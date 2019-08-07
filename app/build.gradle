@@ -1,38 +1,182 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+
+    // 编译 SDK 版本
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    // 编译工具版本
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    // 资源前缀
+    resourcePrefix "app"
+
     defaultConfig {
+        // 应用 id
         applicationId "com.wj.sampleproject"
-        minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // 最低支持版本
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        // 目标 SDK 版本
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+
+        // 应用版本号
+        versionCode rootProject.ext.android.versionCode
+        // 应用版本名
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // 开启 Dex 分包
+        multiDexEnabled true
+
+        // 维度
+        flavorDimensions "version"
+
+        ndk {
+            // 支持的 cpu 类型
+            abiFilters 'armeabi', 'armeabi-v7a'
+        }
     }
+
+    signingConfigs {
+        // 签名配置
+        release {
+            keyAlias 'test'
+            keyPassword '123123'
+            storeFile file('android_test.jks')
+            storePassword '123123'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            // 开启混淆
+            minifyEnabled true
+            // 开启Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件，此项只有在开启混淆时才生效
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    productFlavors {
+        // 正式线上版本
+        online {
+        }
+
+        // 测试版本
+        offline {
+            // 应用包名后缀
+            applicationIdSuffix ".offline"
+        }
+
+        // 开发版本
+        dev {
+            // 应用包名后缀
+            applicationIdSuffix ".dev"
+        }
+    }
+
+    // 源文件路径设置
+    sourceSets {
+        main { //           Java             Kotlin
+            java.srcDirs = ['src/main/java', 'src/main/kotlin']
+            jniLibs.srcDirs = ['libs', 'jniLibs']
+        }
+    }
+
+    // dex 配置
+    dexOptions {
+        jumboMode true
+        dexInProcess true
+        preDexLibraries true
+        javaMaxHeapSize "4g"
+        maxProcessCount 6
+        keepRuntimeAnnotatedClasses false
+    }
+
+    dataBinding {
+        // DataBinding 开启
+        enabled true
+    }
+
+    lintOptions {
+        // 出现错误不终止编译
+        abortOnError false
+    }
+
+    // 使用 httpclient
+    useLibrary 'org.apache.http.legacy'
+
+    // 配置 APK 输出路径
+    applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "sample_${variant.flavorName}_${variant.buildType.name}_v${versionName}.apk"
+            }
     }
 }
 
 dependencies {
-    testImplementation "junit:junit:4.12"
-    androidTestImplementation "androidx.test:runner:1.2.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
-    androidTestImplementation "androidx.test.ext:junit:1.1.2-alpha02"
+    // 测试
+    testImplementation rootProject.ext.dependencies["test_junit"]
+    androidTestImplementation rootProject.ext.dependencies["androidx_test_runner"]
+    androidTestImplementation rootProject.ext.dependencies["androidx_test_espresso-core"]
+    androidTestImplementation rootProject.ext.dependencies["androidx_test_ext_junit"]
 
+    // .jar .aar 包
     implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
-
+    // Kotlin jdk
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.0.2"
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+
+    // ktx
+    implementation rootProject.ext.dependencies["androidx_core-ktx"]
+    // v7
+    implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
+    // design
+    implementation rootProject.ext.dependencies["androidx_design"]
+    // RecyclerView
+    implementation rootProject.ext.dependencies["androidx_recyclerview"]
+    // 约束性布局
+    implementation rootProject.ext.dependencies["androidx_constraint"]
+
+    // Koin
+    implementation rootProject.ext.dependencies["koin"]
+    implementation rootProject.ext.dependencies["koin-scope"]
+    implementation rootProject.ext.dependencies["koin-viewmodel"]
+    testImplementation rootProject.ext.dependencies["koin-test"]
+
+    // RxJava2
+    implementation rootProject.ext.dependencies["rxjava"]
+    // RxAndroid2
+    implementation rootProject.ext.dependencies["rxandroid"]
+
+    // OkHttp
+    implementation rootProject.ext.dependencies["okhttp"]
+    implementation rootProject.ext.dependencies["okhttp-urlconnection"]
+
+    // Retrofit
+    implementation rootProject.ext.dependencies["retrofit"]
+    implementation rootProject.ext.dependencies["retrofit-rxjava2"]
+    implementation rootProject.ext.dependencies["retrofit-gson"]
+
+    // Glide
+    implementation rootProject.ext.dependencies["glide"]
+
+    // 依赖 base 库
+    implementation project(":lib_base")
 }

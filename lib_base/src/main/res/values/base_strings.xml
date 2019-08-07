@@ -1,0 +1,6 @@
+<resources>
+    <string name="base_recycler_base_loading">加载中…</string>
+    <string name="base_recycler_base_swipe_up_to_load_more">上拉加载更多</string>
+    <string name="base_recycler_base_load_failed">加载失败</string>
+    <string name="base_recycler_base_no_more">没有更多了</string>
+</resources>
