@@ -1,4 +1,4 @@
-package com.wj.sampleproject.base.recyclerview.layoutmanager
+package cn.wj.android.base.ext.recycler.layoutmanager
 
 import android.graphics.Rect
 import android.util.SparseArray

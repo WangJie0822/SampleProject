@@ -1,14 +1,14 @@
 @file:Suppress("unused")
 
-package com.wj.sampleproject.databinding
+package cn.wj.android.base.databinding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.wj.sampleproject.base.recyclerview.layoutmanager.FlowLayoutManager
-import com.wj.sampleproject.base.recyclerview.layoutmanager.WrapContentLinearLayoutManager
+import cn.wj.android.base.ext.recycler.layoutmanager.FlowLayoutManager
+import cn.wj.android.base.ext.recycler.layoutmanager.WrapContentLinearLayoutManager
 
 /**
  * RecyclerView DataBinding 适配器

@@ -35,4 +35,6 @@ dependencies {
     implementation rootProject.ext.dependencies["androidx_support-v4"]
     // v7
     implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
+    // RecyclerView
+    implementation rootProject.ext.dependencies["androidx_recyclerview"]
 }

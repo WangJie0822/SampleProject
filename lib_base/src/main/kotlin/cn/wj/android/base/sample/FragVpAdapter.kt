@@ -3,10 +3,10 @@ package cn.wj.android.base.sample
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import cn.wj.android.base.adapter.viewpager.FragVpAdapter
+import cn.wj.android.base.ext.viewpager.FragVpAdapter
 
 /**
- * [cn.wj.android.base.adapter.viewpager.FragVpAdapter] 示例
+ * [cn.wj.android.base.ext.viewpager.FragVpAdapter] 示例
  *
  * @author 王杰
  * @date 2019/8/5

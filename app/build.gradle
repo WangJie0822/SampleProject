@@ -125,9 +125,9 @@ android {
 
     // 配置 APK 输出路径
     applicationVariants.all { variant ->
-            variant.outputs.all {
-                outputFileName = "sample_${variant.flavorName}_${variant.buildType.name}_v${versionName}.apk"
-            }
+        variant.outputs.all {
+            outputFileName = "sample_${variant.flavorName}_${variant.buildType.name}_v${versionName}.apk"
+        }
     }
 }
 

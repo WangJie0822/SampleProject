@@ -1,4 +1,4 @@
-package com.wj.sampleproject.base.recyclerview.layoutmanager
+package cn.wj.android.base.ext.recycler.layoutmanager
 
 import android.content.Context
 import android.util.AttributeSet

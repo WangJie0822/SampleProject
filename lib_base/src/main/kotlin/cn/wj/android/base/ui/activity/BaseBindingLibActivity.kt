@@ -3,6 +3,7 @@ package cn.wj.android.base.ui.activity
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import cn.wj.android.base.BR
 import cn.wj.android.base.mvvm.BaseMvvmViewModel
 
 /**
@@ -27,6 +28,12 @@ abstract class BaseBindingLibActivity<VM : BaseMvvmViewModel, DB : ViewDataBindi
                 LayoutInflater.from(mContext),
                 layoutResID, null, false
         )
+
+        // 绑定生命周期管理
+        mBinding.lifecycleOwner = this
+
+        // 绑定 ViewModel
+        mBinding.setVariable(BR.viewModel, mViewModel)
 
         // 设置布局
         super.setContentView(mBinding.root)

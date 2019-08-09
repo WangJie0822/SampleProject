@@ -1,4 +1,4 @@
-package com.wj.sampleproject.base.recyclerview.adapter
+package cn.wj.android.base.ext.recycler.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
  *
  * @author 王杰
  */
-open class BaseRvViewHolder<E>(view: View) : RecyclerView.ViewHolder(view) {
+abstract class BaseRvViewHolder<E>(view: View) : RecyclerView.ViewHolder(view) {
 
     /**
      * 绑定数据
      *
      * @param entity 数据实体对象
      */
-    open fun bindData(entity: E) {}
+    abstract fun bindData(entity: E)
 }

@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package cn.wj.android.base.adapter.viewpager
+package cn.wj.android.base.ext.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

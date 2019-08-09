@@ -4,9 +4,11 @@ import cn.wj.android.base.log.Logger
 import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.base.net.InterceptorLogger
 import com.wj.sampleproject.base.net.LogInterceptor
+import com.wj.sampleproject.mvvm.MainViewModel
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
 import okhttp3.OkHttpClient
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -66,4 +68,5 @@ val adapterModule: Module = module {
  * ViewModel Module
  */
 val viewModelModule: Module = module {
+    viewModel { MainViewModel() }
 }

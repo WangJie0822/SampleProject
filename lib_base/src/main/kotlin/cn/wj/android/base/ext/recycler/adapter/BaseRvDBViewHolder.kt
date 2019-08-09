@@ -1,8 +1,8 @@
-package com.wj.sampleproject.base.recyclerview.adapter
+package cn.wj.android.base.ext.recycler.adapter
 
 import android.view.View
 import androidx.databinding.ViewDataBinding
-import com.wj.sampleproject.BR
+import cn.wj.android.base.BR
 
 /**
  * ViewHolder基类

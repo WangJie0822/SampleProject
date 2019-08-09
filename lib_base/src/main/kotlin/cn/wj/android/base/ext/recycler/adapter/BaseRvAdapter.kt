@@ -1,4 +1,6 @@
-package com.wj.sampleproject.base.recyclerview.adapter
+@file:Suppress("unused")
+
+package cn.wj.android.base.ext.recycler.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,35 +9,31 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import java.lang.reflect.ParameterizedType
 
 /**
  * RecyclerView 适配器基类
+ * - 若要使 头布局、脚布局 等必须在设置适配器之前设置布局管理器
  *
  * @param VH ViewHolder 类型，继承 [BaseRvViewHolder]
  * @param E  数据类型
  *
- * @param mLoadMoreEnable 标记 - 是否允许加载更多 默认不允许
- *
  * @author 王杰
  */
-abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnable: Boolean = false) :
-        RecyclerView.Adapter<BaseRvViewHolder<E>>() {
+abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
+    : RecyclerView.Adapter<BaseRvViewHolder<E>>() {
 
     companion object {
         /** 布局类型 - 头布局 */
-        protected const val VIEW_TYPE_HEADER = 0x0101551
+        const val VIEW_TYPE_HEADER = 0x0101551
         /** 布局类型 - 正常 */
-        protected const val VIEW_TYPE_NORMAL = 0x1011552
+        const val VIEW_TYPE_NORMAL = 0x1011552
         /** 布局类型 - 脚布局 */
-        protected const val VIEW_TYPE_FOOTER = 0x0101553
+        const val VIEW_TYPE_FOOTER = 0x0101553
         /** 布局类型 - 空布局 */
-        protected const val VIEW_TYPE_EMPTY = 0x0101554
-        /** 布局类型 - 加载更多 */
-        protected const val VIEW_TYPE_LOADING = 0x0101555
+        const val VIEW_TYPE_EMPTY = 0x0101554
     }
 
     /** Adapter 绑定的 RecyclerView 对象 */
@@ -45,22 +43,19 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
     val mData = arrayListOf<E>()
 
     /** 空布局 */
-    private var mEmptyLayout: FrameLayout? = null
+    protected var mEmptyLayout: FrameLayout? = null
     /** 头布局 */
-    private var mHeaderLayout: LinearLayout? = null
+    protected var mHeaderLayout: LinearLayout? = null
     /** 脚布局 */
-    private var mFooterLayout: LinearLayout? = null
+    protected var mFooterLayout: LinearLayout? = null
 
     /** 空布局布局 id */
-    private var emptyViewLayoutResID: Int? = null
+    protected var emptyViewLayoutResID: Int? = null
 
     /** 标记 - 显示空布局是是否显示头布局 默认不显示 */
     var showHeaderWhenEmpty = false
     /** 标记 - 显示空布局时是否显示脚布局 默认不显示 */
     var showFooterWhenEmpty = false
-
-    /** 加载更多布局 */
-    private var mLoadMoreView: BaseRvLoadMoreView? = SimpleLoadMoreView()
 
     /** 空布局点击事件监听 */
     private var mEmptyClickListener: OnEmptyClickListener? = null
@@ -72,7 +67,6 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
      * @return View 类型 [VIEW_TYPE_HEADER]、[VIEW_TYPE_NORMAL]、[VIEW_TYPE_FOOTER]
      */
     override fun getItemViewType(position: Int) = when {
-        isLoading(position) -> VIEW_TYPE_LOADING // 加载更多
         isEmpty(position) -> VIEW_TYPE_EMPTY     // 空布局
         isHeader(position) -> VIEW_TYPE_HEADER   // 头布局
         isFooter(position) -> VIEW_TYPE_FOOTER   // 脚布局
@@ -87,7 +81,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
     }
 
     override fun getItemCount() = if (isShowEmpty()) {
-        // 设置了空布局且显示空布局
+        // 显示空布局
         if (haveHeader() && showHeaderWhenEmpty) {
             // 有头布局，且显示
             if (haveFooter() && showFooterWhenEmpty) {
@@ -108,48 +102,24 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
             }
         }
     } else {
-        // 未设置空布局或不显示空布局
+        // 不显示空布局
         if (haveHeader()) {
             // 有头布局
             if (haveFooter()) {
                 // 有脚布局
-                if (haveLoadMore()) {
-                    // 有加载更多
-                    mData.size + 3
-                } else {
-                    // 无加载更多
-                    mData.size + 2
-                }
+                mData.size + 2
             } else {
                 // 无脚布局
-                if (haveLoadMore()) {
-                    // 有加载更多
-                    mData.size + 2
-                } else {
-                    // 无加载更多
-                    mData.size + 1
-                }
+                mData.size + 1
             }
         } else {
             // 无头布局
             if (haveFooter()) {
                 // 有脚布局
-                if (haveLoadMore()) {
-                    // 有加载更多
-                    mData.size + 2
-                } else {
-                    // 无加载更多
-                    mData.size + 1
-                }
+                mData.size + 1
             } else {
                 // 无脚布局
-                if (haveLoadMore()) {
-                    // 有加载更多
-                    mData.size + 1
-                } else {
-                    // 无加载更多
-                    mData.size
-                }
+                mData.size
             }
         }
     }
@@ -168,11 +138,6 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
                 // 空布局
                 createViewHolder(mEmptyLayout!!)
             }
-            VIEW_TYPE_LOADING -> {
-                // 加载更多
-                val loading = LayoutInflater.from(parent.context).inflate(mLoadMoreView!!.layoutResID(), parent, false)
-                createViewHolder(loading)
-            }
             else -> {
                 customCreateViewHolder(parent, viewType)
             }
@@ -188,10 +153,6 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
      * 除特殊布局外的其他布局，一种布局无需变化，多种布局重写
      */
     override fun onBindViewHolder(holder: BaseRvViewHolder<E>, position: Int) {
-        autoLoadMore(position)
-        if (holder.itemViewType == VIEW_TYPE_LOADING) {
-            mLoadMoreView!!.convert(holder)
-        }
         if (needFix(position)) {
             // 头布局、脚布局、空布局，返回不做操作
             return
@@ -199,29 +160,12 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
         customBindViewHolder(holder, if (haveHeader()) position - 1 else position)
     }
 
-    open fun customBindViewHolder(holder: BaseRvViewHolder<E>, position: Int) {
+    protected open fun customBindViewHolder(holder: BaseRvViewHolder<E>, position: Int) {
         // 普通布局，绑定数据
         if (position >= mData.size) {
             return
         }
         convert(holder, getItem(position))
-    }
-
-    private fun autoLoadMore(position: Int) {
-        if (!haveLoadMore()) {
-            return
-        }
-        if (mData.size <= 0) {
-            return
-        }
-
-        if (position < itemCount - 1) {
-            return
-        }
-        if (mLoadMoreView!!.viewStatus != BaseRvLoadMoreView.VIEW_STATUS_DEFAULT) {
-            return
-        }
-        mLoadMoreView!!.viewStatus = BaseRvLoadMoreView.VIEW_STATUS_LOADING
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -265,7 +209,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
      * @return 是否需要配置独占一行
      */
     private fun needFix(position: Int) =
-            getItemViewType(position) in arrayOf(VIEW_TYPE_HEADER, VIEW_TYPE_FOOTER, VIEW_TYPE_EMPTY, VIEW_TYPE_LOADING)
+            getItemViewType(position) in arrayOf(VIEW_TYPE_HEADER, VIEW_TYPE_FOOTER, VIEW_TYPE_EMPTY)
 
     /**
      * 判断是否显示空布局
@@ -323,7 +267,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
             // 未初始化，初始化空布局
             mEmptyLayout = FrameLayout(emptyView.context)
             mEmptyLayout!!.setOnClickListener {
-                mEmptyClickListener?.onClick()
+                mEmptyClickListener?.invoke()
             }
             // 设置布局参数
             val layoutParams = RecyclerView.LayoutParams(
@@ -491,13 +435,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
                 false
             }
         } else {
-            // 不显示空布局
-            if (haveLoadMore()) {
-                // 显示加载更多
-                position == itemCount - 2
-            } else {
-                position == itemCount - 1
-            }
+            position == itemCount - 1
         }
     }
 
@@ -511,35 +449,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
         -1
     } else {
         // 显示脚布局
-        if (isShowEmpty() || !haveLoadMore()) {
-            // 显示空布局或不显示加载更多
-            itemCount - 1
-        } else {
-            // 不显示空布局且显示加载更多
-            itemCount - 2
-        }
-    }
-
-    /**
-     * 判断是否有加载更多布局
-     *
-     * @return 是否有加载更多
-     */
-    protected fun haveLoadMore() = mLoadMoreView != null && mLoadMoreEnable
-
-    /**
-     * 判断是否是加载更多
-     *
-     * @param position View 位置
-     *
-     * @return 是否是加载更多
-     */
-    protected fun isLoading(position: Int) = if (!haveLoadMore() || isShowEmpty()) {
-        // 没有加载更多布局或不显示或显示无数据
-        false
-    } else {
-        // 有加载更多布局且显示且不显示无数据
-        position == itemCount - 1
+        itemCount - 1
     }
 
     /**
@@ -579,79 +489,13 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
      *
      * @return ViewHolder 实际类型
      */
-    @Suppress("UNCHECKED_CAST")
-    private fun getVHClass() = ((getActualTypeList()[0] as ParameterizedType).rawType) as Class<VH>
+    protected open fun getVHClass() = getActualTypeList()[0] as Class<*>
+
 
     /**
      * 获取泛型实际类型列表
      */
-    private fun getActualTypeList() = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
-
-    /**
-     * 设置加载更多事件
-     *
-     * @param listener 加载更多事件
-     */
-    fun setOnLoadMoreListener(listener: OnLoadMoreListener) {
-        mLoadMoreView?.listener = listener
-    }
-
-    /**
-     * 设置加载更多事件
-     *
-     * @param block 加载更多事件
-     */
-    fun setOnLoadMoreListener(block: () -> Unit) {
-        setOnLoadMoreListener(object : OnLoadMoreListener {
-            override fun onLoadMore() {
-                block()
-            }
-        })
-    }
-
-    /**
-     * 设置加载失败点击事件监听
-     *
-     * @param listener 加载失败点击事件处理
-     */
-    fun setOnLoadMoreFailedClickListener(listener: OnLoadMoreFailedClickListener) {
-        mLoadMoreView?.failedListener = listener
-    }
-
-    /**
-     * 设置加载失败点击事件监听
-     *
-     * @param block 加载失败点击事件处理
-     */
-    fun setOnLoadMoreFailedClickListener(block: () -> Unit) {
-        setOnLoadMoreFailedClickListener(object : OnLoadMoreFailedClickListener {
-            override fun onClick() {
-                block()
-            }
-        })
-    }
-
-    /**
-     * 设置没有更多点击事件监听
-     *
-     * @param listener 没有更多点击事件监听
-     */
-    fun setOnLoadMoreEndClickListener(listener: OnLoadMoreEndClickListener) {
-        mLoadMoreView?.endListener = listener
-    }
-
-    /**
-     * 设置没有更多点击事件监听
-     *
-     * @param block 没有更多点击事件监听
-     */
-    fun setOnLoadMoreEndClickListener(block: () -> Unit) {
-        setOnLoadMoreEndClickListener(object : OnLoadMoreEndClickListener {
-            override fun onClick() {
-                block()
-            }
-        })
-    }
+    protected fun getActualTypeList() = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
 
     /**
      * 设置空布局点击事件
@@ -660,48 +504,6 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
      */
     fun setOnEmptyClickListener(lis: OnEmptyClickListener) {
         this.mEmptyClickListener = lis
-    }
-
-    /**
-     * 设置空布局点击事件
-     *
-     * @param lis 空布局点击事件监听
-     */
-    fun setOnEmptyClickListener(lis: () -> Unit) {
-        setOnEmptyClickListener(object : OnEmptyClickListener {
-            override fun onClick() {
-                lis.invoke()
-            }
-        })
-    }
-
-    /**
-     * 当数据不满一页时停用加载更多
-     *
-     * @param recyclerView [RecyclerView] 对象，默认 adapter 绑定的 RecyclerView
-     */
-    fun disableLoadMoreIfNotFullPage(recyclerView: RecyclerView? = mRecyclerView) {
-        loadMoreEnd()
-        if (recyclerView == null) {
-            return
-        }
-        val manager = recyclerView.layoutManager ?: return
-        if (manager is LinearLayoutManager) {
-            recyclerView.postDelayed({
-                if (manager.findLastCompletelyVisibleItemPosition() + 1 != itemCount) {
-                    loadMoreComplete()
-                }
-            }, 50)
-        } else if (manager is StaggeredGridLayoutManager) {
-            recyclerView.postDelayed({
-                val positions = IntArray(manager.spanCount)
-                manager.findLastCompletelyVisibleItemPositions(positions)
-                val pos = getTheBiggestNumber(positions) + 1
-                if (pos != itemCount) {
-                    loadMoreComplete()
-                }
-            }, 50)
-        }
     }
 
     /**
@@ -722,38 +524,6 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>(var mLoadMoreEnabl
             }
         }
         return tmp
-    }
-
-    /**
-     * 加载更多完成，恢复初始状态，上拉加载更多
-     */
-    fun loadMoreComplete() {
-        mLoadMoreView?.viewStatus = BaseRvLoadMoreView.VIEW_STATUS_DEFAULT
-        notifyDataSetChanged()
-    }
-
-    /**
-     * 没有更多数据，不再加载更多
-     */
-    fun loadMoreEnd() {
-        mLoadMoreView?.viewStatus = BaseRvLoadMoreView.VIEW_STATUS_END
-        notifyDataSetChanged()
-    }
-
-    /**
-     * 加载更多失败
-     */
-    fun loadMoreFailed() {
-        mLoadMoreView?.viewStatus = BaseRvLoadMoreView.VIEW_STATUS_FAILED
-        notifyDataSetChanged()
-    }
-
-    /**
-     * 显示没有更多了
-     */
-    fun showNoMore() {
-        mLoadMoreEnable = true
-        loadMoreEnd()
     }
 
     /**
