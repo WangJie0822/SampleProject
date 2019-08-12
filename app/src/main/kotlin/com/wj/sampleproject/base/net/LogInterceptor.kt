@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.wj.sampleproject.base.net
 
 import cn.wj.android.base.expanding.jsonFormat
@@ -20,37 +22,23 @@ import java.util.concurrent.TimeUnit
  *
  * @author 王杰
  */
-class LogInterceptor(
+class LogInterceptor private constructor(
         private var level: Level = Level.BASIC,
         private val logger: InterceptorLogger = InterceptorLogger.DEFAULT
 ) : Interceptor {
 
     companion object {
-        /** 默认字符集 UTF-8 */
-        private val UTF8 = Charset.forName("UTF-8")
+
+        /**
+         * 新建 Builder 对象
+         */
+        fun newBuilder(): Builder {
+            return Builder()
+        }
     }
 
-    /**
-     * 枚举类，日志打印范围
-     */
-    enum class Level {
-        /**
-         * 不打印日志
-         */
-        NONE,
-        /**
-         * 打印请求和响应行
-         */
-        BASIC,
-        /**
-         * 打印请求和响应行以及他们各自的头
-         */
-        HEADERS,
-        /**
-         * 打印请求和响应行、他们各自的头以及主体
-         */
-        BODY
-    }
+    /** 默认字符集 UTF-8 */
+    private val utf8 = Charset.forName("UTF-8")
 
     override fun intercept(chain: Interceptor.Chain): Response {
 
@@ -112,10 +100,10 @@ class LogInterceptor(
                     val buffer = Buffer()
                     requestBody.writeTo(buffer)
 
-                    var charset = UTF8
+                    var charset = utf8
                     val contentType = requestBody.contentType()
                     if (contentType != null) {
-                        charset = contentType.charset(UTF8)
+                        charset = contentType.charset(utf8)
                     }
 
                     logStr.append("\n")
@@ -169,10 +157,10 @@ class LogInterceptor(
                         source.request(Long.MAX_VALUE)
                         val buffer = source.buffer()
 
-                        var charset = UTF8
+                        var charset = utf8
                         val contentType = responseBody.contentType()
                         if (contentType != null) {
-                            charset = contentType.charset(UTF8)
+                            charset = contentType.charset(utf8)
                         }
 
                         if (!isPlaintext(buffer)) {
@@ -233,5 +221,78 @@ class LogInterceptor(
     private fun bodyEncoded(headers: Headers): Boolean {
         val contentEncoding = headers.get("Content-Encoding")
         return contentEncoding != null && !contentEncoding.equals("identity", ignoreCase = true)
+    }
+
+    /**
+     * 枚举类，日志打印范围
+     */
+    enum class Level {
+        /**
+         * 不打印日志
+         */
+        NONE,
+        /**
+         * 打印请求和响应行
+         */
+        BASIC,
+        /**
+         * 打印请求和响应行以及他们各自的头
+         */
+        HEADERS,
+        /**
+         * 打印请求和响应行、他们各自的头以及主体
+         */
+        BODY
+    }
+
+    /**
+     * 建造者类
+     */
+    class Builder {
+
+        /** 日志打印等级 */
+        private var level = Level.BASIC
+        /** 日志打印接口 */
+        private var logger = InterceptorLogger.DEFAULT
+
+        /**
+         * 设置日志等级
+         *
+         * @param level 日志等级
+         */
+        fun level(level: Level): Builder {
+            this.level = level
+            return this
+        }
+
+        /**
+         * 设置日志打印接口
+         *
+         * @param logger 日志打印接口
+         */
+        fun logger(logger: InterceptorLogger): Builder {
+            this.logger = logger
+            return this
+        }
+
+        /**
+         * 设置日志打印接口
+         *
+         * @param logger 日志打印接口
+         */
+        fun logger(logger: (String) -> Unit): Builder {
+            return logger(object : InterceptorLogger {
+                override fun log(msg: String) {
+                    logger.invoke(msg)
+                }
+            })
+        }
+
+        /**
+         * 构造日志打印拦截器对象
+         */
+        fun build(): LogInterceptor {
+            return LogInterceptor(level, logger)
+        }
     }
 }

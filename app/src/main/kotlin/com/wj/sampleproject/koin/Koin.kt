@@ -4,6 +4,7 @@ import cn.wj.android.base.log.Logger
 import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.base.net.InterceptorLogger
 import com.wj.sampleproject.base.net.LogInterceptor
+import com.wj.sampleproject.base.net.ParamsInterceptor
 import com.wj.sampleproject.mvvm.MainViewModel
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
@@ -30,10 +31,19 @@ val netModule: Module = module {
         OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
                 .addInterceptor(
-                        LogInterceptor(
-                                level = if (BuildConfig.DEBUG) LogInterceptor.Level.BODY else LogInterceptor.Level.NONE,
-                                logger = logger
-                        )
+                        LogInterceptor.newBuilder()
+                                .level(if (BuildConfig.DEBUG) LogInterceptor.Level.BODY else LogInterceptor.Level.NONE)
+                                .logger(logger)
+                                .build()
+                )
+                .addInterceptor(
+                        ParamsInterceptor.newBuilder()
+                                .addStaticParam("hha", "haa")
+                                .addDynamicParam("hehe", { "hehe" })
+                                .addStaticHeader("toto", "toto")
+                                .addDynamicHeader("dd", { "dd" })
+                                .logger(logger)
+                                .build()
                 )
                 .build()
     }

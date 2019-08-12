@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.wj.sampleproject.base.net
 
 import okhttp3.Interceptor
@@ -14,13 +16,23 @@ import okhttp3.Response
  *
  * @author 王杰
  */
-class ParamsInterceptor(
+class ParamsInterceptor private constructor(
         private val staticParams: Map<String, String> = mapOf(),
-        private val dynamicParams: Map<String, () -> String> = mapOf(),
+        private val dynamicParams: Map<String, DynamicParams> = mapOf(),
         private val staticHeaders: Map<String, String> = mapOf(),
-        private val dynamicHeaders: Map<String, () -> String> = mapOf(),
+        private val dynamicHeaders: Map<String, DynamicParams> = mapOf(),
         private val logger: InterceptorLogger = InterceptorLogger.DEFAULT
 ) : Interceptor {
+
+    companion object {
+
+        /**
+         * 新建 Builder 对象
+         */
+        fun newBuilder(): Builder {
+            return Builder()
+        }
+    }
 
     override fun intercept(chain: Interceptor.Chain): Response {
 
@@ -85,4 +97,103 @@ class ParamsInterceptor(
 
         return chain.proceed(requestBuilder.build())
     }
+
+    /**
+     * 建造者类
+     */
+    class Builder {
+        /** 静态参数 拼接到 url */
+        private val staticParams: HashMap<String, String> = hashMapOf()
+        /** 动态参数 拼接到 url */
+        private val dynamicParams: HashMap<String, DynamicParams> = hashMapOf()
+        /** 静态参数 添加到 Headers */
+        private val staticHeaders: HashMap<String, String> = hashMapOf()
+        /** 动态参数 添加到 Headers */
+        private val dynamicHeaders: HashMap<String, DynamicParams> = hashMapOf()
+        /** 日志打印接口 */
+        private var logger = InterceptorLogger.DEFAULT
+
+        /**
+         * 添加静态参数
+         *
+         * @param key 键
+         * @param value 值
+         */
+        fun addStaticParam(key: String, value: String): Builder {
+            staticParams[key] = value
+            return this
+        }
+
+        /**
+         * 添加动态参数
+         *
+         * @param key 键
+         * @param value 值
+         */
+        fun addDynamicParam(key: String, value: DynamicParams): Builder {
+            dynamicParams[key] = value
+            return this
+        }
+
+        /**
+         * 添加静态 Header
+         *
+         * @param key 键
+         * @param value 值
+         */
+        fun addStaticHeader(key: String, value: String): Builder {
+            staticHeaders[key] = value
+            return this
+        }
+
+        /**
+         * 添加动态 Header
+         *
+         * @param key 键
+         * @param value 值
+         */
+        fun addDynamicHeader(key: String, value: DynamicParams): Builder {
+            dynamicHeaders[key] = value
+            return this
+        }
+
+        /**
+         * 设置日志打印接口
+         *
+         * @param logger 日志打印接口
+         */
+        fun logger(logger: InterceptorLogger): Builder {
+            this.logger = logger
+            return this
+        }
+
+        /**
+         * 设置日志打印接口
+         *
+         * @param logger 日志打印接口
+         */
+        fun logger(logger: (String) -> Unit): Builder {
+            return logger(object : InterceptorLogger {
+                override fun log(msg: String) {
+                    logger.invoke(msg)
+                }
+            })
+        }
+
+        /**
+         * 构造公告参数拦截器对象
+         */
+        fun build(): ParamsInterceptor {
+            return ParamsInterceptor(
+                    staticParams,
+                    dynamicParams,
+                    staticHeaders,
+                    dynamicHeaders,
+                    logger
+            )
+        }
+    }
 }
+
+/** 动态参数类型 */
+typealias DynamicParams = () -> String
