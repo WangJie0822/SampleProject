@@ -217,7 +217,7 @@ fun <T> Observable<T>.subscribeWithOwner(owner: RxLifeCircle,
  */
 interface RxLifeCircle {
 
-    /** RxJ 生命周期管理  */
+    /** RxJ 生命周期管理 */
     var disposables: CompositeDisposable?
 
     /**
