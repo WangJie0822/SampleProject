@@ -27,7 +27,7 @@ android {
         // 应用版本名
         versionName rootProject.ext.android.versionName
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // 开启 Dex 分包
         multiDexEnabled true
