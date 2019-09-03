@@ -13,7 +13,7 @@ import android.provider.MediaStore
 import android.view.Gravity
 import android.view.ViewConfiguration
 import android.widget.Toast
-import cn.wj.android.base.log.Logger
+import cn.wj.android.base.log.InternalLog
 import java.io.*
 
 /**
@@ -84,7 +84,7 @@ object AppUtil {
             }
             true
         } catch (e: Exception) {
-            Logger.t("AppUtil").e("isToFile", e)
+            InternalLog.e("AppUtil", "isToFile", e)
             false
         } finally {
             //关闭输入流等（略）
@@ -92,14 +92,14 @@ object AppUtil {
                 try {
                     bos.close()
                 } catch (e: IOException) {
-                    Logger.t("AppUtil").e("isToFile", e)
+                    InternalLog.e("AppUtil", "isToFile", e)
                 }
             }
             if (bis != null) {
                 try {
                     bis.close()
                 } catch (e: IOException) {
-                    Logger.t("AppUtil").e("isToFile", e)
+                    InternalLog.e("AppUtil", "isToFile", e)
                 }
             }
         }
@@ -205,7 +205,7 @@ object AppUtil {
                     return processName
                 }
             } catch (e: Exception) {
-                Logger.t("AppUtil").e("getAppName", e)
+                InternalLog.e("AppUtil", "getAppName", e)
             }
 
         }

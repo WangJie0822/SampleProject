@@ -1,7 +1,7 @@
 package com.wj.sampleproject.base.mvvm
 
 import cn.wj.android.base.mvvm.BaseMvvmViewModel
-import com.wj.sampleproject.tools.RxLifeCircle
+import cn.wj.android.rx.RxLifecycleOwner
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.KoinComponent
 
@@ -11,7 +11,7 @@ import org.koin.core.KoinComponent
 abstract class BaseViewModel
     : BaseMvvmViewModel(),
         KoinComponent,
-        RxLifeCircle {
+        RxLifecycleOwner {
 
     /** Rx 生命周期管理 */
     override var disposables: CompositeDisposable? = CompositeDisposable()

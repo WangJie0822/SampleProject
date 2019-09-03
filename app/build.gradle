@@ -35,10 +35,10 @@ android {
         // 维度
         flavorDimensions "version"
 
-        ndk {
-            // 支持的 cpu 类型
-            abiFilters 'armeabi', 'armeabi-v7a'
-        }
+//        ndk {
+//            // 支持的 cpu 类型
+//            abiFilters 'armeabi', 'armeabi-v7a'
+//        }
     }
 
     signingConfigs {
@@ -179,4 +179,9 @@ dependencies {
 
     // 依赖 base 库
     implementation project(":lib_base")
+    implementation project(":lib_logger")
+    implementation project(':lib_okhttp_interceptor')
+    implementation project(":lib_recyclerview")
+    implementation project(':lib_rx_lifecycle')
+    implementation project(":lib_databinding_adapter")
 }

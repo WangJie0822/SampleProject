@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
  * - 维护 [mContext]，当前界面的 Context 对象
  * - 添加 [initBefore] 方法，在一切流程开始前预处理一些数据
  * - [onCreateView] 方法中对 [layoutResID] 对应的 [View] 进行加载，并在 [initView] 中进行初始化操作
- * - 维护了 [mRootView]、[mDialogWidth]、[mDialogHeight]、[mGravity] 等参数，在 [onActivityCreated] 方法中进行配置
+ * - 维护了 [mRootView]等参数
  * - 维护了 [onSelectVisiableChanged] 方法，以实现对多 [Fragment] 之间切换的感知
  *
  * @author 王杰
@@ -50,6 +50,7 @@ abstract class BaseLibFragment
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        @Suppress("DEPRECATION")
         super.setUserVisibleHint(isVisibleToUser)
 
         // 使用 FragmentPagerAdapter 会调用

@@ -3,7 +3,12 @@ package com.wj.sampleproject.application
 import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
+import cn.wj.android.base.log.InternalLog
 import cn.wj.android.base.utils.AppManager
+import cn.wj.android.logger.AndroidLogAdapter
+import cn.wj.android.logger.Logger
+import cn.wj.android.logger.PrettyFormatStrategy
+import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.koin.adapterModule
 import com.wj.sampleproject.koin.netModule
 import com.wj.sampleproject.koin.repositoryModule
@@ -17,6 +22,12 @@ import org.koin.core.context.startKoin
  */
 class MyApplication : Application() {
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+
+        // Dex 分包
+        MultiDex.install(this)
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -30,12 +41,20 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(arrayListOf(netModule, viewModelModule, repositoryModule, adapterModule))
         }
-    }
 
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
+//        RxJavaPlugins.setErrorHandler {
+//            Logger.e(it)
+//        }
 
-        // Dex 分包
-        MultiDex.install(this)
+        val strategy = PrettyFormatStrategy.newBuilder()
+                .tag("SAMPLE")
+                .build()
+        Logger.addLogAdapter(object : AndroidLogAdapter(strategy) {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                return BuildConfig.DEBUG
+            }
+        })
+
+        InternalLog.logEnable(true)
     }
 }

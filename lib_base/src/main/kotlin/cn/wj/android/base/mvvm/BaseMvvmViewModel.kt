@@ -2,11 +2,8 @@
 
 package cn.wj.android.base.mvvm
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ViewModel
-import cn.wj.android.base.log.Logger
+import androidx.lifecycle.*
+import cn.wj.android.base.log.InternalLog
 
 /**
  * MVVM ViewModel 基类
@@ -17,53 +14,64 @@ import cn.wj.android.base.log.Logger
  */
 abstract class BaseMvvmViewModel
     : ViewModel(),
-        LifecycleObserver {
+        LifecycleEventObserver {
+
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        when (event) {
+            Lifecycle.Event.ON_CREATE -> onCreate(source)
+            Lifecycle.Event.ON_START -> onStart(source)
+            Lifecycle.Event.ON_RESUME -> onResume(source)
+            Lifecycle.Event.ON_PAUSE -> onPause(source)
+            Lifecycle.Event.ON_STOP -> onStop(source)
+            Lifecycle.Event.ON_DESTROY -> onDestroy(source)
+            Lifecycle.Event.ON_ANY -> {
+            }
+        }
+    }
 
     /**
      * 在 [Lifecycle] 生命周期 onCreate 时调用
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    open fun onCreate() {
-        Logger.t("BaseMvvmViewModel").i("View onCreate ----> ViewModel: $this")
+    open fun onCreate(source: LifecycleOwner) {
+        InternalLog.i("BaseMvvmViewModel", "View onCreate ----> ViewModel: $this")
     }
 
     /**
      * 在 [Lifecycle] 生命周期 onStart 时调用
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    open fun onStart() {
-        Logger.t("BaseMvvmViewModel").i("View onStart ----> ViewModel: $this")
+    open fun onStart(source: LifecycleOwner) {
+        InternalLog.i("BaseMvvmViewModel", "View onStart ----> ViewModel: $this")
     }
 
     /**
      * 在 [Lifecycle] 生命周期 onResume 时调用
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    open fun onResume() {
-        Logger.t("BaseMvvmViewModel").i("View onResume ----> ViewModel: $this")
+    open fun onResume(source: LifecycleOwner) {
+        InternalLog.i("BaseMvvmViewModel", "View onResume ----> ViewModel: $this")
     }
 
     /**
      * 在 [Lifecycle] 生命周期 onPause 时调用
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    open fun onPause() {
-        Logger.t("BaseMvvmViewModel").i("View onPause ----> ViewModel: $this")
+    open fun onPause(source: LifecycleOwner) {
+        InternalLog.i("BaseMvvmViewModel", "View onPause ----> ViewModel: $this")
     }
 
     /**
      * 在 [Lifecycle] 生命周期 onStop 时调用
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    open fun onStop() {
-        Logger.t("BaseMvvmViewModel").i("View onStop ----> ViewModel: $this")
+    open fun onStop(source: LifecycleOwner) {
+        InternalLog.i("BaseMvvmViewModel", "View onStop ----> ViewModel: $this")
     }
 
     /**
      * 在 [Lifecycle] 生命周期 onDestroy 时调用
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    open fun onDestroy() {
-        Logger.t("BaseMvvmViewModel").i("View onDestroy ----> ViewModel: $this")
+    open fun onDestroy(source: LifecycleOwner) {
+        InternalLog.i("BaseMvvmViewModel", "View onDestroy ----> ViewModel: $this")
+    }
+
+    override fun onCleared() {
+        InternalLog.i("BaseMvvmViewModel", "View onCleared ----> ViewModel: $this")
     }
 }

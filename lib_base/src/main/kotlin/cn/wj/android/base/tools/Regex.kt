@@ -2,7 +2,7 @@
 
 package cn.wj.android.base.tools
 
-import cn.wj.android.base.expanding.isNotNullAndEmpty
+import cn.wj.android.base.ext.isNotNullAndEmpty
 import java.util.regex.Pattern
 
 /* ----------------------------------------------------------------------------------------- */

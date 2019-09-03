@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    resourcePrefix "okhttp"
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+    }
+
+    sourceSets {
+        main { //           Java             Kotlin
+            java.srcDirs = ['src/main/java', 'src/main/kotlin']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+}
+
+dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // OkHttp
+    implementation rootProject.ext.dependencies["okhttp"]
+
+}

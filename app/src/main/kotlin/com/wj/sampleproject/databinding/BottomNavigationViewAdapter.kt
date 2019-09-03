@@ -3,7 +3,7 @@
 package com.wj.sampleproject.databinding
 
 import androidx.databinding.BindingAdapter
-import cn.wj.android.base.expanding.orFalse
+import cn.wj.android.base.ext.orFalse
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**

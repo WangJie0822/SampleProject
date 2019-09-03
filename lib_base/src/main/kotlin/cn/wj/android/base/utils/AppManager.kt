@@ -6,7 +6,7 @@ import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import cn.wj.android.base.log.Logger
+import cn.wj.android.base.log.InternalLog
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.system.exitProcess
@@ -131,7 +131,7 @@ object AppManager {
                     ?: throw NullPointerException("u should init first")
             return app as Application
         } catch (e: Exception) {
-            Logger.t("AppManager").e("getApplicationByReflect", e)
+            InternalLog.e("AppManager", "getApplicationByReflect", e)
         }
         throw NullPointerException("u should init first")
     }

@@ -11,7 +11,7 @@ import android.os.Build
 import android.view.*
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
-import cn.wj.android.base.log.Logger
+import cn.wj.android.base.log.InternalLog
 import cn.wj.android.base.utils.AppManager
 
 /* ----------------------------------------------------------------------------------------- */
@@ -98,7 +98,7 @@ fun Window.setMIUIStatusBarLightMode(isLightMode: Boolean) {
             extraFlagField.invoke(this, 0, darkModeFlag)//清除黑色字体
         }
     } catch (e: Exception) {
-        Logger.t("Bar").e("setMIUIStatusBarLightMode", e)
+        InternalLog.e("Bar", "setMIUIStatusBarLightMode", e)
     }
 }
 
@@ -137,7 +137,7 @@ fun Window.setFlymeStatusBarLightMode(isLightMode: Boolean) {
         meizuFlags.setInt(lp, value)
         attributes = lp
     } catch (e: Exception) {
-        Logger.t("Bar").e("setFlymeStatusBarLightMode", e)
+        InternalLog.e("Bar", "setFlymeStatusBarLightMode", e)
     }
 }
 

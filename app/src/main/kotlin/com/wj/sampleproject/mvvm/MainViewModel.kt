@@ -1,8 +1,7 @@
 package com.wj.sampleproject.mvvm
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import cn.wj.android.base.constants.COMMON_PAGE_SIZE
-import cn.wj.android.base.constants.COMMON_PAGE_START
 import com.wj.sampleproject.base.ListEntity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import kotlin.random.Random
@@ -16,17 +15,17 @@ class MainViewModel : BaseViewModel() {
 
     val clickItem = MutableLiveData<String>()
 
-    var pageNum = COMMON_PAGE_START
+    var pageNum = cn.wj.android.databinding.adapter.COMMON_PAGE_START
 
     /** 刷新 */
     val onRefreshClick: () -> Unit = {
-        pageNum = COMMON_PAGE_START
+        pageNum = cn.wj.android.databinding.adapter.COMMON_PAGE_START
         getData()
     }
 
     /** 清空 */
     val onClearClick: () -> Unit = {
-        pageNum = COMMON_PAGE_START
+        pageNum = cn.wj.android.databinding.adapter.COMMON_PAGE_START
         listData.postValue(ListEntity(arrayListOf(), true))
     }
 
@@ -41,18 +40,18 @@ class MainViewModel : BaseViewModel() {
         clickItem.postValue(it)
     }
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun onCreate(source: LifecycleOwner) {
+        super.onCreate(source)
 
         onRefreshClick.invoke()
     }
 
     private fun getData() {
         val ls = arrayListOf<String>()
-        for (i in 0 until COMMON_PAGE_SIZE) {
+        for (i in 0 until cn.wj.android.databinding.adapter.COMMON_PAGE_SIZE) {
             ls.add("item: $i --->${Random.nextInt(200)}")
         }
-        listData.postValue(ListEntity(ls, pageNum == COMMON_PAGE_START))
+        listData.postValue(ListEntity(ls, pageNum == cn.wj.android.databinding.adapter.COMMON_PAGE_START))
     }
 
 }

@@ -2,8 +2,7 @@
 
 package cn.wj.android.base.tools
 
-import cn.wj.android.base.constants.DATE_FORMAT_DEFAULT
-import cn.wj.android.base.log.Logger
+import cn.wj.android.base.log.InternalLog
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -11,6 +10,9 @@ import java.util.*
 /* ----------------------------------------------------------------------------------------- */
 /* |                                        时间相关                                        | */
 /* ----------------------------------------------------------------------------------------- */
+
+/** 默认时间格式化 */
+const val DATE_FORMAT_DEFAULT = "yyyy-MM-dd"
 
 /**
  * 格式化日期、时间
@@ -21,7 +23,7 @@ fun <N : Number> N.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
     return try {
         SimpleDateFormat(format, Locale.getDefault()).format(this)
     } catch (e: ParseException) {
-        Logger.t("Time").e("dateFormat", e)
+        InternalLog.e("Time", "dateFormat", e)
         ""
     }
 }
@@ -35,7 +37,7 @@ fun Date.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
     return try {
         SimpleDateFormat(format, Locale.getDefault()).format(this)
     } catch (e: ParseException) {
-        Logger.t("Time").e("dateFormat", e)
+        InternalLog.e("Time", "dateFormat", e)
         ""
     }
 }
@@ -47,7 +49,7 @@ fun String.paresDate(format: String): Date {
     return try {
         SimpleDateFormat(format, Locale.getDefault()).parse(this)
     } catch (e: ParseException) {
-        Logger.t("Time").e("paresDate", e)
+        InternalLog.e("Time", "paresDate", e)
         Date()
     }
 }
@@ -62,7 +64,7 @@ fun String?.toLongTime(format: String = DATE_FORMAT_DEFAULT): Long {
         try {
             SimpleDateFormat(format, Locale.getDefault()).parse(this).time
         } catch (e: ParseException) {
-            Logger.t("Time").e("toLongTime", e)
+            InternalLog.e("Time", "toLongTime", e)
             Date().time
         }
     }

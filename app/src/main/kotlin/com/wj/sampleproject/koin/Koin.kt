@@ -1,10 +1,11 @@
 package com.wj.sampleproject.koin
 
-import cn.wj.android.base.log.Logger
+import cn.wj.android.logger.Logger
+import com.wj.android.okhttp.InterceptorLogger
+import com.wj.android.okhttp.LogInterceptor
+import com.wj.android.okhttp.ParamsInterceptor
 import com.wj.sampleproject.BuildConfig
-import com.wj.sampleproject.base.net.InterceptorLogger
-import com.wj.sampleproject.base.net.LogInterceptor
-import com.wj.sampleproject.base.net.ParamsInterceptor
+import com.wj.sampleproject.mvvm.Main2ViewModel
 import com.wj.sampleproject.mvvm.MainViewModel
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
@@ -39,9 +40,9 @@ val netModule: Module = module {
                 .addInterceptor(
                         ParamsInterceptor.newBuilder()
                                 .addStaticParam("hha", "haa")
-                                .addDynamicParam("hehe", { "hehe" })
+                                .addDynamicParam("hehe") { "hehe" }
                                 .addStaticHeader("toto", "toto")
-                                .addDynamicHeader("dd", { "dd" })
+                                .addDynamicHeader("dd") { "dd" }
                                 .logger(logger)
                                 .build()
                 )
@@ -79,4 +80,5 @@ val adapterModule: Module = module {
  */
 val viewModelModule: Module = module {
     viewModel { MainViewModel() }
+    viewModel { Main2ViewModel() }
 }

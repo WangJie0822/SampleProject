@@ -5,8 +5,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import cn.wj.android.base.ext.recycler.adapter.SimpleRvAdapter
 import cn.wj.android.base.tools.parseColor
+import cn.wj.android.recyclerview.adapter.SimpleRvAdapter
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.databinding.AppActivityMainBinding
 import com.wj.sampleproject.mvvm.MainViewModel
@@ -63,6 +63,7 @@ class MainActivity
 
         mViewModel.clickItem.observe(this, Observer {
             Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
+            Main2Activity.actionStart(mContext)
         })
     }
 }

@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    resourcePrefix "rx"
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+    }
+
+    sourceSets {
+        main { //           Java             Kotlin
+            java.srcDirs = ['src/main/java', 'src/main/kotlin']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // v7
+    implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
+    // RxJava2
+    implementation rootProject.ext.dependencies["rxjava"]
+    // RxAndroid2
+    implementation rootProject.ext.dependencies["rxandroid"]
+}
