@@ -1,1 +1,1 @@
-include ':app', ':lib_base', ':lib_logger', ':lib_recyclerview', ':lib_okhttp_interceptor', ':lib_rxforactivityresult', ':lib_rx_lifecycle', ':lib_views_custom', ':lib_databinding_adapter'
+include ':app', ':lib_base', ':lib_logger', ':lib_recyclerview', ':lib_okhttp_interceptor', ':lib_rx_foractivityresult', ':lib_rx_lifecycle', ':lib_views_custom', ':lib_databinding_adapter'

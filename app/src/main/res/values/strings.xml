@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">SampleProject</string>
-
-    <string name="app_swipe_up_to_load_more">上拉加载更多</string>
-    <string name="app_loading">加载中</string>
-    <string name="app_load_failed">加载失败</string>
-    <string name="app_no_more">没有更多了</string>
-</resources>

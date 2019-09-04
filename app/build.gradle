@@ -32,9 +32,6 @@ android {
         // 开启 Dex 分包
         multiDexEnabled true
 
-        // 维度
-        flavorDimensions "version"
-
 //        ndk {
 //            // 支持的 cpu 类型
 //            abiFilters 'armeabi', 'armeabi-v7a'
@@ -74,19 +71,25 @@ android {
         }
     }
 
+    // 维度
+    flavorDimensions "version"
+
     productFlavors {
         // 正式线上版本
         online {
+            dimension 'version'
         }
 
         // 测试版本
         offline {
+            dimension 'version'
             // 应用包名后缀
             applicationIdSuffix ".offline"
         }
 
         // 开发版本
         dev {
+            dimension 'version'
             // 应用包名后缀
             applicationIdSuffix ".dev"
         }
@@ -122,6 +125,7 @@ android {
 
     // 使用 httpclient
     useLibrary 'org.apache.http.legacy'
+    flavorDimensions 'version'
 
     // 配置 APK 输出路径
     applicationVariants.all { variant ->
@@ -154,6 +158,12 @@ dependencies {
     // 约束性布局
     implementation rootProject.ext.dependencies["androidx_constraint"]
 
+    // ViewModel Kotlin 扩展
+    implementation rootProject.ext.dependencies["androidx_viewmodel-ktx"]
+
+    // 协程
+    implementation rootProject.ext.dependencies["kotlinx_coroutines"]
+
     // Koin
     implementation rootProject.ext.dependencies["koin"]
     implementation rootProject.ext.dependencies["koin-scope"]
@@ -168,10 +178,10 @@ dependencies {
     // OkHttp
     implementation rootProject.ext.dependencies["okhttp"]
     implementation rootProject.ext.dependencies["okhttp-urlconnection"]
+    implementation rootProject.ext.dependencies["okhttp-logging"]
 
     // Retrofit
     implementation rootProject.ext.dependencies["retrofit"]
-    implementation rootProject.ext.dependencies["retrofit-rxjava2"]
     implementation rootProject.ext.dependencies["retrofit-gson"]
 
     // Glide
@@ -179,9 +189,11 @@ dependencies {
 
     // 依赖 base 库
     implementation project(":lib_base")
+    implementation project(":lib_databinding_adapter")
     implementation project(":lib_logger")
     implementation project(':lib_okhttp_interceptor')
     implementation project(":lib_recyclerview")
     implementation project(':lib_rx_lifecycle')
-    implementation project(":lib_databinding_adapter")
+    implementation project(':lib_rx_foractivityresult')
+    implementation project(":lib_views_custom")
 }

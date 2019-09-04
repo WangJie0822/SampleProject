@@ -43,10 +43,10 @@ class ParamsInterceptor private constructor(
         val oldRequest = chain.request()
 
         // 从旧的请求中获取建造者
-        val builder = oldRequest.url()
+        val builder = oldRequest.url
                 .newBuilder()
-                .scheme(oldRequest.url().scheme())
-                .host(oldRequest.url().host())
+                .scheme(oldRequest.url.scheme)
+                .host(oldRequest.url.host)
 
         if (staticParams.isNotEmpty()) {
             // 添加固定参数
@@ -70,7 +70,7 @@ class ParamsInterceptor private constructor(
 
         // 生成新的请求
         val requestBuilder = oldRequest.newBuilder()
-                .method(oldRequest.method(), oldRequest.body())
+                .method(oldRequest.method, oldRequest.body)
                 .url(url)
 
         if (staticHeaders.isNotEmpty()) {
