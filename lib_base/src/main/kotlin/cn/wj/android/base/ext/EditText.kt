@@ -33,7 +33,7 @@ fun EditText.hideSoftKeyboard() {
 }
 
 /**
- * 设置获取焦点是否谈起软键盘
+ * 设置获取焦点是否弹起软键盘
  *
  * @param show 是否弹起
  */

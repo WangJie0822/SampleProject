@@ -30,7 +30,7 @@ fun CharSequence?.isNotNullAndEmpty(): Boolean {
  * @return 是否包含 Emoji
  */
 fun CharSequence.containsEmoji(): Boolean {
-    return (0 until this.length)
+    return (this.indices)
             .map { this[it].toInt() }
             .none {
                 (it == 0x0) || (it == 0x9) || (it == 0xA) || (it == 0xD)
