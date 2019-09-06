@@ -17,8 +17,10 @@ object UrlDefinition {
     @Suppress("ConstantConditionIf")
     val BASE_URL = (if (BuildConfig.IS_ONLINE_ENV) API_ONLINE else API_OFFLINE)
 
+    /** 获取首页 Banner 列表 */
+    const val GET_HOMEPAGE_BANNER_LIST = "/banner/json"
     /** 获取首页置顶文章列表 */
-    const val GET_HOMPAGE_TOP_ARTICLE_LIST = "/article/top/json"
+    const val GET_HOMEPAGE_TOP_ARTICLE_LIST = "/article/top/json"
     /** 获取首页文章列表 */
     const val GET_HOMEPAGE_ARTICLE_LIST = "/article/list/{pageNum}/json"
 }

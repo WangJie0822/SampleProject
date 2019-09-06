@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.wj.sampleproject.entity.homepage.ArticleEntity" />
+            type="com.wj.sampleproject.entity.ArticleEntity" />
 
         <variable
             name="viewModel"

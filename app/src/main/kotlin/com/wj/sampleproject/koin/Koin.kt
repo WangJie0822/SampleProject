@@ -5,6 +5,7 @@ import com.wj.android.okhttp.InterceptorLogger
 import com.wj.android.okhttp.LoggerInterceptor
 import com.wj.android.okhttp.ParamsInterceptor
 import com.wj.sampleproject.BuildConfig
+import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.adapter.HomepageArticleListRvAdapter
 import com.wj.sampleproject.mvvm.HomepageViewModel
 import com.wj.sampleproject.mvvm.MainViewModel
@@ -79,6 +80,7 @@ val repositoryModule: Module = module {
  */
 val adapterModule: Module = module {
     factory { HomepageArticleListRvAdapter() }
+    factory { BannerVpAdapter() }
 }
 
 /**

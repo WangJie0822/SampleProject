@@ -1,4 +1,4 @@
-package com.wj.sampleproject.entity.homepage
+package com.wj.sampleproject.entity
 
 import cn.wj.android.base.ext.isNotNullAndEmpty
 import cn.wj.android.base.ext.orFalse
@@ -8,6 +8,17 @@ import com.wj.sampleproject.constants.STR_TRUE
  * 首页文章列表数据实体类
  */
 data class ArticleListEntity
+/**
+ * 构造方法
+ *
+ * @param curPage 当前页码
+ * @param offset 已显示数量
+ * @param pageCount 总页数
+ * @param size 当前页数据数
+ * @param total 总数据量
+ * @param over 是否结束
+ * @param datas 文章数据
+ */
 constructor(
         var curPage: String? = "",
         var offset: String? = "",
@@ -22,6 +33,35 @@ constructor(
  * 文章对象数据实体类
  */
 data class ArticleEntity
+/**
+ * 构造方法
+ *
+ * @param apkLink APK 下载链接
+ * @param author 作者
+ * @param chapterId 二级分类 id
+ * @param chapterName 二级分类名称
+ * @param collect 是否收藏
+ * @param courseId ？
+ * @param desc 描述
+ * @param envelopePic 文章里的图片地址
+ * @param fresh 是否是新文章
+ * @param id 文章 id
+ * @param link 文章跳转链接
+ * @param niceDate 显示时间
+ * @param origin ？
+ * @param prefix ？
+ * @param projectLink ？
+ * @param publishTime 发布时间
+ * @param superChapterId 一级分类 id
+ * @param superChapterName 一级分类名称
+ * @param tags 标签列表
+ * @param title 标题
+ * @param type ？
+ * @param userId ？
+ * @param visible ？
+ * @param zan 赞 数量
+ * @param top 自设属性 是否置顶
+ */
 constructor(
         var apkLink: String? = "",
         var author: String? = "",
@@ -70,6 +110,12 @@ constructor(
  * 文章标签数据实体类
  */
 data class ArticleTagEntity
+/**
+ * 构造方法
+ *
+ * @param name 标签名
+ * @param url 标签地址
+ */
 constructor(
         var name: String? = "",
         var url: String? = ""

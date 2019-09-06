@@ -1,7 +1,8 @@
 package com.wj.sampleproject.net
 
-import com.wj.sampleproject.entity.homepage.ArticleEntity
-import com.wj.sampleproject.entity.homepage.ArticleListEntity
+import com.wj.sampleproject.entity.ArticleEntity
+import com.wj.sampleproject.entity.ArticleListEntity
+import com.wj.sampleproject.entity.BannerEntity
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -11,9 +12,15 @@ import retrofit2.http.Path
 interface WebService {
 
     /**
+     * 获取首页 Banner 列表
+     */
+    @GET(UrlDefinition.GET_HOMEPAGE_BANNER_LIST)
+    suspend fun getHomepageBannerList(): NetResult<ArrayList<BannerEntity>>
+
+    /**
      * 获取首页置顶文章列表
      */
-    @GET(UrlDefinition.GET_HOMPAGE_TOP_ARTICLE_LIST)
+    @GET(UrlDefinition.GET_HOMEPAGE_TOP_ARTICLE_LIST)
     suspend fun getHomepageTopArticleList(): NetResult<ArrayList<ArticleEntity>>
 
     /**

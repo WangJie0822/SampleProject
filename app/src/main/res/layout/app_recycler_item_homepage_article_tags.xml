@@ -6,7 +6,11 @@
 
         <variable
             name="item"
-            type="com.wj.sampleproject.entity.homepage.ArticleTagEntity" />
+            type="com.wj.sampleproject.entity.ArticleTagEntity" />
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.mvvm.HomepageViewModel" />
     </data>
 
     <TextView

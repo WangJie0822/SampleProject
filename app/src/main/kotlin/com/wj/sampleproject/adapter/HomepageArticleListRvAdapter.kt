@@ -8,8 +8,8 @@ import cn.wj.android.recyclerview.adapter.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.databinding.AppRecyclerItemHomepageArticlesBinding
-import com.wj.sampleproject.entity.homepage.ArticleEntity
-import com.wj.sampleproject.entity.homepage.ArticleTagEntity
+import com.wj.sampleproject.entity.ArticleEntity
+import com.wj.sampleproject.entity.ArticleTagEntity
 import com.wj.sampleproject.mvvm.HomepageViewModel
 
 /**
