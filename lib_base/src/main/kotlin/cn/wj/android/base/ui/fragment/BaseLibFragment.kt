@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
  * - 添加 [initBefore] 方法，在一切流程开始前预处理一些数据
  * - [onCreateView] 方法中对 [layoutResID] 对应的 [View] 进行加载，并在 [initView] 中进行初始化操作
  * - 维护了 [mRootView]等参数
- * - 维护了 [onSelectVisiableChanged] 方法，以实现对多 [Fragment] 之间切换的感知
+ * - 维护了 [onVisiableChanged] 方法，以实现对多 [Fragment] 之间切换的感知
  *
  * @author 王杰
  */
@@ -54,14 +54,14 @@ abstract class BaseLibFragment
         super.setUserVisibleHint(isVisibleToUser)
 
         // 使用 FragmentPagerAdapter 会调用
-        onSelectVisiableChanged(isVisibleToUser)
+        onVisiableChanged(isVisibleToUser)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 
         // 使用 FragmentManager 切换回调用
-        onSelectVisiableChanged(!hidden)
+        onVisiableChanged(!hidden)
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class BaseLibFragment
     /**
      * 初始化布局
      */
-    protected open fun initView() {}
+    abstract fun initView()
 
     /**
      * Fragment 显示状态变化
@@ -80,7 +80,7 @@ abstract class BaseLibFragment
      *
      * @param visiable 是否显示
      */
-    protected open fun onSelectVisiableChanged(visiable: Boolean) {}
+    protected open fun onVisiableChanged(visiable: Boolean) {}
 
     /** 界面布局 id */
     abstract val layoutResID: Int

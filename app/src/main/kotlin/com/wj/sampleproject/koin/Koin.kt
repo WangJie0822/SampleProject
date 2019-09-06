@@ -2,12 +2,17 @@ package com.wj.sampleproject.koin
 
 import cn.wj.android.logger.Logger
 import com.wj.android.okhttp.InterceptorLogger
+import com.wj.android.okhttp.LoggerInterceptor
 import com.wj.android.okhttp.ParamsInterceptor
+import com.wj.sampleproject.BuildConfig
+import com.wj.sampleproject.adapter.HomepageArticleListRvAdapter
+import com.wj.sampleproject.mvvm.HomepageViewModel
 import com.wj.sampleproject.mvvm.MainViewModel
+import com.wj.sampleproject.mvvm.SplashViewModel
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
+import com.wj.sampleproject.repository.HomepageRepository
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -29,11 +34,11 @@ val netModule: Module = module {
         OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
                 .addInterceptor(
-                        HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                            override fun log(message: String) {
-                                Logger.t("NET").i(message)
+                        LoggerInterceptor(object : InterceptorLogger {
+                            override fun log(msg: String) {
+                                Logger.t("NET").i(msg)
                             }
-                        })
+                        }, if (BuildConfig.DEBUG) LoggerInterceptor.Level.BODY else LoggerInterceptor.Level.NONE)
                 )
                 .addInterceptor(
                         ParamsInterceptor.newBuilder()
@@ -64,17 +69,23 @@ val netModule: Module = module {
  * 数据仓库 Module
  */
 val repositoryModule: Module = module {
+    single {
+        HomepageRepository()
+    }
 }
 
 /**
  * 适配器 Module
  */
 val adapterModule: Module = module {
+    factory { HomepageArticleListRvAdapter() }
 }
 
 /**
  * ViewModel Module
  */
 val viewModelModule: Module = module {
+    viewModel { SplashViewModel() }
     viewModel { MainViewModel() }
+    viewModel { HomepageViewModel(get()) }
 }

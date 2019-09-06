@@ -11,7 +11,7 @@ import cn.wj.android.base.adapter.FragVpAdapter
  * @author 王杰
  * @date 2019/8/5
  */
-class FragVpAdapter {
+internal class FragVpAdapter {
 
     /**
      * 示例方法

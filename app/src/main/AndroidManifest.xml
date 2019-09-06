@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wj.sampleproject">
 
+    <!-- 网络请求 -->
+    <permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="false"
@@ -11,13 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.MainActivity">
+        <!-- 欢迎界面 -->
+        <activity
+            android:name=".activity.SplashActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 主界面 -->
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

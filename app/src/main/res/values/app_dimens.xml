@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 标题栏垂直高度 -->
+    <dimen name="app_title_elevation">4dp</dimen>
+</resources>

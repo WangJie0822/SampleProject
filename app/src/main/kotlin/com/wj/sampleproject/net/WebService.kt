@@ -1,12 +1,26 @@
 package com.wj.sampleproject.net
 
+import com.wj.sampleproject.entity.homepage.ArticleEntity
+import com.wj.sampleproject.entity.homepage.ArticleListEntity
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 /**
  * 网络请求接口
  */
 interface WebService {
 
-    @GET("https://www.baidu.com")
-    suspend fun login(): String
+    /**
+     * 获取首页置顶文章列表
+     */
+    @GET(UrlDefinition.GET_HOMPAGE_TOP_ARTICLE_LIST)
+    suspend fun getHomepageTopArticleList(): NetResult<ArrayList<ArticleEntity>>
+
+    /**
+     * 获取首页文章列表
+     *
+     * @param pageNum 页码
+     */
+    @GET(UrlDefinition.GET_HOMEPAGE_ARTICLE_LIST)
+    suspend fun getHomepageArticleList(@Path("pageNum") pageNum: Int): NetResult<ArticleListEntity>
 }

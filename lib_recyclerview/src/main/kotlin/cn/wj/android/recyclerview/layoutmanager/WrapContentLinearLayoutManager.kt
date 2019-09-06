@@ -16,10 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 class WrapContentLinearLayoutManager
     : LinearLayoutManager {
 
-    constructor(context: Context?) : super(context)
-
-    constructor(context: Context?, orientation: Int, reverseLayout: Boolean) : super(
-            context,
+    constructor(orientation: Int = RecyclerView.VERTICAL, reverseLayout: Boolean = false) : super(
+            null,
             orientation,
             reverseLayout
     )

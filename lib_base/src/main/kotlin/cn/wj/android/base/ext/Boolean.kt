@@ -15,3 +15,9 @@ fun Boolean?.orFalse(): Boolean {
 fun Boolean?.orTrue(): Boolean {
     return this ?: true
 }
+
+/**
+ * 判断条件节点
+ */
+val Boolean?.condition: Boolean
+    get() = this == true

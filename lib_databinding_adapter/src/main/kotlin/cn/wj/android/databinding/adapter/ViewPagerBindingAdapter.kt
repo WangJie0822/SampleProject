@@ -3,6 +3,8 @@
 package cn.wj.android.databinding.adapter
 
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 
@@ -22,13 +24,15 @@ import androidx.viewpager.widget.ViewPager
         "android:bind_vp_change_scrolled",
         "android:bind_vp_change_selected",
         "android:bind_vp_change_changed",
+        "android:bind_vp_currentItemAttrChanged",
         requireAll = false
 )
 fun setViewPagerPageChangeListener(
         vp: ViewPager,
         scrolled: ((Int, Float, Int) -> Unit)?,
         selected: ((Int) -> Unit)?,
-        changed: ((Int) -> Unit)?
+        changed: ((Int) -> Unit)?,
+        listener: InverseBindingListener?
 ) {
     vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
         override fun onPageScrollStateChanged(state: Int) {
@@ -41,6 +45,7 @@ fun setViewPagerPageChangeListener(
 
         override fun onPageSelected(position: Int) {
             selected?.invoke(position)
+            listener?.onChange()
         }
     })
 }
@@ -66,6 +71,11 @@ fun setViewPagerOffscreenPageLimit(vp: ViewPager, offscreenPageLimit: Int) {
 @BindingAdapter("android:bind_vp_currentItem", "android:bind_vp_smoothScroll", requireAll = false)
 fun setViewPagerCurrentItem(vp: ViewPager, currentItem: Int, smoothScroll: Boolean = false) {
     vp.setCurrentItem(currentItem, smoothScroll)
+}
+
+@InverseBindingAdapter(attribute = "android:bind_vp_currentItem")
+fun getViewPagerCurrentItem(vp:ViewPager):Int{
+    return vp.currentItem
 }
 
 /**

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_homepage"
+        android:icon="@drawable/app_vector_homepage_black_24dp"
+        android:title="@string/app_homepage" />
+
+    <item
+        android:id="@+id/menu_sytem"
+        android:icon="@drawable/app_vector_system_black_24dp"
+        android:title="@string/app_sytem" />
+
+    <item
+        android:id="@+id/menu_bjnews"
+        android:icon="@drawable/app_vector_bjnews_black_24dp"
+        android:title="@string/app_bjnews" />
+
+    <item
+        android:id="@+id/menu_project"
+        android:icon="@drawable/app_vector_project_black_24dp"
+        android:title="@string/app_project" />
+
+    <item
+        android:id="@+id/menu_my"
+        android:icon="@drawable/app_vector_my_black_24dp"
+        android:title="@string/app_my" />
+</menu>

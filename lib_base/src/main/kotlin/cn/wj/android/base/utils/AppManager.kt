@@ -114,6 +114,16 @@ object AppManager {
     }
 
     /**
+     * 获取 [Context] 对象
+     * - 优先获取栈顶的 [Activity] 对象，若没有，则返回 [Application] 对象
+     *
+     * @return [Context] 对象
+     */
+    fun getContext(): Context {
+        return peekActivity() ?: getApplication()
+    }
+
+    /**
      * 通过反射获取当前 Application 对象
      *
      * @return 当前 Application 对象

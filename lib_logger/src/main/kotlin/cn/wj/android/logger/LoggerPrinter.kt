@@ -43,7 +43,7 @@ class LoggerPrinter : Printer {
     }
 
     override fun d(message: String, vararg args: Any) {
-        log(DEBUG, null, message, args)
+        log(DEBUG, null, message, *args)
     }
 
     override fun d(any: Any?) {
@@ -51,27 +51,27 @@ class LoggerPrinter : Printer {
     }
 
     override fun e(message: String, vararg args: Any) {
-        log(ERROR, null, message, args)
+        log(ERROR, null, message, *args)
     }
 
     override fun e(throwable: Throwable?, message: String, vararg args: Any) {
-        log(ERROR, throwable, message, args)
+        log(ERROR, throwable, message, *args)
     }
 
     override fun w(message: String, vararg args: Any) {
-        log(WARN, null, message, args)
+        log(WARN, null, message, *args)
     }
 
     override fun i(message: String, vararg args: Any) {
-        log(INFO, null, message, args)
+        log(INFO, null, message, *args)
     }
 
     override fun v(message: String, vararg args: Any) {
-        log(VERBOSE, null, message, args)
+        log(VERBOSE, null, message, *args)
     }
 
     override fun a(message: String, vararg args: Any) {
-        log(ASSERT, null, message, args)
+        log(ASSERT, null, message, *args)
     }
 
     override fun json(json: String?) {

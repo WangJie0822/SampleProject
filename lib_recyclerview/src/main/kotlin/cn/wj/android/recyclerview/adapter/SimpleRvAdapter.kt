@@ -11,7 +11,7 @@ import java.lang.reflect.ParameterizedType
  *
  * @author 王杰
  */
-open class SimpleRvAdapter<E>(override val layoutResID: Int)
+class SimpleRvAdapter<E>(override val layoutResID: Int)
     : BaseRvDBAdapter<
         SimpleRvAdapter.ViewHolder<E>,
         ViewDataBinding,

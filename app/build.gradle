@@ -48,6 +48,14 @@ android {
             v1SigningEnabled true
             v2SigningEnabled true
         }
+        debug {
+            keyAlias 'test'
+            keyPassword '123123'
+            storeFile file('android_test.jks')
+            storePassword '123123'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
     }
 
     buildTypes {
@@ -67,7 +75,7 @@ android {
             zipAlignEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -78,6 +86,8 @@ android {
         // 正式线上版本
         online {
             dimension 'version'
+            // 是否使用线上环境
+            buildConfigField "boolean", "IS_ONLINE_ENV", "true"
         }
 
         // 测试版本
@@ -85,6 +95,8 @@ android {
             dimension 'version'
             // 应用包名后缀
             applicationIdSuffix ".offline"
+            // 是否使用线上环境
+            buildConfigField "boolean", "IS_ONLINE_ENV", "false"
         }
 
         // 开发版本
@@ -92,6 +104,8 @@ android {
             dimension 'version'
             // 应用包名后缀
             applicationIdSuffix ".dev"
+            // 是否使用线上环境
+            buildConfigField "boolean", "IS_ONLINE_ENV", "false"
         }
     }
 
@@ -125,7 +139,6 @@ android {
 
     // 使用 httpclient
     useLibrary 'org.apache.http.legacy'
-    flavorDimensions 'version'
 
     // 配置 APK 输出路径
     applicationVariants.all { variant ->
@@ -149,6 +162,8 @@ dependencies {
 
     // ktx
     implementation rootProject.ext.dependencies["androidx_core-ktx"]
+    // v4
+    implementation rootProject.ext.dependencies["androidx_support-v4"]
     // v7
     implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
     // design
@@ -170,15 +185,8 @@ dependencies {
     implementation rootProject.ext.dependencies["koin-viewmodel"]
     testImplementation rootProject.ext.dependencies["koin-test"]
 
-    // RxJava2
-    implementation rootProject.ext.dependencies["rxjava"]
-    // RxAndroid2
-    implementation rootProject.ext.dependencies["rxandroid"]
-
     // OkHttp
     implementation rootProject.ext.dependencies["okhttp"]
-    implementation rootProject.ext.dependencies["okhttp-urlconnection"]
-    implementation rootProject.ext.dependencies["okhttp-logging"]
 
     // Retrofit
     implementation rootProject.ext.dependencies["retrofit"]
@@ -187,13 +195,14 @@ dependencies {
     // Glide
     implementation rootProject.ext.dependencies["glide"]
 
+    // SmartRefreshLayout
+    implementation rootProject.ext.dependencies["smartrefresh"]
+
     // 依赖 base 库
     implementation project(":lib_base")
     implementation project(":lib_databinding_adapter")
     implementation project(":lib_logger")
     implementation project(':lib_okhttp_interceptor')
     implementation project(":lib_recyclerview")
-    implementation project(':lib_rx_lifecycle')
-    implementation project(':lib_rx_foractivityresult')
     implementation project(":lib_views_custom")
 }

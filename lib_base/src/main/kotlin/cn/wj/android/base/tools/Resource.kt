@@ -8,10 +8,21 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
+import cn.wj.android.base.utils.AppManager
 
 /* ----------------------------------------------------------------------------------------- */
 /* |                                        资源相关                                        | */
 /* ----------------------------------------------------------------------------------------- */
+
+/**
+ * 根据资源 id 获取颜色值
+ *
+ * @return 颜色值
+ */
+@ColorInt
+fun Int.getColor(): Int {
+    return getColor(AppManager.getContext())
+}
 
 /**
  * 根据资源 id 获取颜色值
@@ -23,6 +34,18 @@ import androidx.core.content.ContextCompat
 @ColorInt
 fun Int.getColor(context: Context): Int {
     return ContextCompat.getColor(context, this)
+}
+
+/**
+ * 根据资源 id 获取颜色值
+ *
+ * @param resId 颜色资源 id
+ *
+ * @return 颜色值
+ */
+@ColorInt
+fun color(@ColorRes resId: Int): Int {
+    return resId.getColor()
 }
 
 /**
@@ -41,12 +64,32 @@ fun color(context: Context, @ColorRes resId: Int): Int {
 /**
  * 根据资源 id 获取字符串
  *
+ * @return 字符串
+ */
+fun Int.getString(): String {
+    return getString(AppManager.getContext())
+}
+
+/**
+ * 根据资源 id 获取字符串
+ *
  * @param context [Context] 对象
  *
  * @return 字符串
  */
 fun Int.getString(context: Context): String {
     return context.getString(this)
+}
+
+/**
+ * 根据资源 id 获取字符串
+ *
+ * @param resId 字符串资源 id
+ *
+ * @return 字符串
+ */
+fun string(@StringRes resId: Int): String {
+    return resId.getString()
 }
 
 /**
@@ -64,12 +107,32 @@ fun string(context: Context, @StringRes resId: Int): String {
 /**
  * 根据资源 id 获取 Drawable
  *
+ * @return [Drawable] 对象
+ */
+fun Int.getDrawable(): Drawable? {
+    return getDrawable(AppManager.getContext())
+}
+
+/**
+ * 根据资源 id 获取 Drawable
+ *
  * @param context [Context] 对象
  *
  * @return [Drawable] 对象
  */
 fun Int.getDrawable(context: Context): Drawable? {
     return ContextCompat.getDrawable(context, this)
+}
+
+/**
+ * 根据资源 id 获取 Drawable
+ *
+ * @param resId Drawable 资源 id
+ *
+ * @return [Drawable] 对象
+ */
+fun drawable(@DrawableRes resId: Int): Drawable? {
+    return resId.getDrawable()
 }
 
 /**
@@ -87,12 +150,32 @@ fun drawable(context: Context, @DrawableRes resId: Int): Drawable? {
 /**
  * 根据资源 id 获取 尺寸
  *
+ * @return 长度 px
+ */
+fun Int.getDimension(): Float {
+    return getDimension(AppManager.getContext())
+}
+
+/**
+ * 根据资源 id 获取 尺寸
+ *
  * @param context [Context] 对象
  *
  * @return 长度 px
  */
 fun Int.getDimension(context: Context): Float {
     return context.resources.getDimension(this)
+}
+
+/**
+ * 根据资源 id 获取 尺寸
+ *
+ * @param resId 尺寸资源 id
+ *
+ * @return 长度 px
+ */
+fun dimension(@DimenRes resId: Int): Float {
+    return resId.getDimension()
 }
 
 /**
@@ -110,12 +193,32 @@ fun dimension(context: Context, @DimenRes resId: Int): Float {
 /**
  * 根据资源 id 获取 尺寸
  *
+ * @return 长度 px
+ */
+fun Int.getDimensionPixelOffset(): Int {
+    return getDimensionPixelOffset(AppManager.getContext())
+}
+
+/**
+ * 根据资源 id 获取 尺寸
+ *
  * @param context [Context] 对象
  *
  * @return 长度 px
  */
 fun Int.getDimensionPixelOffset(context: Context): Int {
     return context.resources.getDimensionPixelOffset(this)
+}
+
+/**
+ * 根据资源 id 获取 尺寸
+ *
+ * @param resId 尺寸资源 id
+ *
+ * @return 长度 px
+ */
+fun dimensionPixelOffset(@DimenRes resId: Int): Int {
+    return resId.getDimensionPixelOffset()
 }
 
 /**
@@ -133,6 +236,17 @@ fun dimensionPixelOffset(context: Context, @DimenRes resId: Int): Int {
 /**
  * 根据资源 id 字符串，获取资源 id
  *
+ * @param defType 资源类型：资源所在文件夹名称
+ *
+ * @return 资源 id
+ */
+fun String.getIdentifier(defType: String): Int {
+    return this.getIdentifier(AppManager.getContext(), defType)
+}
+
+/**
+ * 根据资源 id 字符串，获取资源 id
+ *
  * @param context [Context] 对象
  * @param defType 资源类型：资源所在文件夹名称
  *
@@ -140,6 +254,18 @@ fun dimensionPixelOffset(context: Context, @DimenRes resId: Int): Int {
  */
 fun String.getIdentifier(context: Context, defType: String): Int {
     return context.resources.getIdentifier(this, defType, context.packageName)
+}
+
+/**
+ * 根据资源 id 字符串，获取资源 id
+ *
+ * @param idStr 资源 id 字符串
+ * @param defType 资源类型：资源所在文件夹名称
+ *
+ * @return 资源 id
+ */
+fun id(idStr: String, defType: String): Int {
+    return idStr.getIdentifier(defType)
 }
 
 /**

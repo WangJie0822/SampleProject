@@ -83,7 +83,7 @@ fun setRecyclerViewLayoutManager(rv: RecyclerView, manager: String) {
         when (attrsMap["layout"]) {
             "linear" -> {
                 // 线性布局
-                WrapContentLinearLayoutManager(null).apply {
+                WrapContentLinearLayoutManager().apply {
                     orientation =
                             if (attrsMap.containsKey("orientation") && attrsMap["orientation"] == "horizontal") {
                                 // 有 orientation 属性且为 horizontal，设置布局方式为 horizontal
@@ -145,12 +145,12 @@ fun setRecyclerViewLayoutManager(rv: RecyclerView, manager: String) {
             }
             else -> {
                 // 其他，线性布局
-                WrapContentLinearLayoutManager(null)
+                WrapContentLinearLayoutManager()
             }
         }
     } else {
         // 没有任何属性字段，默认线性布局
-        WrapContentLinearLayoutManager(null)
+        WrapContentLinearLayoutManager()
     }
 }
 

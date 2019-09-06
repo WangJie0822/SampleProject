@@ -10,7 +10,7 @@ import cn.wj.android.base.simple.setOnKeyboardActionListener
  *
  * @author 王杰
  */
-class KeyboardActionListener {
+internal class KeyboardActionListener {
 
     /**
      * 设置软键盘监听示例方法

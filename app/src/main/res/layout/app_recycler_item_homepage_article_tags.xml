@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.wj.sampleproject.entity.homepage.ArticleTagEntity" />
+    </data>
+
+    <TextView
+        android:id="@+id/tv_istop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/app_shape_article_tag_bg"
+        android:paddingStart="6dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="2dp"
+        android:text="@{item.name}"
+        android:textColor="#2F69F5"
+        android:textSize="12sp"
+        tools:text="@sample/article_list.json/data/datas/tags/name" />
+
+</layout>

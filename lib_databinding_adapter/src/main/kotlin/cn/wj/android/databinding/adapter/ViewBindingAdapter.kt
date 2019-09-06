@@ -175,7 +175,7 @@ fun setViewVisibility(v: View, visibility: Int) {
  */
 @BindingAdapter("android:bind_visibility", "android:bind_visibility_gone", requireAll = false)
 fun setViewVisibility(v: View, show: Boolean, gone: Boolean? = true) {
-    v.visibility = if (show) View.VISIBLE else if (gone == true) View.GONE else View.INVISIBLE
+    v.visibility = if (show) View.VISIBLE else if (gone != false) View.GONE else View.INVISIBLE
 }
 
 /**

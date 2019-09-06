@@ -1,11 +1,51 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- 基本主题 -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 应用主色调，ActionBar、Toolbar 等默认颜色 -->
+        <item name="colorPrimary">@color/app_colorPrimary</item>
+        <!-- 应用主要暗色调，StatusBar 默认颜色 -->
+        <item name="colorPrimaryDark">@color/app_colorPrimaryDark</item>
+        <!-- 应用中控件选中默认色调 -->
+        <item name="colorAccent">@color/app_colorAccent</item>
+
+        <!-- 窗口背景 -->
+        <item name="android:windowBackground">@color/app_windowBackground</item>
+    </style>
+
+    <!-- 全屏主题 -->
+    <style name="AppTheme.FullScreen">
+        <!-- 全屏显示 -->
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- 欢迎界面主题 -->
+    <style name="AppTheme.FullScreen.Splash">
+        <!-- 半透明虚拟导航栏且布局延伸到导航栏下面 -->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!-- 窗口背景 -->
+        <item name="android:windowBackground">@drawable/app_layer_list_splash_bg</item>
+    </style>
+
+    <!-- Toolber 样式 -->
+    <style name="app_toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="actionMenuTextColor">@color/app_colorAccent</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- 分隔线样式 -->
+    <style name="app_dividing">
+        <item name="android:background">@color/app_dividingBackground</item>
+    </style>
+
+    <style name="app_dividing.vertical">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="app_dividing.horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
     </style>
 
 </resources>

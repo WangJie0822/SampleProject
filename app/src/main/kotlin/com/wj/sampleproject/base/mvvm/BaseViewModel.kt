@@ -1,8 +1,9 @@
 package com.wj.sampleproject.base.mvvm
 
+import android.app.Activity
+import android.content.Intent
+import androidx.lifecycle.MutableLiveData
 import cn.wj.android.base.mvvm.BaseMvvmViewModel
-import cn.wj.android.rx.RxLifecycleOwner
-import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.KoinComponent
 
 /**
@@ -10,14 +11,21 @@ import org.koin.core.KoinComponent
  */
 abstract class BaseViewModel
     : BaseMvvmViewModel(),
-        KoinComponent,
-        RxLifecycleOwner {
+        KoinComponent {
 
-    /** Rx 生命周期管理 */
-    override var disposables: CompositeDisposable? = CompositeDisposable()
+    /** 控制 UI 组件关闭 */
+    val uiClose = MutableLiveData<Boolean>()
 
-    override fun onCleared() {
-        // 处理 Rx 事件
-        disposeAll()
+    /** 返回码 */
+    var resultCode: Int = Activity.RESULT_CANCELED
+    /** 返回数据 */
+    var resultData: Intent? = null
+
+    /**
+     * 设置返回数据，仅对 Activity 有效
+     */
+    protected fun setResult(resultCode: Int = Activity.RESULT_OK, resultData: Intent? = null) {
+        this.resultCode = resultCode
+        this.resultData = resultData
     }
 }

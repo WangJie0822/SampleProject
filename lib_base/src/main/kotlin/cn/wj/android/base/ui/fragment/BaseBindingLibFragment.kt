@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import cn.wj.android.base.BR
 import cn.wj.android.base.mvvm.BaseMvvmViewModel
 
 /**
@@ -28,6 +29,12 @@ abstract class BaseBindingLibFragment<VM : BaseMvvmViewModel, DB : ViewDataBindi
 
         // 初始化 DataBinding
         mBinding = DataBindingUtil.inflate(inflater, layoutResID, container, false)
+
+        // 绑定生命周期管理
+        mBinding.lifecycleOwner = this
+
+        // 绑定 ViewModel
+        mBinding.setVariable(BR.viewModel, mViewModel)
 
         mRootView = mBinding.root
 
