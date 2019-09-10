@@ -27,11 +27,37 @@
 
         <View style="@style/app_dividing.horizontal" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_articles"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/app_recycler_item_homepage_articles" />
+            android:bind_smart_onRefresh="@{viewModel.onRefresh}"
+            android:bind_smart_refreshing="@={viewModel.refreshing}">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_articles"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:bind_rv_isNestedScrollingEnabled="@{false}"
+                        tools:listitem="@layout/app_recycler_item_homepage_articles" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
 
