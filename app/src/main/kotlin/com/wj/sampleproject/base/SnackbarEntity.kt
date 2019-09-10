@@ -23,7 +23,7 @@ class SnackbarEntity
  * @param onCallback Snackbar 回调
  */
 constructor(
-        var content: String,
+        var content: String? = "",
         @ColorInt var contentBgColor: Int = R.color.app_colorPrimaryDark.getColor(),
         @ColorInt var contentColor: Int = R.color.app_white.getColor(),
         var duration: Int = Snackbar.LENGTH_SHORT,

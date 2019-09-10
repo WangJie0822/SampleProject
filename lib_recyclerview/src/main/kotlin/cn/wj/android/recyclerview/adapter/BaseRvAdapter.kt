@@ -530,7 +530,10 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
     /**
      * 刷新
      */
-    fun refresh(ls: List<E>) {
+    fun refresh(ls: List<E>?) {
+        if (ls.isNullOrEmpty()) {
+            return
+        }
         mData.clear()
         mData.addAll(ls)
         notifyDataSetChanged()
@@ -550,8 +553,11 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      * @param ls 数据列表
      * @param refresh 是否刷新
      */
-    fun loadData(ls: List<E>, refresh: Boolean = false) {
-        if (refresh) {
+    fun loadData(ls: List<E>?, refresh: Boolean? = false) {
+        if (ls.isNullOrEmpty()) {
+            return
+        }
+        if (refresh == true) {
             mData.clear()
         }
         mData.addAll(ls)

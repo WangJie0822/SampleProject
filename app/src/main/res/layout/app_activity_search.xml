@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.SearchActivity">
 
     <data>
@@ -15,11 +16,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="搜索" />
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/app_colorPrimary"
+            android:theme="@style/app_toolbar"
+            app:title="@string/app_search" />
+
+        <View style="@style/app_dividing.horizontal" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </layout>

@@ -26,7 +26,10 @@ abstract class BaseDialog<VM : BaseViewModel, DB : ViewDataBinding>
      */
     private fun observeData() {
         mViewModel.snackbarData.observe(this, Observer {
-            val snackbar = Snackbar.make(mBinding.root, it.content, it.duration)
+            if (it.content.isNullOrBlank()) {
+                return@Observer
+            }
+            val snackbar = Snackbar.make(mBinding.root, it.content.orEmpty(), it.duration)
             snackbar.setTextColor(it.contentColor)
             snackbar.setBackgroundTint(it.contentBgColor)
             if (it.actionText != null && it.onAction != null) {

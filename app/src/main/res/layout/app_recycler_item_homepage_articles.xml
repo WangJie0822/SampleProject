@@ -17,9 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/app_selector_default_ripple"
-        android:bind_onClick="@{viewModel.onArticleItemClick}"
-        android:bind_onClick_item="@{item}">
+        android:background="@drawable/app_selector_default_ripple">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_start"
@@ -148,8 +146,6 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="4dp"
             android:background="?selectableItemBackground"
-            android:bind_onClick="@{viewModel.onArticleItemSuperChapterClick}"
-            android:bind_onClick_item="@{item}"
             android:paddingStart="4dp"
             android:paddingTop="2dp"
             android:paddingEnd="4dp"
@@ -167,8 +163,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="?selectableItemBackground"
-            android:bind_onClick="@{viewModel.onArticleItemChapterClick}"
-            android:bind_onClick_item="@{item}"
             android:paddingStart="4dp"
             android:paddingTop="2dp"
             android:paddingEnd="4dp"
@@ -185,8 +179,6 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="?selectableItemBackground"
-            android:bind_onClick="@{viewModel.onArticleItemCollectClick}"
-            android:bind_onClick_item="@{item}"
             android:bind_selected="@{item.collected}"
             android:contentDescription="@null"
             android:src="@drawable/app_vector_favorite_black_24dp"
