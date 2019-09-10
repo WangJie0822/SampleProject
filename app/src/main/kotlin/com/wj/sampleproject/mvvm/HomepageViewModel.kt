@@ -53,6 +53,15 @@ constructor(private val repository: HomepageRepository)
         getHomepageArticleList()
     }
 
+    /** 标记 - 是否正在加载更多 */
+    val loadMore: BindingField<Boolean> = BindingField(false)
+
+    /** 加载更多回调 */
+    val onLoadMore: () -> Unit = {
+        pageNum++
+        getHomepageArticleList()
+    }
+
     /** 页码 */
     private var pageNum = NET_PAGE_START
 
@@ -77,6 +86,7 @@ constructor(private val repository: HomepageRepository)
                 snackbarData.postValue(SnackbarEntity(throwable.showMsg))
             } finally {
                 refreshing.set(false)
+                loadMore.set(false)
             }
         }
     }

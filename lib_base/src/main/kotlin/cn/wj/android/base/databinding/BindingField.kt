@@ -19,8 +19,11 @@ constructor(value: T? = null, private var onChange: OnFieldChangeListener<T>? = 
     : ObservableField<T>(value) {
 
     override fun set(value: T?) {
+        val changed = get() != value
         super.set(value)
-        onChange?.invoke(value)
+        if (changed) {
+            onChange?.invoke(value)
+        }
     }
 }
 
