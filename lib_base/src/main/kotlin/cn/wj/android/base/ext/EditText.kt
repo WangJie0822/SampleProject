@@ -47,7 +47,7 @@ fun EditText.showSoftInputOnFocus(show: Boolean) {
             setShowSoftInputOnFocus.isAccessible = false
             setShowSoftInputOnFocus.invoke(this, show)
         } catch (e: Exception) {
-            Log.e("Common_EditText ---->>", e.localizedMessage)
+            Log.e("Common_EditText ---->>", e.localizedMessage.orEmpty())
         }
     }
 }

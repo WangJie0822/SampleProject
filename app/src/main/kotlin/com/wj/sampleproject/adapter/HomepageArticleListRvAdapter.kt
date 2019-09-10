@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.recyclerview.adapter.BaseRvDBAdapter
 import cn.wj.android.recyclerview.adapter.BaseRvDBViewHolder
+import cn.wj.android.recyclerview.adapter.BaseRvViewHolder
 import cn.wj.android.recyclerview.adapter.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
@@ -24,15 +25,17 @@ class HomepageArticleListRvAdapter
 
     override val layoutResID: Int = R.layout.app_recycler_item_homepage_articles
 
-    class ViewHolder(binding: AppRecyclerItemHomepageArticlesBinding)
-        : BaseRvDBViewHolder<AppRecyclerItemHomepageArticlesBinding, ArticleEntity>(binding) {
-
-        override fun bindData(entity: ArticleEntity) {
+    override fun convert(holder: BaseRvViewHolder<ArticleEntity>, entity: ArticleEntity) {
+        super.convert(holder, entity)
+        (holder as? ViewHolder)?.mBinding?.let { mBinding ->
             val adapter = SimpleRvAdapter<ArticleTagEntity>(R.layout.app_recycler_item_homepage_article_tags)
-            adapter.refresh(entity.tags.orEmpty())
+            adapter.mViewModel = mViewModel
+            adapter.mData.addAll(entity.tags.orEmpty())
             mBinding.rvArticlesTags.layoutManager = WrapContentLinearLayoutManager(RecyclerView.HORIZONTAL)
             mBinding.rvArticlesTags.adapter = adapter
-            super.bindData(entity)
         }
     }
+
+    class ViewHolder(binding: AppRecyclerItemHomepageArticlesBinding)
+        : BaseRvDBViewHolder<AppRecyclerItemHomepageArticlesBinding, ArticleEntity>(binding)
 }

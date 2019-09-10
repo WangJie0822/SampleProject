@@ -50,7 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/app_main_bottom" />
+            app:menu="@menu/app_menu_main_bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">玩Android</string>
+
+    <string name="app_net_error_timeout">连接超时，请稍后再试！</string>
+    <string name="app_net_error_connect">连接失败，请稍后再试！</string>
+    <string name="app_net_error_failed">网络故障，请稍后再试！</string>
+
     <string name="app_press_again_to_exit">再次返回退出</string>
     <string name="app_homepage">首页</string>
     <string name="app_sytem">体系</string>
@@ -9,4 +14,5 @@
     <string name="app_search">搜索</string>
     <string name="app_istop">置顶</string>
     <string name="app_new">新</string>
+    <string name="app_collection">收藏</string>
 </resources>

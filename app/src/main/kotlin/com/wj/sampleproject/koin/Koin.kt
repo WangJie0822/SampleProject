@@ -3,13 +3,10 @@ package com.wj.sampleproject.koin
 import cn.wj.android.logger.Logger
 import com.wj.android.okhttp.InterceptorLogger
 import com.wj.android.okhttp.LoggerInterceptor
-import com.wj.android.okhttp.ParamsInterceptor
 import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.adapter.HomepageArticleListRvAdapter
-import com.wj.sampleproject.mvvm.HomepageViewModel
-import com.wj.sampleproject.mvvm.MainViewModel
-import com.wj.sampleproject.mvvm.SplashViewModel
+import com.wj.sampleproject.mvvm.*
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
 import com.wj.sampleproject.repository.HomepageRepository
@@ -35,20 +32,7 @@ val netModule: Module = module {
         OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
                 .addInterceptor(
-                        LoggerInterceptor(object : InterceptorLogger {
-                            override fun log(msg: String) {
-                                Logger.t("NET").i(msg)
-                            }
-                        }, if (BuildConfig.DEBUG) LoggerInterceptor.Level.BODY else LoggerInterceptor.Level.NONE)
-                )
-                .addInterceptor(
-                        ParamsInterceptor.newBuilder()
-                                .addStaticParam("hha", "haa")
-                                .addDynamicParam("hehe") { "hehe" }
-                                .addStaticHeader("toto", "toto")
-                                .addDynamicHeader("dd") { "dd" }
-                                .logger(logger)
-                                .build()
+                        LoggerInterceptor(logger, if (BuildConfig.DEBUG) LoggerInterceptor.Level.BODY else LoggerInterceptor.Level.NONE)
                 )
                 .build()
     }
@@ -90,4 +74,6 @@ val viewModelModule: Module = module {
     viewModel { SplashViewModel() }
     viewModel { MainViewModel() }
     viewModel { HomepageViewModel(get()) }
+    viewModel { SearchViewModel() }
+    viewModel { WebViewViewModel() }
 }

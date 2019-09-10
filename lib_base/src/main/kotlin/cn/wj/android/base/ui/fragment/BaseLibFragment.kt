@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import cn.wj.android.base.ui.Tagable
+import java.util.*
 
 /**
  * Fragment基类
@@ -18,7 +20,12 @@ import androidx.fragment.app.Fragment
  * @author 王杰
  */
 abstract class BaseLibFragment
-    : Fragment() {
+    : Fragment(),
+        Tagable {
+
+    override val mBagOfTags: HashMap<String, Any> = hashMapOf()
+
+    override var mClosed: Boolean = false
 
     /** 当前界面 Context 对象*/
     protected lateinit var mContext: AppCompatActivity
@@ -47,6 +54,16 @@ abstract class BaseLibFragment
         initView()
 
         return mRootView
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mClosed = true
+        synchronized(mBagOfTags) {
+            for (value in mBagOfTags.values) {
+                closeWithRuntimeException(value)
+            }
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

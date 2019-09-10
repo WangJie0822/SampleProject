@@ -50,7 +50,7 @@ fun CharSequence.diff(start: Int, len: Int = 2, color: Int = Color.RED): Spannab
  */
 fun CharSequence.copyToClipboard(context: Context, label: CharSequence) {
     val manager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    manager.primaryClip = ClipData.newPlainText(label, this)
+    manager.setPrimaryClip(ClipData.newPlainText(label, this))
 }
 
 /**

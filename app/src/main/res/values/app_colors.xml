@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 应用主色调 -->
-    <color name="app_colorPrimary">#008577</color>
+    <color name="app_colorPrimary">#3C83FC</color>
     <!-- 应用主要暗色调 -->
-    <color name="app_colorPrimaryDark">#00574B</color>
+    <color name="app_colorPrimaryDark">#3C83FC</color>
     <!-- 控件选中默认颜色 -->
     <color name="app_colorAccent">#D81B60</color>
 
+    <color name="app_white">#FFFFFF</color>
+    <color name="app_gray">#999999</color>
+
     <!-- 窗口默认背景色 -->
-    <color name="app_windowBackground">#FFFFFF</color>
+    <color name="app_windowBackground">#FFFFFFFF</color>
     <!-- 欢迎界面背景色 -->
     <color name="app_welcomeBackgroud">#FFFFFF</color>
     <!-- 分隔线颜色 -->
     <color name="app_dividingBackground">#EBEBEB</color>
-    <color name="app_gray">#999999</color>
     <!-- 点击水波纹颜色 -->
     <color name="app_default_ripple">#EBEBEB</color>
 </resources>

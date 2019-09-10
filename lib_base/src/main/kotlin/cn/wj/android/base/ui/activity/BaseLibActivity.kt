@@ -7,6 +7,8 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import cn.wj.android.base.ext.hideSoftKeyboard
 import cn.wj.android.base.tools.shouldHideInput
+import cn.wj.android.base.ui.Tagable
+import java.util.*
 
 /**
  * Activity 基类
@@ -18,7 +20,12 @@ import cn.wj.android.base.tools.shouldHideInput
  * @author 王杰
  */
 abstract class BaseLibActivity
-    : AppCompatActivity() {
+    : AppCompatActivity(),
+        Tagable {
+
+    override val mBagOfTags: HashMap<String, Any> = hashMapOf()
+
+    override var mClosed: Boolean = false
 
     /** 当前界面 Context 对象*/
     protected lateinit var mContext: AppCompatActivity
@@ -40,6 +47,16 @@ abstract class BaseLibActivity
         super.onPause()
         // 移除当前获取焦点控件的焦点，防止下个界面软键盘顶起布局
         currentFocus?.clearFocus()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mClosed = true
+        synchronized(mBagOfTags) {
+            for (value in mBagOfTags.values) {
+                closeWithRuntimeException(value)
+            }
+        }
     }
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {

@@ -31,6 +31,16 @@
             android:name=".activity.MainActivity"
             android:configChanges="screenSize"
             android:screenOrientation="portrait" />
+        <!-- 搜索界面 -->
+        <activity
+            android:name=".activity.SearchActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait" />
+        <!-- H5界面 -->
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

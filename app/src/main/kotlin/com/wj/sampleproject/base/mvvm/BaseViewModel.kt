@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import cn.wj.android.base.mvvm.BaseMvvmViewModel
+import com.wj.sampleproject.base.SnackbarEntity
 import org.koin.core.KoinComponent
 
 /**
@@ -13,8 +14,11 @@ abstract class BaseViewModel
     : BaseMvvmViewModel(),
         KoinComponent {
 
+    /** Snackbar 控制 */
+    val snackbarData = MutableLiveData<SnackbarEntity>()
+
     /** 控制 UI 组件关闭 */
-    val uiClose = MutableLiveData<Boolean>()
+    val uiCloseData = MutableLiveData<Boolean>()
 
     /** 返回码 */
     var resultCode: Int = Activity.RESULT_CANCELED

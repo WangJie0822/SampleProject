@@ -9,12 +9,15 @@ import cn.wj.android.base.ext.condition
 import cn.wj.android.base.ext.isNotNullAndEmpty
 import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.base.ext.orFalse
-import cn.wj.android.base.tools.toast
 import cn.wj.android.logger.Logger
+import com.wj.sampleproject.base.SnackbarEntity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.constants.MAIN_BANNER_TRANSFORM_INTERVAL_MS
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
+import com.wj.sampleproject.entity.ArticleTagEntity
 import com.wj.sampleproject.entity.BannerEntity
+import com.wj.sampleproject.ext.showMsg
 import com.wj.sampleproject.net.RefreshList
 import com.wj.sampleproject.repository.HomepageRepository
 import kotlinx.coroutines.*
@@ -57,6 +60,12 @@ constructor(private val repository: HomepageRepository)
         false
     }
 
+    /** Banner 点击 */
+    val onBannerItemClick: (BannerEntity) -> Unit = { item ->
+        // TODO
+        snackbarData.postValue(SnackbarEntity(item.title.orEmpty()))
+    }
+
     /** Banner 下标 */
     val bannerCurrent: BindingField<Int> = BindingField()
 
@@ -65,7 +74,6 @@ constructor(private val repository: HomepageRepository)
 
     /** 刷新列表 */
     val onRefresh: () -> Unit = {
-        loadMoreEnable.set(true)
         pageNum = NET_PAGE_START
         getHomepageArticleList()
     }
@@ -82,14 +90,34 @@ constructor(private val repository: HomepageRepository)
     /** 是否允许加载更多 */
     val loadMoreEnable: BindingField<Boolean> = BindingField(true)
 
-    /** 搜索点击 */
-    val onSearchClick: () -> Unit = {
+    /** 文章列表条目点击 */
+    val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // TODO
+        snackbarData.postValue(SnackbarEntity(item.title.orEmpty()))
     }
 
-    /** 文章列表条目点击 */
-    val onAritcleItemClick: (ArticleEntity) -> Unit = { _ ->
+    /** 文章列表条目一级分类点击 */
+    val onArticleItemSuperChapterClick: (ArticleEntity) -> Unit = { item ->
         // TODO
+        snackbarData.postValue(SnackbarEntity(item.superChapterName.orEmpty()))
+    }
+
+    /** 文章列表条目二级分类点击 */
+    val onArticleItemChapterClick: (ArticleEntity) -> Unit = { item ->
+        // TODO
+        snackbarData.postValue(SnackbarEntity(item.chapterName.orEmpty()))
+    }
+
+    /** 文章列表条目收藏点击 */
+    val onArticleItemCollectClick: (ArticleEntity) -> Unit = { item ->
+        // TODO
+        snackbarData.postValue(SnackbarEntity("收藏：" + item.title.orEmpty()))
+    }
+
+    /** 文章标签点击 */
+    val onArticleItemTagClick: (ArticleTagEntity) -> Unit = { item ->
+        // TODO
+        snackbarData.postValue(SnackbarEntity(item.name.orEmpty()))
     }
 
     /** Banner 列表数据 */
@@ -104,7 +132,6 @@ constructor(private val repository: HomepageRepository)
         getHomepageBannerList()
         // 刷新数据
         refreshing.set(true)
-        onRefresh.invoke()
     }
 
     override fun onStart(source: LifecycleOwner) {
@@ -121,7 +148,7 @@ constructor(private val repository: HomepageRepository)
      * 获取首页 Banner 列表
      */
     private fun getHomepageBannerList() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 // 获取 Banner 列表
                 val result = repository.getHomepageBannerList()
@@ -136,9 +163,8 @@ constructor(private val repository: HomepageRepository)
                     }
                 }
             } catch (e: Exception) {
-                // TODO
-                toast(e.toString())
                 Logger.e(e)
+                snackbarData.postValue(SnackbarEntity(e.showMsg))
             }
         }
     }
@@ -150,7 +176,7 @@ constructor(private val repository: HomepageRepository)
         stopCarouse()
         carouselJob = viewModelScope.launch(Dispatchers.IO) {
             while (isActive) {
-                delay(3000L)
+                delay(MAIN_BANNER_TRANSFORM_INTERVAL_MS)
                 if (bannerCount > 0) {
                     val target = ((bannerCurrent.get() ?: 0) + 1) % bannerCount
                     bannerCurrent.set(target)
@@ -175,7 +201,7 @@ constructor(private val repository: HomepageRepository)
      * 获取文章列表
      */
     private fun getHomepageArticleList() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             // 标记 - 是否到末尾
             var over = false
             try {
@@ -187,8 +213,7 @@ constructor(private val repository: HomepageRepository)
                     articleListData.postValue(RefreshList(result.data?.datas, refreshing.get()))
                 }
             } catch (e: Exception) {
-                // TODO
-                toast(e.toString())
+                snackbarData.postValue(SnackbarEntity(e.showMsg))
                 Logger.e(e)
             } finally {
                 refreshing.set(false)

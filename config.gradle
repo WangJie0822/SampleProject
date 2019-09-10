@@ -7,7 +7,7 @@ ext {
             // 最小支持版本
             minSdkVersion    : 19,
             // 目标支持版本
-            targetSdkVersion : 26,
+            targetSdkVersion : 27,
             // 应用版本号
             versionCode      : 1,
             // 应用版本名

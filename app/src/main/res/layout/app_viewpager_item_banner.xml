@@ -16,7 +16,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?selectableItemBackground"
+        android:bind_onClick="@{viewModel.onBannerItemClick}"
+        android:bind_onClick_item="@{item}">
 
         <ImageView
             android:id="@+id/iv_img"

@@ -24,7 +24,7 @@ class SplashViewModel
             // 跳转主界面
             MainActivity.actionStart(AppManager.getContext())
             // 结束当前界面
-            uiClose.postValue(true)
+            uiCloseData.postValue(true)
         }
     }
 }

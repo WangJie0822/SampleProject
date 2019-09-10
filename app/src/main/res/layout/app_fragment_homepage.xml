@@ -20,26 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/app_colorPrimary"
-            android:theme="@style/app_toolbar">
-
-            <cn.wj.android.views.custom.DrawableTextView
-                android:id="@+id/dtv_search"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:background="@drawable/app_selector_search_bg"
-                android:bind_onClick="@{viewModel.onSearchClick}"
-                android:gravity="center_vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="@string/app_search"
-                app:dtv_drawableEnd="@drawable/app_vector_search_white_24dp"
-                app:dtv_drawableEndHeight="24dp"
-                app:dtv_drawableEndWidth="24dp" />
-
-        </androidx.appcompat.widget.Toolbar>
+            android:theme="@style/app_toolbar"
+            app:title="@string/app_homepage"
+            tools:menu="@menu/app_menu_search" />
 
         <View style="@style/app_dividing.horizontal" />
 

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import cn.wj.android.base.tools.DEVICE_SCREEN_HEIGHT
 import cn.wj.android.base.tools.statusBarHeight
+import cn.wj.android.base.ui.Tagable
+import java.util.*
 
 /**
  * Dialog 弹窗基类
@@ -18,7 +20,12 @@ import cn.wj.android.base.tools.statusBarHeight
  * @author 王杰
  */
 abstract class BaseLibDialog
-    : DialogFragment() {
+    : DialogFragment(),
+        Tagable {
+
+    override val mBagOfTags: HashMap<String, Any> = hashMapOf()
+
+    override var mClosed: Boolean = false
 
     /** Context 对象 */
     protected lateinit var mContext: AppCompatActivity
@@ -70,6 +77,16 @@ abstract class BaseLibDialog
         layoutParams?.height = mDialogHeight
         layoutParams?.gravity = mGravity
         dialog?.window?.attributes = layoutParams
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mClosed = true
+        synchronized(mBagOfTags) {
+            for (value in mBagOfTags.values) {
+                closeWithRuntimeException(value)
+            }
+        }
     }
 
     /**

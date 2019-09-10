@@ -543,4 +543,18 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         mData.clear()
         notifyDataSetChanged()
     }
+
+    /**
+     * 加载数据
+     *
+     * @param ls 数据列表
+     * @param refresh 是否刷新
+     */
+    fun loadData(ls: List<E>, refresh: Boolean = false) {
+        if (refresh) {
+            mData.clear()
+        }
+        mData.addAll(ls)
+        notifyDataSetChanged()
+    }
 }
