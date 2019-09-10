@@ -1,7 +1,7 @@
 package com.wj.sampleproject.constants
 
 /** 欢迎界面延时时间 */
-const val SPLASH_DELAY_MS = 200L
+const val SPLASH_DELAY_MS = 2000L
 /** 首页返回点击间隔 */
 const val MAIN_BACK_PRESS_INTERVAL_MS = 2000L
 /** 首页 Banner 变换间隔 */

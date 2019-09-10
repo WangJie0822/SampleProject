@@ -3,7 +3,7 @@ package com.wj.sampleproject.net
 /**
  * 可刷新列表数据封装实体类
  */
-class RefreshList<T>
+data class RefreshList<T>
 /**
  * 构造方法
  *

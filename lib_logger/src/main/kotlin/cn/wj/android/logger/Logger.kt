@@ -85,7 +85,7 @@ object Logger {
      */
     @JvmStatic
     fun d(message: String, vararg args: Any) {
-        mPrinter.d(message, args)
+        mPrinter.d(message, *args)
     }
 
     /**
@@ -106,7 +106,7 @@ object Logger {
      */
     @JvmStatic
     fun e(message: String, vararg args: Any) {
-        mPrinter.e(message, args)
+        mPrinter.e(message, *args)
     }
 
     /**
@@ -118,7 +118,7 @@ object Logger {
      */
     @JvmStatic
     fun e(throwable: Throwable?, message: String, vararg args: Any) {
-        mPrinter.e(throwable, message, args)
+        mPrinter.e(throwable, message, *args)
     }
 
     /**
@@ -139,7 +139,7 @@ object Logger {
      */
     @JvmStatic
     fun i(message: String, vararg args: Any) {
-        mPrinter.i(message, args)
+        mPrinter.i(message, *args)
     }
 
     /**
@@ -150,7 +150,7 @@ object Logger {
      */
     @JvmStatic
     fun v(message: String, vararg args: Any) {
-        mPrinter.v(message, args)
+        mPrinter.v(message, *args)
     }
 
     /**
@@ -161,7 +161,7 @@ object Logger {
      */
     @JvmStatic
     fun w(message: String, vararg args: Any) {
-        mPrinter.w(message, args)
+        mPrinter.w(message, *args)
     }
 
     /**
@@ -172,7 +172,7 @@ object Logger {
      */
     @JvmStatic
     fun a(message: String, vararg args: Any) {
-        mPrinter.a(message, args)
+        mPrinter.a(message, *args)
     }
 
     /**
