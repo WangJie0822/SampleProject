@@ -48,6 +48,26 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:bind_visibility="@{viewModel.showBanner}">
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/vp_banner"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:bind_onTouch="@{viewModel.onBannerTouch}"
+                            android:bind_vp_currentItem="@={viewModel.bannerCurrent}"
+                            android:bind_vp_offscreenPageLimit="@{viewModel.bannerLimit}"
+                            android:bind_vp_smoothScroll="@{true}"
+                            app:layout_constraintDimensionRatio="2:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_articles"
                         android:layout_width="match_parent"
