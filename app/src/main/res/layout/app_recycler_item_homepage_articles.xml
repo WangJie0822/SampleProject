@@ -17,6 +17,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:bind_onClick="@{viewModel.onArticleItemClick}"
+        android:bind_onClick_item="@{item}"
         android:background="@drawable/app_selector_default_ripple">
 
         <androidx.constraintlayout.widget.Guideline

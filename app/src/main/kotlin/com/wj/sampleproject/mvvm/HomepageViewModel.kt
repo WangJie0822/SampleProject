@@ -12,6 +12,7 @@ import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.SearchActivity
+import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.SnackbarEntity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.constants.MAIN_BANNER_TRANSFORM_INTERVAL_MS
@@ -40,8 +41,6 @@ constructor(private val repository: HomepageRepository)
 
         // 获取 Banner 数据
         getHomepageBannerList()
-        // 刷新文章列表
-        refreshing.set(true)
     }
 
     override fun onStart(source: LifecycleOwner) {
@@ -127,25 +126,35 @@ constructor(private val repository: HomepageRepository)
     /** Banner 轮播 job */
     private var carouselJob: Job? = null
 
+    /** 文章列表条目点击 */
+    val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
+        // 跳转 WebView 打开
+        WebViewActivity.actionStart(AppManager.getContext(), item.title.orEmpty(), item.link.orEmpty())
+    }
+
     /**
      * 获取首页 Banner 列表
      */
     private fun getHomepageBannerList() {
         viewModelScope.launch {
+            // 标记 - 是否显示 Banner
+            var show = false
             try {
                 // 获取 Banner 数据
                 val result = repository.getHomepageBannerList()
                 if (result.success()) {
                     // 请求成功
-                    showBanner.set(result.data.isNotNullAndEmpty())
+                    show = result.data.isNotNullAndEmpty()
                     bannerData.postValue(result.data.orEmpty())
                 } else {
                     snackbarData.postValue(SnackbarEntity(result.errorMsg))
-                    showBanner.set(false)
                 }
             } catch (throwable: Throwable) {
                 snackbarData.postValue(SnackbarEntity(throwable.showMsg))
-                showBanner.set(false)
+            } finally {
+                showBanner.set(show)
+                // 刷新文章列表
+                refreshing.set(true)
             }
         }
     }

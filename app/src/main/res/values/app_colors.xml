@@ -9,6 +9,7 @@
 
     <color name="app_white">#FFFFFF</color>
     <color name="app_gray">#999999</color>
+    <color name="app_transparent">#00FFFFFF</color>
 
     <!-- 窗口默认背景色 -->
     <color name="app_windowBackground">#FFFFFFFF</color>

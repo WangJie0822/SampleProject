@@ -23,7 +23,9 @@
             android:background="@color/app_colorPrimary"
             android:theme="@style/app_toolbar"
             app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
-            tools:menu="@menu/app_menu_main_bottom">
+            app:title="@{viewModel.title}"
+            tools:menu="@menu/app_menu_main_bottom"
+            tools:title="@sample/article_list.json/data/datas/title">
 
             <TextView
                 android:id="@+id/tv_title"

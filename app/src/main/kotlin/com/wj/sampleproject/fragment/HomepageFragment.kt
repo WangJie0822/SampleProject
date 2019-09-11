@@ -1,6 +1,7 @@
 package com.wj.sampleproject.fragment
 
 import androidx.lifecycle.Observer
+import cn.wj.android.base.tools.DEVICE_SCREEN_WIDTH
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.BannerVpAdapter
@@ -54,6 +55,14 @@ class HomepageFragment
             mBannerAdapter.refresh(it)
             // 设置 Banner 数量并开启轮播
             mViewModel.bannerCount = it.size
+            // 设置 ViewPager 高度
+            if (it.size > 0) {
+                mBinding.vpBanner.let { vp ->
+                    vp.layoutParams = vp.layoutParams.apply {
+                        height = DEVICE_SCREEN_WIDTH / 2
+                    }
+                }
+            }
         })
         // 文章列表
         mViewModel.articleListData.observe(this, Observer {
