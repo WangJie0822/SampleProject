@@ -39,37 +39,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <androidx.core.widget.NestedScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_articles"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/vp_banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:bind_onTouch="@{viewModel.onBannerTouch}"
-                        android:bind_visibility="@{viewModel.showBanner}"
-                        android:bind_vp_currentItem="@={viewModel.bannerCurrent}"
-                        android:bind_vp_offscreenPageLimit="@{viewModel.bannerLimit}"
-                        android:bind_vp_smoothScroll="@{true}"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_articles"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:bind_rv_isNestedScrollingEnabled="@{false}"
-                        tools:listitem="@layout/app_recycler_item_homepage_articles" />
-
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
+                android:layout_height="match_parent"
+                tools:listitem="@layout/app_recycler_item_homepage_articles" />
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"

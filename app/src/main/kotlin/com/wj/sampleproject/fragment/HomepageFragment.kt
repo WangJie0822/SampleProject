@@ -1,13 +1,14 @@
 package com.wj.sampleproject.fragment
 
+import android.view.LayoutInflater
 import androidx.lifecycle.Observer
-import cn.wj.android.base.tools.DEVICE_SCREEN_WIDTH
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.adapter.HomepageArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
+import com.wj.sampleproject.databinding.AppLayoutHomepageBannerBinding
 import com.wj.sampleproject.mvvm.HomepageViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -40,11 +41,14 @@ class HomepageFragment
 
     override fun initView() {
         // 配置 Banner 列表
+        val mBannerBinding = AppLayoutHomepageBannerBinding.inflate(LayoutInflater.from(mContext))
         mBannerAdapter.mViewModel = mViewModel
-        mBinding.vpBanner.adapter = mBannerAdapter
+        mBannerBinding.vpBanner.adapter = mBannerAdapter
 
         // 配置文章列表
         mArticlesAdapter.mViewModel = mViewModel
+        mArticlesAdapter.addHeaderView(mBannerBinding.root)
+        mArticlesAdapter.setEmptyView(R.layout.app_layout_no_data)
         mBinding.rvArticles.layoutManager = WrapContentLinearLayoutManager()
         mBinding.rvArticles.adapter = mArticlesAdapter
 
@@ -55,14 +59,6 @@ class HomepageFragment
             mBannerAdapter.refresh(it)
             // 设置 Banner 数量并开启轮播
             mViewModel.bannerCount = it.size
-            // 设置 ViewPager 高度
-            if (it.size > 0) {
-                mBinding.vpBanner.let { vp ->
-                    vp.layoutParams = vp.layoutParams.apply {
-                        height = DEVICE_SCREEN_WIDTH / 2
-                    }
-                }
-            }
         })
         // 文章列表
         mViewModel.articleListData.observe(this, Observer {

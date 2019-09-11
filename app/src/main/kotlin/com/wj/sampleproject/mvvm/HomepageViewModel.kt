@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.base.ext.condition
-import cn.wj.android.base.ext.isNotNullAndEmpty
 import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.R
@@ -41,6 +40,8 @@ constructor(private val repository: HomepageRepository)
 
         // 获取 Banner 数据
         getHomepageBannerList()
+        // 刷新文章列表
+        refreshing.set(true)
     }
 
     override fun onStart(source: LifecycleOwner) {
@@ -62,9 +63,6 @@ constructor(private val repository: HomepageRepository)
         }
         false
     }
-
-    /** 标记 - 是否显示 Banner */
-    val showBanner: BindingField<Boolean> = BindingField(false)
 
     /** Banner 下标 */
     val bannerCurrent: BindingField<Int> = BindingField()
@@ -137,24 +135,17 @@ constructor(private val repository: HomepageRepository)
      */
     private fun getHomepageBannerList() {
         viewModelScope.launch {
-            // 标记 - 是否显示 Banner
-            var show = false
             try {
                 // 获取 Banner 数据
                 val result = repository.getHomepageBannerList()
                 if (result.success()) {
                     // 请求成功
-                    show = result.data.isNotNullAndEmpty()
                     bannerData.postValue(result.data.orEmpty())
                 } else {
                     snackbarData.postValue(SnackbarEntity(result.errorMsg))
                 }
             } catch (throwable: Throwable) {
                 snackbarData.postValue(SnackbarEntity(throwable.showMsg))
-            } finally {
-                showBanner.set(show)
-                // 刷新文章列表
-                refreshing.set(true)
             }
         }
     }
