@@ -3,7 +3,7 @@ package com.wj.sampleproject.mvvm
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 
 /**
- * 搜索 ViewModel
+ * 公众号 ViewModel
  */
-class SearchViewModel
+class BjnewsViewModel
     : BaseViewModel()

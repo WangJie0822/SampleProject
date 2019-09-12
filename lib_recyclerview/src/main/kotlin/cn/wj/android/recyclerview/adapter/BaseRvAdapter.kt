@@ -2,6 +2,7 @@
 
 package cn.wj.android.recyclerview.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -129,20 +130,30 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         return when (viewType) {
             VIEW_TYPE_HEADER -> {
                 // 头布局
+                mHeaderLayout.removeParent()
                 createViewHolder(mHeaderLayout!!)
             }
             VIEW_TYPE_FOOTER -> {
                 // 脚布局
+                mFooterLayout.removeParent()
                 createViewHolder(mFooterLayout!!)
             }
             VIEW_TYPE_EMPTY -> {
                 // 空布局
+                mEmptyLayout.removeParent()
                 createViewHolder(mEmptyLayout!!)
             }
             else -> {
                 customCreateViewHolder(parent, viewType)
             }
         }
+    }
+
+    /**
+     * 移除父布局
+     */
+    internal fun View?.removeParent() {
+        (this?.parent as? ViewGroup)?.removeView(this)
     }
 
     /**
@@ -248,7 +259,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
     fun setEmptyView(@LayoutRes layoutResID: Int, parent: ViewGroup? = mRecyclerView) {
         emptyViewLayoutResID = if (parent != null) {
             // 已绑定 RecyclerView
-            val empty = LayoutInflater.from(parent.context).inflate(layoutResID, null, false)
+            val empty = LayoutInflater.from(parent.context).inflate(layoutResID, parent, false)
             setEmptyView(empty)
             null
         } else {
@@ -266,21 +277,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         var insert = false
         if (mEmptyLayout == null) {
             // 未初始化，初始化空布局
-            mEmptyLayout = FrameLayout(emptyView.context)
-            mEmptyLayout!!.setOnClickListener {
-                mEmptyClickListener?.invoke()
-            }
-            // 设置布局参数
-            val layoutParams = RecyclerView.LayoutParams(
-                    RecyclerView.LayoutParams.MATCH_PARENT,
-                    RecyclerView.LayoutParams.MATCH_PARENT
-            )
-            val lp = emptyView.layoutParams
-            if (lp != null) {
-                layoutParams.width = lp.width
-                layoutParams.height = lp.height
-            }
-            mEmptyLayout!!.layoutParams = layoutParams
+            mEmptyLayout = createEmptyLayout(emptyView.context)
             // 第一次创建
             insert = true
         }
@@ -301,6 +298,20 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         }
     }
 
+    protected fun createEmptyLayout(context: Context): FrameLayout {
+        return FrameLayout(context).apply {
+            setOnClickListener {
+                mEmptyClickListener?.invoke()
+            }
+            // 设置布局参数
+            val tempLayoutParams = RecyclerView.LayoutParams(
+                    RecyclerView.LayoutParams.MATCH_PARENT,
+                    RecyclerView.LayoutParams.MATCH_PARENT
+            )
+            layoutParams = tempLayoutParams
+        }
+    }
+
     /**
      * 添加头布局
      *
@@ -312,16 +323,18 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      */
     fun addHeaderView(header: View, index: Int = -1, orientation: Int = LinearLayout.VERTICAL): Int {
         if (mHeaderLayout == null) {
-            mHeaderLayout = LinearLayout(header.context)
-            if (orientation == LinearLayout.VERTICAL) {
-                mHeaderLayout!!.orientation = LinearLayout.VERTICAL
-                mHeaderLayout!!.layoutParams =
-                        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            } else {
-                mHeaderLayout!!.orientation = LinearLayout.HORIZONTAL
-                mHeaderLayout!!.layoutParams =
-                        RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            mHeaderLayout = createHeaderOrFooterLayout(header.context, orientation)
+        }
+        var contains = false
+        for (i in 0 until mHeaderLayout!!.childCount) {
+            val childAt = mHeaderLayout!!.getChildAt(i)
+            if (header.like(childAt)) {
+                contains = true
+                break
             }
+        }
+        if (contains) {
+            return -1
         }
         var i = index
         val childCount = mHeaderLayout!!.childCount
@@ -336,6 +349,12 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         return i
     }
 
+    fun View.like(v: View): Boolean {
+        return this.javaClass == v.javaClass
+                && this.id == v.id
+                && (this as? ViewGroup)?.childCount == (v as? ViewGroup)?.childCount
+    }
+
     /**
      * 添加头布局
      *
@@ -347,16 +366,18 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      */
     fun addFooterView(footer: View, index: Int = -1, orientation: Int = LinearLayout.VERTICAL): Int {
         if (mFooterLayout == null) {
-            mFooterLayout = LinearLayout(footer.context)
-            if (orientation == LinearLayout.VERTICAL) {
-                mFooterLayout!!.orientation = LinearLayout.VERTICAL
-                mFooterLayout!!.layoutParams =
-                        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            } else {
-                mFooterLayout!!.orientation = LinearLayout.HORIZONTAL
-                mFooterLayout!!.layoutParams =
-                        RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            mFooterLayout = createHeaderOrFooterLayout(footer.context, orientation)
+        }
+        var contains = false
+        for (i in 0 until mFooterLayout!!.childCount) {
+            val childAt = mFooterLayout!!.getChildAt(i)
+            if (footer.like(childAt)) {
+                contains = true
+                break
             }
+        }
+        if (contains) {
+            return -1
         }
         var i = index
         val childCount = mFooterLayout!!.childCount
@@ -369,6 +390,28 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
             notifyItemInserted(position)
         }
         return i
+    }
+
+    /**
+     * 创建头布局、脚布局对象
+     *
+     * @param context [Context] 对象
+     * @param orientation 排列方式 [LinearLayout.VERTICAL]、[LinearLayout.HORIZONTAL] 默认竖排
+     *
+     * @return 头布局对象
+     */
+    protected fun createHeaderOrFooterLayout(context: Context, orientation: Int = LinearLayout.VERTICAL): LinearLayout {
+        return LinearLayout(context).apply {
+            if (orientation == LinearLayout.VERTICAL) {
+                this.orientation = LinearLayout.VERTICAL
+                this.layoutParams =
+                        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            } else {
+                this.orientation = LinearLayout.HORIZONTAL
+                this.layoutParams =
+                        RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            }
+        }
     }
 
     fun clearFooterView() {

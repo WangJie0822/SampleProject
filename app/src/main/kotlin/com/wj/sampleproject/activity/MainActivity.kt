@@ -10,7 +10,7 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.MAIN_BACK_PRESS_INTERVAL_MS
 import com.wj.sampleproject.databinding.AppActivityMainBinding
-import com.wj.sampleproject.fragment.HomepageFragment
+import com.wj.sampleproject.fragment.*
 import com.wj.sampleproject.mvvm.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.math.absoluteValue
@@ -46,7 +46,11 @@ class MainActivity
         mBinding.cvpMain.adapter = FragVpAdapter.newBuilder()
                 .manager(supportFragmentManager)
                 .frags(arrayListOf(
-                        HomepageFragment.actionCreate()
+                        HomepageFragment.actionCreate(),
+                        SystemFragment.actionCreate(),
+                        BjnewsFragment.actionCreate(),
+                        ProjectFragment.actionCreate(),
+                        MyFragment.actionCreate()
                 ))
                 .build()
     }

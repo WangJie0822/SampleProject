@@ -74,6 +74,10 @@ val viewModelModule: Module = module {
     viewModel { SplashViewModel() }
     viewModel { MainViewModel() }
     viewModel { HomepageViewModel(get()) }
+    viewModel { SystemViewModel() }
+    viewModel { BjnewsViewModel() }
+    viewModel { ProjectViewModel() }
+    viewModel { MyViewModel() }
     viewModel { SearchViewModel() }
     viewModel { WebViewViewModel() }
 }

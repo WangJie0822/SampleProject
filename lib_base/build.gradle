@@ -28,8 +28,10 @@ android {
 dependencies {
     // Kotlin 支持
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     // 协程
-    implementation rootProject.ext.dependencies["kotlinx_coroutines"]
+    implementation rootProject.ext.dependencies["coroutines"]
+    
     // v4
     implementation rootProject.ext.dependencies["androidx_support-v4"]
     // v7

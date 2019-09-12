@@ -160,8 +160,6 @@ dependencies {
     // Kotlin jdk
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // ktx
-    implementation rootProject.ext.dependencies["androidx_core-ktx"]
     // v4
     implementation rootProject.ext.dependencies["androidx_support-v4"]
     // v7
@@ -172,14 +170,20 @@ dependencies {
     implementation rootProject.ext.dependencies["androidx_recyclerview"]
     // 约束性布局
     implementation rootProject.ext.dependencies["androidx_constraint"]
-    // paging
-    implementation rootProject.ext.dependencies["androidx_paging"]
 
+    // paging
+    implementation rootProject.ext.dependencies["jetpack_paging-ktx"]
     // ViewModel Kotlin 扩展
-    implementation rootProject.ext.dependencies["androidx_viewmodel-ktx"]
+    implementation rootProject.ext.dependencies["jetpack_viewmodel-ktx"]
+    // navigation
+    implementation rootProject.ext.dependencies["jetpack_navigation-ui-ktx"]
+    implementation rootProject.ext.dependencies["jetpack_navigation-fragment-ktx"]
+
+    // ktx
+    implementation rootProject.ext.dependencies["ktx_core"]
 
     // 协程
-    implementation rootProject.ext.dependencies["kotlinx_coroutines"]
+    implementation rootProject.ext.dependencies["coroutines"]
 
     // Koin
     implementation rootProject.ext.dependencies["koin"]

@@ -1,0 +1,33 @@
+package com.wj.sampleproject.fragment
+
+import com.wj.sampleproject.R
+import com.wj.sampleproject.base.ui.BaseFragment
+import com.wj.sampleproject.databinding.AppFragmentSystemBinding
+import com.wj.sampleproject.mvvm.SystemViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
+
+/**
+ * 体系
+ */
+class SystemFragment
+    : BaseFragment<SystemViewModel, AppFragmentSystemBinding>() {
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 体系 Fragment
+         */
+        fun actionCreate(): SystemFragment {
+            return SystemFragment()
+        }
+    }
+
+    override val mViewModel: SystemViewModel by viewModel()
+
+    override val layoutResID: Int = R.layout.app_fragment_system
+
+    override fun initView() {
+
+    }
+}

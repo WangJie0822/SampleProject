@@ -24,26 +24,6 @@ abstract class BaseRvDBAdapter<out VH : BaseRvDBViewHolder<DB, E>, DB : ViewData
     /** 事件处理  */
     var mViewModel: VM? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRvViewHolder<E> {
-        return when (viewType) {
-            VIEW_TYPE_HEADER -> {
-                // 头布局
-                createViewHolder(mHeaderLayout!!)
-            }
-            VIEW_TYPE_FOOTER -> {
-                // 脚布局
-                createViewHolder(mFooterLayout!!)
-            }
-            VIEW_TYPE_EMPTY -> {
-                // 空布局
-                createViewHolder(mEmptyLayout!!)
-            }
-            else -> {
-                customCreateViewHolder(parent, viewType)
-            }
-        }
-    }
-
     /**
      * 创建ViewHolder
      *
@@ -103,15 +83,6 @@ abstract class BaseRvDBAdapter<out VH : BaseRvDBViewHolder<DB, E>, DB : ViewData
      */
     @Suppress("UNCHECKED_CAST")
     protected open fun getDBClass() = getActualTypeList()[1] as Class<DB>
-
-    /**
-     * 绑定 ViewModel
-     *
-     * @param viewModel ViewModel 对象
-     */
-    fun bindViewModel(viewModel: VM) {
-        mViewModel = viewModel
-    }
 
     /** 布局 id */
     abstract val layoutResID: Int

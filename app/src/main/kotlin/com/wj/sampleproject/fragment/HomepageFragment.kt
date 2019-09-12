@@ -41,7 +41,9 @@ class HomepageFragment
 
     override fun initView() {
         // 配置 Banner 列表
-        val mBannerBinding = AppLayoutHomepageBannerBinding.inflate(LayoutInflater.from(mContext))
+        val mBannerBinding = AppLayoutHomepageBannerBinding.inflate(
+                LayoutInflater.from(mContext), null, false
+        )
         mBannerAdapter.mViewModel = mViewModel
         mBannerBinding.vpBanner.adapter = mBannerAdapter
 
