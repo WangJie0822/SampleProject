@@ -35,9 +35,7 @@ class HomepageViewModel
 constructor(private val repository: HomepageRepository)
     : BaseViewModel() {
 
-    override fun onCreate(source: LifecycleOwner) {
-        super.onCreate(source)
-
+    override fun firstLoad() {
         // 获取 Banner 数据
         getHomepageBannerList()
         // 刷新文章列表
