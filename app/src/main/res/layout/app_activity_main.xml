@@ -20,6 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:bind_vp_currentItem="@{viewModel.currentItem}"
+            android:bind_vp_offscreenPageLimit="@{10}"
             android:bind_vp_smoothScroll="@{true}"
             app:layout_constraintBottom_toTopOf="@id/v_dividing"
             app:layout_constraintEnd_toEndOf="parent"

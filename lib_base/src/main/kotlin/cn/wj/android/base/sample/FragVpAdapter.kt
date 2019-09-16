@@ -1,9 +1,9 @@
 package cn.wj.android.base.sample
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import cn.wj.android.base.adapter.FragVpAdapter
+import cn.wj.android.base.ui.fragment.BaseLibFragment
 
 /**
  * [cn.wj.android.base.adapter.FragVpAdapter] 示例
@@ -16,7 +16,7 @@ internal class FragVpAdapter {
     /**
      * 示例方法
      */
-    fun sample(activity: AppCompatActivity, fragmentList: ArrayList<Fragment>) {
+    fun sample(activity: AppCompatActivity, fragmentList: ArrayList<BaseLibFragment>) {
         // 新建 Builder
         // 设置 FragmentManager
         // 设置 Fragment 集合

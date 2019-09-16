@@ -14,7 +14,7 @@ import java.util.*
  * - 维护 [mContext]，当前界面的 Context 对象
  * - 添加 [initBefore] 方法，在一切流程开始前预处理一些数据
  * - [onCreateView] 方法中对 [layoutResID] 对应的 [View] 进行加载，并在 [initView] 中进行初始化操作
- * - 维护了 [mRootView]等参数
+ * - 维护了 [rootView]等参数
  *
  * @author 王杰
  */
@@ -30,10 +30,10 @@ abstract class BaseLibFragment
     protected lateinit var mContext: AppCompatActivity
 
     /** 跟布局对象 */
-    protected lateinit var mRootView: View
+    protected lateinit var rootView: View
 
     /** 页面标题 */
-    open val mPageTitle: String? = null
+    open val pageTitle: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +47,12 @@ abstract class BaseLibFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        mRootView = inflater.inflate(layoutResID, container, false)
+        rootView = inflater.inflate(layoutResID, container, false)
 
         // 初始化布局
         initView()
 
-        return mRootView
+        return rootView
     }
 
     override fun onDestroy() {

@@ -36,11 +36,11 @@ abstract class BaseBindingLibFragment<VM : BaseMvvmViewModel, DB : ViewDataBindi
         // 绑定 ViewModel
         mBinding.setVariable(BR.viewModel, mViewModel)
 
-        mRootView = mBinding.root
+        rootView = mBinding.root
 
         // 初始化布局
         initView()
 
-        return mRootView
+        return rootView
     }
 }
