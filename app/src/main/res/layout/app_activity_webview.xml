@@ -23,18 +23,17 @@
             android:background="@color/app_colorPrimary"
             android:theme="@style/app_toolbar"
             app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
-            app:title="@{viewModel.title}"
-            tools:menu="@menu/app_menu_main_bottom"
-            tools:title="@sample/article_list.json/data/datas/title">
+            tools:menu="@menu/app_menu_main_bottom">
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
                 android:singleLine="true"
+                android:text="@{viewModel.title}"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 tools:text="@sample/article_list.json/data/datas/title" />

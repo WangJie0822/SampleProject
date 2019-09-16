@@ -60,6 +60,7 @@ class WebViewActivity
 
         // 设置 Toolbar
         setSupportActionBar(mBinding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // 配置 WebView
         val webSettings = mBinding.wv.settings
@@ -71,28 +72,6 @@ class WebViewActivity
         webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
 
         mBinding.wv.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-//        mBinding.wv.addJavascriptInterface(WebView2JsInterface(), "android")
-//        mBinding.wv.webChromeClient = object : WebChromeClient() {
-//            override fun onProgressChanged(view: WebView, newProgress: Int) {
-//                if (newProgress == 100) {
-//                    mBinding.pb.visibility = View.INVISIBLE
-//                } else {
-//                    if (View.INVISIBLE == mBinding.pb.visibility) {
-//                        mBinding.pb.visibility = View.VISIBLE
-//                    }
-//                    mBinding.pb.progress = newProgress
-//                }
-//                super.onProgressChanged(view, newProgress)
-//            }
-//        }
-
-//        mBinding.wv.webViewClient = object : WebViewClient() {
-//            @Suppress("OverridingDeprecatedMember")
-//            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-//                view.loadUrl(url)
-//                return true
-//            }
-//        }
 
         mBinding.wv.loadUrl(mUrl)
     }
@@ -114,8 +93,8 @@ class WebViewActivity
         mBinding.wv.destroy()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             android.R.id.home -> {
                 // 返回按钮
                 finish()
