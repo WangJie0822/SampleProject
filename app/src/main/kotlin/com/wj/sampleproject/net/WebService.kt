@@ -3,6 +3,7 @@ package com.wj.sampleproject.net
 import com.wj.sampleproject.entity.*
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * 网络请求接口
@@ -40,4 +41,24 @@ interface WebService {
      */
     @GET(UrlDefinition.GET_NAVIGATION_LIST)
     suspend fun getNavigationList(): NetResult<ArrayList<NavigationListEntity>>
+
+    /**
+     * 获取公众号列表
+     */
+    @GET(UrlDefinition.GET_BJNEWS_LIST)
+    suspend fun getBjnewsList(): NetResult<ArrayList<BjnewsEntity>>
+
+    /**
+     * 获取公众号文章列表
+     *
+     * @param id 公众号 id
+     * @param pageNum 页码
+     * @param keywords 搜索关键字，为空串返回全部
+     */
+    @GET(UrlDefinition.GET_BJNEWS_ARTICLES)
+    suspend fun getBjnewsArticles(
+            @Path("id") id: String,
+            @Path("pageNum") pageNum: Int,
+            @Query("k") keywords: String = ""
+    ): NetResult<ArticleListEntity>
 }

@@ -133,5 +133,8 @@ ext {
             // SmartRefreshLayout
             "smartrefresh"                         : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0",
             "smartrefresh-header"                  : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0",
+
+            // Tablayout
+            "tablayout"                            : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
     ]
 }

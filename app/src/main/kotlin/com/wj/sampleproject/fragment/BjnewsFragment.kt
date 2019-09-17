@@ -1,5 +1,7 @@
 package com.wj.sampleproject.fragment
 
+import androidx.lifecycle.Observer
+import cn.wj.android.base.adapter.FragVpAdapter
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentBjnewsBinding
@@ -28,6 +30,19 @@ class BjnewsFragment
     override val layoutResID: Int = R.layout.app_fragment_bjnews
 
     override fun initView() {
-
+        // 添加观察者
+        mViewModel.bjnewsData.observe(this, Observer {
+            val frags = arrayListOf<BaseFragment<*, *>>()
+            for (item in it) {
+                frags.add(BjnewsArticlesFragment.actionCreate(item))
+            }
+            // 配置 ViewPager
+            mBinding.vpBjnews.adapter = FragVpAdapter.newBuilder()
+                    .manager(childFragmentManager)
+                    .frags(frags)
+                    .pageTitle { _, i -> frags[i].pageTitle.orEmpty() }
+                    .build()
+            mBinding.stlBjnews.setViewPager(mBinding.vpBjnews)
+        })
     }
 }

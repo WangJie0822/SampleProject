@@ -11,15 +11,15 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.HomepageViewModel" />
+            type="com.wj.sampleproject.adapter.ArticleListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/app_selector_default_ripple"
         android:bind_onClick="@{viewModel.onArticleItemClick}"
-        android:bind_onClick_item="@{item}"
-        android:background="@drawable/app_selector_default_ripple">
+        android:bind_onClick_item="@{item}">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_start"
@@ -92,7 +92,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="2"
             tools:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/app_recycler_item_homepage_article_tags"
+            tools:listitem="@layout/app_recycler_item_article_tags"
             tools:orientation="horizontal" />
 
         <TextView

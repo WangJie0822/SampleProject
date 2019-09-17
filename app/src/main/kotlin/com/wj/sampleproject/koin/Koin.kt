@@ -4,14 +4,16 @@ import cn.wj.android.logger.Logger
 import com.wj.android.okhttp.InterceptorLogger
 import com.wj.android.okhttp.LoggerInterceptor
 import com.wj.sampleproject.BuildConfig
+import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.adapter.BannerVpAdapter
-import com.wj.sampleproject.adapter.HomepageArticleListRvAdapter
 import com.wj.sampleproject.adapter.NavigationRvAdapter
 import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
 import com.wj.sampleproject.mvvm.*
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
+import com.wj.sampleproject.repository.BjnewsRepository
 import com.wj.sampleproject.repository.HomepageRepository
+import com.wj.sampleproject.repository.ProjectRepository
 import com.wj.sampleproject.repository.SystemRepository
 import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.dsl.viewModel
@@ -57,19 +59,17 @@ val netModule: Module = module {
  * 数据仓库 Module
  */
 val repositoryModule: Module = module {
-    single {
-        HomepageRepository()
-    }
-    single {
-        SystemRepository()
-    }
+    single { HomepageRepository() }
+    single { SystemRepository() }
+    single { BjnewsRepository() }
+    single { ProjectRepository() }
 }
 
 /**
  * 适配器 Module
  */
 val adapterModule: Module = module {
-    factory { HomepageArticleListRvAdapter() }
+    factory { ArticleListRvAdapter() }
     factory { BannerVpAdapter() }
     factory { SystemCategoryRvAdapter() }
     factory { NavigationRvAdapter() }
@@ -85,7 +85,8 @@ val viewModelModule: Module = module {
     viewModel { SystemViewModel() }
     viewModel { SystemCategoryViewModel(get()) }
     viewModel { NavigationViewModel(get()) }
-    viewModel { BjnewsViewModel() }
+    viewModel { BjnewsViewModel(get()) }
+    viewModel { BjnewsArticlesViewModel(get()) }
     viewModel { ProjectViewModel() }
     viewModel { MyViewModel() }
     viewModel { SearchViewModel() }

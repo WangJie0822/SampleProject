@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,11 +11,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/stl_project"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/app_project" />
+            android:layout_height="48dp"
+            android:background="@color/app_white"
+            app:tl_divider_color="#F0f"
+            app:tl_indicator_color="#f0f"
+            app:tl_indicator_corner_radius="2dp"
+            app:tl_indicator_margin_top="16dp"
+            app:tl_indicator_width="20dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="#ff0"
+            app:tl_textUnselectColor="#00f"
+            app:tl_textsize="14sp" />
+
+        <View style="@style/app_dividing.horizontal" />
+
+        <cn.wj.android.views.custom.CustomViewPager
+            android:id="@+id/vp_project"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

@@ -12,6 +12,7 @@ import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.SearchActivity
 import com.wj.sampleproject.activity.WebViewActivity
+import com.wj.sampleproject.adapter.ArticleListViewModel
 import com.wj.sampleproject.base.SnackbarEntity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.constants.MAIN_BANNER_TRANSFORM_INTERVAL_MS
@@ -31,7 +32,8 @@ class HomepageViewModel
  * @param repository 主页数据仓库
  */
 constructor(private val repository: HomepageRepository)
-    : BaseViewModel() {
+    : BaseViewModel(),
+        ArticleListViewModel {
 
     override fun firstLoad() {
         // 获取 Banner 数据
@@ -92,7 +94,7 @@ constructor(private val repository: HomepageRepository)
     }
 
     /** 标记 - 是否正在刷新 */
-    val refreshing: BindingField<Boolean> = BindingField(true)
+    val refreshing: BindingField<Boolean> = BindingField(false)
 
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
@@ -109,6 +111,9 @@ constructor(private val repository: HomepageRepository)
         getHomepageArticleList()
     }
 
+    /** 标记 - 是否允许加载更多 */
+    val loadMoreEnable: BindingField<Boolean> = BindingField(true)
+
     /** 页码 */
     private var pageNum = NET_PAGE_START
 
@@ -121,7 +126,7 @@ constructor(private val repository: HomepageRepository)
     private var carouselJob: Job? = null
 
     /** 文章列表条目点击 */
-    val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
+    override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
         WebViewActivity.actionStart(AppManager.getContext(), item.title.orEmpty(), item.link.orEmpty())
     }
@@ -185,12 +190,15 @@ constructor(private val repository: HomepageRepository)
      */
     private fun getHomepageArticleList() {
         viewModelScope.launch {
+            // 标记，是否没有更多
+            var noMore = false
             try {
                 // 获取文章列表数据
                 val result = repository.getHompageArticleList(pageNum)
                 if (result.success()) {
                     // 请求成功
                     articleListData.postValue(RefreshList(result.data?.datas, refreshing.get()))
+                    noMore = result.data?.over?.toBoolean().condition
                 } else {
                     snackbarData.postValue(SnackbarEntity(result.errorMsg))
                 }
@@ -199,6 +207,7 @@ constructor(private val repository: HomepageRepository)
             } finally {
                 refreshing.set(false)
                 loadMore.set(false)
+                loadMoreEnable.set(!noMore)
             }
         }
     }

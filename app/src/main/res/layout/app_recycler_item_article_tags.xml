@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.HomepageViewModel" />
+            type="com.wj.sampleproject.adapter.ArticleListViewModel" />
     </data>
 
     <TextView

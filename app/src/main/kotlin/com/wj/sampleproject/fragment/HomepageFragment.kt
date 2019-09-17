@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import androidx.lifecycle.Observer
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
+import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.adapter.BannerVpAdapter
-import com.wj.sampleproject.adapter.HomepageArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
 import com.wj.sampleproject.databinding.AppLayoutHomepageBannerBinding
@@ -37,7 +37,7 @@ class HomepageFragment
     /** Banner 列表适配器 */
     private val mBannerAdapter: BannerVpAdapter by inject()
     /** 文章列表适配器 */
-    private val mArticlesAdapter: HomepageArticleListRvAdapter by inject()
+    private val mArticlesAdapter: ArticleListRvAdapter by inject()
 
     override fun initView() {
         // 配置 Banner 列表

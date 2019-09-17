@@ -204,6 +204,9 @@ dependencies {
     // SmartRefreshLayout
     implementation rootProject.ext.dependencies["smartrefresh"]
 
+    // Tablayout
+    implementation rootProject.ext.dependencies["tablayout"]
+
     // 依赖 base 库
     implementation project(":lib_base")
     implementation project(":lib_databinding_adapter")
