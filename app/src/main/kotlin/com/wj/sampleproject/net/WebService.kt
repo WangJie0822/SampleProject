@@ -1,8 +1,6 @@
 package com.wj.sampleproject.net
 
-import com.wj.sampleproject.entity.ArticleEntity
-import com.wj.sampleproject.entity.ArticleListEntity
-import com.wj.sampleproject.entity.BannerEntity
+import com.wj.sampleproject.entity.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -30,4 +28,16 @@ interface WebService {
      */
     @GET(UrlDefinition.GET_HOMEPAGE_ARTICLE_LIST)
     suspend fun getHomepageArticleList(@Path("pageNum") pageNum: Int): NetResult<ArticleListEntity>
+
+    /**
+     * 获取体系分类列表
+     */
+    @GET(UrlDefinition.GET_SYSTEM_CATEGORY_LIST)
+    suspend fun getSystemCategoryList(): NetResult<ArrayList<SystemCategoryEntity>>
+
+    /**
+     * 获取导航列表
+     */
+    @GET(UrlDefinition.GET_NAVIGATION_LIST)
+    suspend fun getNavigationList(): NetResult<ArrayList<NavigationListEntity>>
 }

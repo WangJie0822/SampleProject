@@ -6,10 +6,13 @@ import com.wj.android.okhttp.LoggerInterceptor
 import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.adapter.HomepageArticleListRvAdapter
+import com.wj.sampleproject.adapter.NavigationRvAdapter
+import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
 import com.wj.sampleproject.mvvm.*
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
 import com.wj.sampleproject.repository.HomepageRepository
+import com.wj.sampleproject.repository.SystemRepository
 import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -57,6 +60,9 @@ val repositoryModule: Module = module {
     single {
         HomepageRepository()
     }
+    single {
+        SystemRepository()
+    }
 }
 
 /**
@@ -65,6 +71,8 @@ val repositoryModule: Module = module {
 val adapterModule: Module = module {
     factory { HomepageArticleListRvAdapter() }
     factory { BannerVpAdapter() }
+    factory { SystemCategoryRvAdapter() }
+    factory { NavigationRvAdapter() }
 }
 
 /**
@@ -75,6 +83,8 @@ val viewModelModule: Module = module {
     viewModel { MainViewModel() }
     viewModel { HomepageViewModel(get()) }
     viewModel { SystemViewModel() }
+    viewModel { SystemCategoryViewModel(get()) }
+    viewModel { NavigationViewModel(get()) }
     viewModel { BjnewsViewModel() }
     viewModel { ProjectViewModel() }
     viewModel { MyViewModel() }

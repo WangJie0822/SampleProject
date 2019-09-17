@@ -604,6 +604,9 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
             mData.clear()
         }
         mData.addAll(ls)
+        if (mRecyclerView == null) {
+            return
+        }
         notifyDataSetChanged()
     }
 }

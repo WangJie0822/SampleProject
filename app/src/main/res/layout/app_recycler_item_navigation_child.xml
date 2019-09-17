@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.mvvm.NavigationViewModel" />
+
+        <variable
+            name="item"
+            type="com.wj.sampleproject.entity.ArticleEntity" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/app_selector_system_category_child_bg"
+            android:bind_onClick="@{viewModel.onNavigationItemClick}"
+            android:bind_onClick_item="@{item}"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="@{item.title}"
+            tools:text="@sample/navigation_list.json/data/articles/title" />
+
+    </FrameLayout>
+
+</layout>

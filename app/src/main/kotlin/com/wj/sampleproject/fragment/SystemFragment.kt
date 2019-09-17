@@ -1,5 +1,6 @@
 package com.wj.sampleproject.fragment
 
+import cn.wj.android.base.adapter.FragVpAdapter
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentSystemBinding
@@ -28,6 +29,13 @@ class SystemFragment
     override val layoutResID: Int = R.layout.app_fragment_system
 
     override fun initView() {
-
+        // 配置 ViewPager
+        mBinding.vpSystem.adapter = FragVpAdapter.newBuilder()
+                .manager(childFragmentManager)
+                .frags(arrayListOf(
+                        SystemCategoryFragment.actionCreate(),
+                        NavigationFragment.actionCreate())
+                )
+                .build()
     }
 }

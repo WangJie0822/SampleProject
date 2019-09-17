@@ -9,7 +9,7 @@
     <item
         android:id="@+id/menu_sytem"
         android:icon="@drawable/app_vector_system_black_24dp"
-        android:title="@string/app_sytem" />
+        android:title="@string/app_system" />
 
     <item
         android:id="@+id/menu_bjnews"

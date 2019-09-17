@@ -23,4 +23,9 @@ object UrlDefinition {
     const val GET_HOMEPAGE_TOP_ARTICLE_LIST = "/article/top/json"
     /** 获取首页文章列表 */
     const val GET_HOMEPAGE_ARTICLE_LIST = "/article/list/{pageNum}/json"
+
+    /** 获取体系分类列表 */
+    const val GET_SYSTEM_CATEGORY_LIST = "/tree/json"
+    /** 获取导航列表 */
+    const val GET_NAVIGATION_LIST = "/navi/json"
 }

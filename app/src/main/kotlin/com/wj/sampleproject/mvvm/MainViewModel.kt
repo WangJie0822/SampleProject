@@ -8,7 +8,8 @@ import com.wj.sampleproject.constants.*
 /**
  *  ViewModel
  */
-class MainViewModel : BaseViewModel() {
+class MainViewModel
+    : BaseViewModel() {
 
     /** ViewPage 当前位置 */
     val currentItem: BindingField<Int> = BindingField(TAB_MAIN_BOTTOM_HOMEPAGE)

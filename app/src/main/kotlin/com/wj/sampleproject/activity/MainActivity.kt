@@ -5,11 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import cn.wj.android.base.adapter.FragVpAdapter
-import cn.wj.android.base.tools.toast
+import cn.wj.android.base.tools.getString
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.MAIN_BACK_PRESS_INTERVAL_MS
 import com.wj.sampleproject.databinding.AppActivityMainBinding
+import com.wj.sampleproject.ext.toSnackbarMsg
 import com.wj.sampleproject.fragment.*
 import com.wj.sampleproject.mvvm.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -60,7 +61,7 @@ class MainActivity
         val currentBackPressMs = System.currentTimeMillis()
         if ((currentBackPressMs - lastBackPressMs).absoluteValue > MAIN_BACK_PRESS_INTERVAL_MS) {
             // 间隔时间外，提示
-            toast(R.string.app_press_again_to_exit)
+            mViewModel.snackbarData.postValue(R.string.app_press_again_to_exit.getString().toSnackbarMsg())
             // 保存时间
             lastBackPressMs = currentBackPressMs
         } else {

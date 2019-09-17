@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.mvvm.SystemViewModel" />
     </data>
 
     <LinearLayout
@@ -10,11 +14,55 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/app_colorPrimary"
+            android:theme="@style/app_toolbar">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:bind_onClick="@{viewModel.onSystemClick}"
+                    android:bind_selected="@{viewModel.systemSelected}"
+                    android:padding="4dp"
+                    android:text="@string/app_system"
+                    android:textColor="@color/app_selector_system_title_text"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:bind_onClick="@{viewModel.onNavigationClick}"
+                    android:bind_selected="@{!viewModel.systemSelected}"
+                    android:padding="4dp"
+                    android:text="@string/app_navigation"
+                    android:textColor="@color/app_selector_system_title_text"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View style="@style/app_dividing.horizontal" />
+
+        <cn.wj.android.views.custom.CustomViewPager
+            android:id="@+id/vp_system"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/app_sytem" />
+            android:bind_vp_currentItem="@{viewModel.currentItem}"
+            android:bind_vp_offscreenPageLimit="@{1}"
+            android:bind_vp_smoothScroll="@{true}"
+            app:scrollable="false" />
 
     </LinearLayout>
 

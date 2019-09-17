@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.mvvm.SystemCategoryViewModel" />
+
+        <variable
+            name="item"
+            type="com.wj.sampleproject.entity.SystemCategoryEntity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="12dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.name}"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            tools:text="@sample/system_category.json/data/name" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_system_category_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:bind_rv_isNestedScrollingEnabled="@{false}"
+            tools:layoutManager="cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager"
+            tools:listitem="@layout/app_recycler_item_system_category_child" />
+
+    </LinearLayout>
+
+</layout>

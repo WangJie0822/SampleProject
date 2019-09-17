@@ -7,7 +7,7 @@
 
     <string name="app_press_again_to_exit">再次返回退出</string>
     <string name="app_homepage">首页</string>
-    <string name="app_sytem">体系</string>
+    <string name="app_system">体系</string>
     <string name="app_bjnews">公众号</string>
     <string name="app_project">项目</string>
     <string name="app_my">我的</string>
@@ -15,4 +15,5 @@
     <string name="app_istop">置顶</string>
     <string name="app_new">新</string>
     <string name="app_collection">收藏</string>
+    <string name="app_navigation">导航</string>
 </resources>

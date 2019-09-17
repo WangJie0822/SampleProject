@@ -1,5 +1,6 @@
 package com.wj.sampleproject.net
 
+import com.wj.sampleproject.base.SnackbarEntity
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_LOGIN_FAILED
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_SUCCESS
 
@@ -30,5 +31,9 @@ constructor(
             // TODO 登录失败，需要重新登录
         }
         return errorCode == NET_RESPONSE_CODE_SUCCESS
+    }
+
+    fun toError(): SnackbarEntity {
+        return SnackbarEntity(errorMsg.orEmpty())
     }
 }

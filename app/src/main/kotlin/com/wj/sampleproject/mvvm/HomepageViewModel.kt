@@ -28,8 +28,6 @@ import kotlinx.coroutines.*
  */
 class HomepageViewModel
 /**
- * 构造方法
- *
  * @param repository 主页数据仓库
  */
 constructor(private val repository: HomepageRepository)
