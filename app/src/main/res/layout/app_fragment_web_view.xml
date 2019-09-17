@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.WebViewActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.mvvm.WebViewViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/app_colorPrimary"
+            android:bind_toolbar_navigationClick="@{viewModel.onNavigationClick}"
+            android:bind_visibility="@{viewModel.showTitle}"
+            android:theme="@style/app_toolbar"
+            app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:singleLine="true"
+                android:text="@{viewModel.title}"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                tools:text="@sample/article_list.json/data/datas/title" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View style="@style/app_dividing.horizontal" />
+
+        <WebView
+            android:id="@+id/wv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</layout>

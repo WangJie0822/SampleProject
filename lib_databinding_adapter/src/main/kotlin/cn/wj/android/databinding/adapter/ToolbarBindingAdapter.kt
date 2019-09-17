@@ -15,6 +15,14 @@ fun setToolbarMenuItemClick(toolbar: Toolbar, itemClick: (MenuItem) -> Boolean) 
 }
 
 /**
+ * 设置 Menu 点击事件
+ */
+@BindingAdapter("android:bind_toolbar_navigationClick")
+fun setToolbarNavigationClick(toolbar: Toolbar, click: () -> Unit) {
+    toolbar.setNavigationOnClickListener { click.invoke() }
+}
+
+/**
  * 设置 Toolbar 标题
  */
 @BindingAdapter("android:bind_toolbar_title")
