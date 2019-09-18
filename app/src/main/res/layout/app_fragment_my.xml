@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.mvvm.MyViewModel" />
     </data>
 
     <LinearLayout
@@ -10,11 +15,57 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/app_my" />
+            android:layout_height="wrap_content"
+            android:background="@color/app_colorPrimary"
+            android:bind_onClick="@{viewModel.onTopClick}"
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:bind_iv_img_circle="@{true}"
+                android:bind_iv_img_url="@{viewModel.avatarUrl}"
+                android:contentDescription="@null"
+                tools:background="#0BB1FF" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@{viewModel.userName}"
+                android:textColor="@color/app_white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="用户名" />
+
+        </LinearLayout>
+
+        <cn.wj.android.views.custom.DrawableTextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="?selectableItemBackground"
+            android:bind_onClick="@{viewModel.onMyCollectionClick}"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/app_my_collection"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            app:dtv_drawableEnd="@drawable/app_vector_arrow_right_gray_24dp"
+            app:dtv_drawableEndHeight="24dp"
+            app:dtv_drawableEndWidth="24dp"
+            app:dtv_drawableStart="@drawable/app_vector_favorite_border_primary_24dp"
+            app:dtv_drawableStartHeight="24dp"
+            app:dtv_drawableStartWidth="24dp" />
 
     </LinearLayout>
 

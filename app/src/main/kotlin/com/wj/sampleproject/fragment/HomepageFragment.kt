@@ -40,23 +40,22 @@ class HomepageFragment
     private val mArticlesAdapter: ArticleListRvAdapter by inject()
 
     override fun initView() {
-        // 配置 Banner 列表
-        val mBannerBinding = AppLayoutHomepageBannerBinding.inflate(
-                LayoutInflater.from(mContext), null, false
-        )
-        mBannerAdapter.mViewModel = mViewModel
-        mBannerBinding.vpBanner.adapter = mBannerAdapter
 
         // 配置文章列表
         mArticlesAdapter.mViewModel = mViewModel
-        mArticlesAdapter.addHeaderView(mBannerBinding.root)
-        mArticlesAdapter.setEmptyView(R.layout.app_layout_no_data)
         mBinding.rvArticles.layoutManager = WrapContentLinearLayoutManager()
         mBinding.rvArticles.adapter = mArticlesAdapter
 
         // 添加观察者
         // Banner 列表
         mViewModel.bannerData.observe(this, Observer {
+            // 配置 Banner 列表
+            val mBannerBinding = AppLayoutHomepageBannerBinding.inflate(
+                    LayoutInflater.from(mContext), null, false
+            )
+            mBannerAdapter.mViewModel = mViewModel
+            mBannerBinding.vpBanner.adapter = mBannerAdapter
+            mArticlesAdapter.addHeaderView(mBannerBinding.root)
             // 更新 Banner 列表
             mBannerAdapter.refresh(it)
             // 设置 Banner 数量并开启轮播

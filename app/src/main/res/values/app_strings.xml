@@ -17,4 +17,6 @@
     <string name="app_collection">收藏</string>
     <string name="app_navigation">导航</string>
     <string name="app_zan">赞</string>
+    <string name="app_my_collection">我的收藏</string>
+    <string name="app_un_login">未登录</string>
 </resources>
