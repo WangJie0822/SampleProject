@@ -4,8 +4,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.orEmpty
+import cn.wj.android.logger.Logger
 import com.wj.sampleproject.base.mvvm.BaseViewModel
-import com.wj.sampleproject.entity.BjnewsEntity
+import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.repository.BjnewsRepository
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ constructor(private val repository: BjnewsRepository)
     }
 
     /** 公众号数据 */
-    val bjnewsData = MutableLiveData<ArrayList<BjnewsEntity>>()
+    val bjnewsData = MutableLiveData<ArrayList<CategoryEntity>>()
 
     /**
      * 获取公众号列表
@@ -44,6 +45,7 @@ constructor(private val repository: BjnewsRepository)
                     snackbarData.postValue(result.toError())
                 }
             } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "NET_ERROR")
                 snackbarData.postValue(throwable.snackbarMsg)
             }
         }

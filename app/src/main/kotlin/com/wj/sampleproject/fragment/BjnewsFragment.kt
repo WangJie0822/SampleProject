@@ -32,15 +32,16 @@ class BjnewsFragment
     override fun initView() {
         // 添加观察者
         mViewModel.bjnewsData.observe(this, Observer {
-            val frags = arrayListOf<BaseFragment<*, *>>()
-            for (item in it) {
-                frags.add(BjnewsArticlesFragment.actionCreate(item))
-            }
             // 配置 ViewPager
             mBinding.vpBjnews.adapter = FragVpAdapter.newBuilder()
                     .manager(childFragmentManager)
-                    .frags(frags)
-                    .pageTitle { _, i -> frags[i].pageTitle.orEmpty() }
+                    .creator(object : FragVpAdapter.Creator {
+                        override val count: Int
+                            get() = it.size
+
+                        override fun createFragment(position: Int) = BjnewsArticlesFragment.actionCreate(it[position])
+                    })
+                    .pageTitle { _, i -> it[i].name.orEmpty() }
                     .build()
             mBinding.stlBjnews.setViewPager(mBinding.vpBjnews)
         })

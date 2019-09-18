@@ -14,9 +14,10 @@
         android:allowBackup="false"
         android:icon="@mipmap/app_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/app_network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <!-- 全面屏适配 -->
         <meta-data

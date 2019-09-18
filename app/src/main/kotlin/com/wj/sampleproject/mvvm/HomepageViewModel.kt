@@ -9,6 +9,7 @@ import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.base.ext.condition
 import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.base.utils.AppManager
+import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.SearchActivity
 import com.wj.sampleproject.activity.WebViewActivity
@@ -146,6 +147,7 @@ constructor(private val repository: HomepageRepository)
                     snackbarData.postValue(SnackbarEntity(result.errorMsg))
                 }
             } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "NET_ERROR")
                 snackbarData.postValue(SnackbarEntity(throwable.showMsg))
             }
         }
@@ -203,6 +205,7 @@ constructor(private val repository: HomepageRepository)
                     snackbarData.postValue(SnackbarEntity(result.errorMsg))
                 }
             } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "NET_ERROR")
                 snackbarData.postValue(SnackbarEntity(throwable.showMsg))
             } finally {
                 refreshing.set(false)

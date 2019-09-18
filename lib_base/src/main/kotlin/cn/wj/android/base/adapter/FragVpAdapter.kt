@@ -28,13 +28,36 @@ class FragVpAdapter private constructor(
     /** Fragment 集合 */
     val mFrags = arrayListOf<Fragment>()
 
+    val mFragsMap = hashMapOf<Int, Fragment>()
+
+    /** 动态创建接口 */
+    var mCreator: Creator? = null
+
+    /** 获取标题接口 */
     private var pageTitleListener: OnPageTitleListener? = null
 
-    override fun getCount() = mFrags.size
+    override fun getCount() = if (mCreator == null) {
+        mFrags.size
+    } else {
+        mCreator!!.count
+    }
 
-    override fun getPageTitle(position: Int) = pageTitleListener?.invoke(mFrags[position], position)
+    override fun getPageTitle(position: Int) = pageTitleListener?.invoke(getItem(position), position)
 
-    override fun getItem(position: Int) = mFrags[position]
+    override fun getItem(position: Int) = if (mCreator == null) {
+        mFrags[position]
+    } else {
+        if (mFragsMap.containsKey(position)) {
+            val frag = mFragsMap[position]
+            if (frag == null) {
+                mCreator!!.createFragment(position)
+            } else {
+                frag
+            }
+        } else {
+            mCreator!!.createFragment(position)
+        }
+    }
 
     /**
      * FragVpAdapter 建造者类
@@ -52,6 +75,17 @@ class FragVpAdapter private constructor(
 
         /** 获取标题 */
         private var pageTitleListener: OnPageTitleListener? = null
+
+        /** 动态创建接口 */
+        private var creator: Creator? = null
+
+        /**
+         * 设置动态创建接口
+         */
+        fun creator(creator: Creator): Builder {
+            this.creator = creator
+            return this
+        }
 
         /**
          * 绑定 Fragment 集合
@@ -95,11 +129,28 @@ class FragVpAdapter private constructor(
             val adapter = FragVpAdapter(fm, behavior)
             adapter.mFrags.clear()
             adapter.mFrags.addAll(mFrags)
+            adapter.mCreator = creator
             adapter.pageTitleListener = this.pageTitleListener
             return adapter
         }
     }
 
+    /**
+     * 动态创建接口
+     */
+    interface Creator {
+        /** Fragment 总数 */
+        val count: Int
+
+        /**
+         * 创建 Fragment 对象
+         *
+         * @param position 下标
+         *
+         * @return Fragment 对象
+         */
+        fun createFragment(position: Int): Fragment
+    }
 }
 
 /**

@@ -4,6 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.orEmpty
+import cn.wj.android.logger.Logger
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.entity.SystemCategoryEntity
 import com.wj.sampleproject.ext.snackbarMsg
@@ -50,6 +51,7 @@ constructor(private val repository: SystemRepository)
                     snackbarData.postValue(result.toError())
                 }
             } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "NET_ERROR")
                 snackbarData.postValue(throwable.snackbarMsg)
             }
         }

@@ -4,12 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 
 /**
- * 公众号数据实体类
+ * 公众号、项目分类数据实体类
  */
-data class BjnewsEntity
+data class CategoryEntity
 /**
- * @param id 公众号 id
- * @param name 公众号名称
+ * @param id 分类 id
+ * @param name 分类名称
  */
 constructor(
         var id: String? = "",
@@ -29,12 +29,12 @@ constructor(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<BjnewsEntity> {
-        override fun createFromParcel(parcel: Parcel): BjnewsEntity {
-            return BjnewsEntity(parcel)
+    companion object CREATOR : Parcelable.Creator<CategoryEntity> {
+        override fun createFromParcel(parcel: Parcel): CategoryEntity {
+            return CategoryEntity(parcel)
         }
 
-        override fun newArray(size: Int): Array<BjnewsEntity?> {
+        override fun newArray(size: Int): Array<CategoryEntity?> {
             return arrayOfNulls(size)
         }
     }

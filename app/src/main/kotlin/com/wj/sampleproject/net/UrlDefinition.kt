@@ -33,4 +33,9 @@ object UrlDefinition {
     const val GET_BJNEWS_LIST = "/wxarticle/chapters/json"
     /** 获取公众号文章列表 */
     const val GET_BJNEWS_ARTICLES = "/wxarticle/list/{id}/{pageNum}/json"
+
+    /** 获取项目分类列表 */
+    const val GET_PROJECT_CATEGORY = "/project/tree/json"
+    /** 获取项目列表 */
+    const val GET_PROJECT_LIST = "/project/list/{pageNum}/json"
 }

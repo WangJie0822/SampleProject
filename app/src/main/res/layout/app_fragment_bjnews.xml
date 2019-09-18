@@ -14,7 +14,7 @@
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/stl_bjnews"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/app_colorPrimary"
             app:tl_divider_color="#FFFFFF"
             app:tl_indicator_color="#FFFFFF"

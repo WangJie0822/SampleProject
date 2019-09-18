@@ -1,5 +1,6 @@
 package com.wj.sampleproject.entity
 
+import cn.wj.android.base.ext.isNotNullAndBlank
 import cn.wj.android.base.ext.isNotNullAndEmpty
 import cn.wj.android.base.ext.orFalse
 import com.wj.sampleproject.constants.STR_TRUE
@@ -104,6 +105,10 @@ constructor(
     /** 标记 - 是否收藏 */
     val collected: Boolean
         get() = collect?.toBoolean().orFalse()
+
+    /** 标记 - 是否显示封面 */
+    val showEnvelope: Boolean
+        get() = envelopePic.isNotNullAndBlank()
 }
 
 /**

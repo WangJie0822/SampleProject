@@ -15,14 +15,17 @@ import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.ext.showMsg
 import com.wj.sampleproject.net.RefreshList
-import com.wj.sampleproject.repository.BjnewsRepository
+import com.wj.sampleproject.repository.ProjectRepository
 import kotlinx.coroutines.launch
 
 /**
  * 公众号文章 ViewModel
  */
-class BjnewsArticlesViewModel
-constructor(private val repository: BjnewsRepository)
+class ProjectArticlesViewModel
+/**
+ * @param repository 项目相关数据仓库
+ */
+constructor(private val repository: ProjectRepository)
     : BaseViewModel(),
         ArticleListViewModel {
 
@@ -56,8 +59,8 @@ constructor(private val repository: BjnewsRepository)
         WebViewActivity.actionStart(AppManager.getContext(), item.title.orEmpty(), item.link.orEmpty())
     }
 
-    /** 公众号 id */
-    var bjnewsId = ""
+    /** 项目分类 id */
+    var categoryId = ""
     /** 页码 */
     private var pageNum = NET_PAGE_START
 
@@ -73,7 +76,7 @@ constructor(private val repository: BjnewsRepository)
             var noMore = false
             try {
                 // 获取文章列表数据
-                val result = repository.getBjnewsArticles(bjnewsId, pageNum)
+                val result = repository.getProjectList(categoryId, pageNum)
                 if (result.success()) {
                     // 请求成功
                     articleListData.postValue(RefreshList(result.data?.datas, refreshing.get()))

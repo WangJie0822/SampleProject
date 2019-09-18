@@ -22,5 +22,5 @@ const val ACTION_WEB_URL = "action_web_url"
 const val ACTION_SHOW_TITLE = "action_show_title"
 /** 界面跳转数据传递 key - 标题 */
 const val ACTION_TITLE = "action_title"
-/** 界面跳转数据传递 key - 公众号 */
-const val ACTION_BJNEWS = "action_bjnews"
+/** 界面跳转数据传递 key - 公众号、项目目录 */
+const val ACTION_CATEGORY = "action_bjnews"

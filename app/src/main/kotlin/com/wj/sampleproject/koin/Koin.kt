@@ -87,7 +87,8 @@ val viewModelModule: Module = module {
     viewModel { NavigationViewModel(get()) }
     viewModel { BjnewsViewModel(get()) }
     viewModel { BjnewsArticlesViewModel(get()) }
-    viewModel { ProjectViewModel() }
+    viewModel { ProjectViewModel(get()) }
+    viewModel { ProjectArticlesViewModel(get()) }
     viewModel { MyViewModel() }
     viewModel { SearchViewModel() }
     viewModel { WebViewViewModel() }

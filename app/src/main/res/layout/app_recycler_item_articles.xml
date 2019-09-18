@@ -127,19 +127,43 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="tv_istop,tv_new,tv_author,tv_time,rv_articles_tags" />
 
+        <ImageView
+            android:id="@+id/iv_envelope"
+            android:layout_width="160dp"
+            android:layout_height="0dp"
+            android:bind_iv_img_url="@{item.envelopePic}"
+            android:bind_visibility="@{item.showEnvelope}"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="2:1"
+            app:layout_constraintStart_toEndOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/barrier_top"
+            tools:background="#C0FAE7" />
+
         <TextView
             android:id="@+id/tv_article_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="3"
             android:text="@{item.title}"
             android:textColor="#333333"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
-            app:layout_constraintStart_toEndOf="@id/guideline_start"
+            app:layout_constraintStart_toEndOf="@id/iv_envelope"
             app:layout_constraintTop_toBottomOf="@id/barrier_top"
             app:layout_goneMarginEnd="16dp"
+            app:layout_goneMarginStart="0dp"
             tools:text="@sample/article_list.json/data/datas/title" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="iv_envelope,tv_article_title" />
 
         <TextView
             android:id="@+id/tv_super_chapter"
@@ -156,7 +180,7 @@
             android:textColor="#666666"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_article_title"
+            app:layout_constraintTop_toBottomOf="@id/barrier_bottom"
             tools:text="@sample/article_list.json/data/datas/superChapterName" />
 
         <TextView
@@ -173,7 +197,7 @@
             android:textColor="#666666"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/tv_super_chapter"
-            app:layout_constraintTop_toBottomOf="@id/tv_article_title"
+            app:layout_constraintTop_toBottomOf="@id/barrier_bottom"
             tools:text="@sample/article_list.json/data/datas/chapterName" />
 
         <ImageButton
@@ -186,7 +210,7 @@
             android:src="@drawable/app_vector_favorite_black_24dp"
             android:tint="@color/app_selector_article_favorite_tint"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@id/tv_article_title" />
+            app:layout_constraintTop_toBottomOf="@id/barrier_bottom" />
 
         <View
             android:layout_width="0dp"

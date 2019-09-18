@@ -46,7 +46,7 @@ interface WebService {
      * 获取公众号列表
      */
     @GET(UrlDefinition.GET_BJNEWS_LIST)
-    suspend fun getBjnewsList(): NetResult<ArrayList<BjnewsEntity>>
+    suspend fun getBjnewsList(): NetResult<ArrayList<CategoryEntity>>
 
     /**
      * 获取公众号文章列表
@@ -60,5 +60,23 @@ interface WebService {
             @Path("id") id: String,
             @Path("pageNum") pageNum: Int,
             @Query("k") keywords: String = ""
+    ): NetResult<ArticleListEntity>
+
+    /**
+     * 获取项目分类列表
+     */
+    @GET(UrlDefinition.GET_PROJECT_CATEGORY)
+    suspend fun getProjectCategory(): NetResult<ArrayList<CategoryEntity>>
+
+    /**
+     * 获取项目列表
+     *
+     * @param pageNum 页码
+     * @param categoryId 分类 id
+     */
+    @GET(UrlDefinition.GET_PROJECT_LIST)
+    suspend fun getProjectList(
+            @Path("pageNum") pageNum: Int,
+            @Query("cid") categoryId: String
     ): NetResult<ArticleListEntity>
 }
