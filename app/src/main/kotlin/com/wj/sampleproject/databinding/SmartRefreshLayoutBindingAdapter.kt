@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.wj.sampleproject.databinding
 
 import androidx.databinding.BindingAdapter
@@ -14,7 +16,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState
  * 扩展属性 是否正在刷新
  */
 var SmartRefreshLayout.refreshing: Boolean
-    get() = this.state == RefreshState.Refreshing
+    get() = state == RefreshState.Refreshing
     set(value) {
         if (refreshing && value) {
             return
@@ -23,9 +25,13 @@ var SmartRefreshLayout.refreshing: Boolean
             return
         }
         if (value) {
-            this.autoRefresh()
+            if (state == RefreshState.None) {
+                autoRefresh(200, 300, 1.5f, false)
+            } else {
+                autoRefresh()
+            }
         } else {
-            this.finishRefresh()
+            finishRefresh()
         }
     }
 
@@ -39,8 +45,8 @@ fun setSmartRefreshLayoutOnRefresh(srl: SmartRefreshLayout,
                                    onRefresh: (() -> Unit)?,
                                    listener: InverseBindingListener?) {
     srl.setOnRefreshListener {
-        onRefresh?.invoke()
         listener?.onChange()
+        onRefresh?.invoke()
     }
 }
 
@@ -76,7 +82,7 @@ fun setSmartRefreshLayoutRefreshEnable(srl: SmartRefreshLayout, enable: Boolean)
  * 扩展属性 是否正在加载更多
  */
 var SmartRefreshLayout.loadmore: Boolean
-    get() = this.state == RefreshState.Loading
+    get() = state == RefreshState.Loading
     set(value) {
         if (loadmore && value) {
             return
@@ -85,9 +91,9 @@ var SmartRefreshLayout.loadmore: Boolean
             return
         }
         if (value) {
-            this.autoLoadMore()
+            autoLoadMore()
         } else {
-            this.finishLoadMore()
+            finishLoadMore()
         }
     }
 
@@ -101,8 +107,8 @@ fun setSmartRefreshLayoutOnLoadMore(srl: SmartRefreshLayout,
                                     onLoadmore: (() -> Unit)?,
                                     listener: InverseBindingListener?) {
     srl.setOnLoadMoreListener {
-        onLoadmore?.invoke()
         listener?.onChange()
+        onLoadmore?.invoke()
     }
 }
 

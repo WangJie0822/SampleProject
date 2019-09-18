@@ -53,8 +53,6 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <View style="@style/app_dividing.horizontal" />
-
         <cn.wj.android.views.custom.CustomViewPager
             android:id="@+id/vp_system"
             android:layout_width="match_parent"

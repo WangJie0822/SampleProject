@@ -47,16 +47,18 @@ class FragVpAdapter private constructor(
     override fun getItem(position: Int) = if (mCreator == null) {
         mFrags[position]
     } else {
+        var frag: Fragment?
         if (mFragsMap.containsKey(position)) {
-            val frag = mFragsMap[position]
+            frag = mFragsMap[position]
             if (frag == null) {
-                mCreator!!.createFragment(position)
-            } else {
-                frag
+                frag = mCreator!!.createFragment(position)
+                mFragsMap[position] = frag
             }
         } else {
-            mCreator!!.createFragment(position)
+            frag = mCreator!!.createFragment(position)
+            mFragsMap[position] = frag
         }
+        frag
     }
 
     /**

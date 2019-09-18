@@ -26,8 +26,6 @@
             app:tl_textUnselectColor="#D5D5D5"
             app:tl_textsize="14sp" />
 
-        <View style="@style/app_dividing.horizontal" />
-
         <cn.wj.android.views.custom.CustomViewPager
             android:id="@+id/vp_project"
             android:layout_width="match_parent"

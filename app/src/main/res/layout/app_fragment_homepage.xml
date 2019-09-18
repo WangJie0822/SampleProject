@@ -25,8 +25,6 @@
             app:menu="@menu/app_menu_search"
             app:title="@string/app_homepage" />
 
-        <View style="@style/app_dividing.horizontal" />
-
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
