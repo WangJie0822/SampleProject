@@ -1,5 +1,6 @@
 package com.wj.sampleproject.fragment
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import cn.wj.android.base.adapter.FragVpAdapter
 import com.wj.sampleproject.R
@@ -29,8 +30,15 @@ class ProjectFragment
 
     override val layoutResID: Int = R.layout.app_fragment_project
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // 获取项目分类数据
+        mViewModel.getProjectCategory()
+    }
+
     override fun initView() {
-// 添加观察者
+        // 添加观察者
         mViewModel.listData.observe(this, Observer {
             // 配置 ViewPager
             mBinding.vpProject.adapter = FragVpAdapter.newBuilder()

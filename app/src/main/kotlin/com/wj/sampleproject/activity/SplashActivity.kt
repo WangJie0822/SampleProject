@@ -3,10 +3,15 @@ package com.wj.sampleproject.activity
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
+import cn.wj.android.base.ext.viewModelScope
+import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
+import com.wj.sampleproject.constants.SPLASH_DELAY_MS
 import com.wj.sampleproject.databinding.AppActivitySplashBinding
 import com.wj.sampleproject.mvvm.SplashViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -25,5 +30,14 @@ class SplashActivity
             window.attributes = lp
         }
         setContentView(R.layout.app_activity_splash)
+
+        viewModelScope.launch {
+            // 延时 2000ms
+            delay(SPLASH_DELAY_MS)
+            // 跳转主界面
+            MainActivity.actionStart(AppManager.getContext())
+            // 结束当前界面
+            finish()
+        }
     }
 }

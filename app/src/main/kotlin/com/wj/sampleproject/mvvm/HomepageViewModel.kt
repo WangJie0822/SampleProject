@@ -2,7 +2,6 @@ package com.wj.sampleproject.mvvm
 
 import android.view.MenuItem
 import android.view.MotionEvent
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
@@ -35,25 +34,6 @@ class HomepageViewModel
 constructor(private val repository: HomepageRepository)
     : BaseViewModel(),
         ArticleListViewModel {
-
-    override fun firstLoad() {
-        // 获取 Banner 数据
-        getHomepageBannerList()
-        // 刷新文章列表
-        refreshing.set(true)
-    }
-
-    override fun onStart(source: LifecycleOwner) {
-        super.onStart(source)
-        // 开启轮播
-        startCarousel()
-    }
-
-    override fun onStop(source: LifecycleOwner) {
-        super.onStop(source)
-        // 关闭轮播
-        stopCarousel()
-    }
 
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
@@ -135,7 +115,7 @@ constructor(private val repository: HomepageRepository)
     /**
      * 获取首页 Banner 列表
      */
-    private fun getHomepageBannerList() {
+    fun getHomepageBannerList() {
         viewModelScope.launch {
             try {
                 // 获取 Banner 数据
@@ -156,7 +136,7 @@ constructor(private val repository: HomepageRepository)
     /**
      * 开启 Banner 轮播
      */
-    private fun startCarousel() {
+    fun startCarousel() {
         // 关闭轮播
         stopCarousel()
         if (bannerCount < 2) {
@@ -178,7 +158,7 @@ constructor(private val repository: HomepageRepository)
     /**
      * 关闭 Banner 轮播
      */
-    private fun stopCarousel() {
+    fun stopCarousel() {
         if (carouselJob != null) {
             if (carouselJob?.isActive.condition) {
                 carouselJob?.cancel()

@@ -1,6 +1,5 @@
 package com.wj.sampleproject.mvvm
 
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.orEmpty
@@ -22,13 +21,6 @@ class SystemCategoryViewModel
 constructor(private val repository: SystemRepository)
     : BaseViewModel() {
 
-    override fun onCreate(source: LifecycleOwner) {
-        super.onCreate(source)
-
-        // 获取分类数据
-        getSystemCategoryList()
-    }
-
     /** TODO 目录点击 */
     val onCategoryItemClick: (SystemCategoryEntity) -> Unit = { item ->
         snackbarData.postValue(item.name.toSnackbarMsg())
@@ -40,7 +32,7 @@ constructor(private val repository: SystemRepository)
     /**
      * 获取分类数据
      */
-    private fun getSystemCategoryList() {
+    fun getSystemCategoryList() {
         viewModelScope.launch {
             try {
                 val result = repository.getSystemCategoryList()

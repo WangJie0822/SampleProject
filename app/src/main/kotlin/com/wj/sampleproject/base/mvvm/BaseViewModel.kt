@@ -2,7 +2,6 @@ package com.wj.sampleproject.base.mvvm
 
 import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import cn.wj.android.base.mvvm.BaseMvvmViewModel
 import com.wj.sampleproject.base.SnackbarEntity
@@ -14,15 +13,6 @@ import org.koin.core.KoinComponent
 abstract class BaseViewModel
     : BaseMvvmViewModel(),
         KoinComponent {
-
-    override fun onResume(source: LifecycleOwner) {
-        super.onResume(source)
-
-        if (firstLoad) {
-            firstLoad()
-            firstLoad = false
-        }
-    }
 
     /** Snackbar 控制 */
     val snackbarData = MutableLiveData<SnackbarEntity>()
@@ -42,9 +32,4 @@ abstract class BaseViewModel
         this.resultCode = resultCode
         this.resultData = resultData
     }
-
-    /** 标记 - 是否第一次加载 */
-    protected var firstLoad = true
-
-    open protected fun firstLoad() {}
 }

@@ -1,5 +1,6 @@
 package com.wj.sampleproject.fragment
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import cn.wj.android.base.adapter.FragVpAdapter
 import com.wj.sampleproject.R
@@ -28,6 +29,13 @@ class BjnewsFragment
     override val mViewModel: BjnewsViewModel by viewModel()
 
     override val layoutResID: Int = R.layout.app_fragment_bjnews
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // 获取公众号数据
+        mViewModel.getBjnewList()
+    }
 
     override fun initView() {
         // 添加观察者

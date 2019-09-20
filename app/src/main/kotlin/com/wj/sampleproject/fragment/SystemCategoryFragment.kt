@@ -1,5 +1,6 @@
 package com.wj.sampleproject.fragment
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
@@ -34,6 +35,13 @@ class SystemCategoryFragment
 
     /** 列表适配器对象 */
     private val mAdapter: SystemCategoryRvAdapter by inject()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // 获取分类数据
+        mViewModel.getSystemCategoryList()
+    }
 
     override fun initView() {
         // 配置 RecyclerView

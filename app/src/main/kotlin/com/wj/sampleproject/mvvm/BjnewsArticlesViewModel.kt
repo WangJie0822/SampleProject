@@ -22,13 +22,13 @@ import kotlinx.coroutines.launch
  * 公众号文章 ViewModel
  */
 class BjnewsArticlesViewModel
+/**
+ * @param repository 公众号相关数据仓库
+ */
 constructor(private val repository: BjnewsRepository)
     : BaseViewModel(),
         ArticleListViewModel {
 
-    override fun firstLoad() {
-        refreshing.set(true)
-    }
 
     /** 标记 - 是否正在刷新 */
     val refreshing: BindingField<Boolean> = BindingField(false)

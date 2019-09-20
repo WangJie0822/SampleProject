@@ -1,6 +1,5 @@
 package com.wj.sampleproject.mvvm
 
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.orEmpty
@@ -21,20 +20,13 @@ class ProjectViewModel
 constructor(private val repository: ProjectRepository)
     : BaseViewModel() {
 
-    override fun onCreate(source: LifecycleOwner) {
-        super.onCreate(source)
-
-        // 获取项目分类数据
-        getProjectCategory()
-    }
-
     /** 项目分类数据 */
     val listData = MutableLiveData<ArrayList<CategoryEntity>>()
 
     /**
      * 获取新项目分类列表
      */
-    private fun getProjectCategory() {
+    fun getProjectCategory() {
         viewModelScope.launch {
             try {
                 val result = repository.getProjectCategory()

@@ -67,4 +67,23 @@ class HomepageFragment
             mArticlesAdapter.loadData(it.list, it.refresh)
         })
     }
+
+    override fun firstLoad() {
+        // 获取 Banner 数据
+        mViewModel.getHomepageBannerList()
+        // 刷新文章列表
+        mViewModel.refreshing.set(true)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // 开启轮播
+        mViewModel.startCarousel()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // 关闭轮播
+        mViewModel.stopCarousel()
+    }
 }

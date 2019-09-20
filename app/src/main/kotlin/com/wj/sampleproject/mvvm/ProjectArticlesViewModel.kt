@@ -29,10 +29,6 @@ constructor(private val repository: ProjectRepository)
     : BaseViewModel(),
         ArticleListViewModel {
 
-    override fun firstLoad() {
-        refreshing.set(true)
-    }
-
     /** 标记 - 是否正在刷新 */
     val refreshing: BindingField<Boolean> = BindingField(false)
 

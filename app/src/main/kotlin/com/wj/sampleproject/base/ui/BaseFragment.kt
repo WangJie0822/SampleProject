@@ -15,11 +15,25 @@ import com.wj.sampleproject.base.mvvm.BaseViewModel
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
     : BaseBindingLibFragment<VM, DB>() {
 
+    /** 标记 - 第一次加载 */
+    protected var mFirstLoad = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         observeData()
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (mFirstLoad) {
+            firstLoad()
+            mFirstLoad = false
+        }
+    }
+
+    protected open fun firstLoad() {}
 
     /**
      * 添加观察者

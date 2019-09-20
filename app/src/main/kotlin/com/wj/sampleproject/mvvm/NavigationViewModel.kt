@@ -1,6 +1,5 @@
 package com.wj.sampleproject.mvvm
 
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.orEmpty
@@ -23,13 +22,6 @@ class NavigationViewModel
 constructor(private val repository: SystemRepository)
     : BaseViewModel() {
 
-    override fun onCreate(source: LifecycleOwner) {
-        super.onCreate(source)
-
-        // 获取导航数据
-        getNavigationList()
-    }
-
     /** TODO 导航条目点击 */
     val onNavigationItemClick: (ArticleEntity) -> Unit = { item ->
         snackbarData.postValue(item.title.toSnackbarMsg())
@@ -41,7 +33,7 @@ constructor(private val repository: SystemRepository)
     /**
      * 获取导航列表
      */
-    private fun getNavigationList() {
+    fun getNavigationList() {
         viewModelScope.launch {
             try {
                 val result = repository.getNavigationList()

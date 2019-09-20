@@ -2,6 +2,7 @@
 
 package cn.wj.android.base.ext
 
+import androidx.lifecycle.ViewModel
 import cn.wj.android.base.ui.activity.BaseLibActivity
 import cn.wj.android.base.ui.dialog.BaseLibDialog
 import cn.wj.android.base.ui.fragment.BaseLibFragment
@@ -12,10 +13,15 @@ import kotlinx.coroutines.cancel
 import java.io.Closeable
 import kotlin.coroutines.CoroutineContext
 
-private const val JOB_KEY = "cn.wj.android.base.ViewModelCoroutineScope.JOB_KEY"
+private const val JOB_KEY = "cn.wj.android.lifecycle.ViewModelCoroutineScope.JOB_KEY"
 
-/** Activity 协程范围 */
-val BaseLibActivity.activityScope: CoroutineScope
+/**
+ * [CoroutineScope] tied to this [ViewModel].
+ * This scope will be canceled when ViewModel will be cleared, i.e [ViewModel.onCleared] is called
+ *
+ * This scope is bound to [Dispatchers.Main]
+ */
+val BaseLibActivity.viewModelScope: CoroutineScope
     get() {
         val scope: CoroutineScope? = this.getTag(JOB_KEY)
         if (scope != null) {
@@ -25,8 +31,13 @@ val BaseLibActivity.activityScope: CoroutineScope
                 MyCloseableCoroutineScope(SupervisorJob() + Dispatchers.Main))
     }
 
-/** Fragment 协程范围 */
-val BaseLibFragment.fragmentScope: CoroutineScope
+/**
+ * [CoroutineScope] tied to this [ViewModel].
+ * This scope will be canceled when ViewModel will be cleared, i.e [ViewModel.onCleared] is called
+ *
+ * This scope is bound to [Dispatchers.Main]
+ */
+val BaseLibFragment.viewModelScope: CoroutineScope
     get() {
         val scope: CoroutineScope? = this.getTag(JOB_KEY)
         if (scope != null) {
@@ -36,8 +47,13 @@ val BaseLibFragment.fragmentScope: CoroutineScope
                 MyCloseableCoroutineScope(SupervisorJob() + Dispatchers.Main))
     }
 
-/** Dialog 协程范围 */
-val BaseLibDialog.dialogScope: CoroutineScope
+/**
+ * [CoroutineScope] tied to this [ViewModel].
+ * This scope will be canceled when ViewModel will be cleared, i.e [ViewModel.onCleared] is called
+ *
+ * This scope is bound to [Dispatchers.Main]
+ */
+val BaseLibDialog.viewModelScope: CoroutineScope
     get() {
         val scope: CoroutineScope? = this.getTag(JOB_KEY)
         if (scope != null) {
@@ -47,7 +63,8 @@ val BaseLibDialog.dialogScope: CoroutineScope
                 MyCloseableCoroutineScope(SupervisorJob() + Dispatchers.Main))
     }
 
-internal class CloseableCoroutineScope(context: CoroutineContext) : Closeable, CoroutineScope {
+internal class MyCloseableCoroutineScope(context: CoroutineContext) : Closeable, CoroutineScope {
+
     override val coroutineContext: CoroutineContext = context
 
     override fun close() {

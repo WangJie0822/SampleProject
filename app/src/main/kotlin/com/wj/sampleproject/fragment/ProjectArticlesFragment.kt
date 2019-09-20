@@ -61,4 +61,8 @@ class ProjectArticlesFragment
             mArticlesAdapter.loadData(it.list, it.refresh)
         })
     }
+
+    override fun firstLoad() {
+        mViewModel.refreshing.set(true)
+    }
 }
