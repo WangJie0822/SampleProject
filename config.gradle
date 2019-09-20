@@ -136,5 +136,8 @@ ext {
 
             // Tablayout
             "tablayout"                            : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
+
+            // androidx - livedatabus
+            "androidx-livedatabus"                 : "com.jeremyliao:live-event-bus-x:1.5.1",
     ]
 }

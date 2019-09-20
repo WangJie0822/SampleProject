@@ -191,6 +191,9 @@ dependencies {
     implementation rootProject.ext.dependencies["koin-viewmodel"]
     testImplementation rootProject.ext.dependencies["koin-test"]
 
+    // livedatabus
+    implementation rootProject.ext.dependencies["androidx-livedatabus"]
+
     // OkHttp
     implementation rootProject.ext.dependencies["okhttp"]
 

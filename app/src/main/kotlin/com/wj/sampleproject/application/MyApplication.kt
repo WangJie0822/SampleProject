@@ -8,6 +8,7 @@ import cn.wj.android.base.utils.AppManager
 import cn.wj.android.logger.AndroidLogAdapter
 import cn.wj.android.logger.Logger
 import cn.wj.android.logger.PrettyFormatStrategy
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.koin.adapterModule
 import com.wj.sampleproject.koin.netModule
@@ -39,13 +40,16 @@ class MyApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@MyApplication)
-            modules(arrayListOf(netModule, viewModelModule, repositoryModule, adapterModule))
+            modules(listOf(netModule, viewModelModule, repositoryModule, adapterModule))
         }
 
-//        RxJavaPlugins.setErrorHandler {
-//            Logger.e(it)
-//        }
+        // 初始化LiveDataBus
+        LiveEventBus
+                .config()
+                .lifecycleObserverAlwaysActive(false)
+                .autoClear(false)
 
+        // 初始化 Logger 日志打印
         val strategy = PrettyFormatStrategy.newBuilder()
                 .tag("SAMPLE")
                 .build()
@@ -55,6 +59,7 @@ class MyApplication : Application() {
             }
         })
 
-        InternalLog.logEnable(true)
+        // base库输出日志
+        InternalLog.logEnable(BuildConfig.DEBUG)
     }
 }
