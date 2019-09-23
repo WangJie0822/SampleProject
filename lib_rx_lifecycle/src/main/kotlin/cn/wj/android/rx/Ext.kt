@@ -241,7 +241,7 @@ val Tagable.rxLifecycleOwner: RxLifecycleOwner
         return setTagIfAbsent(JOB_KEY, RxCompositeDisposable(CompositeDisposable()))
     }
 
-class RxCompositeDisposable(disposiables: CompositeDisposable?) : Closeable, RxLifecycleOwner {
+internal class RxCompositeDisposable(disposiables: CompositeDisposable?) : Closeable, RxLifecycleOwner {
 
     override var disposables: CompositeDisposable? = disposiables
 
