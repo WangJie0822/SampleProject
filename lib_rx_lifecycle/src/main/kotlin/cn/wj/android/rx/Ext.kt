@@ -3,12 +3,15 @@
 package cn.wj.android.rx
 
 import androidx.lifecycle.LifecycleOwner
+import cn.wj.android.common.Tagable
 import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.internal.functions.Functions
+import java.io.Closeable
 
 /**
  * 订阅并关联生命周期管理
@@ -225,4 +228,118 @@ internal fun getObserver(owner: LifecycleOwner): RxLifecycleObserver {
     // 添加到 Map 集合以复用
     rxLifecycles[owner] = observer
     return observer
+}
+
+private const val JOB_KEY = "cn.wj.android.lifecycle.rxLifecycle.JOB_KEY"
+
+val Tagable.rxLifecycleOwner: RxLifecycleOwner
+    get() {
+        val scope: RxLifecycleOwner? = this.getTag(JOB_KEY)
+        if (scope != null) {
+            return scope
+        }
+        return setTagIfAbsent(JOB_KEY, RxCompositeDisposable(CompositeDisposable()))
+    }
+
+class RxCompositeDisposable(disposiables: CompositeDisposable?) : Closeable, RxLifecycleOwner {
+
+    override var disposables: CompositeDisposable? = disposiables
+
+    override fun close() {
+        disposeAll()
+    }
+}
+
+/**
+ * 订阅并关联生命周期管理
+ *
+ * @param owner Android 生命周期接口
+ * @param onNext 事件处理
+ * @param onComplete 事件完成
+ * @param onSubscribe 事件订阅
+ *
+ * @return [Disposable] 事件对象
+ */
+fun <T> Observable<T>.subscribeWithOwner(owner: Tagable,
+                                         onNext: Consumer<T> = Functions.emptyConsumer(),
+                                         onError: Consumer<Throwable> = Functions.ON_ERROR_MISSING,
+                                         onComplete: Action = Functions.EMPTY_ACTION,
+                                         onSubscribe: Consumer<Disposable> = Functions.emptyConsumer()
+): Disposable {
+    val disposable = this.subscribe(onNext, onError, onComplete, onSubscribe)
+    owner.rxLifecycleOwner.addDisposable(disposable)
+    return disposable
+}
+
+/**
+ * 订阅并关联生命周期管理
+ *
+ * @param owner Android 生命周期接口
+ * @param onNext 事件处理
+ * @param onComplete 事件完成
+ * @param onSubscribe 事件订阅
+ *
+ * @return [Disposable] 事件对象
+ */
+fun <T> Observable<T>.subscribeWithOwner(owner: Tagable,
+                                         onNext: ((T) -> Unit)? = null,
+                                         onError: ((Throwable) -> Unit)? = null,
+                                         onComplete: (() -> Unit)? = null,
+                                         onSubscribe: ((Disposable) -> Unit)? = null
+): Disposable {
+    val onNextConsumer: Consumer<T> = if (onNext == null) {
+        Functions.emptyConsumer()
+    } else {
+        Consumer { t -> onNext.invoke(t) }
+    }
+    val onErrorConsumer: Consumer<Throwable> = if (onError == null) {
+        Functions.emptyConsumer()
+    } else {
+        Consumer { t -> onError.invoke(t) }
+    }
+    val onCompleteAction: Action = if (onComplete == null) {
+        Functions.EMPTY_ACTION
+    } else {
+        Action { onComplete.invoke() }
+    }
+    val onSubscribeConsumer: Consumer<Disposable> = if (onSubscribe == null) {
+        Functions.emptyConsumer()
+    } else {
+        Consumer { d -> onSubscribe.invoke(d) }
+    }
+    return this.subscribeWithOwner(owner,
+            onNextConsumer,
+            onErrorConsumer,
+            onCompleteAction,
+            onSubscribeConsumer)
+}
+
+/**
+ * 订阅并关联生命周期管理
+ *
+ * @param owner Android 生命周期接口
+ * @param observer 观察者对象
+ */
+fun <T> Observable<T>.subscribeWithOwner(owner: Tagable,
+                                         observer: Observer<T>
+) {
+    this.subscribe(object : Observer<T> {
+        override fun onComplete() {
+            observer.onComplete()
+        }
+
+        override fun onSubscribe(d: Disposable) {
+            observer.onSubscribe(d)
+            owner.rxLifecycleOwner.addDisposable(d)
+        }
+
+        override fun onNext(t: T) {
+            observer.onNext(t)
+        }
+
+        override fun onError(e: Throwable) {
+            observer.onError(e)
+        }
+
+    })
 }

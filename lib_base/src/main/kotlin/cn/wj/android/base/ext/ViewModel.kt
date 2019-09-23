@@ -10,7 +10,7 @@ import kotlinx.coroutines.cancel
 import java.io.Closeable
 import kotlin.coroutines.CoroutineContext
 
-private const val JOB_KEY = "cn.wj.android.lifecycle.ViewModelCoroutineScope.JOB_KEY"
+private const val JOB_KEY = "cn.wj.android.lifecycle.TagableCoroutineScope.JOB_KEY"
 
 /**
  * Tagable 接口的 协程范围

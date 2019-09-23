@@ -23,7 +23,7 @@ abstract class BaseLibDialog
     : DialogFragment(),
         Tagable {
 
-    override val mBagOfTags: HashMap<String, Any> = hashMapOf()
+    override val mTagMaps: HashMap<String, Any> = hashMapOf()
 
     override var mClosed: Boolean = false
 
@@ -81,12 +81,7 @@ abstract class BaseLibDialog
 
     override fun onDestroy() {
         super.onDestroy()
-        mClosed = true
-        synchronized(mBagOfTags) {
-            for (value in mBagOfTags.values) {
-                closeWithRuntimeException(value)
-            }
-        }
+        clearTags()
     }
 
     /**

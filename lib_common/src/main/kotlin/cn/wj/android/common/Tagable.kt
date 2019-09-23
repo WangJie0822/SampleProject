@@ -10,25 +10,25 @@ import java.util.*
 interface Tagable {
 
     /** Map 数据集合 */
-    val mBagOfTags: HashMap<String, Any>
+    val mTagMaps: HashMap<String, Any>
 
     /** 标记 - 当前接口是否关闭 */
     var mClosed: Boolean
 
     fun <T> getTag(key: String): T? {
-        return synchronized(mBagOfTags) {
+        return synchronized(mTagMaps) {
             @Suppress("UNCHECKED_CAST")
-            mBagOfTags[key] as? T
+            mTagMaps[key] as? T
         }
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T> setTagIfAbsent(key: String, newValue: T): T {
         val previous: T?
-        synchronized(mBagOfTags) {
-            previous = mBagOfTags[key] as T?
+        synchronized(mTagMaps) {
+            previous = mTagMaps[key] as T?
             if (previous == null) {
-                mBagOfTags[key] = newValue as Any
+                mTagMaps[key] = newValue as Any
             }
         }
         val result = previous ?: newValue
@@ -47,6 +47,18 @@ interface Tagable {
                 throw RuntimeException(e)
             }
 
+        }
+    }
+
+    /**
+     * 清空 Tag，此方法必须在回收资源是调用
+     */
+    fun clearTags() {
+        mClosed = true
+        synchronized(mTagMaps) {
+            for (value in mTagMaps.values) {
+                closeWithRuntimeException(value)
+            }
         }
     }
 }

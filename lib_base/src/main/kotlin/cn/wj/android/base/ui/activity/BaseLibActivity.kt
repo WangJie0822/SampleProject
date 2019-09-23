@@ -23,7 +23,7 @@ abstract class BaseLibActivity
     : AppCompatActivity(),
         Tagable {
 
-    override val mBagOfTags: HashMap<String, Any> = hashMapOf()
+    override val mTagMaps: HashMap<String, Any> = hashMapOf()
 
     override var mClosed: Boolean = false
 
@@ -51,12 +51,7 @@ abstract class BaseLibActivity
 
     override fun onDestroy() {
         super.onDestroy()
-        mClosed = true
-        synchronized(mBagOfTags) {
-            for (value in mBagOfTags.values) {
-                closeWithRuntimeException(value)
-            }
-        }
+        clearTags()
     }
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {

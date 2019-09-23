@@ -29,4 +29,7 @@ dependencies {
     implementation rootProject.ext.dependencies["rxjava"]
     // RxAndroid2
     implementation rootProject.ext.dependencies["rxandroid"]
+
+    // Common 库
+    implementation project(":lib_common")
 }
