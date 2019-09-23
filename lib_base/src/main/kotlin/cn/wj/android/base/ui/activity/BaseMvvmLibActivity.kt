@@ -1,6 +1,5 @@
 package cn.wj.android.base.ui.activity
 
-import android.os.Bundle
 import cn.wj.android.base.mvvm.BaseMvvmViewModel
 
 /**
@@ -17,19 +16,4 @@ abstract class BaseMvvmLibActivity<VM : BaseMvvmViewModel>
 
     /** 当前界面 ViewModel 对象 */
     abstract val mViewModel: VM
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // 添加生命周期监听
-        lifecycle.addObserver(mViewModel)
-    }
-
-    override fun onDestroy() {
-
-        super.onDestroy()
-
-        // 移除生命周期监听
-        lifecycle.removeObserver(mViewModel)
-    }
 }
