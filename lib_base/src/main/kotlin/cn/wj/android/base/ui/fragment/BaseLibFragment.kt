@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import cn.wj.android.base.ui.Tagable
+import cn.wj.android.common.Tagable
 import java.util.*
 
 /**

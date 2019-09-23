@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
 
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
-    resourcePrefix "base"
+    resourcePrefix "common"
 
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -20,25 +19,8 @@ android {
         }
     }
 
-    dataBinding { // DataBinding 开启
-        enabled true
-    }
 }
 
 dependencies {
-    // Kotlin 支持
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    // 协程
-    implementation rootProject.ext.dependencies["coroutines"]
-    
-    // v4
-    implementation rootProject.ext.dependencies["androidx_support-v4"]
-    // v7
-    implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
-    // RecyclerView
-    implementation rootProject.ext.dependencies["androidx_recyclerview"]
-
-    // Common 库
-    implementation project(":lib_common")
 }

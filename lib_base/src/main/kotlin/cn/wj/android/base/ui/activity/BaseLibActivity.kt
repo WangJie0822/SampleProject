@@ -7,7 +7,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import cn.wj.android.base.ext.hideSoftKeyboard
 import cn.wj.android.base.tools.shouldHideInput
-import cn.wj.android.base.ui.Tagable
+import cn.wj.android.common.Tagable
 import java.util.*
 
 /**

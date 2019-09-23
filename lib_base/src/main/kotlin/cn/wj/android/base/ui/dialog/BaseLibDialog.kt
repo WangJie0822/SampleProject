@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import cn.wj.android.base.tools.DEVICE_SCREEN_HEIGHT
 import cn.wj.android.base.tools.statusBarHeight
-import cn.wj.android.base.ui.Tagable
+import cn.wj.android.common.Tagable
 import java.util.*
 
 /**
