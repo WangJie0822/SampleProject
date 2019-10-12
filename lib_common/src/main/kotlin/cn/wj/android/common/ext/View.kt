@@ -1,10 +1,13 @@
 @file:Suppress("unused")
+@file:JvmName("ViewExt")
 
-package cn.wj.android.base.ext
+package cn.wj.android.common.ext
 
+import android.content.Context
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 
 /**
  * 当前 View 是否被覆盖
@@ -58,5 +61,17 @@ fun View.isViewCovered(): Boolean {
         currentView = currentParent
     }
     return false
+}
+
+/**
+ * 隐藏软键盘
+ */
+fun View?.hideSoftKeyboard() {
+    if (this == null) {
+        return
+    }
+    this.clearFocus()
+    (this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+            .hideSoftInputFromWindow(this.windowToken, 0)
 }
 

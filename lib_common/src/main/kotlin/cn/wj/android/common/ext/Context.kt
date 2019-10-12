@@ -1,6 +1,7 @@
 @file:Suppress("unused")
+@file:JvmName("ContextExt")
 
-package cn.wj.android.base.ext
+package cn.wj.android.common.ext
 
 import android.app.ActivityManager
 import android.content.Context

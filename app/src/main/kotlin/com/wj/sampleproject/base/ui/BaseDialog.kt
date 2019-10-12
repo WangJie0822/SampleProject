@@ -25,7 +25,7 @@ abstract class BaseDialog<VM : BaseViewModel, DB : ViewDataBinding>
      * 添加观察者
      */
     private fun observeData() {
-        mViewModel.snackbarData.observe(this, Observer {
+        viewModel.snackbarData.observe(this, Observer {
             if (it.content.isNullOrBlank()) {
                 return@Observer
             }
@@ -41,7 +41,7 @@ abstract class BaseDialog<VM : BaseViewModel, DB : ViewDataBinding>
             }
             snackbar.show()
         })
-        mViewModel.uiCloseData.observe(this, Observer { close ->
+        viewModel.uiCloseData.observe(this, Observer { close ->
             if (close) {
                 // 隐藏 Dialog
                 dismiss()

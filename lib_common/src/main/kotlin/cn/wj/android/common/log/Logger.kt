@@ -1,9 +1,9 @@
 @file:Suppress("unused")
 
-package cn.wj.android.base.log
+package cn.wj.android.common.log
 
 import android.util.Log
-import cn.wj.android.base.ext.getStackTraceString
+import cn.wj.android.common.ext.getStackTraceString
 
 /**
  * 内部使用日志打印
@@ -30,7 +30,7 @@ object InternalLog {
      */
     @JvmStatic
     fun logEnable(logEnable: Boolean) {
-        this.logEnable = logEnable
+        InternalLog.logEnable = logEnable
     }
 
     /**
@@ -41,7 +41,7 @@ object InternalLog {
      * @param args 格式化信息
      */
     @JvmStatic
-    internal fun e(tag: String?, message: String, vararg args: Any) {
+    fun e(tag: String?, message: String, vararg args: Any) {
         if (logEnable) {
             mPrinter.log(Log.ERROR, tag, if (args.isEmpty()) message else String.format(message, *args), null)
         }
@@ -56,7 +56,7 @@ object InternalLog {
      * @param args 格式化信息
      */
     @JvmStatic
-    internal fun e(tag: String?, throwable: Throwable?, message: String, vararg args: Any) {
+    fun e(tag: String?, throwable: Throwable?, message: String, vararg args: Any) {
         if (logEnable) {
             mPrinter.log(Log.ERROR, tag, if (args.isEmpty()) message else String.format(message, *args), throwable)
         }
@@ -70,7 +70,7 @@ object InternalLog {
      * @param args 格式化信息
      */
     @JvmStatic
-    internal fun i(tag: String?, message: String, vararg args: Any) {
+    fun i(tag: String?, message: String, vararg args: Any) {
         if (logEnable) {
             mPrinter.log(Log.INFO, tag, if (args.isEmpty()) message else String.format(message, *args), null)
         }

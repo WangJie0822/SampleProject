@@ -58,6 +58,8 @@ ext {
             "androidx_recyclerview"                : "androidx.recyclerview:recyclerview:1.1.0-beta04",
             // androidx - Dex 分包
             "androidx_multidex"                    : "androidx.multidex:multidex:2.0.1",
+            // androidx - LifeCycle 扩展
+            "androidx_lifecycle-extensions"        : "androidx.lifecycle:lifecycle-extensions:2.1.0",
 
             // jetpack - paging
             "jetpack_paging"                       : "androidx.paging:paging-runtime:2.1.0",
@@ -107,12 +109,12 @@ ext {
             // 可视化埋点
             "tencent-visual"                       : "com.qq.visual:visual:1.0.7-alpha",
 
-            // RxJava
-            "rxjava"                               : "io.reactivex.rxjava2:rxjava:2.2.12",
-            // RxAndroid
-            "rxandroid"                            : "io.reactivex.rxjava2:rxandroid:2.1.1",
-            // RxKotlin
-            "rxkotlin"                             : "io.reactivex.rxjava2:rxkotlin:2.4.0",
+            // RxJava2
+            "rxjava2"                              : "io.reactivex.rxjava2:rxjava:2.2.12",
+            // RxAndroid2
+            "rxandroid2"                           : "io.reactivex.rxjava2:rxandroid:2.1.1",
+            // RxKotlin2
+            "rxkotlin2"                            : "io.reactivex.rxjava2:rxkotlin:2.4.0",
 
             // Glide
             "glide"                                : "com.github.bumptech.glide:glide:4.9.0",

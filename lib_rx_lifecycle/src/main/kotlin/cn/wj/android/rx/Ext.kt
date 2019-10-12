@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+@file:JvmName("RxLifecycle")
 
 package cn.wj.android.rx
 
@@ -23,6 +24,7 @@ import java.io.Closeable
  *
  * @return [Disposable] 事件对象
  */
+@JvmOverloads
 fun <T> Observable<T>.subscribeWithOwner(owner: RxLifecycleOwner,
                                          onNext: Consumer<T> = Functions.emptyConsumer(),
                                          onError: Consumer<Throwable> = Functions.ON_ERROR_MISSING,
@@ -117,6 +119,7 @@ fun <T> Observable<T>.subscribeWithOwner(owner: RxLifecycleOwner,
  *
  * @return [Disposable] 事件对象
  */
+@JvmOverloads
 fun <T> Observable<T>.subscribeWithOwner(owner: LifecycleOwner,
                                          onNext: Consumer<T> = Functions.emptyConsumer(),
                                          onError: Consumer<Throwable> = Functions.ON_ERROR_MISSING,
@@ -260,6 +263,7 @@ internal class RxCompositeDisposable(disposiables: CompositeDisposable?) : Close
  *
  * @return [Disposable] 事件对象
  */
+@JvmOverloads
 fun <T> Observable<T>.subscribeWithOwner(owner: Tagable,
                                          onNext: Consumer<T> = Functions.emptyConsumer(),
                                          onError: Consumer<Throwable> = Functions.ON_ERROR_MISSING,

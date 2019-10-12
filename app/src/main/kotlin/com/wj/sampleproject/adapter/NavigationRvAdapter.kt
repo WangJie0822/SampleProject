@@ -27,7 +27,7 @@ class NavigationRvAdapter
         super.convert(holder, entity)
         (holder as? ViewHolder)?.mBinding?.let { binding ->
             val adapter = SimpleRvAdapter<ArticleEntity>(R.layout.app_recycler_item_navigation_child)
-            adapter.mViewModel = mViewModel
+            adapter.viewModel = viewModel
             adapter.loadData(entity.articles)
             binding.rvNavigationChild.layoutManager = FlowLayoutManager()
             binding.rvNavigationChild.adapter = adapter

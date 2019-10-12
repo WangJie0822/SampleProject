@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+@file:JvmName("BarTools")
 
 package cn.wj.android.base.tools
 
@@ -11,8 +12,8 @@ import android.os.Build
 import android.view.*
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
-import cn.wj.android.base.log.InternalLog
 import cn.wj.android.base.utils.AppManager
+import cn.wj.android.common.log.InternalLog
 
 /* ----------------------------------------------------------------------------------------- */
 /* |                                   状态栏 导航栏相关                                     | */

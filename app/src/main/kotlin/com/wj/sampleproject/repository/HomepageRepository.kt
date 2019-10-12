@@ -1,6 +1,5 @@
 package com.wj.sampleproject.repository
 
-import cn.wj.android.base.ext.orEmpty
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.constants.STR_TRUE
 import com.wj.sampleproject.entity.ArticleEntity
@@ -30,7 +29,7 @@ class HomepageRepository : KoinComponent {
      *
      * @param pageNum 页码
      */
-    suspend fun getHompageArticleList(pageNum: Int) = withContext(Dispatchers.IO) {
+    suspend fun getHomepageArticleList(pageNum: Int) = withContext(Dispatchers.IO) {
         // 获取文章列表
         val result = mWebService.getHomepageArticleList(pageNum)
         if (pageNum == NET_PAGE_START) {

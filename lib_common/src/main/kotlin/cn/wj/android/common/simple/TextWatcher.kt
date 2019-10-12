@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package cn.wj.android.base.simple
+package cn.wj.android.common.simple
 
 import android.text.Editable
 import android.text.TextWatcher

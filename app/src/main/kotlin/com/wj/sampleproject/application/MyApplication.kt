@@ -3,8 +3,8 @@ package com.wj.sampleproject.application
 import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
-import cn.wj.android.base.log.InternalLog
 import cn.wj.android.base.utils.AppManager
+import cn.wj.android.common.log.InternalLog
 import cn.wj.android.logger.AndroidLogAdapter
 import cn.wj.android.logger.Logger
 import cn.wj.android.logger.PrettyFormatStrategy

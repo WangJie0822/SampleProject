@@ -34,7 +34,7 @@ class MainActivity
         }
     }
 
-    override val mViewModel: MainViewModel by viewModel()
+    override val viewModel: MainViewModel by viewModel()
 
     /** 上次返回点击时间 */
     private var lastBackPressMs = 0L
@@ -61,7 +61,7 @@ class MainActivity
         val currentBackPressMs = System.currentTimeMillis()
         if ((currentBackPressMs - lastBackPressMs).absoluteValue > MAIN_BACK_PRESS_INTERVAL_MS) {
             // 间隔时间外，提示
-            mViewModel.snackbarData.postValue(R.string.app_press_again_to_exit.getString().toSnackbarMsg())
+            viewModel.snackbarData.postValue(R.string.app_press_again_to_exit.getString().toSnackbarMsg())
             // 保存时间
             lastBackPressMs = currentBackPressMs
         } else {

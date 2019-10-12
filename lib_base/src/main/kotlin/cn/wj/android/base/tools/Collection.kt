@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+@file:JvmName("CollectionTools")
 
 package cn.wj.android.base.tools
 

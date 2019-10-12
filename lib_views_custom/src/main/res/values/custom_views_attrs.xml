@@ -100,7 +100,6 @@
         <attr name="dtv_drawableBottomHeight" format="dimension|reference" />
     </declare-styleable>
 
-
     <declare-styleable name="DrawableEditText">
         <attr name="det_drawableStart" format="reference" />
         <attr name="det_drawableStartWidth" format="dimension|reference" />
@@ -117,6 +116,8 @@
         <attr name="det_drawableBottom" format="reference" />
         <attr name="det_drawableBottomWidth" format="dimension|reference" />
         <attr name="det_drawableBottomHeight" format="dimension|reference" />
+
+        <attr name="det_phoneFormat" format="boolean" />
     </declare-styleable>
 
 </resources>

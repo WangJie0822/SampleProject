@@ -20,7 +20,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SplashActivity
     : BaseActivity<SplashViewModel, AppActivitySplashBinding>() {
 
-    override val mViewModel: SplashViewModel by viewModel()
+    override val viewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

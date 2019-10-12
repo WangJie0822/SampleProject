@@ -1,5 +1,6 @@
 package com.wj.sampleproject.base.ui
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -21,6 +22,18 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         observeData()
     }
 
+    override fun getResources(): Resources? {
+        // 禁止app字体大小跟随系统字体大小调节
+        val resources = super.getResources()
+        if (resources != null && resources.configuration.fontScale != 1.0f) {
+            val configuration = resources.configuration
+            configuration.fontScale = 1.0f
+//            resources.updateConfiguration(configuration, resources.displayMetrics)
+            createConfigurationContext(configuration)
+        }
+        return resources
+    }
+
     override fun startAnim() {
     }
 
@@ -31,7 +44,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
      * 添加观察者
      */
     private fun observeData() {
-        mViewModel.snackbarData.observe(this, Observer {
+        viewModel.snackbarData.observe(this, Observer {
             if (it.content.isNullOrBlank()) {
                 return@Observer
             }
@@ -47,10 +60,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             }
             snackbar.show()
         })
-        mViewModel.uiCloseData.observe(this, Observer { close ->
+        viewModel.uiCloseData.observe(this, Observer { close ->
             if (close) {
                 // 关闭 Activity
-                setResult(mViewModel.resultCode, mViewModel.resultData)
+                setResult(viewModel.resultCode, viewModel.resultData)
                 finish()
             }
         })

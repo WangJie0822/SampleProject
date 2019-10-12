@@ -1,8 +1,10 @@
 @file:Suppress("unused")
+@file:JvmName("ThreadExt")
 
-package cn.wj.android.base.thread
+package cn.wj.android.common.ext
 
 import android.os.Looper
+import cn.wj.android.common.thread.MainThreadManager
 
 /**
  * 在主线程执行

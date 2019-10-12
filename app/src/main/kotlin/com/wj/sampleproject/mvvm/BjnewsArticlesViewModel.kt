@@ -3,9 +3,8 @@ package com.wj.sampleproject.mvvm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.ext.condition
-import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.base.utils.AppManager
+import cn.wj.android.common.ext.condition
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel

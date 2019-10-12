@@ -81,6 +81,32 @@ fun <T> setViewOnClick(v: View, click: ((View, T) -> Unit)?, item: T, throttle: 
  * @param click 点击回调
  */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
+fun <T> setViewOnClick(v: View, click: ViewItemClickListener<T>?, item: T, throttle: Int?) {
+    val interval = throttle ?: 1000
+    v.setOnClickListener {
+        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastTime > interval) {
+            click?.onItemClick(item)
+            v.setTag(R.id.databinding_view_click_tag, currentTime)
+        }
+    }
+}
+
+/**
+ * View 点击事件
+ */
+interface ViewItemClickListener<T> {
+    fun onItemClick(item: T)
+}
+
+/**
+ * 设置点击事件
+ *
+ * @param v [View] 对象
+ * @param click 点击回调
+ */
+@BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
 fun <T> setViewOnClick(v: View, click: ((T) -> Unit)?, item: T, throttle: Int?) {
     val interval = throttle ?: 1000
     v.setOnClickListener {
@@ -110,6 +136,32 @@ fun setViewOnClick(v: View, listener: View.OnClickListener?, throttle: Int?) {
             v.setTag(R.id.databinding_view_click_tag, currentTime)
         }
     }
+}
+
+/**
+ * 设置点击事件
+ *
+ * @param v [View] 对象
+ * @param listener 点击回调
+ */
+@BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
+fun setViewOnClick(v: View, listener: ViewClickListener?, throttle: Int?) {
+    val interval = throttle ?: 1000
+    v.setOnClickListener {
+        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastTime > interval) {
+            listener?.onClick()
+            v.setTag(R.id.databinding_view_click_tag, currentTime)
+        }
+    }
+}
+
+/**
+ * View 点击事件
+ */
+interface ViewClickListener {
+    fun onClick()
 }
 
 /**
@@ -404,4 +456,12 @@ fun setStateListAnimator(v: View, anmatorId: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         v.stateListAnimator = AnimatorInflater.loadStateListAnimator(v.context, anmatorId)
     }
+}
+
+/**
+ * 设置 View 透明度
+ */
+@BindingAdapter("android:bind_alpha")
+fun setAlpha(v: View, alpha: Float) {
+    v.alpha = alpha
 }

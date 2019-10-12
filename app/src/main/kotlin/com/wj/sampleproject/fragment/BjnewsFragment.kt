@@ -26,20 +26,24 @@ class BjnewsFragment
         }
     }
 
-    override val mViewModel: BjnewsViewModel by viewModel()
+    override val viewModel: BjnewsViewModel by viewModel()
 
-    override val layoutResID: Int = R.layout.app_fragment_bjnews
+    override val layoutResId: Int = R.layout.app_fragment_bjnews
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // 获取公众号数据
-        mViewModel.getBjnewList()
+        viewModel.getBjnewsList()
     }
 
     override fun initView() {
-        // 添加观察者
-        mViewModel.bjnewsData.observe(this, Observer {
+
+    }
+
+    override fun initObserve() {
+        // 公众号列表
+        viewModel.bjnewsData.observe(this, Observer {
             // 配置 ViewPager
             mBinding.vpBjnews.adapter = FragVpAdapter.newBuilder()
                     .manager(childFragmentManager)

@@ -26,7 +26,7 @@ class SystemCategoryRvAdapter
         super.convert(holder, entity)
         (holder as? ViewHolder)?.mBinding?.let { binding ->
             val adapter = SimpleRvAdapter<SystemCategoryEntity>(R.layout.app_recycler_item_system_category_child)
-            adapter.mViewModel = mViewModel
+            adapter.viewModel = viewModel
             adapter.loadData(entity.children)
             binding.rvSystemCategoryChild.layoutManager = FlowLayoutManager()
             binding.rvSystemCategoryChild.adapter = adapter

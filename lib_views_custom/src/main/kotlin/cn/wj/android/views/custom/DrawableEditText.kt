@@ -2,6 +2,8 @@ package cn.wj.android.views.custom
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import kotlin.math.roundToInt
@@ -49,8 +51,58 @@ class DrawableEditText @JvmOverloads constructor(
                 setTextViewDrawableBottom(dBottom, wBottom, hBottom)
             }
 
+            if (a.getBoolean(R.styleable.DrawableEditText_det_phoneFormat, false)) {
+                // 格式化手机号
+                addTextChangedListener(object : TextWatcher {
+
+                    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        try {
+                            if (s == null || s.isEmpty())
+                                return
+                            val sb = StringBuilder()
+                            for (i in s.indices) {
+                                if (i != 3 && i != 8 && s[i] == ' ') {
+                                    continue
+                                } else {
+                                    sb.append(s[i])
+                                    if ((sb.length == 4 || sb.length == 9) && sb[sb.length - 1] != ' ') {
+                                        sb.insert(sb.length - 1, ' ')
+                                    }
+                                }
+                            }
+                            if (sb.toString() != s.toString()) {
+                                var index = start + 1
+                                if (sb[start] == ' ') {
+                                    if (before == 0) {
+                                        index++
+                                    } else {
+                                        index--
+                                    }
+                                } else {
+                                    if (before == 1) {
+                                        index--
+                                    }
+                                }
+                                setText(sb.toString())
+                                setSelection(index)
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable) {
+                    }
+                })
+            }
+
             a.recycle()
         }
+        // 自动获取焦点
+        isFocusableInTouchMode = true
+        isFocusable = true
     }
 
     /**

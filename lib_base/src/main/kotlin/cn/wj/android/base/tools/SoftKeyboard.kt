@@ -1,3 +1,5 @@
+@file:JvmName("SoftKeyboardTools")
+
 package cn.wj.android.base.tools
 
 import android.view.MotionEvent

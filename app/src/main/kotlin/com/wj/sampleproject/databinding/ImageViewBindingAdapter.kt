@@ -5,8 +5,8 @@ package com.wj.sampleproject.databinding
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import cn.wj.android.base.ext.isNotNullAndBlank
-import cn.wj.android.base.ext.orFalse
+import cn.wj.android.common.ext.isNotNullAndBlank
+import cn.wj.android.common.ext.orFalse
 import cn.wj.android.databinding.adapter.IMG_RESOURCE_MARK
 import cn.wj.android.databinding.adapter.setImageResource
 import com.bumptech.glide.Glide

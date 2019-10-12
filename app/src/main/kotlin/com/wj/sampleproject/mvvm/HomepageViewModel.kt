@@ -5,9 +5,9 @@ import android.view.MotionEvent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.ext.condition
-import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.base.utils.AppManager
+import cn.wj.android.common.ext.condition
+import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.SearchActivity
@@ -176,7 +176,7 @@ constructor(private val repository: HomepageRepository)
             var noMore = false
             try {
                 // 获取文章列表数据
-                val result = repository.getHompageArticleList(pageNum)
+                val result = repository.getHomepageArticleList(pageNum)
                 if (result.success()) {
                     // 请求成功
                     articleListData.postValue(RefreshList(result.data?.datas, refreshing.get()))

@@ -1,14 +1,19 @@
 @file:Suppress("unused")
+@file:JvmName("ResourceTools")
 
 package cn.wj.android.base.tools
 
 import android.content.Context
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import cn.wj.android.base.utils.AppManager
+import cn.wj.android.common.log.InternalLog
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
 
 /* ----------------------------------------------------------------------------------------- */
 /* |                                        资源相关                                        | */
@@ -281,24 +286,98 @@ fun id(context: Context, idStr: String, defType: String): Int {
     return idStr.getIdentifier(context, defType)
 }
 
+/** 默认字体规模 */
+const val RESOURCE_DEFAULT_FONT_SCALE = 1f
+
 /**
  * 修正 Resources
  * - 使得应用文字大小不跟随系统
  *
+ * @param context [Context] 对象
  * @param resource Activity 的 Resources 对象
  *
  * @return 修正后的 Resources 对象
  *
  * <pre>
  * override fun getResources(): Resources {
- *     return fixResources(super.getResources())
+ *     return fixFontScaleResources(mContext, super.getResources())
  * }
  * </pre>
  */
-fun fixResources(resource: Resources): Resources {
-    val config = Configuration()
-    config.setToDefaults()
-    @Suppress("DEPRECATION")
-    resource.updateConfiguration(config, resource.displayMetrics)
-    return resource
+fun fixFontScaleResources(context: Context?, resource: Resources?): Resources? {
+    return if (resource == null) {
+        null
+    } else {
+        val config = resource.configuration
+        if (config.fontScale != RESOURCE_DEFAULT_FONT_SCALE) {
+            // 不是默认字体规模，修复
+            config.fontScale = RESOURCE_DEFAULT_FONT_SCALE
+            if (context == null) {
+                @Suppress("DEPRECATION")
+                resource.updateConfiguration(config, resource.displayMetrics)
+            } else {
+                context.createConfigurationContext(config)
+            }
+        }
+        resource
+    }
+}
+
+/**
+ * 从 Assets 中打开文件
+ *
+ * @param fileName 文件名
+ */
+fun Context.openAssetsFile(fileName: String): InputStream? {
+    return assetsFile(this, fileName)
+}
+
+/**
+ * 从 Assets 中打开文件
+ *
+ * @param context [Context] 对象
+ * @param fileName 文件名
+ */
+fun assetsFile(context: Context, fileName: String): InputStream? {
+    return try {
+        context.assets.open(fileName)
+    } catch (e: IOException) {
+        InternalLog.e("Resource", "assetsFile", e)
+        null
+    }
+}
+
+/**
+ * 从 Assets 读取字符串
+ *
+ * @param fileName 文件名
+ */
+fun Context.openAssetsString(fileName: String): String? {
+    return assetsString(this, fileName)
+}
+
+/**
+ * 从 Assets 读取字符串
+ *
+ * @param context [Context] 对象
+ * @param fileName 文件名
+ */
+fun assetsString(context: Context, fileName: String): String? {
+    return try {
+        val assetsFile = assetsFile(context, fileName) ?: return null
+        val br = BufferedReader(InputStreamReader(assetsFile))
+        val sb = StringBuilder()
+        var line: String?
+        while (true) {
+            line = br.readLine()
+            if (line != null) {
+                sb.append(line)
+            } else {
+                break
+            }
+        }
+        sb.toString()
+    } catch (e: IOException) {
+        null
+    }
 }

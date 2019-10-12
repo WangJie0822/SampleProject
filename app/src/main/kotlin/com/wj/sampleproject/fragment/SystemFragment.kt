@@ -24,9 +24,9 @@ class SystemFragment
         }
     }
 
-    override val mViewModel: SystemViewModel by viewModel()
+    override val viewModel: SystemViewModel by viewModel()
 
-    override val layoutResID: Int = R.layout.app_fragment_system
+    override val layoutResId: Int = R.layout.app_fragment_system
 
     override fun initView() {
         // 配置 ViewPager

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package cn.wj.android.base.utils
 
 import android.annotation.SuppressLint
@@ -13,7 +15,7 @@ import android.provider.MediaStore
 import android.view.Gravity
 import android.view.ViewConfiguration
 import android.widget.Toast
-import cn.wj.android.base.log.InternalLog
+import cn.wj.android.common.log.InternalLog
 import java.io.*
 
 /**
@@ -237,7 +239,11 @@ object AppUtil {
             }
             return picturePath
         } else {
-            val file = File(imgUri.path)
+            val path = imgUri.path
+            if (path.isNullOrBlank()) {
+                return ""
+            }
+            val file = File(path)
             if (!file.exists()) {
                 val toast = Toast.makeText(context, "找不到图片", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)

@@ -1,6 +1,7 @@
 @file:Suppress("unused")
+@file:JvmName("EditTextExt")
 
-package cn.wj.android.base.ext
+package cn.wj.android.common.ext
 
 import android.content.Context
 import android.os.Build
@@ -18,17 +19,6 @@ fun EditText.showSoftKeyboard() {
     (this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
             this,
             InputMethodManager.SHOW_FORCED
-    )
-}
-
-/**
- * 隐藏软键盘
- */
-fun EditText.hideSoftKeyboard() {
-    this.clearFocus()
-    (this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-            this.windowToken,
-            0
     )
 }
 

@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+@file:JvmName("CoroutineExt")
 
 package cn.wj.android.base.ext
 

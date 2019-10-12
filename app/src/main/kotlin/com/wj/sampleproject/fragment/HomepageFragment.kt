@@ -30,60 +30,65 @@ class HomepageFragment
         }
     }
 
-    override val mViewModel: HomepageViewModel by viewModel()
+    override val viewModel: HomepageViewModel by viewModel()
 
-    override val layoutResID: Int = R.layout.app_fragment_homepage
+    override val layoutResId: Int = R.layout.app_fragment_homepage
 
     /** Banner 列表适配器 */
     private val mBannerAdapter: BannerVpAdapter by inject()
     /** 文章列表适配器 */
     private val mArticlesAdapter: ArticleListRvAdapter by inject()
 
-    override fun initView() {
+    override fun onResume() {
+        super.onResume()
 
-        // 配置文章列表
-        mArticlesAdapter.mViewModel = mViewModel
-        mBinding.rvArticles.layoutManager = WrapContentLinearLayoutManager()
-        mBinding.rvArticles.adapter = mArticlesAdapter
-
-        // 添加观察者
-        // Banner 列表
-        mViewModel.bannerData.observe(this, Observer {
-            // 配置 Banner 列表
-            val mBannerBinding = AppLayoutHomepageBannerBinding.inflate(
-                    LayoutInflater.from(mContext), null, false
-            )
-            mBannerAdapter.mViewModel = mViewModel
-            mBannerBinding.vpBanner.adapter = mBannerAdapter
-            mArticlesAdapter.addHeaderView(mBannerBinding.root)
-            // 更新 Banner 列表
-            mBannerAdapter.refresh(it)
-            // 设置 Banner 数量并开启轮播
-            mViewModel.bannerCount = it.size
-        })
-        // 文章列表
-        mViewModel.articleListData.observe(this, Observer {
-            // 更新文章列表
-            mArticlesAdapter.loadData(it.list, it.refresh)
-        })
-    }
-
-    override fun firstLoad() {
-        // 获取 Banner 数据
-        mViewModel.getHomepageBannerList()
-        // 刷新文章列表
-        mViewModel.refreshing.set(true)
+        if (firstLoad) {
+            // 获取 Banner 数据
+            viewModel.getHomepageBannerList()
+            // 刷新文章列表
+            viewModel.refreshing.set(true)
+        }
     }
 
     override fun onStart() {
         super.onStart()
         // 开启轮播
-        mViewModel.startCarousel()
+        viewModel.startCarousel()
     }
 
     override fun onStop() {
         super.onStop()
         // 关闭轮播
-        mViewModel.stopCarousel()
+        viewModel.stopCarousel()
+    }
+
+    override fun initView() {
+
+        // 配置文章列表
+        mArticlesAdapter.viewModel = viewModel
+        mBinding.rvArticles.layoutManager = WrapContentLinearLayoutManager()
+        mBinding.rvArticles.adapter = mArticlesAdapter
+    }
+
+    override fun initObserve() {
+        // Banner 列表
+        viewModel.bannerData.observe(this, Observer {
+            // 配置 Banner 列表
+            val mBannerBinding = AppLayoutHomepageBannerBinding.inflate(
+                    LayoutInflater.from(mContext), null, false
+            )
+            mBannerAdapter.mViewModel = viewModel
+            mBannerBinding.vpBanner.adapter = mBannerAdapter
+            mArticlesAdapter.addHeaderView(mBannerBinding.root)
+            // 更新 Banner 列表
+            mBannerAdapter.refresh(it)
+            // 设置 Banner 数量并开启轮播
+            viewModel.bannerCount = it.size
+        })
+        // 文章列表
+        viewModel.articleListData.observe(this, Observer {
+            // 更新文章列表
+            mArticlesAdapter.loadData(it.list, it.refresh)
+        })
     }
 }

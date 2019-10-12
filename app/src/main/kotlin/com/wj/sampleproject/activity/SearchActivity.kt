@@ -31,7 +31,7 @@ class SearchActivity
         }
     }
 
-    override val mViewModel: SearchViewModel by viewModel()
+    override val viewModel: SearchViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

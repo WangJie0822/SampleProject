@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
+import cn.wj.android.common.tools.parseColor
 import kotlin.math.roundToInt
 
 /**
@@ -134,6 +135,21 @@ fun setTextColor(tv: TextView, @ColorInt color: Int) {
 }
 
 /**
+ * 设置 TextView 文本颜色
+ *
+ * @param tv     [TextView] 对象
+ * @param colorStr 颜色值
+ */
+@BindingAdapter("android:bind_tv_textColor")
+fun setTextColor(tv: TextView, colorStr: String?) {
+    if (colorStr.isNullOrBlank()) {
+        return
+    }
+    val color = colorStr.parseColor() ?: return
+    tv.setTextColor(color)
+}
+
+/**
  * 设置 TextView 文本
  *
  * @param tv     [TextView] 对象
@@ -164,4 +180,15 @@ fun setText(tv: TextView, cs: CharSequence) {
 @BindingAdapter("android:bind_tv_maxLines")
 fun setMaxLines(tv: TextView, maxLines: Int) {
     tv.maxLines = maxLines
+}
+
+/**
+ * 设置重心
+ */
+@BindingAdapter("android:bind_tv_gravity")
+fun setGravity(tv: TextView, gravity: Int?) {
+    if (null == gravity) {
+        return
+    }
+    tv.gravity = gravity
 }

@@ -40,7 +40,7 @@ class WebViewActivity
         }
     }
 
-    override val mViewModel: WebViewViewModel by viewModel()
+    override val viewModel: WebViewViewModel by viewModel()
 
     /** WebView Fragment 对象 */
     private val webViewFragment: WebViewFragment by lazy {

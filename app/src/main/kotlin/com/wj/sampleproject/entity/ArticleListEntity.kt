@@ -1,8 +1,8 @@
 package com.wj.sampleproject.entity
 
-import cn.wj.android.base.ext.isNotNullAndBlank
-import cn.wj.android.base.ext.isNotNullAndEmpty
-import cn.wj.android.base.ext.orFalse
+import cn.wj.android.common.ext.isNotNullAndBlank
+import cn.wj.android.common.ext.isNotNullAndEmpty
+import cn.wj.android.common.ext.orFalse
 import com.wj.sampleproject.constants.STR_TRUE
 
 /**

@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.*
 import cn.wj.android.recyclerview.OnEmptyClickListener
 import java.lang.reflect.ParameterizedType
 
@@ -24,14 +22,49 @@ import java.lang.reflect.ParameterizedType
  *
  * @author 王杰
  */
-abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
-    : RecyclerView.Adapter<BaseRvViewHolder<E>>() {
+abstract class BaseRvListAdapter<VH : BaseRvViewHolder<E>, E>
+    : RecyclerView.Adapter<BaseRvViewHolder<E>> {
 
     /** Adapter 绑定的 RecyclerView 对象 */
     var mRecyclerView: RecyclerView? = null
 
-    /** 数据集合  */
-    val mData = arrayListOf<E>()
+    /** 数据集合 */
+    val mDiffer: AsyncListDiffer<E>
+
+    private val mListener = AsyncListDiffer.ListListener<E> { previousList, currentList -> this.onCurrentListChanged(previousList, currentList) }
+
+    /**
+     * 构造方法
+     *
+     * @param diffCallback 数据是否相同回调
+     * @param anim 是否使用动画
+     */
+    constructor(diffCallback: DiffUtil.ItemCallback<E>, anim: Boolean = false) {
+        val listUpdateCallback = if (anim) {
+            AdapterListUpdateCallback(this)
+        } else {
+            AdapterListUpdateNoAnimCallback(this)
+        }
+        mDiffer = AsyncListDiffer<E>(listUpdateCallback,
+                AsyncDifferConfig.Builder<E>(diffCallback).build())
+        mDiffer.addListListener(mListener)
+    }
+
+    /**
+     * 构造方法
+     *
+     * @param config Differ config
+     * @param anim 是否使用动画
+     */
+    constructor(config: AsyncDifferConfig<E>, anim: Boolean = false) {
+        val listUpdateCallback = if (anim) {
+            AdapterListUpdateCallback(this)
+        } else {
+            AdapterListUpdateNoAnimCallback(this)
+        }
+        mDiffer = AsyncListDiffer<E>(listUpdateCallback, config)
+        mDiffer.addListListener(mListener)
+    }
 
     /** 空布局 */
     protected var mEmptyLayout: FrameLayout? = null
@@ -98,19 +131,19 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
             // 有头布局
             if (haveFooter()) {
                 // 有脚布局
-                mData.size + 2
+                mDiffer.currentList.size + 2
             } else {
                 // 无脚布局
-                mData.size + 1
+                mDiffer.currentList.size + 1
             }
         } else {
             // 无头布局
             if (haveFooter()) {
                 // 有脚布局
-                mData.size + 1
+                mDiffer.currentList.size + 1
             } else {
                 // 无脚布局
-                mData.size
+                mDiffer.currentList.size
             }
         }
     }
@@ -163,7 +196,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
 
     protected open fun customBindViewHolder(holder: BaseRvViewHolder<E>, position: Int) {
         // 普通布局，绑定数据
-        if (position >= mData.size) {
+        if (position >= mDiffer.currentList.size) {
             return
         }
         convert(holder, getItem(position))
@@ -217,7 +250,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      *
      * @return 是否显示空布局
      */
-    protected fun isShowEmpty() = mEmptyLayout != null && mEmptyLayout!!.childCount > 0 && mData.size <= 0
+    protected fun isShowEmpty() = mEmptyLayout != null && mEmptyLayout!!.childCount > 0 && mDiffer.currentList.size <= 0
 
     /**
      * 判断是否是空布局
@@ -491,7 +524,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      * @param position View 下标
      * @return View 对应的数据对象
      */
-    protected fun getItem(position: Int) = mData[position]
+    protected fun getItem(position: Int) = mDiffer.currentList[position]
 
     /**
      * 绑定数据
@@ -559,43 +592,13 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         return tmp
     }
 
-    /**
-     * 刷新
-     */
-    fun refresh(ls: List<E>?) {
-        if (ls.isNullOrEmpty()) {
-            return
-        }
-        mData.clear()
-        mData.addAll(ls)
-        notifyDataSetChanged()
+    open fun onCurrentListChanged(previousList: List<E>, currentList: List<E>) {}
+
+    fun submitList(list: List<E>?) {
+        mDiffer.submitList(list)
     }
 
-    /**
-     * 清空数据
-     */
-    fun clear() {
-        mData.clear()
-        notifyDataSetChanged()
-    }
-
-    /**
-     * 加载数据
-     *
-     * @param ls 数据列表
-     * @param refresh 是否刷新
-     */
-    fun loadData(ls: List<E>?, refresh: Boolean? = false) {
-        if (ls.isNullOrEmpty()) {
-            return
-        }
-        if (refresh == true) {
-            mData.clear()
-        }
-        mData.addAll(ls)
-        if (mRecyclerView == null) {
-            return
-        }
-        notifyDataSetChanged()
+    fun submitList(list: List<E>?, commitCallback: Runnable?) {
+        mDiffer.submitList(list, commitCallback)
     }
 }

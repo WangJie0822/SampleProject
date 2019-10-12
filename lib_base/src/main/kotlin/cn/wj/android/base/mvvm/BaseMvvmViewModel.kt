@@ -4,8 +4,8 @@ package cn.wj.android.base.mvvm
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
-import cn.wj.android.base.log.InternalLog
 import cn.wj.android.common.Tagable
+import cn.wj.android.common.log.InternalLog
 import java.util.*
 
 /**

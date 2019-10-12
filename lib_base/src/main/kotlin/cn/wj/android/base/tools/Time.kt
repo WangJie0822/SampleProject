@@ -1,8 +1,9 @@
 @file:Suppress("unused")
+@file:JvmName("TimeTools")
 
 package cn.wj.android.base.tools
 
-import cn.wj.android.base.log.InternalLog
+import cn.wj.android.common.log.InternalLog
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,7 +46,7 @@ fun Date.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
 /**
  * 将时间字符串格式化为指定类型
  */
-fun String.paresDate(format: String): Date {
+fun String.paresDate(format: String): Date? {
     return try {
         SimpleDateFormat(format, Locale.getDefault()).parse(this)
     } catch (e: ParseException) {
@@ -62,7 +63,7 @@ fun String?.toLongTime(format: String = DATE_FORMAT_DEFAULT): Long {
         Date().time
     } else {
         try {
-            SimpleDateFormat(format, Locale.getDefault()).parse(this).time
+            SimpleDateFormat(format, Locale.getDefault()).parse(this)?.time ?: 0L
         } catch (e: ParseException) {
             InternalLog.e("Time", "toLongTime", e)
             Date().time

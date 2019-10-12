@@ -2,7 +2,6 @@ package com.wj.sampleproject.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
@@ -29,9 +28,9 @@ class SystemCategoryFragment
         }
     }
 
-    override val mViewModel: SystemCategoryViewModel by viewModel()
+    override val viewModel: SystemCategoryViewModel by viewModel()
 
-    override val layoutResID: Int = R.layout.app_fragment_system_category
+    override val layoutResId: Int = R.layout.app_fragment_system_category
 
     /** 列表适配器对象 */
     private val mAdapter: SystemCategoryRvAdapter by inject()
@@ -40,17 +39,19 @@ class SystemCategoryFragment
         super.onCreate(savedInstanceState)
 
         // 获取分类数据
-        mViewModel.getSystemCategoryList()
+        viewModel.getSystemCategoryList()
     }
 
     override fun initView() {
         // 配置 RecyclerView
-        mAdapter.mViewModel = mViewModel
+        mAdapter.viewModel = viewModel
         mBinding.rvSystemCategory.layoutManager = WrapContentLinearLayoutManager()
         mBinding.rvSystemCategory.adapter = mAdapter
+    }
 
-        // 绑定观察者
-        mViewModel.listData.observe(this, Observer {
+    override fun initObserve() {
+        // 目录列表
+        viewModel.listData.observe(this, Observer {
             mAdapter.loadData(it.orEmpty())
         })
     }

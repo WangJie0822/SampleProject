@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+@file:JvmName("ImageTools")
 
 package cn.wj.android.base.tools
 
@@ -46,6 +47,7 @@ fun ByteArray.toBitmap(): Bitmap {
  *
  * @return Bitmap
  */
+@Suppress("DEPRECATION")
 fun Drawable.toBitmap(): Bitmap {
     if (this is BitmapDrawable) {
         if (bitmap != null) {
@@ -140,6 +142,7 @@ fun String.getBitmap(): Bitmap {
  *
  * @return 是否保存成功
  */
+@Suppress("DEPRECATION")
 fun Bitmap.saveToGallery(dirName: String): Boolean {
     // 首先保存图片
     val storePath = Environment.getExternalStorageDirectory().absolutePath + File.separator + dirName

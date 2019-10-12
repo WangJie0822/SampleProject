@@ -34,35 +34,39 @@ class BjnewsArticlesFragment
         }
     }
 
-    override val mViewModel: BjnewsArticlesViewModel by viewModel()
+    override val viewModel: BjnewsArticlesViewModel by viewModel()
 
-    override val layoutResID: Int = R.layout.app_fragment_bjnews_articles
+    override val layoutResId: Int = R.layout.app_fragment_bjnews_articles
 
     private val bjnews: CategoryEntity? by lazy { arguments?.getParcelable<CategoryEntity>(ACTION_CATEGORY) }
 
     /** 文章列表适配器 */
     private val mArticlesAdapter: ArticleListRvAdapter by inject()
 
-    override fun initBefore() {
-        // 保存公众号 id
-        mViewModel.bjnewsId = bjnews?.id.orEmpty()
+    override fun onResume() {
+        super.onResume()
+
+        if (firstLoad) {
+            // 刷新数据
+            viewModel.refreshing.set(true)
+        }
     }
 
     override fun initView() {
+        // 保存公众号 id
+        viewModel.bjnewsId = bjnews?.id.orEmpty()
+
         // 配置文章列表
-        mArticlesAdapter.mViewModel = mViewModel
+        mArticlesAdapter.viewModel = viewModel
         mBinding.rvBjnewsArticles.layoutManager = WrapContentLinearLayoutManager()
         mBinding.rvBjnewsArticles.adapter = mArticlesAdapter
+    }
 
-        // 添加观察者
+    override fun initObserve() {
         // 文章列表
-        mViewModel.articleListData.observe(this, Observer {
+        viewModel.articleListData.observe(this, Observer {
             // 更新文章列表
             mArticlesAdapter.loadData(it.list, it.refresh)
         })
-    }
-
-    override fun firstLoad() {
-        mViewModel.refreshing.set(true)
     }
 }

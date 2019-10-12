@@ -1,4 +1,6 @@
-package cn.wj.android.base.thread
+@file:Suppress("unused")
+
+package cn.wj.android.common.thread
 
 import android.os.Handler
 import android.os.Looper
@@ -25,6 +27,7 @@ object MainThreadManager {
      *
      * @param runnable 在主线程执行的代码
      */
+    @JvmStatic
     fun postToMainThread(runnable: Runnable) {
         if (mMainHandler == null) {
             synchronized(MainThreadManager::class.java) {
@@ -34,5 +37,23 @@ object MainThreadManager {
             }
         }
         mMainHandler?.post(runnable)
+    }
+
+    /**
+     * 将事件延时后 post 到主线程执行
+     *
+     * @param runnable 在主线程执行的代码
+     * @param delay 延时时间 ms
+     */
+    @JvmStatic
+    fun postToMainThread(runnable: Runnable, delay: Long) {
+        if (mMainHandler == null) {
+            synchronized(MainThreadManager::class.java) {
+                if (mMainHandler == null) {
+                    mMainHandler = Handler(Looper.getMainLooper())
+                }
+            }
+        }
+        mMainHandler?.postDelayed(runnable, delay)
     }
 }

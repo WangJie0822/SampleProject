@@ -27,19 +27,23 @@ abstract class BaseBindingLibFragment<VM : BaseMvvmViewModel, DB : ViewDataBindi
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        // 初始化 DataBinding
-        mBinding = DataBindingUtil.inflate(inflater, layoutResID, container, false)
+        if (null == rootView) {
+            // 初始化 DataBinding
+            mBinding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
 
-        // 绑定生命周期管理
-        mBinding.lifecycleOwner = this
+            // 绑定生命周期管理
+            mBinding.lifecycleOwner = this
 
-        // 绑定 ViewModel
-        mBinding.setVariable(BR.viewModel, mViewModel)
+            // 绑定 ViewModel
+            mBinding.setVariable(BR.viewModel, viewModel)
 
-        rootView = mBinding.root
+            rootView = mBinding.root
 
-        // 初始化布局
-        initView()
+            // 初始化布局
+            initView()
+        } else {
+            (rootView?.parent as? ViewGroup?)?.removeView(rootView)
+        }
 
         return rootView
     }

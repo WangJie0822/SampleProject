@@ -26,9 +26,9 @@ dependencies {
     // v7
     implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
     // RxJava2
-    implementation rootProject.ext.dependencies["rxjava"]
+    implementation rootProject.ext.dependencies["rxjava2"]
     // RxAndroid2
-    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["rxandroid2"]
 
     // Common 库
     implementation project(":lib_common")

@@ -6,7 +6,7 @@ import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import cn.wj.android.base.log.InternalLog
+import cn.wj.android.common.log.InternalLog
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.system.exitProcess
@@ -33,51 +33,50 @@ object AppManager {
     /** 前台界面个数 */
     private var foregroundCount = 0
 
-    /** 当前焦点 Activity */
-    private var focusActivity: WeakReference<Activity>? = null
-
     /** Activity 生命周期回调接口*/
     private val mActivityLifecycleCallbacks = object : Application.ActivityLifecycleCallbacks {
 
         override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
             onCreate(activity)
+            InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityCreated")
         }
 
         override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
+            InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivitySaveInstanceState")
         }
 
         override fun onActivityStarted(activity: Activity?) {
             foregroundCount++
+            InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityStarted")
         }
 
         override fun onActivityResumed(activity: Activity?) {
-            if (activity != null) {
-                focusActivity = WeakReference(activity)
-            }
+            InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityResumed")
         }
 
         override fun onActivityPaused(activity: Activity?) {
-            if (focusActivity?.get() == activity) {
-                focusActivity = null
-            }
+            InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityPaused")
         }
 
         override fun onActivityStopped(activity: Activity?) {
             foregroundCount--
+            InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityStopped")
         }
 
         override fun onActivityDestroyed(activity: Activity?) {
             onDestroy(activity)
+            InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityDestroyed")
         }
     }
 
     /**
-     * 获取当前焦点 Activity
+     * 获取前台界面数量
      *
-     * @return 当前焦点 Activity，没有返回 null
+     * @return 前台 Activity 数量
      */
-    fun getFocusActivity(): Activity? {
-        return focusActivity?.get()
+    @JvmStatic
+    fun getForegroundCount(): Int {
+        return foregroundCount
     }
 
     /**
@@ -85,8 +84,19 @@ object AppManager {
      *
      * @return 应用是否在前台
      */
+    @JvmStatic
     fun isForeground(): Boolean {
-        return foregroundCount > 0
+        val activityManager = getContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val packageName = getContext().packageName
+        // 获取Android设备中所有正在运行的App
+        val appProcesses = activityManager.runningAppProcesses ?: return false
+        for (appProcess in appProcesses) {
+            // The name of the process that this object is associated with.
+            if (appProcess.processName == packageName && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
@@ -94,6 +104,7 @@ object AppManager {
      *
      * @param application 应用 [Application] 对象
      */
+    @JvmStatic
     fun register(application: Application) {
         mApplication = application
         application.unregisterActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
@@ -103,6 +114,7 @@ object AppManager {
     /**
      * 获取可用 Application 对象
      */
+    @JvmStatic
     fun getApplication(): Application {
         if (mApplication == null) {
             register(getApplicationByReflect())
@@ -119,6 +131,7 @@ object AppManager {
      *
      * @return [Context] 对象
      */
+    @JvmStatic
     fun getContext(): Context {
         return peekActivity() ?: getApplication()
     }
@@ -145,6 +158,7 @@ object AppManager {
     /**
      * 将 Activity 类对象添加到忽略列表
      */
+    @JvmStatic
     fun addToIgnore(vararg clazzs: Class<out Activity>) {
         ignoreActivitys.addAll(clazzs)
     }
@@ -154,6 +168,7 @@ object AppManager {
      *
      * @param activity Activity 对象
      */
+    @JvmStatic
     fun onCreate(activity: Activity?) {
         if (activity != null && ignoreActivitys.contains(activity.javaClass)) {
             // 不添加在忽略列表中的 Activity
@@ -167,6 +182,7 @@ object AppManager {
      *
      * @param activity Activity 对象
      */
+    @JvmStatic
     fun onDestroy(activity: Activity?) {
         if (activity != null && ignoreActivitys.contains(activity.javaClass)) {
             // 不移除在忽略列表中的 Activity
@@ -180,6 +196,7 @@ object AppManager {
      *
      * @param clazz Activity 类对象
      */
+    @JvmStatic
     fun contains(clazz: Class<out Activity>): Boolean {
         return activityStack.count { it.get()?.javaClass == clazz } > 0
     }
@@ -187,6 +204,7 @@ object AppManager {
     /**
      * 将 Activity 加入堆栈
      */
+    @JvmStatic
     fun add(activity: Activity?) {
         if (activity == null) {
             return
@@ -199,6 +217,7 @@ object AppManager {
      *
      * @param activity Activity 对象
      */
+    @JvmStatic
     fun remove(activity: Activity?) {
         if (activity == null) {
             return
@@ -217,6 +236,7 @@ object AppManager {
      *
      * @param activity 指定不关闭的 Activity
      */
+    @JvmStatic
     fun finishAllWithout(activity: Activity?) {
         if (activity == null) {
             return
@@ -231,6 +251,7 @@ object AppManager {
      *
      * @param clazz Activity 类对象
      */
+    @JvmStatic
     fun finishActivity(clazz: Class<out Activity>) {
         val del: Activity? = activityStack.lastOrNull { it.get()?.javaClass == clazz }?.get()
         del?.finish()
@@ -241,6 +262,7 @@ object AppManager {
      *
      * @param clazzs Activity 类对象
      */
+    @JvmStatic
     fun finishActivities(vararg clazzs: Class<out Activity>) {
         for (clazz in clazzs) {
             finishActivity(clazz)
@@ -252,6 +274,7 @@ object AppManager {
      *
      * @return 栈顶的 Activity 对象
      */
+    @JvmStatic
     fun peekActivity(): Activity? {
         return if (activityStack.isEmpty()) {
             null
@@ -266,16 +289,40 @@ object AppManager {
      * @param clazz  Activity 类
      * @param A      Activity 类型
      *
-     * @return       Activity对象
+     * @return       Activity 对象
      */
+    @JvmStatic
     fun <A : Activity> getActivity(clazz: Class<A>): A? {
         @Suppress("UNCHECKED_CAST")
         return activityStack.firstOrNull { it.get()?.javaClass == clazz }?.get() as A?
     }
 
     /**
+     * 根据下标，获取 Activity 对象
+     *
+     * @param index  Activity 下标
+     *
+     * @return       Activity 对象
+     */
+    @JvmStatic
+    fun getActivity(index: Int): Activity? {
+        return activityStack[index]?.get()
+    }
+
+    /**
+     * 获取堆栈中 Activity 数量
+     *
+     * @return Activity 数量
+     */
+    @JvmStatic
+    fun getStackSize(): Int {
+        return activityStack.size
+    }
+
+    /**
      * 结束所有 Activity
      */
+    @JvmStatic
     private fun finishAllActivity() {
         for (weak in activityStack) {
             weak.get()?.finish()
@@ -286,10 +333,11 @@ object AppManager {
     /**
      * 退出应用程序
      */
+    @JvmStatic
     fun appExit() {
         try {
-            val activityMgr = getApplication().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-            activityMgr.killBackgroundProcesses(getApplication().packageName)
+            val activityMgr = getContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            activityMgr.killBackgroundProcesses(getContext().packageName)
             finishAllActivity()
             exitProcess(0)
         } catch (e: Exception) {

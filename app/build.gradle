@@ -179,6 +179,9 @@ dependencies {
     implementation rootProject.ext.dependencies["jetpack_navigation-ui-ktx"]
     implementation rootProject.ext.dependencies["jetpack_navigation-fragment-ktx"]
 
+    // Lifecycle 拓展
+    implementation rootProject.ext.dependencies["androidx_lifecycle-extensions"]
+
     // ktx
     implementation rootProject.ext.dependencies["ktx_core"]
 
@@ -217,4 +220,5 @@ dependencies {
     implementation project(':lib_okhttp_interceptor')
     implementation project(":lib_recyclerview")
     implementation project(":lib_views_custom")
+    implementation project(":lib_common")
 }

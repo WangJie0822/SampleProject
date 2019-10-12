@@ -1,11 +1,12 @@
 @file:Suppress("unused")
 
-package cn.wj.android.base.tools
+package cn.wj.android.common.tools
 
 import android.graphics.Color
-import android.text.Html
 import android.text.Spanned
-import android.util.Base64
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+import cn.wj.android.common.log.InternalLog
 
 /* ----------------------------------------------------------------------------------------- */
 /* |                                      字符串相关                                        | */
@@ -17,8 +18,7 @@ import android.util.Base64
  * @return 从 Html 解析出的 Spanned 对象
  */
 fun String.parseHtml(): Spanned? {
-    @Suppress("DEPRECATION")
-    return Html.fromHtml(this)
+    return HtmlCompat.fromHtml(this, FROM_HTML_MODE_LEGACY)
 }
 
 /**
@@ -37,8 +37,13 @@ fun html(str: String): Spanned? {
  *
  * @return 颜色值
  */
-fun String.parseColor(): Int {
-    return Color.parseColor(this)
+fun String.parseColor(): Int? {
+    return try {
+        Color.parseColor(this)
+    } catch (e: Exception) {
+        InternalLog.e("String.kt", e, "parseColor")
+        null
+    }
 }
 
 /**
@@ -48,24 +53,6 @@ fun String.parseColor(): Int {
  *
  * @return 颜色值
  */
-fun color(str: String): Int {
+fun color(str: String): Int? {
     return str.parseColor()
-}
-
-/**
- * 对字符串进行 Base64 加密
- *
- * @return 加密后的字符串
- */
-fun String.toBase64(): String {
-    return Base64.encodeToString(this.toByteArray(), Base64.DEFAULT).replace("\n", "")
-}
-
-/**
- * 从 Base64 字符串解密
- *
- * @return 解密后的字符串
- */
-fun String.fromBase64(): String {
-    return String(Base64.decode(this, Base64.DEFAULT))
 }

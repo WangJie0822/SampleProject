@@ -1,6 +1,7 @@
 @file:Suppress("unused")
+@file:JvmName("CollectionExt")
 
-package cn.wj.android.base.ext
+package cn.wj.android.common.ext
 
 /* ----------------------------------------------------------------------------------------- */
 /* |                                        集合相关                                        | */
@@ -18,4 +19,18 @@ fun <T : Collection<*>> T?.isNullOrEmpty(): Boolean {
  */
 fun <T : Collection<*>> T?.isNotNullAndEmpty(): Boolean {
     return !this.isNullOrEmpty()
+}
+
+/**
+ * 若为空 返回空集合
+ */
+fun <T> ArrayList<T>?.orEmpty(): ArrayList<T> {
+    return this ?: arrayListOf()
+}
+
+/**
+ * 若为空 返回空集合
+ */
+fun <T> List<T>?.orEmpty(): List<T> {
+    return this ?: mutableListOf()
 }

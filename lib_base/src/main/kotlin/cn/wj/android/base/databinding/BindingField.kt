@@ -15,14 +15,15 @@ open class BindingField<T>
  * @param value 默认值
  * @param onChange 数据变化监听
  */
-constructor(value: T? = null, private var onChange: OnFieldChangeListener<T>? = null)
-    : ObservableField<T>(value) {
+@JvmOverloads
+constructor(value: T? = null, private var onChange: OnFieldChangeListener<T>? = null) : ObservableField<T>(value) {
+
 
     override fun set(value: T?) {
         val changed = get() != value
         super.set(value)
         if (changed) {
-            onChange?.invoke(value)
+            onChange?.invoke(this, value)
         }
     }
 }
@@ -30,4 +31,4 @@ constructor(value: T? = null, private var onChange: OnFieldChangeListener<T>? = 
 /**
  * 数据变化监听回调
  */
-typealias OnFieldChangeListener<T> = (T?) -> Unit
+typealias OnFieldChangeListener<T> = (BindingField<T>, T?) -> Unit

@@ -29,7 +29,7 @@ class WebViewFragment
          * @param title 标题
          * @param url Web Url
          *
-         * @return Webview Fragment
+         * @return WebView Fragment
          */
         fun actionCreate(title: String, url: String): WebViewFragment {
             return WebViewFragment().apply {
@@ -41,19 +41,18 @@ class WebViewFragment
         }
     }
 
-    override val mViewModel: WebViewViewModel by viewModel()
+    override val viewModel: WebViewViewModel by viewModel()
 
-    override val layoutResID: Int = R.layout.app_fragment_web_view
+    override val layoutResId: Int = R.layout.app_fragment_web_view
 
     private val mUrl: String by lazy {
         arguments?.getString(ACTION_WEB_URL, "").orEmpty()
     }
 
-    override fun initBefore() {
-        mViewModel.title.set(arguments?.getString(ACTION_TITLE, "").orEmpty())
-    }
-
     override fun initView() {
+        // 获取标题
+        viewModel.title.set(arguments?.getString(ACTION_TITLE, "").orEmpty())
+
         // 配置 WebView
         val webSettings = mBinding.wv.settings
         webSettings.domStorageEnabled = true
@@ -72,7 +71,7 @@ class WebViewFragment
         }
 
         // 添加观察者
-        mViewModel.navigationData.observe(this, Observer {
+        viewModel.navigationData.observe(this, Observer {
             if (mBinding.wv.canGoBack()) {
                 mBinding.wv.goBack()
             } else {

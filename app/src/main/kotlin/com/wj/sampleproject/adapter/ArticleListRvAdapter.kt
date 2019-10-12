@@ -1,7 +1,6 @@
 package com.wj.sampleproject.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import cn.wj.android.base.ext.orEmpty
 import cn.wj.android.recyclerview.adapter.BaseRvDBAdapter
 import cn.wj.android.recyclerview.adapter.BaseRvDBViewHolder
 import cn.wj.android.recyclerview.adapter.BaseRvViewHolder
@@ -28,7 +27,7 @@ class ArticleListRvAdapter
         super.convert(holder, entity)
         (holder as? ViewHolder)?.mBinding?.let { mBinding ->
             val adapter = SimpleRvAdapter<ArticleTagEntity>(R.layout.app_recycler_item_article_tags)
-            adapter.mViewModel = mViewModel
+            adapter.viewModel = viewModel
             adapter.mData.addAll(entity.tags.orEmpty())
             mBinding.rvArticlesTags.layoutManager = WrapContentLinearLayoutManager(RecyclerView.HORIZONTAL)
             mBinding.rvArticlesTags.adapter = adapter

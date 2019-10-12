@@ -1,6 +1,7 @@
 @file:Suppress("unused")
+@file:JvmName("BooleanExt")
 
-package cn.wj.android.base.ext
+package cn.wj.android.common.ext
 
 /**
  * 如果为 null 则为 false

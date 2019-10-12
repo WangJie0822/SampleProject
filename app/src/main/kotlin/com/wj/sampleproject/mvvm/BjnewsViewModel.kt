@@ -2,7 +2,7 @@ package com.wj.sampleproject.mvvm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import cn.wj.android.base.ext.orEmpty
+import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.entity.CategoryEntity
@@ -26,7 +26,7 @@ constructor(private val repository: BjnewsRepository)
     /**
      * 获取公众号列表
      */
-    fun getBjnewList() {
+    fun getBjnewsList() {
         viewModelScope.launch {
             try {
                 val result = repository.getBjnewsList()

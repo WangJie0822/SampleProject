@@ -23,4 +23,9 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // v4
+    implementation rootProject.ext.dependencies["androidx_support-v4"]
+    // v7
+    implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
 }

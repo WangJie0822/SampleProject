@@ -1,12 +1,11 @@
 @file:Suppress("unused")
+@file:JvmName("DeviceTools")
 
 package cn.wj.android.base.tools
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
-import android.provider.Settings
 import android.telephony.TelephonyManager
 import cn.wj.android.base.utils.AppManager
 import java.io.File
@@ -69,28 +68,6 @@ val DEVICE_MODEL: String
 /** 设备厂商 */
 val DEVICE_BRAND: String
     get() = Build.BRAND
-
-/** 设备 IMEI */
-val DEVICE_IMEI: String
-    @SuppressLint("HardwareIds")
-    get() {
-        var imei: String?
-        val context = AppManager.getApplication()
-        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        @Suppress("DEPRECATION")
-        imei = telephonyManager.deviceId
-        if (null == imei) {
-            imei = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-            if ("9774d56d682e549c" == imei) {
-                // 某些主流设备 android_id是固定的
-                imei = ""
-            }
-        }
-        if (null == imei) {
-            imei = ""
-        }
-        return imei
-    }
 
 /** 屏幕宽度 单位：px */
 val DEVICE_SCREEN_WIDTH: Int

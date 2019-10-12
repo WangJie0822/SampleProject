@@ -3,8 +3,8 @@ package cn.wj.android.base.ui.dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import cn.wj.android.base.tools.DEVICE_SCREEN_HEIGHT
 import cn.wj.android.base.tools.statusBarHeight
 import cn.wj.android.common.Tagable
@@ -13,8 +13,7 @@ import java.util.*
 /**
  * Dialog 弹窗基类
  * - 维护 [mContext]，当前界面的 Context 对象
- * - 添加 [initBefore] 方法，在一切流程开始前预处理一些数据
- * - [onCreateView] 方法中对 [layoutResID] 对应的 [View] 进行加载，并在 [initView] 中进行初始化操作
+ * - [onCreateView] 方法中对 [layoutResId] 对应的 [View] 进行加载，并在 [initView] 中进行初始化操作
  * - 维护了 [mRootView]、[mDialogWidth]、[mDialogHeight]、[mGravity] 等参数，在 [onActivityCreated] 方法中进行配置
  *
  * @author 王杰
@@ -28,7 +27,7 @@ abstract class BaseLibDialog
     override var mClosed: Boolean = false
 
     /** Context 对象 */
-    protected lateinit var mContext: AppCompatActivity
+    protected lateinit var mContext: FragmentActivity
 
     /** 根布局对象 */
     protected lateinit var mRootView: View
@@ -48,10 +47,7 @@ abstract class BaseLibDialog
         super.onCreate(savedInstanceState)
 
         // 保存 Context 对象
-        mContext = activity as AppCompatActivity
-
-        // 初始化数据
-        initBefore()
+        mContext = activity as FragmentActivity
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,7 +56,7 @@ abstract class BaseLibDialog
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(0x00000000))
 
-        mRootView = inflater.inflate(layoutResID, container, false)
+        mRootView = inflater.inflate(layoutResId, container, false)
 
         // 初始化布局
         initView()
@@ -84,16 +80,11 @@ abstract class BaseLibDialog
         clearTags()
     }
 
-    /**
-     * 初始化数据，最先调用
-     */
-    protected open fun initBefore() {}
+    /** 界面布局 id */
+    abstract val layoutResId: Int
 
     /**
      * 初始化布局
      */
-    protected open fun initView() {}
-
-    /** 界面布局 id */
-    abstract val layoutResID: Int
+    abstract fun initView()
 }

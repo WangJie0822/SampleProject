@@ -1,8 +1,10 @@
 @file:Suppress("unused")
+@file:JvmName("RegexTools")
 
 package cn.wj.android.base.tools
 
-import cn.wj.android.base.ext.isNotNullAndEmpty
+import cn.wj.android.common.ext.isNotNullAndEmpty
+import cn.wj.android.common.ext.orFalse
 import java.util.regex.Pattern
 
 /* ----------------------------------------------------------------------------------------- */
@@ -14,7 +16,7 @@ import java.util.regex.Pattern
  * - 6-16位，大小写字符、数字、下划线、减号
  */
 fun CharSequence?.isPwdSimple(): Boolean {
-    return isMatch(regex = "^[\\w_-]{6,16}\$")
+    return this?.isMatch(regex = "^[\\w_-]{6,16}\$").orFalse()
 }
 
 /**
@@ -32,7 +34,7 @@ fun CharSequence?.isNotPwdSimple(): Boolean {
  * @return 满足简单的手机号码格式：true 不满足简单的手机号码格式：false
  */
 fun CharSequence?.isMobileSimple(): Boolean {
-    return isMatch(regex = "^[1]+\\d{10}")
+    return this?.isMatch(regex = "^[1]+\\d{10}").orFalse()
 }
 
 /**
@@ -56,7 +58,7 @@ fun CharSequence?.isNotMobileSimple(): Boolean {
  * @return 满足手机号码格式：true 不满足手机号码格式：false
  */
 fun CharSequence?.isMobileExact(): Boolean {
-    return isMatch(regex = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(16[6])|(17[0,1,3,5-8])|(18[0-9])|(19[8,9]))\\d{8}\$")
+    return this?.isMatch(regex = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(16[6])|(17[0,1,3,5-8])|(18[0-9])|(19[8,9]))\\d{8}\$").orFalse()
 }
 
 /**
@@ -79,7 +81,7 @@ fun CharSequence?.isNotMobileExact(): Boolean {
  * @return 满足电子邮件格式：true 不满足电子邮件格式：false
  */
 fun CharSequence?.isEmail(): Boolean {
-    return isMatch(regex = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$")
+    return this?.isMatch(regex = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").orFalse()
 }
 
 /**
@@ -97,7 +99,7 @@ fun CharSequence?.isNotEmail(): Boolean {
  * @return 满足 Url 格式：true 不满足 Url 格式：false
  */
 fun CharSequence?.isUrl(): Boolean {
-    return isMatch(regex = "[a-zA-z]+://[^\\s]*")
+    return this?.isMatch(regex = "[a-zA-z]+://[^\\s]*").orFalse()
 }
 
 /**
@@ -115,7 +117,7 @@ fun CharSequence?.isNotUrl(): Boolean {
  * @return 满足汉字格式：true 不满足汉字格式：false
  */
 fun CharSequence?.isZH(): Boolean {
-    return isMatch(regex = "^[\\u4e00-\\u9fa5]+$")
+    return this?.isMatch(regex = "^[\\u4e00-\\u9fa5]+$").orFalse()
 }
 
 /**
@@ -134,6 +136,6 @@ fun CharSequence?.isNotZH(): Boolean {
  *
  * @return 匹配正则表达式：true 不匹配正则表达式：false
  */
-fun CharSequence?.isMatch(regex: String): Boolean {
+fun CharSequence.isMatch(regex: String): Boolean {
     return isNotNullAndEmpty() && Pattern.matches(regex, this)
 }

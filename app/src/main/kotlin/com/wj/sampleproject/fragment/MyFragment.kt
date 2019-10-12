@@ -23,9 +23,9 @@ class MyFragment
         }
     }
 
-    override val mViewModel: MyViewModel by viewModel()
+    override val viewModel: MyViewModel by viewModel()
 
-    override val layoutResID: Int = R.layout.app_fragment_my
+    override val layoutResId: Int = R.layout.app_fragment_my
 
     override fun initView() {
 

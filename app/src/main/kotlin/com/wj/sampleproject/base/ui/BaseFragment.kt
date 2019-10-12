@@ -16,7 +16,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
     : BaseBindingLibFragment<VM, DB>() {
 
     /** 标记 - 第一次加载 */
-    protected var mFirstLoad = true
+    protected var firstLoad = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,22 +24,17 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
         observeData()
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onPause() {
+        super.onPause()
 
-        if (mFirstLoad) {
-            firstLoad()
-            mFirstLoad = false
-        }
+        firstLoad = false
     }
-
-    protected open fun firstLoad() {}
 
     /**
      * 添加观察者
      */
     private fun observeData() {
-        mViewModel.snackbarData.observe(this, Observer {
+        viewModel.snackbarData.observe(this, Observer {
             if (it.content.isNullOrBlank()) {
                 return@Observer
             }
@@ -55,10 +50,10 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
             }
             snackbar.show()
         })
-        mViewModel.uiCloseData.observe(this, Observer { close ->
+        viewModel.uiCloseData.observe(this, Observer { close ->
             if (close) {
                 // 关闭 Activity
-                mContext.setResult(mViewModel.resultCode, mViewModel.resultData)
+                mContext.setResult(viewModel.resultCode, viewModel.resultData)
                 mContext.finish()
             }
         })

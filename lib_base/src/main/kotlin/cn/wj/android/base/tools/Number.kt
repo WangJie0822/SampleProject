@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+@file:JvmName("NumberTools")
 
 package cn.wj.android.base.tools
 

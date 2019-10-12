@@ -34,13 +34,13 @@ abstract class BaseBindingLibDialog<VM : BaseMvvmViewModel, DB : ViewDataBinding
         dialog?.window?.setBackgroundDrawable(ColorDrawable(0x00000000))
 
         // 初始化 DataBinding
-        mBinding = DataBindingUtil.inflate(inflater, layoutResID, container, false)
+        mBinding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
 
         // 绑定生命周期管理
         mBinding.lifecycleOwner = this
 
         // 绑定 ViewModel
-        mBinding.setVariable(BR.viewModel, mViewModel)
+        mBinding.setVariable(BR.viewModel, viewModel)
 
         initView()
 

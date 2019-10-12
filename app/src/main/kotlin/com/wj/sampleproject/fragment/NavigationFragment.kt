@@ -28,9 +28,9 @@ class NavigationFragment
         }
     }
 
-    override val mViewModel: NavigationViewModel by viewModel()
+    override val viewModel: NavigationViewModel by viewModel()
 
-    override val layoutResID: Int = R.layout.app_fragment_navigation
+    override val layoutResId: Int = R.layout.app_fragment_navigation
 
     /** 列表适配器对象 */
     private val mAdapter: NavigationRvAdapter by inject()
@@ -39,17 +39,19 @@ class NavigationFragment
         super.onCreate(savedInstanceState)
 
         // 获取导航数据
-        mViewModel.getNavigationList()
+        viewModel.getNavigationList()
     }
 
     override fun initView() {
         // 配置 RecyclerView
-        mAdapter.mViewModel = mViewModel
+        mAdapter.viewModel = viewModel
         mBinding.rvNavigation.layoutManager = WrapContentLinearLayoutManager()
         mBinding.rvNavigation.adapter = mAdapter
+    }
 
-        // 注册观察者
-        mViewModel.listData.observe(this, Observer {
+    override fun initObserve() {
+        // 导航列表
+        viewModel.listData.observe(this, Observer {
             mAdapter.loadData(it)
         })
     }

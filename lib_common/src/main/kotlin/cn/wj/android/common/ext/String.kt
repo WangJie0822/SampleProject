@@ -1,6 +1,7 @@
 @file:Suppress("unused")
+@file:JvmName("StringExt")
 
-package cn.wj.android.base.ext
+package cn.wj.android.common.ext
 
 import org.json.JSONArray
 import org.json.JSONException
@@ -65,6 +66,7 @@ fun String?.jsonFormat(): String {
  * @return xml 格式化后的字符串
  */
 fun String?.xmlFormat(): String {
+    this.toString()
     if (this.isNullOrBlank()) {
         return ""
     }
@@ -80,4 +82,11 @@ fun String?.xmlFormat(): String {
     } catch (e: TransformerException) {
         ""
     }
+}
+
+/**
+ * 优化 toString()
+ */
+fun Any?.toString(): String {
+    return this?.toString() ?: "null"
 }

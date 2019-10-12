@@ -5,16 +5,15 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import cn.wj.android.base.ext.hideSoftKeyboard
 import cn.wj.android.base.tools.shouldHideInput
 import cn.wj.android.common.Tagable
+import cn.wj.android.common.ext.hideSoftKeyboard
 import java.util.*
 
 /**
  * Activity 基类
  * - 维护 [mContext]，当前界面的 Context 对象
  * - 维护 [touchToHideInput]，是否在点击 [EditText] 以外的地方隐藏软键盘
- * - 添加 [initBefore] 方法，在一切流程开始前预处理一些数据
  * - 添加 [startAnim]、[finishAnim] 方法，统一处理界面跳转的动画效果
  *
  * @author 王杰
@@ -38,9 +37,6 @@ abstract class BaseLibActivity
 
         // 保存当前 Context 对象
         mContext = this
-
-        // 初始化数据
-        initBefore()
     }
 
     override fun onPause() {
@@ -96,9 +92,4 @@ abstract class BaseLibActivity
      */
     protected open fun finishAnim() {
     }
-
-    /**
-     * 初始化，最先调用
-     */
-    protected open fun initBefore() {}
 }

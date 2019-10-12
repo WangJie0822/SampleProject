@@ -33,7 +33,7 @@ abstract class BaseBindingLibActivity<VM : BaseMvvmViewModel, DB : ViewDataBindi
         mBinding.lifecycleOwner = this
 
         // 绑定 ViewModel
-        mBinding.setVariable(BR.viewModel, mViewModel)
+        mBinding.setVariable(BR.viewModel, viewModel)
 
         // 设置布局
         super.setContentView(mBinding.root)

@@ -40,6 +40,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <!-- 搜索界面 -->
         <activity

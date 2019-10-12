@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.AsyncDifferConfig
+import androidx.recyclerview.widget.DiffUtil
 import cn.wj.android.recyclerview.BR
 
 /**
@@ -18,8 +20,24 @@ import cn.wj.android.recyclerview.BR
  *
  * @author 王杰
  */
-abstract class BaseRvDBAdapter<out VH : BaseRvDBViewHolder<DB, E>, DB : ViewDataBinding, VM, E>
-    : BaseRvAdapter<BaseRvViewHolder<E>, E>() {
+abstract class BaseRvListDBAdapter<out VH : BaseRvDBViewHolder<DB, E>, DB : ViewDataBinding, VM, E>
+    : BaseRvListAdapter<BaseRvViewHolder<E>, E> {
+
+    /**
+     * 构造方法
+     *
+     * @param diffCallback 数据是否相同回调
+     * @param anim 是否使用动画
+     */
+    constructor(diffCallback: DiffUtil.ItemCallback<E>, anim: Boolean = false) : super(diffCallback, anim)
+
+    /**
+     * 构造方法
+     *
+     * @param config Differ config
+     * @param anim 是否使用动画
+     */
+    constructor(config: AsyncDifferConfig<E>, anim: Boolean = false) : super(config, anim)
 
     /** 事件处理  */
     var viewModel: VM? = null

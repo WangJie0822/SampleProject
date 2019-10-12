@@ -2,7 +2,6 @@ package com.wj.android.okhttp
 
 import okhttp3.Headers
 import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.internal.http.promisesBody
 import okio.Buffer
@@ -14,11 +13,7 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.util.concurrent.TimeUnit
 
 /**
- * An OkHttp interceptor which logs request and response information. Can be applied as an
- * [application interceptor][OkHttpClient.interceptors] or as a [OkHttpClient.networkInterceptors].
- *
- * The format of the logs created by this class should not be considered stable and may
- * change slightly between releases. If you need a stable logging format, use your own interceptor.
+ * OkHttp 网络请求日志打印拦截器
  */
 class LoggerInterceptor @JvmOverloads constructor(
         private val logger: InterceptorLogger = InterceptorLogger.DEFAULT,
@@ -106,8 +101,9 @@ class LoggerInterceptor @JvmOverloads constructor(
         val requestBody = request.body
 
         val connection = chain.connection()
+        val url = request.url
         var requestStartMessage =
-                ("--> ${request.method} ${request.url}${if (connection != null) " " + connection.protocol() else ""}")
+                ("--> ${request.method} $url${if (connection != null) " " + connection.protocol() else ""}")
         if (!logHeaders && requestBody != null) {
             requestStartMessage += " (${requestBody.contentLength()}-byte body)"
         }
@@ -126,7 +122,28 @@ class LoggerInterceptor @JvmOverloads constructor(
                 }
             }
 
+            // 获取拼接参数
+            sb.appendNewline(">> START QueryParameters")
+            val parametersMaxLength = url.queryParameterNames.maxBy { it.length }?.length ?: 0
+            for (name in url.queryParameterNames) {
+                for (value in url.queryParameterValues(name)) {
+                    sb.appendNewline("\t${name.fixLength(parametersMaxLength)}\t: \t${value}")
+                }
+            }
+            sb.appendNewline(">> END QueryParameters\n")
+
             val headers = request.headers
+
+            val headersMaxLength = headers.names().maxBy { it.length }?.length ?: 0
+            sb.appendNewline(">> START Headers")
+            for (i in 0 until headers.size) {
+                val name = headers.name(i)
+                if (!"Content-Type".equals(name, true) && !"Content-Length".equals(name, true)) {
+                    sb.appendNewline("\t${name.fixLength(headersMaxLength)}\t: \t${headers.value(i)}")
+                }
+            }
+            sb.appendNewline(">> END Headers")
+
             for (i in 0 until headers.size) {
                 val name = headers.name(i)
                 // Skip headers from the request body as they are explicitly logged above.
@@ -266,6 +283,21 @@ class LoggerInterceptor @JvmOverloads constructor(
 
     private fun StringBuilder.appendNewline(str: String) {
         this.append(str).append("\n")
+    }
+
+    /**
+     * 补全长度
+     */
+    private fun String.fixLength(maxLength: Int): String {
+        return if (this.length >= maxLength) {
+            this
+        } else {
+            val sb = StringBuilder(this)
+            for (i in 0 until maxLength - this.length) {
+                sb.append(" ")
+            }
+            sb.toString()
+        }
     }
 }
 
