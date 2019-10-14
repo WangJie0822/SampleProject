@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.ACTION_TITLE
@@ -51,10 +52,22 @@ class WebViewActivity
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity_webview)
 
+        // 获取标题
+        viewModel.title.set(intent.getStringExtra(ACTION_TITLE).orEmpty())
+
         // 加载 Fragment
         supportFragmentManager.commit(true) {
             replace(R.id.fl_fragment, webViewFragment)
         }
+    }
+
+    override fun initObserve() {
+        // 返回点击
+        viewModel.navigationData.observe(this, Observer {
+            if (!webViewFragment.onKeyDown()) {
+                finish()
+            }
+        })
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

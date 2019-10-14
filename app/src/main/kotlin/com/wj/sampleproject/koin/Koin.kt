@@ -92,4 +92,5 @@ val viewModelModule: Module = module {
     viewModel { MyViewModel() }
     viewModel { SearchViewModel() }
     viewModel { WebViewViewModel() }
+    viewModel { WebViewFragViewModel() }
 }

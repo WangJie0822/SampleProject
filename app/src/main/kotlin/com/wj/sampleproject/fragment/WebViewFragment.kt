@@ -7,20 +7,19 @@ import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.lifecycle.Observer
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.ACTION_TITLE
 import com.wj.sampleproject.constants.ACTION_WEB_URL
 import com.wj.sampleproject.databinding.AppFragmentWebViewBinding
-import com.wj.sampleproject.mvvm.WebViewViewModel
+import com.wj.sampleproject.mvvm.WebViewFragViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * WebView 页面
  */
 class WebViewFragment
-    : BaseFragment<WebViewViewModel, AppFragmentWebViewBinding>() {
+    : BaseFragment<WebViewFragViewModel, AppFragmentWebViewBinding>() {
 
     companion object {
         /**
@@ -41,7 +40,7 @@ class WebViewFragment
         }
     }
 
-    override val viewModel: WebViewViewModel by viewModel()
+    override val viewModel: WebViewFragViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_web_view
 
@@ -50,8 +49,6 @@ class WebViewFragment
     }
 
     override fun initView() {
-        // 获取标题
-        viewModel.title.set(arguments?.getString(ACTION_TITLE, "").orEmpty())
 
         // 配置 WebView
         val webSettings = mBinding.wv.settings
@@ -69,15 +66,6 @@ class WebViewFragment
                 return false
             }
         }
-
-        // 添加观察者
-        viewModel.navigationData.observe(this, Observer {
-            if (mBinding.wv.canGoBack()) {
-                mBinding.wv.goBack()
-            } else {
-                mContext.finish()
-            }
-        })
 
         // 加载页面
         mBinding.wv.loadUrl(mUrl)
@@ -100,7 +88,7 @@ class WebViewFragment
         mBinding.wv.destroy()
     }
 
-    fun onKeyDown(keyCode: Int): Boolean {
+    fun onKeyDown(keyCode: Int = KeyEvent.KEYCODE_BACK): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && mBinding.wv.canGoBack()) {
             mBinding.wv.goBack()
             return true
