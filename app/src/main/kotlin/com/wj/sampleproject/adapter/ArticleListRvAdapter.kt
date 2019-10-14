@@ -1,8 +1,9 @@
 package com.wj.sampleproject.adapter
 
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import cn.wj.android.recyclerview.adapter.BaseRvDBAdapter
 import cn.wj.android.recyclerview.adapter.BaseRvDBViewHolder
+import cn.wj.android.recyclerview.adapter.BaseRvListDBAdapter
 import cn.wj.android.recyclerview.adapter.BaseRvViewHolder
 import cn.wj.android.recyclerview.adapter.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
@@ -15,11 +16,21 @@ import com.wj.sampleproject.entity.ArticleTagEntity
  * 首页文章列表列表适配器类
  */
 class ArticleListRvAdapter
-    : BaseRvDBAdapter<
+    : BaseRvListDBAdapter<
         ArticleListRvAdapter.ViewHolder,
         AppRecyclerItemArticlesBinding,
         ArticleListViewModel,
-        ArticleEntity>() {
+        ArticleEntity>(
+        object : DiffUtil.ItemCallback<ArticleEntity>() {
+            override fun areItemsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
+) {
 
     override val layoutResID: Int = R.layout.app_recycler_item_articles
 

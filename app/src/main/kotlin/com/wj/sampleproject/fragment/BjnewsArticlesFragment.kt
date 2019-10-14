@@ -66,7 +66,7 @@ class BjnewsArticlesFragment
         // 文章列表
         viewModel.articleListData.observe(this, Observer {
             // 更新文章列表
-            mArticlesAdapter.loadData(it.list, it.refresh)
+            mArticlesAdapter.submitList(it)
         })
     }
 }

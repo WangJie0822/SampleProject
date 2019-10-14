@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:bind_smart_loadMore="@={viewModel.loadMore}"
-        android:bind_smart_loadMore_enable="@{viewModel.loadMoreEnable}"
+        android:bind_smart_noMore="@{viewModel.noMore}"
         android:bind_smart_onLoadMore="@{viewModel.onLoadMore}"
         android:bind_smart_onRefresh="@{viewModel.onRefresh}"
         android:bind_smart_refreshing="@={viewModel.refreshing}">

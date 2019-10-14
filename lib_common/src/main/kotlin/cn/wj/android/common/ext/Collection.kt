@@ -34,3 +34,33 @@ fun <T> ArrayList<T>?.orEmpty(): ArrayList<T> {
 fun <T> List<T>?.orEmpty(): List<T> {
     return this ?: mutableListOf()
 }
+
+/**
+ * 将当前 List 转换为新的 List
+ *
+ * @param list 新的数据
+ * @param clean 是否清空旧数据
+ */
+fun <T> List<T>?.toNewList(list: List<T>?, clean: Boolean? = false): List<T> {
+    val ls = mutableListOf<T>()
+    if (!clean.condition) {
+        ls.addAll(this.orEmpty())
+    }
+    ls.addAll(list.orEmpty())
+    return ls
+}
+
+/**
+ * 将当前 List 转换为新的 List
+ *
+ * @param list 新的数据
+ * @param clean 是否清空旧数据
+ */
+fun <T> ArrayList<T>?.toNewList(list: List<T>?, clean: Boolean? = false): ArrayList<T> {
+    val ls = arrayListOf<T>()
+    if (!clean.condition) {
+        ls.addAll(this.orEmpty())
+    }
+    ls.addAll(list.orEmpty())
+    return ls
+}

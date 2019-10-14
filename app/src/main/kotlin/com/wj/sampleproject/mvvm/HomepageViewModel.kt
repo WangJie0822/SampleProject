@@ -8,6 +8,7 @@ import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.base.utils.AppManager
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.orEmpty
+import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.SearchActivity
@@ -20,7 +21,6 @@ import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.BannerEntity
 import com.wj.sampleproject.ext.showMsg
-import com.wj.sampleproject.net.RefreshList
 import com.wj.sampleproject.repository.HomepageRepository
 import kotlinx.coroutines.*
 
@@ -34,6 +34,17 @@ class HomepageViewModel
 constructor(private val repository: HomepageRepository)
     : BaseViewModel(),
         ArticleListViewModel {
+
+    /** 页码 */
+    private var pageNum = NET_PAGE_START
+
+    /** Banner 列表数据 */
+    val bannerData = MutableLiveData<ArrayList<BannerEntity>>()
+    /** 文章列表数据 */
+    val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
+
+    /** Banner 轮播 job */
+    private var carouselJob: Job? = null
 
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
@@ -80,6 +91,7 @@ constructor(private val repository: HomepageRepository)
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         pageNum = NET_PAGE_START
+        noMore.set(false)
         getHomepageArticleList()
     }
 
@@ -92,19 +104,8 @@ constructor(private val repository: HomepageRepository)
         getHomepageArticleList()
     }
 
-    /** 标记 - 是否允许加载更多 */
-    val loadMoreEnable: BindingField<Boolean> = BindingField(true)
-
-    /** 页码 */
-    private var pageNum = NET_PAGE_START
-
-    /** Banner 列表数据 */
-    val bannerData = MutableLiveData<ArrayList<BannerEntity>>()
-    /** 文章列表数据 */
-    val articleListData = MutableLiveData<RefreshList<ArticleEntity>>()
-
-    /** Banner 轮播 job */
-    private var carouselJob: Job? = null
+    /** 标记 - 是否没有更多 */
+    val noMore: BindingField<Boolean> = BindingField(false)
 
     /** 文章列表条目点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
@@ -172,15 +173,13 @@ constructor(private val repository: HomepageRepository)
      */
     private fun getHomepageArticleList() {
         viewModelScope.launch {
-            // 标记，是否没有更多
-            var noMore = false
             try {
                 // 获取文章列表数据
                 val result = repository.getHomepageArticleList(pageNum)
                 if (result.success()) {
                     // 请求成功
-                    articleListData.postValue(RefreshList(result.data?.datas, refreshing.get()))
-                    noMore = result.data?.over?.toBoolean().condition
+                    articleListData.postValue(articleListData.value.toNewList(result.data?.datas, refreshing.get()))
+                    noMore.set(result.data?.over?.toBoolean().condition)
                 } else {
                     snackbarData.postValue(SnackbarEntity(result.errorMsg))
                 }
@@ -190,7 +189,6 @@ constructor(private val repository: HomepageRepository)
             } finally {
                 refreshing.set(false)
                 loadMore.set(false)
-                loadMoreEnable.set(!noMore)
             }
         }
     }
