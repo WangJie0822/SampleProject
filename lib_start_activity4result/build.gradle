@@ -5,7 +5,7 @@ android {
 
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
-    resourcePrefix "rx4activityresult"
+    resourcePrefix "startactivity4result"
 
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -26,6 +26,4 @@ dependencies {
 
     // v7
     implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
-    // RxJava2
-    implementation rootProject.ext.dependencies["rxjava2"]
 }

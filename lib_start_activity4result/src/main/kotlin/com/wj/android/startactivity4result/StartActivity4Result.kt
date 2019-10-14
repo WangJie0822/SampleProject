@@ -1,13 +1,13 @@
 @file:Suppress("unused")
 
-package com.wj.android.rxforactivityresult
+package com.wj.android.startactivity4result
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import io.reactivex.Observable
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LiveData
 
 /**
  * 处理 startActivityForResult
@@ -15,7 +15,7 @@ import io.reactivex.Observable
  * @param activity 当前 Activity 对象
  *
  * ```
- * RxForActivityResult(activity)
+ * StartActivity4Result(activity)
  *     .requestCode(REQUEST_CODE)
  *     .target(TargetActivity::class.java)
  *     .params(params)
@@ -26,7 +26,7 @@ import io.reactivex.Observable
  *         // on error
  *     })
  *
- * RxForActivityResult(activity)
+ * StartActivity4Result(activity)
  *     .requestCode(REQUEST_CODE)
  *     .startForResult{ fragment ->
  *         TargetActivity.actionStartForResult(fragment, REQUEST_CODE)
@@ -40,14 +40,14 @@ import io.reactivex.Observable
  *
  * @author 王杰
  */
-class RxForActivityResult(activity: AppCompatActivity) {
+class StartActivity4Result(activity: FragmentActivity) {
 
     /** 空 Fragment，用于处理 onActivityResult */
-    private val rxForActivityResultFragment: RxForActivityResultFragment
+    private val startActivity4ResultFragment: StartActivity4ResultFragment
 
     init {
         // 初始化 Fragment
-        rxForActivityResultFragment = getRxResultFragment(activity)
+        startActivity4ResultFragment = get4ResultFragment(activity)
     }
 
     /** 目标界面 */
@@ -64,20 +64,20 @@ class RxForActivityResult(activity: AppCompatActivity) {
      *
      * @return 与当前 Activity 关联的 Fragment
      */
-    private fun getRxResultFragment(activity: AppCompatActivity): RxForActivityResultFragment {
+    private fun get4ResultFragment(activity: FragmentActivity): StartActivity4ResultFragment {
         // 从 Activity 查找 Fragment 对象
-        var rxForActivityResultFragment: RxForActivityResultFragment? = findRxResultFragment(activity)
-        if (rxForActivityResultFragment == null) {
+        var startActivity4ResultFragment: StartActivity4ResultFragment? = find4ResultFragment(activity)
+        if (startActivity4ResultFragment == null) {
             // 没有找到 Fragment 对象，新建
-            rxForActivityResultFragment = RxForActivityResultFragment()
+            startActivity4ResultFragment = StartActivity4ResultFragment()
             val fragmentManager = activity.supportFragmentManager
             fragmentManager
                     .beginTransaction()
-                    .add(rxForActivityResultFragment, "RxForActivityResult")
+                    .add(startActivity4ResultFragment, "StartActivity4Result")
                     .commitAllowingStateLoss()
             fragmentManager.executePendingTransactions()
         }
-        return rxForActivityResultFragment
+        return startActivity4ResultFragment
     }
 
     /**
@@ -87,8 +87,8 @@ class RxForActivityResult(activity: AppCompatActivity) {
      *
      * @return 与当前 Activity 关联的 Fragment，若没有返回 null
      */
-    private fun findRxResultFragment(activity: AppCompatActivity): RxForActivityResultFragment? {
-        return activity.supportFragmentManager.findFragmentByTag("RxForActivityResult") as? RxForActivityResultFragment
+    private fun find4ResultFragment(activity: FragmentActivity): StartActivity4ResultFragment? {
+        return activity.supportFragmentManager.findFragmentByTag("StartActivity4Result") as? StartActivity4ResultFragment
     }
 
     /**
@@ -96,7 +96,7 @@ class RxForActivityResult(activity: AppCompatActivity) {
      *
      * @param code 请求码
      */
-    fun requestCode(code: Int): RxForActivityResult {
+    fun requestCode(code: Int): StartActivity4Result {
         this.requestCode = code
         return this
     }
@@ -106,7 +106,7 @@ class RxForActivityResult(activity: AppCompatActivity) {
      *
      * @param clazz 目标 Activity 类对象
      */
-    fun target(clazz: Class<out Activity>): RxForActivityResult {
+    fun target(clazz: Class<out Activity>): StartActivity4Result {
         this.target = clazz
         return this
     }
@@ -116,7 +116,7 @@ class RxForActivityResult(activity: AppCompatActivity) {
      *
      * @param params 跳转参数
      */
-    fun params(params: Bundle): RxForActivityResult {
+    fun params(params: Bundle): StartActivity4Result {
         this.bundle.putAll(params)
         return this
     }
@@ -124,53 +124,45 @@ class RxForActivityResult(activity: AppCompatActivity) {
     /**
      * 跳转 Activity 并返回 Observable
      * ```
-     * RxForActivityResult(activity)
-     *     .requestCode(REQUEST_CODE)
+     * StartActivity4Result(activity)
      *     .target(TargetActivity::class.java)
      *     .params(params)
      *     .startForResult()
-     *     .subscribe({
-     *         // on success
-     *     }, {
-     *         // on error
+     *     .observe(lifeCycleOwner, {
+     *         // on result
      *     })
      * ```
      *
-     * @return [Observable] 对象，用于处理返回数据
+     * @return [LiveData] 对象，用于处理返回数据
      */
-    fun startForResult(): Observable<RxForActivityResultInfo> {
-        require(requestCode != -1) { "Please set requestCode first! requestCode could not be -1!" }
+    fun startForResult(): LiveData<ActivityResultInfo> {
         if (target == null) {
             throw NullPointerException("Target Activity could not be null!")
         }
-        val intent = Intent(rxForActivityResultFragment.activity, target).apply {
+        val intent = Intent(startActivity4ResultFragment.activity, target).apply {
             putExtras(bundle)
         }
-        return rxForActivityResultFragment.startForResult(requestCode, intent)
+        return startActivity4ResultFragment.startForResult(intent, requestCode)
     }
 
     /**
      * 跳转 Activity 并返回 Observable
      * ```
-     * RxForActivityResult(activity)
-     *     .requestCode(REQUEST_CODE)
-     *     .startForResult{ fragment ->
-     *         TargetActivity.actionStartForResult(fragment, REQUEST_CODE)
+     * StartActivity4Result(activity)
+     *     .startForResult{ fragment, requestCode ->
+     *         TargetActivity.actionStartForResult(fragment, requestCode)
      *     }
-     *     .subscribe({
-     *         // on success
-     *     }, {
-     *         // on error
+     *     .observe(lifeCycleOwner, {
+     *         // on result
      *     })
      * ```
      *
      * @param start 跳转 Activity 方法块
      *
-     * @return [Observable] 对象，用于处理返回数据
+     * @return [LiveData] 对象，用于处理返回数据
      */
-    fun startForResult(start: (Fragment) -> Unit): Observable<RxForActivityResultInfo> {
-        require(requestCode != -1) { "Please set requestCode first!" }
-        return rxForActivityResultFragment.startForResult(requestCode, start)
+    fun startForResult(start: (Fragment, Int) -> Unit): LiveData<ActivityResultInfo> {
+        return startActivity4ResultFragment.startForResult(start, requestCode)
     }
 }
 

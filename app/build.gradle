@@ -215,10 +215,11 @@ dependencies {
 
     // 依赖 base 库
     implementation project(":lib_base")
+    implementation project(":lib_common")
+    implementation project(":lib_start_activity4result")
     implementation project(":lib_databinding_adapter")
     implementation project(":lib_logger")
     implementation project(':lib_okhttp_interceptor')
     implementation project(":lib_recyclerview")
     implementation project(":lib_views_custom")
-    implementation project(":lib_common")
 }
