@@ -123,34 +123,30 @@ class LoggerInterceptor @JvmOverloads constructor(
             }
 
             // 获取拼接参数
-            sb.appendNewline(">> START QueryParameters")
-            val parametersMaxLength = url.queryParameterNames.maxBy { it.length }?.length ?: 0
-            for (name in url.queryParameterNames) {
-                for (value in url.queryParameterValues(name)) {
-                    sb.appendNewline("\t${name.fixLength(parametersMaxLength)}\t: \t${value}")
+            val queryParameterNames = url.queryParameterNames
+            if (queryParameterNames.isNotEmpty()) {
+                sb.appendNewline(">> QUERY")
+                val parametersMaxLength = queryParameterNames.maxBy { it.length }?.length ?: 0
+                for (name in queryParameterNames) {
+                    for (value in url.queryParameterValues(name)) {
+                        sb.appendNewline("\t${name.fixLength(parametersMaxLength)}\t: \t${value}")
+                    }
                 }
+                sb.appendNewline(">> QUERY\n")
             }
-            sb.appendNewline(">> END QueryParameters\n")
 
             val headers = request.headers
 
-            val headersMaxLength = headers.names().maxBy { it.length }?.length ?: 0
-            sb.appendNewline(">> START Headers")
-            for (i in 0 until headers.size) {
-                val name = headers.name(i)
-                if (!"Content-Type".equals(name, true) && !"Content-Length".equals(name, true)) {
-                    sb.appendNewline("\t${name.fixLength(headersMaxLength)}\t: \t${headers.value(i)}")
+            if (headers.size > 0) {
+                sb.appendNewline(">> HEADERS")
+                val headersMaxLength = headers.names().maxBy { it.length }?.length ?: 0
+                for (i in 0 until headers.size) {
+                    val name = headers.name(i)
+                    if (!"Content-Type".equals(name, true) && !"Content-Length".equals(name, true)) {
+                        sb.appendNewline("\t${name.fixLength(headersMaxLength)}\t: \t${headers.value(i)}")
+                    }
                 }
-            }
-            sb.appendNewline(">> END Headers")
-
-            for (i in 0 until headers.size) {
-                val name = headers.name(i)
-                // Skip headers from the request body as they are explicitly logged above.
-                if (!"Content-Type".equals(name, ignoreCase = true) &&
-                        !"Content-Length".equals(name, ignoreCase = true)) {
-                    sb.appendNewline(logHeader(headers, i))
-                }
+                sb.appendNewline(">> HEADERS\n")
             }
 
             if (!logBody || requestBody == null) {

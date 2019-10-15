@@ -1,11 +1,12 @@
 @file:Suppress("unused")
+@file:JvmName("StringTools")
 
 package cn.wj.android.common.tools
 
 import android.graphics.Color
+import android.text.Html
 import android.text.Spanned
-import androidx.core.text.HtmlCompat
-import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+import android.util.Base64
 import cn.wj.android.common.log.InternalLog
 
 /* ----------------------------------------------------------------------------------------- */
@@ -18,7 +19,8 @@ import cn.wj.android.common.log.InternalLog
  * @return 从 Html 解析出的 Spanned 对象
  */
 fun String.parseHtml(): Spanned? {
-    return HtmlCompat.fromHtml(this, FROM_HTML_MODE_LEGACY)
+    @Suppress("DEPRECATION")
+    return Html.fromHtml(this)
 }
 
 /**
@@ -55,4 +57,22 @@ fun String.parseColor(): Int? {
  */
 fun color(str: String): Int? {
     return str.parseColor()
+}
+
+/**
+ * 对字符串进行 Base64 加密
+ *
+ * @return 加密后的字符串
+ */
+fun String.toBase64(): String {
+    return Base64.encodeToString(this.toByteArray(), Base64.DEFAULT).replace("\n", "")
+}
+
+/**
+ * 从 Base64 字符串解密
+ *
+ * @return 解密后的字符串
+ */
+fun String.fromBase64(): String {
+    return String(Base64.decode(this, Base64.DEFAULT))
 }

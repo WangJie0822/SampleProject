@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.SystemViewModel" />
+            type="com.wj.sampleproject.viewmodel.SystemViewModel" />
     </data>
 
     <LinearLayout

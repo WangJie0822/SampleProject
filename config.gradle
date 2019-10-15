@@ -108,6 +108,8 @@ ext {
             "tencent-mid"                          : "com.tencent.mid:mid:3.73-a",
             // 可视化埋点
             "tencent-visual"                       : "com.qq.visual:visual:1.0.7-alpha",
+            // MMKV
+            "tencent-mmkv"                         : "com.tencent:mmkv:1.0.23",
 
             // RxJava2
             "rxjava2"                              : "io.reactivex.rxjava2:rxjava:2.2.12",

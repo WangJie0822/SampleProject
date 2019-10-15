@@ -90,3 +90,10 @@ fun String?.xmlFormat(): String {
 fun Any?.toString(): String {
     return this?.toString() ?: "null"
 }
+
+/**
+ * 优化 length()
+ */
+fun String?.length(): Int {
+    return this.orEmpty().length
+}

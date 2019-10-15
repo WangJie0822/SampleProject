@@ -1,4 +1,4 @@
-package com.wj.sampleproject.mvvm
+package com.wj.sampleproject.viewmodel
 
 import cn.wj.android.base.databinding.BindingField
 import com.wj.sampleproject.base.mvvm.BaseViewModel

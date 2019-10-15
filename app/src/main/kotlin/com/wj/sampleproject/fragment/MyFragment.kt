@@ -1,9 +1,11 @@
 package com.wj.sampleproject.fragment
 
+import cn.wj.android.base.tools.getString
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentMyBinding
-import com.wj.sampleproject.mvvm.MyViewModel
+import com.wj.sampleproject.helper.UserHelper
+import com.wj.sampleproject.viewmodel.MyViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -27,7 +29,18 @@ class MyFragment
 
     override val layoutResId: Int = R.layout.app_fragment_my
 
-    override fun initView() {
+    override fun onResume() {
+        super.onResume()
 
+        if (null == UserHelper.userInfo) {
+            viewModel.userName.set(R.string.app_un_login.getString())
+            viewModel.avatarUrl.set("")
+        } else {
+            viewModel.userName.set(UserHelper.userInfo?.username)
+            viewModel.avatarUrl.set(UserHelper.userInfo?.icon)
+        }
+    }
+
+    override fun initView() {
     }
 }

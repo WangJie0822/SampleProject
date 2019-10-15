@@ -47,11 +47,17 @@
             android:name=".activity.SearchActivity"
             android:configChanges="screenSize"
             android:screenOrientation="portrait" />
-        <!-- H5界面 -->
+        <!-- WebView 界面 -->
         <activity
             android:name=".activity.WebViewActivity"
             android:configChanges="screenSize"
             android:screenOrientation="portrait" />
+        <!-- 注册界面 -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WhiteStatusBar" />
     </application>
 
 </manifest>

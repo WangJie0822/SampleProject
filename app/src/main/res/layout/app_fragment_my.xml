@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.MyViewModel" />
+            type="com.wj.sampleproject.viewmodel.MyViewModel" />
     </data>
 
     <LinearLayout
@@ -30,9 +30,11 @@
                 android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:bind_iv_img_circle="@{true}"
+                android:bind_iv_img_default="@{@drawable/app_vector_avatar_circle_gray_24dp}"
+                android:bind_iv_img_placeholder="@{@drawable/app_vector_avatar_circle_gray_24dp}"
                 android:bind_iv_img_url="@{viewModel.avatarUrl}"
                 android:contentDescription="@null"
-                tools:background="#0BB1FF" />
+                tools:background="@drawable/app_vector_avatar_circle_gray_24dp" />
 
             <TextView
                 android:id="@+id/tv_name"

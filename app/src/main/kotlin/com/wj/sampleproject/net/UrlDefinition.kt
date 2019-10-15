@@ -38,4 +38,11 @@ object UrlDefinition {
     const val GET_PROJECT_CATEGORY = "/project/tree/json"
     /** 获取项目列表 */
     const val GET_PROJECT_LIST = "/project/list/{pageNum}/json"
+
+    /** 登录 */
+    const val LOGIN = "/user/login"
+    /** 注册 */
+    const val REGISTER = "/user/register"
+    /** 退出登录 */
+    const val LOGOUT = "/user/logout/json"
 }

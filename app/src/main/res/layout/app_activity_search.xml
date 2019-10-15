@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.SearchViewModel" />
+            type="com.wj.sampleproject.viewmodel.SearchViewModel" />
     </data>
 
     <LinearLayout

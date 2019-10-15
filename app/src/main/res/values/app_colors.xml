@@ -12,11 +12,25 @@
     <color name="app_transparent">#00FFFFFF</color>
 
     <!-- 窗口默认背景色 -->
-    <color name="app_windowBackground">#FFFFFFFF</color>
+    <color name="app_window_bg">#FFFFFFFF</color>
     <!-- 欢迎界面背景色 -->
-    <color name="app_welcomeBackgroud">#FFFFFF</color>
+    <color name="app_welcome_bg">#FFFFFF</color>
     <!-- 分隔线颜色 -->
-    <color name="app_dividingBackground">#EBEBEB</color>
+    <color name="app_dividing_bg">#EBEBEB</color>
     <!-- 点击水波纹颜色 -->
     <color name="app_default_ripple">#EBEBEB</color>
+
+    <!-- 字体颜色 - 黑色 -->
+    <color name="app_text_color_black">#333333</color>
+    <!-- 字体颜色 - 灰色 -->
+    <color name="app_text_color_gray">#666666</color>
+    <!-- 字体颜色 - 浅灰色 -->
+    <color name="app_text_color_gray_light">#999999</color>
+    <!-- 字体颜色 - 白色 -->
+    <color name="app_text_color_white">#FFFFFF</color>
+    <!-- 字体颜色 - 红色 -->
+    <color name="app_text_color_red">#A71201</color>
+    <!-- 字体颜色 - 蓝色 -->
+    <color name="app_text_color_blue">#3C83FC</color>
+
 </resources>

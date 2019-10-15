@@ -2,7 +2,9 @@ package com.wj.sampleproject.base
 
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
 import cn.wj.android.base.tools.getColor
+import cn.wj.android.base.tools.getString
 import com.google.android.material.snackbar.Snackbar
 import com.wj.sampleproject.R
 
@@ -11,7 +13,7 @@ import com.wj.sampleproject.R
  */
 class SnackbarEntity
 /**
- * 构造方法
+ * 主构造方法
  *
  * @param content 显示文本
  * @param contentBgColor 显示背景颜色
@@ -31,4 +33,12 @@ constructor(
         @ColorInt var actionColor: Int = R.color.app_colorAccent.getColor(),
         var onAction: View.OnClickListener? = null,
         var onCallback: Snackbar.Callback? = null
-)
+) {
+
+    /**
+     * 次构造方法
+     *
+     * @param resId 显示文本资源 id
+     */
+    constructor(@StringRes resId: Int) : this(resId.getString())
+}

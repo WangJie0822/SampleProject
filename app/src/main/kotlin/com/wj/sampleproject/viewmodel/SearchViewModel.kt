@@ -1,4 +1,4 @@
-package com.wj.sampleproject.mvvm
+package com.wj.sampleproject.viewmodel
 
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 

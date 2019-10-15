@@ -1,41 +1,35 @@
-package com.wj.sampleproject.mvvm
+package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.base.mvvm.BaseViewModel
-import com.wj.sampleproject.entity.SystemCategoryEntity
+import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.ext.toSnackbarMsg
-import com.wj.sampleproject.repository.SystemRepository
+import com.wj.sampleproject.repository.ProjectRepository
 import kotlinx.coroutines.launch
 
 /**
- * 体系目录列表 ViewModel
+ * 项目 ViewModel
  */
-class SystemCategoryViewModel
+class ProjectViewModel
 /**
- * @param repository 体系相关数据仓库
+ * @param repository 项目相关数据仓库
  */
-constructor(private val repository: SystemRepository)
+constructor(private val repository: ProjectRepository)
     : BaseViewModel() {
 
-    /** TODO 目录点击 */
-    val onCategoryItemClick: (SystemCategoryEntity) -> Unit = { item ->
-        snackbarData.postValue(item.name.toSnackbarMsg())
-    }
-
-    /** 列表数据 */
-    val listData = MutableLiveData<ArrayList<SystemCategoryEntity>>()
+    /** 项目分类数据 */
+    val listData = MutableLiveData<ArrayList<CategoryEntity>>()
 
     /**
-     * 获取分类数据
+     * 获取新项目分类列表
      */
-    fun getSystemCategoryList() {
+    fun getProjectCategory() {
         viewModelScope.launch {
             try {
-                val result = repository.getSystemCategoryList()
+                val result = repository.getProjectCategory()
                 if (result.success()) {
                     // 获取成功
                     listData.postValue(result.data.orEmpty())

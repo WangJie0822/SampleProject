@@ -207,6 +207,9 @@ dependencies {
     // Glide
     implementation rootProject.ext.dependencies["glide"]
 
+    // MMKV 数据存储
+    implementation rootProject.ext.dependencies["tencent-mmkv"]
+
     // SmartRefreshLayout
     implementation rootProject.ext.dependencies["smartrefresh"]
 

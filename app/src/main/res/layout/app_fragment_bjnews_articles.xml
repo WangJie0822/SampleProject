@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.BjnewsArticlesViewModel" />
+            type="com.wj.sampleproject.viewmodel.BjnewsArticlesViewModel" />
     </data>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

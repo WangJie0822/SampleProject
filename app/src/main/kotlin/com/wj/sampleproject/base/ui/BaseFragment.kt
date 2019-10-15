@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import cn.wj.android.base.ui.fragment.BaseBindingLibFragment
 import com.google.android.material.snackbar.Snackbar
 import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.helper.ProgressDialogHelper
 
 /**
  * Fragment 基类
@@ -28,6 +29,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
         super.onPause()
 
         firstLoad = false
+        ProgressDialogHelper.dismiss()
     }
 
     /**
@@ -38,17 +40,24 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
             if (it.content.isNullOrBlank()) {
                 return@Observer
             }
-            val snackbar = Snackbar.make(mBinding.root, it.content.orEmpty(), it.duration)
-            snackbar.setTextColor(it.contentColor)
-            snackbar.setBackgroundTint(it.contentBgColor)
+            val snackBar = Snackbar.make(mBinding.root, it.content.orEmpty(), it.duration)
+            snackBar.setTextColor(it.contentColor)
+            snackBar.setBackgroundTint(it.contentBgColor)
             if (it.actionText != null && it.onAction != null) {
-                snackbar.setAction(it.actionText!!, it.onAction)
-                snackbar.setActionTextColor(it.actionColor)
+                snackBar.setAction(it.actionText!!, it.onAction)
+                snackBar.setActionTextColor(it.actionColor)
             }
             if (it.onCallback != null) {
-                snackbar.addCallback(it.onCallback!!)
+                snackBar.addCallback(it.onCallback!!)
             }
-            snackbar.show()
+            snackBar.show()
+        })
+        viewModel.progressData.observe(this, Observer { progress ->
+            if (null == progress || !progress.show) {
+                ProgressDialogHelper.dismiss()
+            } else {
+                ProgressDialogHelper.show(mContext, progress.cancelable)
+            }
         })
         viewModel.uiCloseData.observe(this, Observer { close ->
             if (close) {
@@ -57,5 +66,6 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
                 mContext.finish()
             }
         })
+        viewModel.showDialogData.observe(this, Observer { builder -> builder.build().show(mContext) })
     }
 }

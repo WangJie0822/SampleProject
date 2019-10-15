@@ -3,6 +3,8 @@
 
 package cn.wj.android.common.ext
 
+import java.util.*
+
 /* ----------------------------------------------------------------------------------------- */
 /* |                                        集合相关                                        | */
 /* ----------------------------------------------------------------------------------------- */
@@ -19,6 +21,13 @@ fun <T : Collection<*>> T?.isNullOrEmpty(): Boolean {
  */
 fun <T : Collection<*>> T?.isNotNullAndEmpty(): Boolean {
     return !this.isNullOrEmpty()
+}
+
+/**
+ * 交换位置
+ */
+fun List<*>.swap(fromPosition: Int, toPosition: Int) {
+    Collections.swap(this, fromPosition, toPosition)
 }
 
 /**

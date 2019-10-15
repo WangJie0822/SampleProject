@@ -12,7 +12,7 @@ import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.ACTION_TITLE
 import com.wj.sampleproject.constants.ACTION_WEB_URL
 import com.wj.sampleproject.databinding.AppFragmentWebViewBinding
-import com.wj.sampleproject.mvvm.WebViewFragViewModel
+import com.wj.sampleproject.viewmodel.WebViewFragViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

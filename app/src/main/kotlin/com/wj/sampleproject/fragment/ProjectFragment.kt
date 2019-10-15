@@ -6,7 +6,7 @@ import cn.wj.android.base.adapter.FragVpAdapter
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentProjectBinding
-import com.wj.sampleproject.mvvm.ProjectViewModel
+import com.wj.sampleproject.viewmodel.ProjectViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

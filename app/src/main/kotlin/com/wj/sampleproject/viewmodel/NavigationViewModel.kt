@@ -1,4 +1,4 @@
-package com.wj.sampleproject.mvvm
+package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

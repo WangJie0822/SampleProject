@@ -7,7 +7,7 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.NavigationRvAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentNavigationBinding
-import com.wj.sampleproject.mvvm.NavigationViewModel
+import com.wj.sampleproject.viewmodel.NavigationViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 

@@ -13,7 +13,7 @@ import com.wj.sampleproject.constants.ACTION_TITLE
 import com.wj.sampleproject.constants.ACTION_WEB_URL
 import com.wj.sampleproject.databinding.AppActivityWebviewBinding
 import com.wj.sampleproject.fragment.WebViewFragment
-import com.wj.sampleproject.mvvm.WebViewViewModel
+import com.wj.sampleproject.viewmodel.WebViewViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

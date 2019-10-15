@@ -4,7 +4,7 @@ import cn.wj.android.base.adapter.FragVpAdapter
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentSystemBinding
-import com.wj.sampleproject.mvvm.SystemViewModel
+import com.wj.sampleproject.viewmodel.SystemViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

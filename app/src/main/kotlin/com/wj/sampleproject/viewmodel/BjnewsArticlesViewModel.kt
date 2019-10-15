@@ -1,4 +1,4 @@
-package com.wj.sampleproject.mvvm
+package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,22 +14,22 @@ import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.ext.showMsg
-import com.wj.sampleproject.repository.ProjectRepository
+import com.wj.sampleproject.repository.BjnewsRepository
 import kotlinx.coroutines.launch
 
 /**
  * 公众号文章 ViewModel
  */
-class ProjectArticlesViewModel
+class BjnewsArticlesViewModel
 /**
- * @param repository 项目相关数据仓库
+ * @param repository 公众号相关数据仓库
  */
-constructor(private val repository: ProjectRepository)
+constructor(private val repository: BjnewsRepository)
     : BaseViewModel(),
         ArticleListViewModel {
 
-    /** 项目分类 id */
-    var categoryId = ""
+    /** 公众号 id */
+    var bjnewsId = ""
     /** 页码 */
     private var pageNum = NET_PAGE_START
 
@@ -42,6 +42,7 @@ constructor(private val repository: ProjectRepository)
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         pageNum = NET_PAGE_START
+        noMore.set(false)
         getBjnewsArticles()
     }
 
@@ -55,7 +56,7 @@ constructor(private val repository: ProjectRepository)
     }
 
     /** 标记 - 是否没有更多 */
-    val noMore: BindingField<Boolean> = BindingField(true)
+    val noMore: BindingField<Boolean> = BindingField(false)
 
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
@@ -69,7 +70,7 @@ constructor(private val repository: ProjectRepository)
         viewModelScope.launch {
             try {
                 // 获取文章列表数据
-                val result = repository.getProjectList(categoryId, pageNum)
+                val result = repository.getBjnewsArticles(bjnewsId, pageNum)
                 if (result.success()) {
                     // 请求成功
                     articleListData.postValue(articleListData.value.toNewList(result.data?.datas, refreshing.get()))

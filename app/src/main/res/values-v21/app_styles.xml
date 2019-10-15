@@ -13,7 +13,7 @@
         <!-- 状态栏颜色 -->
         <item name="android:statusBarColor">@color/app_colorPrimaryDark</item>
         <!-- 窗口背景 -->
-        <item name="android:windowBackground">@color/app_windowBackground</item>
+        <item name="android:windowBackground">@color/app_window_bg</item>
     </style>
 
     <!-- 欢迎界面主题 -->
@@ -26,6 +26,12 @@
         <item name="android:statusBarColor">@color/app_transparent</item>
         <!-- 窗口背景 -->
         <item name="android:windowBackground">@drawable/app_layer_list_splash_bg</item>
+    </style>
+
+    <!-- 白色状态栏主题 -->
+    <style name="AppTheme.WhiteStatusBar">
+        <item name="colorPrimaryDark">@color/app_white</item>
+        <item name="android:statusBarColor">@color/app_white</item>
     </style>
 
 </resources>

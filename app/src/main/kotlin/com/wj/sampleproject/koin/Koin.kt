@@ -1,6 +1,8 @@
 package com.wj.sampleproject.koin
 
+import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
+import com.tencent.mmkv.MMKV
 import com.wj.android.okhttp.InterceptorLogger
 import com.wj.android.okhttp.LoggerInterceptor
 import com.wj.sampleproject.BuildConfig
@@ -8,13 +10,17 @@ import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.adapter.NavigationRvAdapter
 import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
-import com.wj.sampleproject.mvvm.*
+import com.wj.sampleproject.constants.SP_KEY_COOKIES
+import com.wj.sampleproject.entity.CookieEntity
+import com.wj.sampleproject.ext.toEntity
+import com.wj.sampleproject.ext.toJson
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
-import com.wj.sampleproject.repository.BjnewsRepository
-import com.wj.sampleproject.repository.HomepageRepository
-import com.wj.sampleproject.repository.ProjectRepository
-import com.wj.sampleproject.repository.SystemRepository
+import com.wj.sampleproject.repository.*
+import com.wj.sampleproject.viewmodel.*
+import okhttp3.Cookie
+import okhttp3.CookieJar
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -36,7 +42,22 @@ val netModule: Module = module {
         }
         OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
-                .addInterceptor(
+                .cookieJar(object : CookieJar {
+                    override fun loadForRequest(url: HttpUrl): List<Cookie> {
+                        val cookieEntity = MMKV.defaultMMKV().decodeString(SP_KEY_COOKIES, "").toEntity(CookieEntity::class.java)
+                        return cookieEntity?.cookies.orEmpty()
+                    }
+
+                    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+                        if (cookies.size > 1) {
+                            val ls = arrayListOf<Cookie>()
+                            ls.addAll(cookies)
+                            val cookieEntity = CookieEntity(ls)
+                            MMKV.defaultMMKV().encode(SP_KEY_COOKIES, cookieEntity.toJson())
+                        }
+                    }
+                })
+                .addNetworkInterceptor(
                         LoggerInterceptor(logger, if (BuildConfig.DEBUG) LoggerInterceptor.Level.BODY else LoggerInterceptor.Level.NONE)
                 )
                 .build()
@@ -63,6 +84,7 @@ val repositoryModule: Module = module {
     single { SystemRepository() }
     single { BjnewsRepository() }
     single { ProjectRepository() }
+    single { MyRepository() }
 }
 
 /**
@@ -89,8 +111,10 @@ val viewModelModule: Module = module {
     viewModel { BjnewsArticlesViewModel(get()) }
     viewModel { ProjectViewModel(get()) }
     viewModel { ProjectArticlesViewModel(get()) }
-    viewModel { MyViewModel() }
+    viewModel { MyViewModel(get()) }
     viewModel { SearchViewModel() }
     viewModel { WebViewViewModel() }
     viewModel { WebViewFragViewModel() }
+    viewModel { LoginViewModel(get()) }
+    viewModel { GeneralViewModel() }
 }

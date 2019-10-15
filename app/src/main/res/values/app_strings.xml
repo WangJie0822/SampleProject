@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">玩Android</string>
 
+    <string name="app_welcome_tips">欢迎来到玩 Android！</string>
+
     <string name="app_net_error_timeout">连接超时，请稍后再试！</string>
     <string name="app_net_error_connect">连接失败，请稍后再试！</string>
     <string name="app_net_error_failed">网络故障，请稍后再试！</string>
@@ -19,4 +21,18 @@
     <string name="app_zan">赞</string>
     <string name="app_my_collection">我的收藏</string>
     <string name="app_un_login">未登录</string>
+    <string name="app_please_enter_user_name">请输入用户名</string>
+    <string name="app_please_enter_password">请输入密码</string>
+    <string name="app_please_enter_password_again">请再次输入密码</string>
+    <string name="app_user_name_must_not_be_empty">用户名不能为空</string>
+    <string name="app_password_must_not_be_empty">密码不能为空</string>
+    <string name="app_register">注册</string>
+    <string name="app_login">登录</string>
+    <string name="app_password_length_must_larger_than_six">密码长度必须大于6</string>
+    <string name="app_re_set_password_not_match">两次输入的密码不一致</string>
+    <string name="app_in_request">请求中…</string>
+    <string name="app_no_longer_tips">不再提示</string>
+    <string name="app_confirm">确定</string>
+    <string name="app_cancel">取消</string>
+    <string name="app_are_you_sure_to_logout">确定要退出登录吗？</string>
 </resources>

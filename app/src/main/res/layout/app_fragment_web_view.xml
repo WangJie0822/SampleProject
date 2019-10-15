@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.WebViewFragViewModel" />
+            type="com.wj.sampleproject.viewmodel.WebViewFragViewModel" />
     </data>
 
     <WebView

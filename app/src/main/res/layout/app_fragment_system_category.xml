@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.SystemCategoryViewModel" />
+            type="com.wj.sampleproject.viewmodel.SystemCategoryViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView

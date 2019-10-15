@@ -7,7 +7,7 @@ import android.os.Bundle
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.databinding.AppActivitySearchBinding
-import com.wj.sampleproject.mvvm.SearchViewModel
+import com.wj.sampleproject.viewmodel.SearchViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

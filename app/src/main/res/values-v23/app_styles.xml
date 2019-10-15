@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 白色状态栏主题 -->
+    <style name="AppTheme.WhiteStatusBar">
+        <item name="colorPrimaryDark">@color/app_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/app_white</item>
+    </style>
+
+</resources>

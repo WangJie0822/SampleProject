@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.viewmodel.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?selectableItemBackground"
+            android:bind_onClick="@{viewModel.onCloseClick}"
+            android:contentDescription="@null"
+            android:padding="12dp"
+            android:src="@drawable/app_vector_close_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="100dp"
+            android:text="@string/app_welcome_tips"
+            android:textColor="@color/app_text_color_black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="?selectableItemBackground"
+            android:bind_onClick="@{viewModel.onTabClick}"
+            android:bind_onClick_item="@{true}"
+            android:bind_selected="@{viewModel.register}"
+            android:padding="10dp"
+            android:text="@string/app_register"
+            android:textColor="@color/app_selector_login_register_text"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_welcome"
+            tools:enabled="false" />
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="?selectableItemBackground"
+            android:bind_onClick="@{viewModel.onTabClick}"
+            android:bind_onClick_item="@{false}"
+            android:bind_selected="@{!viewModel.register}"
+            android:padding="10dp"
+            android:text="@string/app_login"
+            android:textColor="@color/app_selector_login_register_text"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_register"
+            app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
+
+        <cn.wj.android.views.custom.DrawableEditText
+            android:id="@+id/det_phone_number"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/app_please_enter_user_name"
+            android:inputType="text"
+            android:maxLength="13"
+            android:singleLine="true"
+            android:text="@={viewModel.userName}"
+            android:textColor="@color/app_text_color_black"
+            android:textColorHint="@color/app_text_color_gray_light"
+            android:textSize="16sp"
+            app:det_drawableStart="@drawable/app_vector_phone_gray_24dp"
+            app:det_drawableStartHeight="24dp"
+            app:det_drawableStartWidth="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_login" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?selectableItemBackground"
+            android:bind_onClick="@{viewModel.onUserNameClearClick}"
+            android:bind_visibility="@{viewModel.showUserNameClear}"
+            android:contentDescription="@null"
+            android:padding="8dp"
+            android:src="@drawable/app_selector_clear_circle"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/det_phone_number"
+            app:layout_constraintEnd_toEndOf="@id/det_phone_number"
+            app:layout_constraintTop_toTopOf="@id/det_phone_number"
+            tools:visibility="visible" />
+
+        <View
+            android:id="@+id/v_phone_number"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/app_dividing_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/det_phone_number" />
+
+        <cn.wj.android.views.custom.DrawableEditText
+            android:id="@+id/det_password"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="40dp"
+            android:drawableStart="@drawable/app_vector_password_gray_24dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/app_please_enter_password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:text="@={viewModel.password}"
+            android:textColor="@color/app_text_color_black"
+            android:textColorHint="@color/app_text_color_gray_light"
+            android:textSize="16sp"
+            app:det_drawableStartHeight="25dp"
+            app:det_drawableStartWidth="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_phone_number" />
+
+        <View
+            android:id="@+id/v_password"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/app_dividing_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/det_password" />
+
+        <cn.wj.android.views.custom.DrawableEditText
+            android:id="@+id/det_password_again"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="40dp"
+            android:bind_visibility="@{viewModel.register}"
+            android:drawableStart="@drawable/app_vector_password_gray_24dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/app_please_enter_password_again"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:text="@={viewModel.passwordAgain}"
+            android:textColor="@color/app_text_color_black"
+            android:textColorHint="@color/app_text_color_gray_light"
+            android:textSize="16sp"
+            app:det_drawableStartHeight="25dp"
+            app:det_drawableStartWidth="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_password" />
+
+        <View
+            android:id="@+id/v_password_again"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/app_dividing_bg"
+            android:bind_visibility="@{viewModel.register}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/det_password_again" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/app_selector_button_bg_positive"
+            android:bind_enable="@{viewModel.buttonEnable}"
+            android:bind_onClick="@{viewModel.onButtonClick}"
+            android:gravity="center"
+            android:text="@{viewModel.buttonStr}"
+            android:textColor="@color/app_text_color_white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_password_again"
+            tools:text="注册" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

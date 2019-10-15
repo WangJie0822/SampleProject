@@ -8,7 +8,7 @@ import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.databinding.AppRecyclerItemSystemCategoryBinding
 import com.wj.sampleproject.entity.SystemCategoryEntity
-import com.wj.sampleproject.mvvm.SystemCategoryViewModel
+import com.wj.sampleproject.viewmodel.SystemCategoryViewModel
 
 /**
  * 体系目录列表适配器类

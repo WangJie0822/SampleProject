@@ -9,7 +9,7 @@ import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
 import com.wj.sampleproject.databinding.AppLayoutHomepageBannerBinding
-import com.wj.sampleproject.mvvm.HomepageViewModel
+import com.wj.sampleproject.viewmodel.HomepageViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 

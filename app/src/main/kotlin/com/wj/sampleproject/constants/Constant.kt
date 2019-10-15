@@ -1,5 +1,8 @@
 package com.wj.sampleproject.constants
 
+/** 密码最低长度 */
+const val PASSWORD_MIN_LENGTH = 6
+
 /** 欢迎界面延时时间 */
 const val SPLASH_DELAY_MS = 2000L
 /** 首页返回点击间隔 */

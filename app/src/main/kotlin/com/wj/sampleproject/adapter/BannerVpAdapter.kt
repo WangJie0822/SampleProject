@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.wj.sampleproject.databinding.AppViewpagerItemBannerBinding
 import com.wj.sampleproject.entity.BannerEntity
-import com.wj.sampleproject.mvvm.HomepageViewModel
+import com.wj.sampleproject.viewmodel.HomepageViewModel
 
 /**
  * 首页 Banner 适配器类

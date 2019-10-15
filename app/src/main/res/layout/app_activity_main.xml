@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.MainViewModel" />
+            type="com.wj.sampleproject.viewmodel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +32,7 @@
             android:id="@+id/v_dividing"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="@color/app_dividingBackground"
+            android:background="@color/app_dividing_bg"
             app:layout_constraintBottom_toTopOf="@id/bnv_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

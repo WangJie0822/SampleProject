@@ -9,7 +9,7 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.SPLASH_DELAY_MS
 import com.wj.sampleproject.databinding.AppActivitySplashBinding
-import com.wj.sampleproject.mvvm.SplashViewModel
+import com.wj.sampleproject.viewmodel.SplashViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel

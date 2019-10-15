@@ -9,7 +9,7 @@ import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.ACTION_CATEGORY
 import com.wj.sampleproject.databinding.AppFragmentBjnewsArticlesBinding
 import com.wj.sampleproject.entity.CategoryEntity
-import com.wj.sampleproject.mvvm.BjnewsArticlesViewModel
+import com.wj.sampleproject.viewmodel.BjnewsArticlesViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 

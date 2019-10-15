@@ -9,7 +9,7 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.databinding.AppRecyclerItemNavigationBinding
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.NavigationListEntity
-import com.wj.sampleproject.mvvm.NavigationViewModel
+import com.wj.sampleproject.viewmodel.NavigationViewModel
 
 /**
  * 导航列表适配器类

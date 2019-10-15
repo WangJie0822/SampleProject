@@ -10,7 +10,7 @@
         <item name="colorAccent">@color/app_colorAccent</item>
 
         <!-- 窗口背景 -->
-        <item name="android:windowBackground">@color/app_windowBackground</item>
+        <item name="android:windowBackground">@color/app_window_bg</item>
     </style>
 
     <!-- 全屏主题 -->
@@ -29,6 +29,11 @@
         <item name="android:windowBackground">@drawable/app_layer_list_splash_bg</item>
     </style>
 
+    <!-- 白色状态栏主题 -->
+    <style name="AppTheme.WhiteStatusBar">
+        <item name="colorPrimaryDark">@color/app_white</item>
+    </style>
+
     <!-- Toolber 样式 -->
     <style name="app_toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="actionMenuTextColor">@color/app_colorAccent</item>
@@ -37,7 +42,7 @@
 
     <!-- 分隔线样式 -->
     <style name="app_dividing">
-        <item name="android:background">@color/app_dividingBackground</item>
+        <item name="android:background">@color/app_dividing_bg</item>
     </style>
 
     <style name="app_dividing.vertical">
@@ -48,6 +53,17 @@
     <style name="app_dividing.horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
+    </style>
+
+    <!-- 进度条弹窗主题 -->
+    <style name="app_progress_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
 </resources>

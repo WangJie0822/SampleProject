@@ -1,9 +1,7 @@
 package com.wj.sampleproject.net
 
 import com.wj.sampleproject.entity.*
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * 网络请求接口
@@ -79,4 +77,38 @@ interface WebService {
             @Path("pageNum") pageNum: Int,
             @Query("cid") categoryId: String
     ): NetResult<ArticleListEntity>
+
+    /**
+     * 用户登录
+     *
+     * @param username 用户名
+     * @param password 密码
+     */
+    @FormUrlEncoded
+    @POST(UrlDefinition.LOGIN)
+    suspend fun login(
+            @Field("username") username: String,
+            @Field("password") password: String
+    ): NetResult<UserInfoEntity>
+
+    /**
+     * 用户注册
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @param repassword 重复密码
+     */
+    @FormUrlEncoded
+    @POST(UrlDefinition.REGISTER)
+    suspend fun register(
+            @Field("username") username: String,
+            @Field("password") password: String,
+            @Field("repassword") repassword: String
+    ): NetResult<UserInfoEntity>
+
+    /**
+     * 用户退出登录
+     */
+    @GET(UrlDefinition.LOGOUT)
+    suspend fun logout(): NetResult<Any>
 }

@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.mvvm.SplashViewModel" />
+            type="com.wj.sampleproject.viewmodel.SplashViewModel" />
     </data>
 
     <View
