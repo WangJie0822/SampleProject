@@ -29,11 +29,9 @@ abstract class BaseBindingLibActivity<VM : BaseMvvmViewModel, DB : ViewDataBindi
                 layoutResID, null, false
         )
 
-        // 绑定生命周期管理
-        mBinding.lifecycleOwner = this
-
         // 绑定 ViewModel
         mBinding.setVariable(BR.viewModel, viewModel)
+        mBinding.executePendingBindings()
 
         // 设置布局
         super.setContentView(mBinding.root)

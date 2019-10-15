@@ -60,6 +60,8 @@ ext {
             "androidx_multidex"                    : "androidx.multidex:multidex:2.0.1",
             // androidx - LifeCycle 扩展
             "androidx_lifecycle-extensions"        : "androidx.lifecycle:lifecycle-extensions:2.1.0",
+            // androidx - ViewPager2
+            "androidx_viewpager2"                  : "androidx.viewpager2:viewpager2:1.0.0-beta05",
 
             // jetpack - paging
             "jetpack_paging"                       : "androidx.paging:paging-runtime:2.1.0",
