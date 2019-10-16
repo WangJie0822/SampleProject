@@ -13,12 +13,12 @@ import androidx.databinding.BindingAdapter
  * 根据资源 id 加载图片
  *
  * @param iv    [ImageView] 对象
- * @param resID 图片资源 id
+ * @param resId 图片资源 id
  */
-@BindingAdapter("android:src")
-fun src(iv: ImageView, resID: Int) {
-    if (0 != resID) {
-        iv.setImageResource(resID)
+@BindingAdapter("android:bind_src")
+fun src(iv: ImageView, resId: Int) {
+    if (0 != resId) {
+        iv.setImageResource(resId)
     }
 }
 

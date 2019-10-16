@@ -45,6 +45,8 @@ class ProjectArticlesFragment
 
         // 配置文章列表
         mArticlesAdapter.viewModel = viewModel
+        mArticlesAdapter.setEmptyView(R.layout.app_layout_placeholder)
+        mArticlesAdapter.showHeaderWhenEmpty = true
         mBinding.rvProjectArticles.layoutManager = WrapContentLinearLayoutManager()
         mBinding.rvProjectArticles.adapter = mArticlesAdapter
     }

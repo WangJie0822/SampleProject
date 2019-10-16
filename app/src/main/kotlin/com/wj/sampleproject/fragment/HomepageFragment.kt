@@ -57,6 +57,8 @@ class HomepageFragment
 
         // 配置文章列表
         mArticlesAdapter.viewModel = viewModel
+        mArticlesAdapter.setEmptyView(R.layout.app_layout_placeholder)
+        mArticlesAdapter.showHeaderWhenEmpty = true
         mBinding.rvArticles.layoutManager = WrapContentLinearLayoutManager()
         mBinding.rvArticles.adapter = mArticlesAdapter
     }
