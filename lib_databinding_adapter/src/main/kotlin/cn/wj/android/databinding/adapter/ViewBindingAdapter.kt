@@ -11,6 +11,8 @@ import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import cn.wj.android.common.ext.condition
+import cn.wj.android.common.ext.orTrue
 
 /**
  * View DataBinding 适配器
@@ -215,7 +217,10 @@ fun <T> setViewOnLongClick(v: View, click: ((T) -> Boolean)?, item: T) {
  * @param visibility 显示状态
  */
 @BindingAdapter("android:bind_visibility")
-fun setViewVisibility(v: View, visibility: Int) {
+fun setViewVisibility(v: View, visibility: Int?) {
+    if (null == visibility) {
+        return
+    }
     v.visibility = visibility
 }
 
@@ -226,8 +231,8 @@ fun setViewVisibility(v: View, visibility: Int) {
  * @param show 是否显示
  */
 @BindingAdapter("android:bind_visibility", "android:bind_visibility_gone", requireAll = false)
-fun setViewVisibility(v: View, show: Boolean, gone: Boolean? = true) {
-    v.visibility = if (show) View.VISIBLE else if (gone != false) View.GONE else View.INVISIBLE
+fun setViewVisibility(v: View, show: Boolean?, gone: Boolean?) {
+    v.visibility = if (show.orTrue()) View.VISIBLE else if (gone.orTrue()) View.GONE else View.INVISIBLE
 }
 
 /**
@@ -237,8 +242,8 @@ fun setViewVisibility(v: View, show: Boolean, gone: Boolean? = true) {
  * @param selected 是否选中
  */
 @BindingAdapter("android:bind_selected")
-fun setViewSelected(v: View, selected: Boolean) {
-    v.isSelected = selected
+fun setViewSelected(v: View, selected: Boolean?) {
+    v.isSelected = selected.condition
 }
 
 /**
@@ -248,8 +253,8 @@ fun setViewSelected(v: View, selected: Boolean) {
  * @param enable 是否允许点击
  */
 @BindingAdapter("android:bind_enable")
-fun setViewEnable(v: View, enable: Boolean) {
-    v.isEnabled = enable
+fun setViewEnable(v: View, enable: Boolean?) {
+    v.isEnabled = enable.condition
 }
 
 /**
@@ -259,8 +264,8 @@ fun setViewEnable(v: View, enable: Boolean) {
  * @param focusable 是否获取焦点
  */
 @BindingAdapter("android:bind_focusable", "android:bind_focusableAttrChanged", requireAll = false)
-fun setViewFocusable(v: View, focusable: Boolean, listener: InverseBindingListener?) {
-    v.isFocusable = focusable
+fun setViewFocusable(v: View, focusable: Boolean?, listener: InverseBindingListener?) {
+    v.isFocusable = focusable.condition
     listener?.onChange()
 }
 
@@ -283,9 +288,9 @@ fun getViewFocusable(v: View): Boolean {
  * @param change 监听回调
  */
 @BindingAdapter("android:bind_focus_change", "android:bind_focusableAttrChanged", requireAll = false)
-fun setViewFocusableListener(v: View, change: (Boolean) -> Unit, listener: InverseBindingListener?) {
+fun setViewFocusableListener(v: View, change: ((Boolean) -> Unit)?, listener: InverseBindingListener?) {
     v.setOnFocusChangeListener { _, hasFocus ->
-        change.invoke(hasFocus)
+        change?.invoke(hasFocus)
         listener?.onChange()
     }
 }
@@ -297,9 +302,9 @@ fun setViewFocusableListener(v: View, change: (Boolean) -> Unit, listener: Inver
  * @param change 监听回调
  */
 @BindingAdapter("android:bind_focus_change", "android:bind_focusableAttrChanged", requireAll = false)
-fun setViewFocusableListener(v: View, change: (View, Boolean) -> Unit, listener: InverseBindingListener?) {
+fun setViewFocusableListener(v: View, change: ((View, Boolean) -> Unit)?, listener: InverseBindingListener?) {
     v.setOnFocusChangeListener { _, hasFocus ->
-        change.invoke(v, hasFocus)
+        change?.invoke(v, hasFocus)
         listener?.onChange()
     }
 }
@@ -423,14 +428,17 @@ fun setBackground(v: View, color: String?) {
  * 根据资源 id 设置背景
  *
  * @param v [View] 对象
- * @param resID 背景资源 id
+ * @param resId 背景资源 id
  */
 @BindingAdapter("android:bind_background")
-fun setBackgroundRes(v: View, resID: Int) {
-    if (0 == resID) {
+fun setBackgroundRes(v: View, resId: Int?) {
+    if (null == resId) {
+        return
+    }
+    if (0 == resId) {
         v.background = null
     } else {
-        v.setBackgroundResource(resID)
+        v.setBackgroundResource(resId)
     }
 }
 
@@ -441,7 +449,10 @@ fun setBackgroundRes(v: View, resID: Int) {
  * @param elevation 高度 单位:dp
  */
 @BindingAdapter("android:bind_elevation")
-fun setElevation(v: View, elevation: Float) {
+fun setElevation(v: View, elevation: Float?) {
+    if (null == elevation) {
+        return
+    }
     ViewCompat.setElevation(v, elevation)
 }
 
@@ -449,12 +460,15 @@ fun setElevation(v: View, elevation: Float) {
  * 设置 View 动画列表
  * - 仅 API >= LOLLIPOP 有效
  *
- * @param anmatorId 动画列表 id
+ * @param animatorId 动画列表 id
  */
 @BindingAdapter("android:bind_stateListAnimator")
-fun setStateListAnimator(v: View, anmatorId: Int) {
+fun setStateListAnimator(v: View, animatorId: Int?) {
+    if (null == animatorId) {
+        return
+    }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        v.stateListAnimator = AnimatorInflater.loadStateListAnimator(v.context, anmatorId)
+        v.stateListAnimator = AnimatorInflater.loadStateListAnimator(v.context, animatorId)
     }
 }
 
@@ -462,6 +476,9 @@ fun setStateListAnimator(v: View, anmatorId: Int) {
  * 设置 View 透明度
  */
 @BindingAdapter("android:bind_alpha")
-fun setAlpha(v: View, alpha: Float) {
+fun setAlpha(v: View, alpha: Float?) {
+    if (null == alpha) {
+        return
+    }
     v.alpha = alpha
 }

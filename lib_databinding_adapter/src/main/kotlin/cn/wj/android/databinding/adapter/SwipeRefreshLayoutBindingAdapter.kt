@@ -3,10 +3,12 @@
 package cn.wj.android.databinding.adapter
 
 import android.graphics.Color
+import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import cn.wj.android.common.ext.condition
 
 /**
  * SwipeRefreshLayout DataBinding 适配器
@@ -19,7 +21,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
  * @param color 颜色值
  */
 @BindingAdapter("android:bind_srl_schemeColors")
-fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, color: Int) {
+fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, @ColorInt color: Int?) {
+    if (null == color) {
+        return
+    }
     srl.setColorSchemeColors(color)
 }
 
@@ -30,7 +35,10 @@ fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, color: Int) {
  * @param colorStr 颜色 id 字符串或颜色值，"," 分隔
  */
 @BindingAdapter("android:bind_srl_schemeColors")
-fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, colorStr: String) {
+fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, colorStr: String?) {
+    if (colorStr.isNullOrBlank()) {
+        return
+    }
     // 获取颜色集合
     val colorStrLs = colorStr.split(",")
     // 转换后的颜色集合
@@ -57,8 +65,8 @@ fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, colorStr: String)
  * @param refreshing 是否刷新
  */
 @BindingAdapter("android:bind_srl_refreshing")
-fun setSwipeRefreshLayoutRefreshing(srl: SwipeRefreshLayout, refreshing: Boolean) {
-    srl.isRefreshing = refreshing
+fun setSwipeRefreshLayoutRefreshing(srl: SwipeRefreshLayout, refreshing: Boolean?) {
+    srl.isRefreshing = refreshing.condition
 }
 
 /**

@@ -20,12 +20,13 @@ import androidx.databinding.BindingAdapter
  * - 如果文本长度超过 10 会出异常，所以只设置10以及10一下
  */
 @BindingAdapter("android:bind_selection")
-fun setEditTextSelection(et: EditText, selection: Int) {
-    et.postDelayed({
-        if (selection in 0..et.text.length) {
-            et.setSelection(selection)
-        }
-    }, 200)
+fun setEditTextSelection(et: EditText, selection: Int?) {
+    if (null == selection) {
+        return
+    }
+    if (selection in 0..et.text.length) {
+        et.setSelection(selection)
+    }
 }
 
 /**
@@ -35,7 +36,10 @@ fun setEditTextSelection(et: EditText, selection: Int) {
  * @param inputType 输入类型
  */
 @BindingAdapter("android:bind_inputType")
-fun setEditTextInputType(et: EditText, inputType: TransformationMethod) {
+fun setEditTextInputType(et: EditText, inputType: TransformationMethod?) {
+    if (null == inputType) {
+        return
+    }
     et.transformationMethod = inputType
 }
 

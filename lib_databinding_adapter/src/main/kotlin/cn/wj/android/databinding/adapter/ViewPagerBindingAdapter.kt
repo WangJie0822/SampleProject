@@ -7,6 +7,7 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import cn.wj.android.common.ext.condition
 
 /**
  * ViewPager DataBinding 适配器
@@ -57,7 +58,10 @@ fun setViewPagerPageChangeListener(
  * @param offscreenPageLimit 预加载页数
  */
 @BindingAdapter("android:bind_vp_offscreenPageLimit")
-fun setViewPagerOffscreenPageLimit(vp: ViewPager, offscreenPageLimit: Int) {
+fun setViewPagerOffscreenPageLimit(vp: ViewPager, offscreenPageLimit: Int?) {
+    if (null == offscreenPageLimit) {
+        return
+    }
     vp.offscreenPageLimit = offscreenPageLimit
 }
 
@@ -69,12 +73,15 @@ fun setViewPagerOffscreenPageLimit(vp: ViewPager, offscreenPageLimit: Int) {
  * @param smoothScroll 是否平滑滚动
  */
 @BindingAdapter("android:bind_vp_currentItem", "android:bind_vp_smoothScroll", requireAll = false)
-fun setViewPagerCurrentItem(vp: ViewPager, currentItem: Int, smoothScroll: Boolean = false) {
-    vp.setCurrentItem(currentItem, smoothScroll)
+fun setViewPagerCurrentItem(vp: ViewPager, currentItem: Int?, smoothScroll: Boolean? = false) {
+    if (null == currentItem) {
+        return
+    }
+    vp.setCurrentItem(currentItem, smoothScroll.condition)
 }
 
 @InverseBindingAdapter(attribute = "android:bind_vp_currentItem")
-fun getViewPagerCurrentItem(vp:ViewPager):Int{
+fun getViewPagerCurrentItem(vp: ViewPager): Int {
     return vp.currentItem
 }
 

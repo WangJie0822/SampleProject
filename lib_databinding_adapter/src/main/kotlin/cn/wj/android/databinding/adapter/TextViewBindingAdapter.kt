@@ -2,7 +2,6 @@
 
 package cn.wj.android.databinding.adapter
 
-import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.TextView
@@ -10,83 +9,10 @@ import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import cn.wj.android.common.tools.parseColor
-import kotlin.math.roundToInt
 
 /**
  * TextView DataBinding 适配器
  */
-
-/**
- * 设置 TextView 右侧图片
- *
- * @param tv     [TextView] 对象
- * @param drawable 图片
- * @param width 图片宽度
- * @param height 图片高度
- */
-@BindingAdapter(
-        "android:bind_tv_drawable_end",
-        "android:bind_tv_drawable_end_width",
-        "android:bind_tv_drawable_end_height"
-)
-fun setTextViewDrawableEnd(tv: TextView, drawable: Drawable, width: Float, height: Float) {
-    drawable.setBounds(0, 0, width.roundToInt(), height.roundToInt())
-    tv.setCompoundDrawables(tv.compoundDrawables[0], tv.compoundDrawables[1], drawable, tv.compoundDrawables[3])
-}
-
-/**
- * 设置 TextView 左侧图片
- *
- * @param tv     [TextView] 对象
- * @param drawable 图片
- * @param width 图片宽度
- * @param height 图片高度
- */
-@BindingAdapter(
-        "android:bind_tv_drawable_start",
-        "android:bind_tv_drawable_start_width",
-        "android:bind_tv_drawable_start_height"
-)
-fun setTextViewDrawableStart(tv: TextView, drawable: Drawable, width: Float, height: Float) {
-    drawable.setBounds(0, 0, width.roundToInt(), height.roundToInt())
-    tv.setCompoundDrawables(drawable, tv.compoundDrawables[1], tv.compoundDrawables[2], tv.compoundDrawables[3])
-}
-
-/**
- * 设置 TextView 顶部图片
- *
- * @param tv     [TextView] 对象
- * @param drawable 图片
- * @param width 图片宽度
- * @param height 图片高度
- */
-@BindingAdapter(
-        "android:bind_tv_drawable_top",
-        "android:bind_tv_drawable_top_width",
-        "android:bind_tv_drawable_top_height"
-)
-fun setTextViewDrawableTop(tv: TextView, drawable: Drawable, width: Float, height: Float) {
-    drawable.setBounds(0, 0, width.roundToInt(), height.roundToInt())
-    tv.setCompoundDrawables(tv.compoundDrawables[0], drawable, tv.compoundDrawables[2], tv.compoundDrawables[3])
-}
-
-/**
- * 设置 TextView 下方图片
- *
- * @param tv     [TextView] 对象
- * @param drawable 图片
- * @param width 图片宽度
- * @param height 图片高度
- */
-@BindingAdapter(
-        "android:bind_tv_drawable_bottom",
-        "android:bind_tv_drawable_bottom_width",
-        "android:bind_tv_drawable_bottom_height"
-)
-fun setTextViewDrawableBottom(tv: TextView, drawable: Drawable, width: Float, height: Float) {
-    drawable.setBounds(0, 0, width.roundToInt(), height.roundToInt())
-    tv.setCompoundDrawables(tv.compoundDrawables[0], tv.compoundDrawables[1], tv.compoundDrawables[2], drawable)
-}
 
 /**
  * 设置 TextView 文本变化监听
@@ -130,7 +56,10 @@ fun addTextChangedListener(
  * @param color 颜色值
  */
 @BindingAdapter("android:bind_tv_textColor")
-fun setTextColor(tv: TextView, @ColorInt color: Int) {
+fun setTextColor(tv: TextView, @ColorInt color: Int?) {
+    if (null == color) {
+        return
+    }
     tv.setTextColor(color)
 }
 
@@ -156,7 +85,10 @@ fun setTextColor(tv: TextView, colorStr: String?) {
  * @param resId 文本资源 id
  */
 @BindingAdapter("android:bind_tv_text")
-fun setText(tv: TextView, @StringRes resId: Int) {
+fun setText(tv: TextView, @StringRes resId: Int?) {
+    if (null == resId) {
+        return
+    }
     tv.setText(resId)
 }
 
@@ -167,7 +99,7 @@ fun setText(tv: TextView, @StringRes resId: Int) {
  * @param cs CharSequence 对象
  */
 @BindingAdapter("android:bind_tv_text")
-fun setText(tv: TextView, cs: CharSequence) {
+fun setText(tv: TextView, cs: CharSequence?) {
     tv.text = cs
 }
 
@@ -178,7 +110,10 @@ fun setText(tv: TextView, cs: CharSequence) {
  * @param maxLines 最大行数
  */
 @BindingAdapter("android:bind_tv_maxLines")
-fun setMaxLines(tv: TextView, maxLines: Int) {
+fun setMaxLines(tv: TextView, maxLines: Int?) {
+    if (null == maxLines) {
+        return
+    }
     tv.maxLines = maxLines
 }
 

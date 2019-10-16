@@ -3,6 +3,7 @@
 package cn.wj.android.databinding.adapter
 
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 
 /**
@@ -16,7 +17,10 @@ import androidx.databinding.BindingAdapter
  * @param resId 图片资源 id
  */
 @BindingAdapter("android:bind_src")
-fun src(iv: ImageView, resId: Int) {
+fun src(iv: ImageView, @DrawableRes resId: Int?) {
+    if (null == resId) {
+        return
+    }
     if (0 != resId) {
         iv.setImageResource(resId)
     }
@@ -29,14 +33,15 @@ fun src(iv: ImageView, resId: Int) {
  * @param res 资源字符串 drawable-anydpi-resource:resId 或 mipmap-resource:resId
  */
 @BindingAdapter("android:bind_src")
-fun setImageResource(iv: ImageView, res: String) {
-    if (res.isNotBlank()) {
-        if (res.startsWith(IMG_DRAWABLE_MARK)) {
-            val realRes = res.split(":")[1]
-            iv.setImageResource(realRes.getIdentifier(iv.context, "drawable"))
-        } else if (res.startsWith(IMG_MIPMAP_MARK)) {
-            val realRes = res.split(":")[1]
-            iv.setImageResource(realRes.getIdentifier(iv.context, "mipmap"))
-        }
+fun setImageResource(iv: ImageView, res: String?) {
+    if (res.isNullOrBlank()) {
+        return
+    }
+    if (res.startsWith(IMG_DRAWABLE_MARK)) {
+        val realRes = res.split(":")[1]
+        iv.setImageResource(realRes.getIdentifier(iv.context, "drawable"))
+    } else if (res.startsWith(IMG_MIPMAP_MARK)) {
+        val realRes = res.split(":")[1]
+        iv.setImageResource(realRes.getIdentifier(iv.context, "mipmap"))
     }
 }

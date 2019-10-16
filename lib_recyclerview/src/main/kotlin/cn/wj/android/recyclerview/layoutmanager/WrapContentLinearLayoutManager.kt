@@ -36,6 +36,5 @@ class WrapContentLinearLayoutManager
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
         }
-
     }
 }
