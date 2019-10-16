@@ -594,6 +594,14 @@ abstract class BaseRvListAdapter<VH : BaseRvViewHolder<E>, E>
 
     open fun onCurrentListChanged(previousList: List<E>, currentList: List<E>) {}
 
+    internal fun fixPosition(position: Int): Int {
+        return if (haveHeader()) {
+            position + 1
+        } else {
+            position
+        }
+    }
+
     fun submitList(list: List<E>?) {
         mDiffer.submitList(list)
     }

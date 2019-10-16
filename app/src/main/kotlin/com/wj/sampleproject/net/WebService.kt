@@ -29,6 +29,14 @@ interface WebService {
     suspend fun getHomepageArticleList(@Path("pageNum") pageNum: Int): NetResult<ArticleListEntity>
 
     /**
+     * 获取收藏列表
+     *
+     * @param pageNum 页码
+     */
+    @GET(UrlDefinition.GET_COLLECTION_LIST)
+    suspend fun getCollectionList(@Path("pageNum") pageNum: Int): NetResult<ArticleListEntity>
+
+    /**
      * 收藏文章 - 站内
      *
      * @param id 文章 id

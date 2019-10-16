@@ -118,4 +118,5 @@ val viewModelModule: Module = module {
     viewModel { WebViewFragViewModel() }
     viewModel { LoginViewModel(get()) }
     viewModel { GeneralViewModel() }
+    viewModel { CollectionViewModel(get()) }
 }

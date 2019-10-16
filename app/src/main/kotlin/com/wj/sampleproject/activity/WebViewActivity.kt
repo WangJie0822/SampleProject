@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
+import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.ACTION_TITLE
@@ -63,7 +64,7 @@ class WebViewActivity
          * @param title 标题
          * @param url Web Url
          */
-        fun actionStart(context: Context, title: String, url: String) {
+        fun actionStart(context: Context = AppManager.getContext(), title: String, url: String) {
             context.startActivity(Intent(context, WebViewActivity::class.java).apply {
                 putExtra(ACTION_TITLE, title)
                 putExtra(ACTION_WEB_URL, url)

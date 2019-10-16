@@ -3,10 +3,12 @@ package com.wj.sampleproject.fragment
 import android.view.LayoutInflater
 import androidx.lifecycle.Observer
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
+import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCLED
 import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
 import com.wj.sampleproject.databinding.AppLayoutHomepageBannerBinding
 import com.wj.sampleproject.viewmodel.HomepageViewModel
@@ -79,6 +81,12 @@ class HomepageFragment
             // 更新文章列表
             mArticlesAdapter.submitList(it)
         })
+        // 取消收藏事件
+        LiveEventBus.get(EVENT_COLLECTION_CANCLED, String::class.java)
+                .observe(this, Observer { id ->
+                    val item = mArticlesAdapter.mDiffer.currentList.firstOrNull { it.id == id }
+                    item?.collected?.set(false)
+                })
     }
 
     companion object {

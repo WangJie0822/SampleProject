@@ -50,7 +50,7 @@ fun <T> List<T>?.orEmpty(): List<T> {
  * @param list 新的数据
  * @param clean 是否清空旧数据
  */
-fun <T> List<T>?.toNewList(list: List<T>?, clean: Boolean? = false): List<T> {
+fun <T> List<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean? = false): List<T> {
     val ls = mutableListOf<T>()
     if (!clean.condition) {
         ls.addAll(this.orEmpty())
@@ -65,7 +65,7 @@ fun <T> List<T>?.toNewList(list: List<T>?, clean: Boolean? = false): List<T> {
  * @param list 新的数据
  * @param clean 是否清空旧数据
  */
-fun <T> ArrayList<T>?.toNewList(list: List<T>?, clean: Boolean? = false): ArrayList<T> {
+fun <T> ArrayList<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean? = false): ArrayList<T> {
     val ls = arrayListOf<T>()
     if (!clean.condition) {
         ls.addAll(this.orEmpty())

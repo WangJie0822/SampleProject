@@ -46,7 +46,7 @@ class MyApplication : Application() {
         // 初始化LiveDataBus
         LiveEventBus
                 .config()
-                .lifecycleObserverAlwaysActive(false)
+                .lifecycleObserverAlwaysActive(true)
                 .autoClear(false)
 
         // 初始化 Logger 日志打印

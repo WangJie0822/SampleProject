@@ -58,6 +58,11 @@
             android:configChanges="screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.WhiteStatusBar" />
+        <!-- 收藏界面 -->
+        <activity
+            android:name=".activity.CollectionActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

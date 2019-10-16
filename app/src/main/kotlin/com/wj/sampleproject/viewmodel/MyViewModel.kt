@@ -3,14 +3,13 @@ package com.wj.sampleproject.viewmodel
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.base.tools.getString
-import cn.wj.android.base.utils.AppManager
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.CollectionActivity
 import com.wj.sampleproject.activity.LoginActivity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.dialog.GeneralDialog
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.ext.toSnackbarMsg
 import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.SnackbarModel
@@ -39,7 +38,7 @@ constructor(private val repository: MyRepository)
     val onTopClick: () -> Unit = {
         if (null == UserHelper.userInfo) {
             // 未登录，跳转登录
-            LoginActivity.actionStart(AppManager.getContext())
+            LoginActivity.actionStart()
         } else {
             // 已登录，提示是否退出登录
             showDialogData.postValue(GeneralDialog.newBuilder()
@@ -55,10 +54,10 @@ constructor(private val repository: MyRepository)
     val onMyCollectionClick: () -> Unit = {
         if (null == UserHelper.userInfo) {
             // 未登录，跳转登录
-            LoginActivity.actionStart(AppManager.getContext())
+            LoginActivity.actionStart()
         } else {
-            // TODO 已登录，跳转我的收藏列表
-            snackbarData.postValue("我的收藏".toSnackbarMsg())
+            // 已登录，跳转我的收藏列表
+            CollectionActivity.actionStart()
         }
     }
 

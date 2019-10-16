@@ -42,7 +42,7 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
          * @param context [Context] 对象
          * @param fromNet 是否是从网络拦截跳转 默认 false
          */
-        fun actionStart(context: Context, fromNet: Boolean = false) {
+        fun actionStart(context: Context = AppManager.getContext(), fromNet: Boolean = false) {
             if (AppManager.contains(LoginActivity::class.java)) {
                 // 堆栈中已有登录页，返回
                 return

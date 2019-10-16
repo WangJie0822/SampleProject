@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import cn.wj.android.base.adapter.FragVpAdapter
 import cn.wj.android.base.tools.getString
+import cn.wj.android.base.utils.AppManager
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
@@ -65,7 +66,7 @@ class MainActivity
          *
          * @param context Context 对象
          */
-        fun actionStart(context: Context) {
+        fun actionStart(context: Context = AppManager.getContext()) {
             context.startActivity(Intent(context, MainActivity::class.java).apply {
                 if (context !is Activity) {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK

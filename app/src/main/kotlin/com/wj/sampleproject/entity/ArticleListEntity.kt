@@ -51,6 +51,7 @@ data class ArticleEntity
  * @param link 文章跳转链接
  * @param niceDate 显示时间
  * @param origin ？
+ * @param originId ？
  * @param prefix ？
  * @param projectLink ？
  * @param publishTime 发布时间
@@ -78,6 +79,7 @@ constructor(
         var link: String? = "",
         var niceDate: String? = "",
         var origin: String? = "",
+        var originId: String? = "",
         var prefix: String? = "",
         var projectLink: String? = "",
         var publishTime: String? = "",

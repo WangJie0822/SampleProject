@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.databinding.AppActivitySearchBinding
@@ -29,7 +30,7 @@ class SearchActivity
          *
          * @param context Context 对象
          */
-        fun actionStart(context: Context) {
+        fun actionStart(context: Context = AppManager.getContext()) {
             context.startActivity(Intent(context, SearchActivity::class.java).apply {
                 if (context !is Activity) {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK

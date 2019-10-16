@@ -1,6 +1,5 @@
 package com.wj.sampleproject.net
 
-import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.activity.LoginActivity
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_LOGIN_FAILED
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_SUCCESS
@@ -31,7 +30,7 @@ constructor(
     fun success(): Boolean {
         if (errorCode == NET_RESPONSE_CODE_LOGIN_FAILED) {
             // 登录失败，需要重新登录
-            LoginActivity.actionStart(AppManager.getContext(), true)
+            LoginActivity.actionStart(fromNet = true)
         }
         return errorCode == NET_RESPONSE_CODE_SUCCESS
     }

@@ -3,7 +3,6 @@ package com.wj.sampleproject.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.utils.AppManager
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
@@ -66,7 +65,7 @@ constructor(
     /** 文章 item 点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
-        WebViewActivity.actionStart(AppManager.getContext(), item.title.orEmpty(), item.link.orEmpty())
+        WebViewActivity.actionStart(title = item.title.orEmpty(), url = item.link.orEmpty())
     }
 
     /** 文章收藏点击 */

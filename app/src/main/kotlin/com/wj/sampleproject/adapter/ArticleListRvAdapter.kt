@@ -29,8 +29,7 @@ class ArticleListRvAdapter
             override fun areContentsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
                 return oldItem == newItem
             }
-        }
-) {
+        }, true) {
 
     override val layoutResID: Int = R.layout.app_recycler_item_articles
 

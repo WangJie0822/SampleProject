@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.CollectionActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.viewmodel.CollectionViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/app_colorPrimary"
+            android:bind_toolbar_navigationClick="@{viewModel.onBackClick}"
+            android:theme="@style/app_toolbar"
+            app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
+            app:title="@string/app_my_collection" />
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:bind_smart_loadMore="@={viewModel.loadMore}"
+            android:bind_smart_noMore="@{viewModel.noMore}"
+            android:bind_smart_onLoadMore="@{viewModel.onLoadMore}"
+            android:bind_smart_onRefresh="@{viewModel.onRefresh}"
+            android:bind_smart_refreshing="@={viewModel.refreshing}">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_articles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/app_recycler_item_articles" />
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+</layout>

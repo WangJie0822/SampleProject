@@ -18,6 +18,9 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
 
     /** 标记 - 第一次加载 */
     protected var firstLoad = true
+        private set(value) {
+            field = value
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

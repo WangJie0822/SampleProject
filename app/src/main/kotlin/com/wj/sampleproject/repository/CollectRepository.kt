@@ -50,6 +50,24 @@ class CollectRepository : KoinComponent {
      * @param originId 我的收藏列表下发 id
      */
     suspend fun unCollectArticleCollected(id: String, originId: String) = withContext(Dispatchers.IO) {
-        mWebService.unCollectArticleCollected(id, originId)
+        val oId = if (originId.isBlank()) {
+            "-1"
+        } else {
+            originId
+        }
+        mWebService.unCollectArticleCollected(id, oId)
+    }
+
+    /**
+     * 获取收藏列表
+     *
+     * @param pageNum 页码
+     */
+    suspend fun getCollectionList(pageNum: Int) = withContext(Dispatchers.IO) {
+        // 获取收藏列表
+        val result = mWebService.getCollectionList(pageNum)
+        // 处理收藏状态
+        result.data?.datas?.forEach { it.collected.set(true) }
+        result
     }
 }
