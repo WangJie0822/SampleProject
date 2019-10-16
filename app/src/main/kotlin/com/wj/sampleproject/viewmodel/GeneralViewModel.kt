@@ -7,6 +7,7 @@ import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.base.tools.getString
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.model.UiCloseModel
 
 /**
  * 通用弹窗 ViewModel
@@ -57,7 +58,7 @@ class GeneralViewModel : BaseViewModel() {
     val positiveButtonStr = BindingField(R.string.app_confirm.getString())
 
     /** 关闭按钮点击  */
-    val onCloseClick = { uiCloseData.postValue(true) }
+    val onCloseClick = { uiCloseData.postValue(UiCloseModel()) }
 
     /** 选择器点击  */
     val onSelectClick = fun() {

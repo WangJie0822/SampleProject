@@ -14,17 +14,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MyFragment
     : BaseFragment<MyViewModel, AppFragmentMyBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 体系 Fragment
-         */
-        fun actionCreate(): MyFragment {
-            return MyFragment()
-        }
-    }
-
     override val viewModel: MyViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_my
@@ -42,5 +31,16 @@ class MyFragment
     }
 
     override fun initView() {
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 体系 Fragment
+         */
+        fun actionCreate(): MyFragment {
+            return MyFragment()
+        }
     }
 }

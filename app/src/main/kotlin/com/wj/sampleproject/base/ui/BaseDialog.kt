@@ -55,8 +55,7 @@ abstract class BaseDialog<VM : BaseViewModel, DB : ViewDataBinding>
             }
         })
         viewModel.uiCloseData.observe(this, Observer { close ->
-            if (close) {
-                // 隐藏 Dialog
+            close?.let {
                 dismiss()
             }
         })

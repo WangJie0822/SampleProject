@@ -19,17 +19,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class HomepageFragment
     : BaseFragment<HomepageViewModel, AppFragmentHomepageBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 首页 Fragment
-         */
-        fun actionCreate(): HomepageFragment {
-            return HomepageFragment()
-        }
-    }
-
     override val viewModel: HomepageViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_homepage
@@ -90,5 +79,16 @@ class HomepageFragment
             // 更新文章列表
             mArticlesAdapter.submitList(it)
         })
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 首页 Fragment
+         */
+        fun actionCreate(): HomepageFragment {
+            return HomepageFragment()
+        }
     }
 }

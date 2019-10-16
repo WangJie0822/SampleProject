@@ -15,17 +15,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class BjnewsFragment
     : BaseFragment<BjnewsViewModel, AppFragmentBjnewsBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 公众号 Fragment
-         */
-        fun actionCreate(): BjnewsFragment {
-            return BjnewsFragment()
-        }
-    }
-
     override val viewModel: BjnewsViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_bjnews
@@ -57,5 +46,16 @@ class BjnewsFragment
                     .build()
             mBinding.stlBjnews.setViewPager(mBinding.vpBjnews)
         })
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 公众号 Fragment
+         */
+        fun actionCreate(): BjnewsFragment {
+            return BjnewsFragment()
+        }
     }
 }

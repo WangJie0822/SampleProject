@@ -2,7 +2,7 @@ package com.wj.sampleproject.ext
 
 import cn.wj.android.base.tools.getString
 import com.wj.sampleproject.R
-import com.wj.sampleproject.base.SnackbarEntity
+import com.wj.sampleproject.model.SnackbarModel
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
@@ -15,5 +15,5 @@ val Throwable.showMsg: String
     }.getString()
 
 /** 用于提示的错误信息 */
-val Throwable.snackbarMsg: SnackbarEntity
+val Throwable.snackbarMsg: SnackbarModel
     get() = showMsg.toSnackbarMsg()

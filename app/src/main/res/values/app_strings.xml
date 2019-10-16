@@ -35,4 +35,5 @@
     <string name="app_confirm">确定</string>
     <string name="app_cancel">取消</string>
     <string name="app_are_you_sure_to_logout">确定要退出登录吗？</string>
+    <string name="app_please_login_first">请先登录</string>
 </resources>

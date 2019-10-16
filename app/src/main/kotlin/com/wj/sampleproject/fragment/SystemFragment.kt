@@ -13,17 +13,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SystemFragment
     : BaseFragment<SystemViewModel, AppFragmentSystemBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 体系 Fragment
-         */
-        fun actionCreate(): SystemFragment {
-            return SystemFragment()
-        }
-    }
-
     override val viewModel: SystemViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_system
@@ -37,5 +26,16 @@ class SystemFragment
                         NavigationFragment.actionCreate())
                 )
                 .build()
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 体系 Fragment
+         */
+        fun actionCreate(): SystemFragment {
+            return SystemFragment()
+        }
     }
 }

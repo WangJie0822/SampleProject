@@ -15,7 +15,7 @@ class BannerVpAdapter : PagerAdapter() {
 
     var mViewModel: HomepageViewModel? = null
 
-    val mData = arrayListOf<BannerEntity>()
+    private val mData = arrayListOf<BannerEntity>()
 
     override fun getCount(): Int {
         return mData.size

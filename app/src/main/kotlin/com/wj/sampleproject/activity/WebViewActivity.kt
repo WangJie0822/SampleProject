@@ -22,25 +22,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class WebViewActivity
     : BaseActivity<WebViewViewModel, AppActivityWebviewBinding>() {
 
-    companion object {
-        /**
-         * 界面入口
-         *
-         * @param context Context 对象
-         * @param title 标题
-         * @param url Web Url
-         */
-        fun actionStart(context: Context, title: String, url: String) {
-            context.startActivity(Intent(context, WebViewActivity::class.java).apply {
-                putExtra(ACTION_TITLE, title)
-                putExtra(ACTION_WEB_URL, url)
-                if (context !is Activity) {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-            })
-        }
-    }
-
     override val viewModel: WebViewViewModel by viewModel()
 
     /** WebView Fragment 对象 */
@@ -74,4 +55,22 @@ class WebViewActivity
         return webViewFragment.onKeyDown(keyCode) || super.onKeyDown(keyCode, event)
     }
 
+    companion object {
+        /**
+         * 界面入口
+         *
+         * @param context Context 对象
+         * @param title 标题
+         * @param url Web Url
+         */
+        fun actionStart(context: Context, title: String, url: String) {
+            context.startActivity(Intent(context, WebViewActivity::class.java).apply {
+                putExtra(ACTION_TITLE, title)
+                putExtra(ACTION_WEB_URL, url)
+                if (context !is Activity) {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+            })
+        }
+    }
 }

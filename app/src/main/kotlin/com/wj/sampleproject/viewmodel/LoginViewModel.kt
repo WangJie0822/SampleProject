@@ -9,13 +9,14 @@ import cn.wj.android.common.ext.length
 import cn.wj.android.logger.Logger
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
-import com.wj.sampleproject.base.SnackbarEntity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.constants.PASSWORD_MIN_LENGTH
 import com.wj.sampleproject.constants.SP_KEY_USER_NAME
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.model.ProgressModel
+import com.wj.sampleproject.model.SnackbarModel
+import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.MyRepository
 import kotlinx.coroutines.launch
 
@@ -72,7 +73,7 @@ constructor(private val repository: MyRepository)
 
     /** 关闭点击 */
     val onCloseClick: () -> Unit = {
-        uiCloseData.postValue(true)
+        uiCloseData.postValue(UiCloseModel())
     }
 
     /** 注册、登录点击 */
@@ -93,22 +94,22 @@ constructor(private val repository: MyRepository)
         }
         if (userName.get().isNullOrBlank()) {
             // 用户名为空
-            snackbarData.postValue(SnackbarEntity(R.string.app_please_enter_user_name))
+            snackbarData.postValue(SnackbarModel(R.string.app_please_enter_user_name))
             return
         }
         if (password.get().isNullOrBlank()) {
             // 密码为空
-            snackbarData.postValue(SnackbarEntity(R.string.app_please_enter_password))
+            snackbarData.postValue(SnackbarModel(R.string.app_please_enter_password))
             return
         }
         if (password.get().orEmpty().length < PASSWORD_MIN_LENGTH) {
             // 密码长度小于最低长度
-            snackbarData.postValue(SnackbarEntity(R.string.app_password_length_must_larger_than_six))
+            snackbarData.postValue(SnackbarModel(R.string.app_password_length_must_larger_than_six))
             return
         }
         if (register.get().condition && password.get() != passwordAgain.get()) {
             // 注册且密码不匹配
-            snackbarData.postValue(SnackbarEntity(R.string.app_re_set_password_not_match))
+            snackbarData.postValue(SnackbarModel(R.string.app_re_set_password_not_match))
             return
         }
         if (register.get().condition) {
@@ -135,10 +136,10 @@ constructor(private val repository: MyRepository)
                     // 保存用户账号
                     MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
                     // 关闭当前界面
-                    uiCloseData.postValue(true)
+                    uiCloseData.postValue(UiCloseModel())
                 } else {
                     // 注册失败，提示错误
-                    snackbarData.postValue(SnackbarEntity(result.errorMsg))
+                    snackbarData.postValue(SnackbarModel(result.errorMsg))
                 }
             } catch (throwable: Throwable) {
                 // 打印错误日志
@@ -166,10 +167,10 @@ constructor(private val repository: MyRepository)
                     // 保存用户账号
                     MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
                     // 关闭当前界面
-                    uiCloseData.postValue(true)
+                    uiCloseData.postValue(UiCloseModel())
                 } else {
                     // 登录失败，提示错误
-                    snackbarData.postValue(SnackbarEntity(result.errorMsg))
+                    snackbarData.postValue(SnackbarModel(result.errorMsg))
                 }
             } catch (throwable: Throwable) {
                 // 打印错误日志

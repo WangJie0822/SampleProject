@@ -1,7 +1,7 @@
 package com.wj.sampleproject.ext
 
-import com.wj.sampleproject.base.SnackbarEntity
+import com.wj.sampleproject.model.SnackbarModel
 
-fun String?.toSnackbarMsg(): SnackbarEntity {
-    return SnackbarEntity(this.orEmpty())
+fun String?.toSnackbarMsg(): SnackbarModel {
+    return SnackbarModel(this.orEmpty())
 }

@@ -1,8 +1,10 @@
 package com.wj.sampleproject.net
 
-import com.wj.sampleproject.base.SnackbarEntity
+import cn.wj.android.base.utils.AppManager
+import com.wj.sampleproject.activity.LoginActivity
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_LOGIN_FAILED
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_SUCCESS
+import com.wj.sampleproject.model.SnackbarModel
 
 /**
  * 网络请求返回数据基本框架
@@ -28,12 +30,13 @@ constructor(
      */
     fun success(): Boolean {
         if (errorCode == NET_RESPONSE_CODE_LOGIN_FAILED) {
-            // TODO 登录失败，需要重新登录
+            // 登录失败，需要重新登录
+            LoginActivity.actionStart(AppManager.getContext(), true)
         }
         return errorCode == NET_RESPONSE_CODE_SUCCESS
     }
 
-    fun toError(): SnackbarEntity {
-        return SnackbarEntity(errorMsg.orEmpty())
+    fun toError(): SnackbarModel {
+        return SnackbarModel(errorMsg.orEmpty())
     }
 }

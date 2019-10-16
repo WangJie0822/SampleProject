@@ -9,11 +9,11 @@ import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
-import com.wj.sampleproject.base.SnackbarEntity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.ext.showMsg
+import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.repository.ProjectRepository
 import kotlinx.coroutines.launch
 
@@ -75,11 +75,11 @@ constructor(private val repository: ProjectRepository)
                     articleListData.postValue(articleListData.value.toNewList(result.data?.datas, refreshing.get()))
                     noMore.set(result.data?.over?.toBoolean().condition)
                 } else {
-                    snackbarData.postValue(SnackbarEntity(result.errorMsg))
+                    snackbarData.postValue(SnackbarModel(result.errorMsg))
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.postValue(SnackbarEntity(throwable.showMsg))
+                snackbarData.postValue(SnackbarModel(throwable.showMsg))
             } finally {
                 refreshing.set(false)
                 loadMore.set(false)

@@ -1,4 +1,4 @@
-package com.wj.sampleproject.base
+package com.wj.sampleproject.model
 
 import android.view.View
 import androidx.annotation.ColorInt
@@ -11,7 +11,7 @@ import com.wj.sampleproject.R
 /**
  * [Snackbar] 显示数据实体类
  */
-class SnackbarEntity
+class SnackbarModel
 /**
  * 主构造方法
  *

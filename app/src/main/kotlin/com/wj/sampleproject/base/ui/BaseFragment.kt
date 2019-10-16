@@ -60,9 +60,8 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
             }
         })
         viewModel.uiCloseData.observe(this, Observer { close ->
-            if (close) {
-                // 关闭 Activity
-                mContext.setResult(viewModel.resultCode, viewModel.resultData)
+            close?.let { model ->
+                mContext.setResult(model.resultCode, model.result)
                 mContext.finish()
             }
         })

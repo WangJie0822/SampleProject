@@ -21,25 +21,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class WebViewFragment
     : BaseFragment<WebViewFragViewModel, AppFragmentWebViewBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @param title 标题
-         * @param url Web Url
-         *
-         * @return WebView Fragment
-         */
-        fun actionCreate(title: String, url: String): WebViewFragment {
-            return WebViewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ACTION_TITLE, title)
-                    putString(ACTION_WEB_URL, url)
-                }
-            }
-        }
-    }
-
     override val viewModel: WebViewFragViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_web_view
@@ -94,5 +75,24 @@ class WebViewFragment
             return true
         }
         return false
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @param title 标题
+         * @param url Web Url
+         *
+         * @return WebView Fragment
+         */
+        fun actionCreate(title: String, url: String): WebViewFragment {
+            return WebViewFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ACTION_TITLE, title)
+                    putString(ACTION_WEB_URL, url)
+                }
+            }
+        }
     }
 }

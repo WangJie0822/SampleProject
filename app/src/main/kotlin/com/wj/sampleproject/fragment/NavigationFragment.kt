@@ -17,17 +17,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class NavigationFragment
     : BaseFragment<NavigationViewModel, AppFragmentNavigationBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 导航 Fragment
-         */
-        fun actionCreate(): NavigationFragment {
-            return NavigationFragment()
-        }
-    }
-
     override val viewModel: NavigationViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_navigation
@@ -54,5 +43,16 @@ class NavigationFragment
         viewModel.listData.observe(this, Observer {
             mAdapter.loadData(it)
         })
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 导航 Fragment
+         */
+        fun actionCreate(): NavigationFragment {
+            return NavigationFragment()
+        }
     }
 }

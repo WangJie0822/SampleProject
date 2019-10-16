@@ -16,6 +16,13 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SearchActivity
     : BaseActivity<SearchViewModel, AppActivitySearchBinding>() {
 
+    override val viewModel: SearchViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.app_activity_search)
+    }
+
     companion object {
         /**
          * 界面入口
@@ -29,12 +36,5 @@ class SearchActivity
                 }
             })
         }
-    }
-
-    override val viewModel: SearchViewModel by viewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.app_activity_search)
     }
 }

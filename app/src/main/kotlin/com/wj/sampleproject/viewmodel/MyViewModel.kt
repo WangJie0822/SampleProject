@@ -7,13 +7,13 @@ import cn.wj.android.base.utils.AppManager
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.LoginActivity
-import com.wj.sampleproject.base.SnackbarEntity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.dialog.GeneralDialog
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.ext.toSnackbarMsg
 import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.model.ProgressModel
+import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.repository.MyRepository
 import kotlinx.coroutines.launch
 
@@ -53,7 +53,13 @@ constructor(private val repository: MyRepository)
 
     /** 我的收藏点击 */
     val onMyCollectionClick: () -> Unit = {
-        snackbarData.postValue("我的收藏".toSnackbarMsg())
+        if (null == UserHelper.userInfo) {
+            // 未登录，跳转登录
+            LoginActivity.actionStart(AppManager.getContext())
+        } else {
+            // TODO 已登录，跳转我的收藏列表
+            snackbarData.postValue("我的收藏".toSnackbarMsg())
+        }
     }
 
     /**
@@ -73,7 +79,7 @@ constructor(private val repository: MyRepository)
                     UserHelper.userInfo = null
                 } else {
                     // 退出失败，提示
-                    snackbarData.postValue(SnackbarEntity(result.errorMsg))
+                    snackbarData.postValue(SnackbarModel(result.errorMsg))
                 }
             } catch (throwable: Throwable) {
                 // 请求异常

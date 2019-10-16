@@ -19,21 +19,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class BjnewsArticlesFragment
     : BaseFragment<BjnewsArticlesViewModel, AppFragmentBjnewsArticlesBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 公众号文章列表 Fragment
-         */
-        fun actionCreate(bjnews: CategoryEntity): BjnewsArticlesFragment {
-            return BjnewsArticlesFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(ACTION_CATEGORY, bjnews)
-                }
-            }
-        }
-    }
-
     override val viewModel: BjnewsArticlesViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_bjnews_articles
@@ -68,5 +53,20 @@ class BjnewsArticlesFragment
             // 更新文章列表
             mArticlesAdapter.submitList(it)
         })
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 公众号文章列表 Fragment
+         */
+        fun actionCreate(bjnews: CategoryEntity): BjnewsArticlesFragment {
+            return BjnewsArticlesFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ACTION_CATEGORY, bjnews)
+                }
+            }
+        }
     }
 }

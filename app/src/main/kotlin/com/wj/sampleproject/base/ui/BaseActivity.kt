@@ -77,9 +77,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             }
         })
         viewModel.uiCloseData.observe(this, Observer { close ->
-            if (close) {
-                // 关闭 Activity
-                setResult(viewModel.resultCode, viewModel.resultData)
+            close?.let { model ->
+                setResult(model.resultCode, model.result)
                 finish()
             }
         })

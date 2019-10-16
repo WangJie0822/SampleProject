@@ -17,17 +17,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SystemCategoryFragment
     : BaseFragment<SystemCategoryViewModel, AppFragmentSystemCategoryBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 体系目录列表 Fragment
-         */
-        fun actionCreate(): SystemCategoryFragment {
-            return SystemCategoryFragment()
-        }
-    }
-
     override val viewModel: SystemCategoryViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_system_category
@@ -54,5 +43,16 @@ class SystemCategoryFragment
         viewModel.listData.observe(this, Observer {
             mAdapter.loadData(it.orEmpty())
         })
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 体系目录列表 Fragment
+         */
+        fun actionCreate(): SystemCategoryFragment {
+            return SystemCategoryFragment()
+        }
     }
 }

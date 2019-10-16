@@ -20,21 +20,6 @@ import kotlin.math.absoluteValue
 class MainActivity
     : BaseActivity<MainViewModel, AppActivityMainBinding>() {
 
-    companion object {
-        /**
-         * 界面入口
-         *
-         * @param context Context 对象
-         */
-        fun actionStart(context: Context) {
-            context.startActivity(Intent(context, MainActivity::class.java).apply {
-                if (context !is Activity) {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-            })
-        }
-    }
-
     override val viewModel: MainViewModel by viewModel()
 
     /** 上次返回点击时间 */
@@ -71,6 +56,21 @@ class MainActivity
         } else {
             // 间隔时间内，退到后台
             moveTaskToBack(true)
+        }
+    }
+
+    companion object {
+        /**
+         * 界面入口
+         *
+         * @param context Context 对象
+         */
+        fun actionStart(context: Context) {
+            context.startActivity(Intent(context, MainActivity::class.java).apply {
+                if (context !is Activity) {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+            })
         }
     }
 }

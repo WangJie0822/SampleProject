@@ -15,12 +15,3 @@ const val TAB_MAIN_BOTTOM_MY = 4
 const val TAB_SYSTEM_SYSTEM = 0
 /** 体系页面 - 导航 */
 const val TAB_SYSTEM_NAVIGATION = 1
-
-/** 界面跳转数据传递 key - 网页 url */
-const val ACTION_WEB_URL = "action_web_url"
-/** 界面跳转数据传递 key - 是否显示标题 */
-const val ACTION_SHOW_TITLE = "action_show_title"
-/** 界面跳转数据传递 key - 标题 */
-const val ACTION_TITLE = "action_title"
-/** 界面跳转数据传递 key - 公众号、项目目录 */
-const val ACTION_CATEGORY = "action_bjnews"

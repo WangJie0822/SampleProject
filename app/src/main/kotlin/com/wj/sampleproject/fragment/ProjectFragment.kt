@@ -15,17 +15,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class ProjectFragment
     : BaseFragment<ProjectViewModel, AppFragmentProjectBinding>() {
 
-    companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 体系 Fragment
-         */
-        fun actionCreate(): ProjectFragment {
-            return ProjectFragment()
-        }
-    }
-
     override val viewModel: ProjectViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_project
@@ -57,5 +46,16 @@ class ProjectFragment
                     .build()
             mBinding.stlProject.setViewPager(mBinding.vpProject)
         })
+    }
+
+    companion object {
+        /**
+         * 创建 Fragment
+         *
+         * @return 体系 Fragment
+         */
+        fun actionCreate(): ProjectFragment {
+            return ProjectFragment()
+        }
     }
 }
