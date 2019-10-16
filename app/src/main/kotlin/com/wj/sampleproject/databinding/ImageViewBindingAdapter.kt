@@ -5,7 +5,6 @@ package com.wj.sampleproject.databinding
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.ext.orFalse
 import cn.wj.android.databinding.adapter.IMG_RESOURCE_MARK
 import cn.wj.android.databinding.adapter.setImageResource
@@ -41,6 +40,12 @@ fun setImageViewUrl(
         default: Drawable?,
         circle: Boolean?
 ) {
+    if (imgUrl.isNullOrBlank()) {
+        if (null != default) {
+            iv.setImageDrawable(default)
+        }
+        return
+    }
     val options = RequestOptions().apply {
         if (null != placeholder) {
             placeholder(placeholder)
@@ -80,6 +85,12 @@ fun setImageViewPath(
         default: Drawable?,
         circle: Boolean?
 ) {
+    if (path.isNullOrBlank()) {
+        if (null != default) {
+            iv.setImageDrawable(default)
+        }
+        return
+    }
     val options = RequestOptions().apply {
         if (null != placeholder) {
             placeholder(placeholder)
@@ -118,32 +129,20 @@ fun setImageViewPath(
         requireAll = false
 )
 fun setImageViewImg(iv: ImageView, img: String?, placeholder: Drawable?, default: Drawable?, circle: Boolean?) {
-    if (img.isNotNullAndBlank()) {
-        if (img!!.contains("http:") || img.contains("https:")) {
-            // url
-            setImageViewUrl(iv, img, placeholder, default, circle)
-        } else if (img.contains(IMG_RESOURCE_MARK)) {
-            // Resource
-            setImageResource(iv, img)
-        } else {
-            // path
-            setImageViewPath(iv, img, placeholder, default, circle)
+    if (img.isNullOrBlank()) {
+        if (null != default) {
+            iv.setImageDrawable(default)
         }
+        return
+    }
+    if (img.contains("http:") || img.contains("https:")) {
+        // url
+        setImageViewUrl(iv, img, placeholder, default, circle)
+    } else if (img.contains(IMG_RESOURCE_MARK)) {
+        // Resource
+        setImageResource(iv, img)
     } else {
-        val options = RequestOptions().apply {
-            if (null != placeholder) {
-                placeholder(placeholder)
-            }
-            if (null != default) {
-                error(default)
-            }
-            if (circle.orFalse()) {
-                circleCrop()
-            }
-        }
-        Glide.with(iv)
-                .load(default)
-                .apply(options)
-                .into(iv)
+        // path
+        setImageViewPath(iv, img, placeholder, default, circle)
     }
 }
