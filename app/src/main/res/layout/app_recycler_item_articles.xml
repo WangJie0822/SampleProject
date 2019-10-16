@@ -203,7 +203,7 @@
             android:id="@+id/ib_favorite"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="?selectableItemBackground"
+            android:background="?selectableItemBackgroundBorderless"
             android:bind_onClick="@{viewModel.onArticleCollectClick}"
             android:bind_onClick_item="@{item}"
             android:bind_selected="@{item.collected}"
