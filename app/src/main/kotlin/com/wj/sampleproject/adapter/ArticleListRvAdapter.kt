@@ -53,4 +53,7 @@ interface ArticleListViewModel {
 
     /** 文章列表条目点击 */
     val onArticleItemClick: (ArticleEntity) -> Unit
+
+    /** 文章收藏点击 */
+    val onArticleCollectClick: (ArticleEntity) -> Unit
 }

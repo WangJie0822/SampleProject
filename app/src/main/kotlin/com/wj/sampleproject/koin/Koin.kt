@@ -85,6 +85,7 @@ val repositoryModule: Module = module {
     single { BjnewsRepository() }
     single { ProjectRepository() }
     single { MyRepository() }
+    single { CollectRepository() }
 }
 
 /**
@@ -103,14 +104,14 @@ val adapterModule: Module = module {
 val viewModelModule: Module = module {
     viewModel { SplashViewModel() }
     viewModel { MainViewModel() }
-    viewModel { HomepageViewModel(get()) }
+    viewModel { HomepageViewModel(get(), get()) }
     viewModel { SystemViewModel() }
     viewModel { SystemCategoryViewModel(get()) }
     viewModel { NavigationViewModel(get()) }
     viewModel { BjnewsViewModel(get()) }
-    viewModel { BjnewsArticlesViewModel(get()) }
+    viewModel { BjnewsArticlesViewModel(get(), get()) }
     viewModel { ProjectViewModel(get()) }
-    viewModel { ProjectArticlesViewModel(get()) }
+    viewModel { ProjectArticlesViewModel(get(), get()) }
     viewModel { MyViewModel(get()) }
     viewModel { SearchViewModel() }
     viewModel { WebViewViewModel() }

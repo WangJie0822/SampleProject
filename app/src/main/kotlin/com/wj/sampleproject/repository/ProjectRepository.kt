@@ -1,5 +1,6 @@
 package com.wj.sampleproject.repository
 
+import cn.wj.android.common.ext.orFalse
 import com.wj.sampleproject.net.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,6 +29,10 @@ class ProjectRepository : KoinComponent {
      * @param pageNum 页码
      */
     suspend fun getProjectList(categoryId: String, pageNum: Int) = withContext(Dispatchers.IO) {
-        mWebService.getProjectList(pageNum, categoryId)
+        // 获取项目列表
+        val result = mWebService.getProjectList(pageNum, categoryId)
+        // 处理收藏状态
+        result.data?.datas?.forEach { it.collected.set(it.collect?.toBoolean().orFalse()) }
+        result
     }
 }

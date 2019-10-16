@@ -1,8 +1,9 @@
 package com.wj.sampleproject.repository
 
+import cn.wj.android.common.ext.orEmpty
+import cn.wj.android.common.ext.orFalse
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.constants.STR_TRUE
-import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.net.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,18 +32,23 @@ class HomepageRepository : KoinComponent {
      */
     suspend fun getHomepageArticleList(pageNum: Int) = withContext(Dispatchers.IO) {
         // 获取文章列表
-        val result = mWebService.getHomepageArticleList(pageNum)
-        if (pageNum == NET_PAGE_START) {
-            // 刷新，获取置顶文章列表
-            val top = mWebService.getHomepageTopArticleList()
-            val ls = arrayListOf<ArticleEntity>()
-            ls.addAll(top.data.orEmpty())
-            ls.forEach {
-                it.top = STR_TRUE
-            }
-            ls.addAll(result.data?.datas.orEmpty())
-            result.data?.datas = ls
+        val ls = if (pageNum == NET_PAGE_START) {
+            // 刷新获取置顶文章列表
+            val tops = mWebService.getHomepageTopArticleList().data.orEmpty()
+            tops.forEach { it.top = STR_TRUE }
+            tops
+        } else {
+            // 空列表
+            arrayListOf()
         }
+        // 获取文章列表
+        val result = mWebService.getHomepageArticleList(pageNum)
+        // 添加文章列表到 ls
+        ls.addAll(result.data?.datas.orEmpty())
+        // 处理收藏状态
+        ls.forEach { it.collected.set(it.collect?.toBoolean().orFalse()) }
+        // 处理返回列表
+        result.data?.datas = ls
         result
     }
 }

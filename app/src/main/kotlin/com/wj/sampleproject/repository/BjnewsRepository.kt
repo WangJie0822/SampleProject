@@ -1,5 +1,6 @@
 package com.wj.sampleproject.repository
 
+import cn.wj.android.common.ext.orFalse
 import com.wj.sampleproject.net.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,6 +30,10 @@ class BjnewsRepository : KoinComponent {
      * @param keywords 搜索关键字，为空串返回全部
      */
     suspend fun getBjnewsArticles(bjnewsId: String, pageNum: Int, keywords: String = "") = withContext(Dispatchers.IO) {
-        mWebService.getBjnewsArticles(bjnewsId, pageNum, keywords)
+        // 获取文章列表
+        val result = mWebService.getBjnewsArticles(bjnewsId, pageNum, keywords)
+        // 处理收藏状态
+        result.data?.datas?.forEach { it.collected.set(it.collect?.toBoolean().orFalse()) }
+        result
     }
 }

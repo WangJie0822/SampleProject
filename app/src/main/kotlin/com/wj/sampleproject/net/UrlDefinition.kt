@@ -23,6 +23,14 @@ object UrlDefinition {
     const val GET_HOMEPAGE_TOP_ARTICLE_LIST = "/article/top/json"
     /** 获取首页文章列表 */
     const val GET_HOMEPAGE_ARTICLE_LIST = "/article/list/{pageNum}/json"
+    /** 收藏站内文章 */
+    const val COLLECT_ARTICLE_INSIDE = "/lg/collect/{id}/json"
+    /** 收藏站内文章 */
+    const val COLLECT_ARTICLE_OUTSIDE = "/lg/collect/add/json"
+    /** 取消收藏 - 文章列表 */
+    const val UN_COLLECT_ARTICLE_LIST = "/lg/uncollect_originId/{id}/json"
+    /** 取消收藏 - 我的收藏 */
+    const val UN_COLLECT_ARTICLE_COLLECTED = "/lg/uncollect/{id}/json"
 
     /** 获取体系分类列表 */
     const val GET_SYSTEM_CATEGORY_LIST = "/tree/json"

@@ -1,5 +1,6 @@
 package com.wj.sampleproject.entity
 
+import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.ext.isNotNullAndEmpty
 import cn.wj.android.common.ext.orFalse
@@ -103,8 +104,7 @@ constructor(
         get() = tags.isNotNullAndEmpty()
 
     /** 标记 - 是否收藏 */
-    val collected: Boolean
-        get() = collect?.toBoolean().orFalse()
+    val collected: BindingField<Boolean> = BindingField(false)
 
     /** 标记 - 是否显示封面 */
     val showEnvelope: Boolean

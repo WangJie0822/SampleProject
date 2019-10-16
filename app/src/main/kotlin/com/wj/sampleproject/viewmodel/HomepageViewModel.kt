@@ -21,6 +21,7 @@ import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.BannerEntity
 import com.wj.sampleproject.ext.showMsg
 import com.wj.sampleproject.model.SnackbarModel
+import com.wj.sampleproject.repository.CollectRepository
 import com.wj.sampleproject.repository.HomepageRepository
 import kotlinx.coroutines.*
 
@@ -29,10 +30,13 @@ import kotlinx.coroutines.*
  */
 class HomepageViewModel
 /**
- * @param repository 主页数据仓库
+ * @param homepageRepository 主页数据仓库
+ * @param collectRepository 收藏相关数据仓库
  */
-constructor(private val repository: HomepageRepository)
-    : BaseViewModel(),
+constructor(
+        private val homepageRepository: HomepageRepository,
+        private val collectRepository: CollectRepository
+) : BaseViewModel(),
         ArticleListViewModel {
 
     /** 页码 */
@@ -113,6 +117,19 @@ constructor(private val repository: HomepageRepository)
         WebViewActivity.actionStart(AppManager.getContext(), item.title.orEmpty(), item.link.orEmpty())
     }
 
+    /** 文章收藏点击 */
+    override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
+        if (item.collected.get().condition) {
+            // 已收藏，取消收藏
+            item.collected.set(false)
+            unCollect(item)
+        } else {
+            // 未收藏，收藏
+            item.collected.set(true)
+            collect(item)
+        }
+    }
+
     /**
      * 获取首页 Banner 列表
      */
@@ -120,7 +137,7 @@ constructor(private val repository: HomepageRepository)
         viewModelScope.launch {
             try {
                 // 获取 Banner 数据
-                val result = repository.getHomepageBannerList()
+                val result = homepageRepository.getHomepageBannerList()
                 if (result.success()) {
                     // 请求成功
                     bannerData.postValue(result.data.orEmpty())
@@ -175,7 +192,7 @@ constructor(private val repository: HomepageRepository)
         viewModelScope.launch {
             try {
                 // 获取文章列表数据
-                val result = repository.getHomepageArticleList(pageNum)
+                val result = homepageRepository.getHomepageArticleList(pageNum)
                 if (result.success()) {
                     // 请求成功
                     articleListData.postValue(articleListData.value.toNewList(result.data?.datas, refreshing.get()))
@@ -184,7 +201,7 @@ constructor(private val repository: HomepageRepository)
                     snackbarData.postValue(SnackbarModel(result.errorMsg))
                 }
             } catch (throwable: Throwable) {
-                Logger.t("NET").e(throwable, "NET_ERROR")
+                Logger.t("NET").e(throwable, "getHomepageArticleList")
                 snackbarData.postValue(SnackbarModel(throwable.showMsg))
             } finally {
                 refreshing.set(false)
@@ -193,4 +210,51 @@ constructor(private val repository: HomepageRepository)
         }
     }
 
+    /**
+     * 收藏
+     *
+     * @param item 文章对象
+     */
+    private fun collect(item: ArticleEntity) {
+        viewModelScope.launch {
+            try {
+                // 收藏
+                val result = collectRepository.collectArticleInside(item.id.orEmpty())
+                if (!result.success()) {
+                    // 收藏失败，提示、回滚收藏状态
+                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    item.collected.set(false)
+                }
+            } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "collect")
+                // 收藏失败，提示、回滚收藏状态
+                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                item.collected.set(false)
+            }
+        }
+    }
+
+    /**
+     * 取消收藏
+     *
+     * @param item 文章对象
+     */
+    private fun unCollect(item: ArticleEntity) {
+        viewModelScope.launch {
+            try {
+                // 取消收藏
+                val result = collectRepository.unCollectArticleList(item.id.orEmpty())
+                if (!result.success()) {
+                    // 取消收藏失败，提示、回滚收藏状态
+                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    item.collected.set(true)
+                }
+            } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "unCollect")
+                // 取消收藏失败，提示、回滚收藏状态
+                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                item.collected.set(true)
+            }
+        }
+    }
 }

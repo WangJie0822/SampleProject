@@ -29,6 +29,50 @@ interface WebService {
     suspend fun getHomepageArticleList(@Path("pageNum") pageNum: Int): NetResult<ArticleListEntity>
 
     /**
+     * 收藏文章 - 站内
+     *
+     * @param id 文章 id
+     */
+    @POST(UrlDefinition.COLLECT_ARTICLE_INSIDE)
+    suspend fun collectArticleInside(@Path("id") id: String): NetResult<Any>
+
+    /**
+     * 收藏文章 - 站外
+     *
+     * @param title 标题
+     * @param author 作者
+     * @param link 链接
+     */
+    @FormUrlEncoded
+    @POST(UrlDefinition.COLLECT_ARTICLE_OUTSIDE)
+    suspend fun collectArticleOutside(
+            @Field("title") title: String,
+            @Field("author") author: String,
+            @Field("link") link: String
+    ): NetResult<Any>
+
+    /**
+     * 取消收藏 - 文章列表
+     *
+     * @param id 文章 id
+     */
+    @POST(UrlDefinition.UN_COLLECT_ARTICLE_LIST)
+    suspend fun unCollectArticleList(@Path("id") id: String): NetResult<Any>
+
+    /**
+     * 取消收藏 - 我的收藏列表
+     *
+     * @param id 文章 id
+     * @param originId 我的收藏列表下发 id
+     */
+    @FormUrlEncoded
+    @POST(UrlDefinition.UN_COLLECT_ARTICLE_COLLECTED)
+    suspend fun unCollectArticleCollected(
+            @Path("id") id: String,
+            @Field("originId") originId: String
+    ): NetResult<Any>
+
+    /**
      * 获取体系分类列表
      */
     @GET(UrlDefinition.GET_SYSTEM_CATEGORY_LIST)
