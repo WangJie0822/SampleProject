@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.viewmodel.EditCollectedWebViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="#60000000"
+        tools:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/app_shape_general_dialog_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.82">
+
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="?selectableItemBackground"
+                android:bind_onClick="@{viewModel.onCloseClick}"
+                android:contentDescription="@null"
+                android:padding="10dp"
+                android:src="@drawable/app_icon_dialog_close"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@{viewModel.titleStr}"
+                android:textColor="@color/app_text_color_black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="添加网站" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/app_web_name_with_colon"
+                android:textColor="@color/app_text_color_black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@null"
+                android:hint="@string/app_please_enter_web_name"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:text="@={viewModel.webName}"
+                android:textColor="@color/app_text_color_black"
+                android:textColorHint="@color/app_text_color_gray_light"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_name"
+                app:layout_constraintTop_toTopOf="@id/tv_name" />
+
+            <TextView
+                android:id="@+id/tv_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/app_web_link_with_colon"
+                android:textColor="@color/app_text_color_black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_name" />
+
+            <EditText
+                android:id="@+id/et_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@null"
+                android:hint="@string/app_please_enter_web_link"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:text="@={viewModel.webLink}"
+                android:textColor="@color/app_text_color_black"
+                android:textColorHint="@color/app_text_color_gray_light"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_link"
+                app:layout_constraintTop_toTopOf="@id/tv_link" />
+
+            <View
+                android:id="@+id/v_dividing_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/app_dividing_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_link"
+                app:layout_goneMarginTop="34dp" />
+
+            <TextView
+                android:id="@+id/tv_negative"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:background="?selectableItemBackground"
+                android:bind_onClick="@{viewModel.onNegativeClick}"
+                android:gravity="center"
+                android:text="@string/app_cancel"
+                android:textColor="@color/app_text_color_gray_light"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@id/v_dividing_vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_dividing_horizontal"
+                tools:visibility="visible" />
+
+            <View
+                android:id="@+id/v_dividing_vertical"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@color/app_dividing_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_positive"
+                app:layout_constraintStart_toEndOf="@id/tv_negative"
+                app:layout_constraintTop_toTopOf="@id/v_dividing_horizontal" />
+
+            <TextView
+                android:id="@+id/tv_positive"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:background="?selectableItemBackground"
+                android:bind_onClick="@{viewModel.onPositiveClick}"
+                android:gravity="center"
+                android:text="@string/app_confirm"
+                android:textColor="@color/app_text_color_blue"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/v_dividing_vertical"
+                app:layout_constraintTop_toBottomOf="@id/v_dividing_horizontal"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

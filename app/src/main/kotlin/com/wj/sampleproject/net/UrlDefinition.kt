@@ -34,6 +34,14 @@ object UrlDefinition {
     const val UN_COLLECT_ARTICLE_LIST = "/lg/uncollect_originId/{id}/json"
     /** 取消收藏 - 我的收藏 */
     const val UN_COLLECT_ARTICLE_COLLECTED = "/lg/uncollect/{id}/json"
+    /** 获取收藏网站列表 */
+    const val GET_COLLECTED_WEB_LIST = "/lg/collect/usertools/json"
+    /** 删除收藏网站 */
+    const val DELETE_COLLECTED_WEB = "/lg/collect/deletetool/json"
+    /** 收藏网站 */
+    const val COLLECT_WEB = "/lg/collect/addtool/json"
+    /** 编辑网站 */
+    const val EDIT_COLLECTED_WEB = "/lg/collect/updatetool/json"
 
     /** 获取体系分类列表 */
     const val GET_SYSTEM_CATEGORY_LIST = "/tree/json"

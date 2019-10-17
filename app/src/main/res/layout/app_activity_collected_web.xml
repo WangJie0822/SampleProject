@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.CollectedWebActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.viewmodel.CollectedWebViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/app_colorPrimary"
+            android:bind_toolbar_itemClick="@{viewModel.onMenuItemClick}"
+            android:bind_toolbar_navigationClick="@{viewModel.onBackClick}"
+            android:theme="@style/app_toolbar"
+            app:menu="@menu/app_menu_collected_web"
+            app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
+            app:title="@string/app_collected_web" />
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:bind_smart_loadMore_enable="@{false}"
+            android:bind_smart_onRefresh="@{viewModel.onRefresh}"
+            android:bind_smart_refreshing="@={viewModel.refreshing}">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_webs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layoutManager="cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager"
+                tools:listitem="@layout/app_recycler_item_collected_web" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+</layout>

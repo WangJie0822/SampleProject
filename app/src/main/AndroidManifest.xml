@@ -63,6 +63,12 @@
             android:name=".activity.CollectionActivity"
             android:configChanges="screenSize"
             android:screenOrientation="portrait" />
+        <!-- 收藏网站界面 -->
+        <activity
+            android:name=".activity.CollectedWebActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
     </application>
 
 </manifest>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.viewmodel.CollectedWebViewModel" />
+
+        <variable
+            name="item"
+            type="com.wj.sampleproject.entity.CollectedWebEntity" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@color/app_white"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?selectableItemBackground"
+            android:bind_onClick="@{viewModel.onItemClick}"
+            android:bind_onClick_item="@{item}"
+            android:bind_onLongClick="@{viewModel.onItemLongClick}"
+            android:bind_onLongClick_item="@{item}"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="@{item.name}"
+            android:textColor="@color/app_text_color_black"
+            android:textSize="16sp"
+            tools:text="@sample/collected_web_list.json/data/name" />
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

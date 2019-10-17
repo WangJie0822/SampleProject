@@ -19,3 +19,5 @@ const val ACTION_TITLE = "action_title"
 const val ACTION_CATEGORY = "action_bjnews"
 /** 界面跳转数据传递 Key - 网络请求拦截跳转登录 */
 const val ACTION_NET_TO_LOGIN = "action_net_to_login"
+/** 界面跳转数据传递 Key - 编辑收藏网站 */
+const val ACTION_EDIT_COLLECTED_WEB = "action_edit_collected_web"

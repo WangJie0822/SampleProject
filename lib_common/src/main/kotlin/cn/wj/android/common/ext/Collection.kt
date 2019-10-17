@@ -41,7 +41,7 @@ fun <T> ArrayList<T>?.orEmpty(): ArrayList<T> {
  * 若为空 返回空集合
  */
 fun <T> List<T>?.orEmpty(): List<T> {
-    return this ?: mutableListOf()
+    return this ?: listOf()
 }
 
 /**

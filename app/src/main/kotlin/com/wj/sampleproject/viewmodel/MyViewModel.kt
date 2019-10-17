@@ -5,6 +5,7 @@ import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.base.tools.getString
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.CollectedWebActivity
 import com.wj.sampleproject.activity.CollectionActivity
 import com.wj.sampleproject.activity.LoginActivity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
@@ -58,6 +59,17 @@ constructor(private val repository: MyRepository)
         } else {
             // 已登录，跳转我的收藏列表
             CollectionActivity.actionStart()
+        }
+    }
+
+    /** 收藏网站点击 */
+    val onCollectedWebClick: () -> Unit = {
+        if (null == UserHelper.userInfo) {
+            // 未登录，跳转登录
+            LoginActivity.actionStart()
+        } else {
+            // 已登录，跳转收藏网站列表
+            CollectedWebActivity.actionStart()
         }
     }
 

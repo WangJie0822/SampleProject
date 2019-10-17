@@ -70,4 +70,41 @@ class CollectRepository : KoinComponent {
         result.data?.datas?.forEach { it.collected.set(true) }
         result
     }
+
+    /**
+     * 获取收藏网站列表
+     */
+    suspend fun getCollectedWebList() = withContext(Dispatchers.IO) {
+        mWebService.getCollectedWebList()
+    }
+
+    /**
+     * 删除收藏网站
+     *
+     * @param id 网站 id
+     */
+    suspend fun deleteCollectedWeb(id: String) = withContext(Dispatchers.IO) {
+        mWebService.deleteCollectedWeb(id)
+    }
+
+    /**
+     * 收藏网站
+     *
+     * @param name 网站名
+     * @param link 网站链接
+     */
+    suspend fun collectWeb(name: String, link: String) = withContext(Dispatchers.IO) {
+        mWebService.collectWeb(name, link)
+    }
+
+    /**
+     * 编辑收藏网站
+     *
+     * @param id 网站 id
+     * @param name 网站名
+     * @param link 网站链接
+     */
+    suspend fun editCollectedWeb(id: String, name: String, link: String) = withContext(Dispatchers.IO) {
+        mWebService.editCollectedWeb(id, name, link)
+    }
 }

@@ -37,4 +37,18 @@
     <string name="app_are_you_sure_to_logout">确定要退出登录吗？</string>
     <string name="app_please_login_first">请先登录</string>
     <string name="app_no_data_try_refresh">没有数据，刷新试试！</string>
+    <string name="app_collected_web">收藏网站</string>
+    <string name="app_add">添加</string>
+    <string name="app_url_not_match">网站地址异常</string>
+    <string name="app_edit">编辑</string>
+    <string name="app_delete">删除</string>
+    <string name="app_please_enter_web_name">请输入网站名称</string>
+    <string name="app_web_name_with_colon">网站名称：</string>
+    <string name="app_web_link_with_colon">网站链接：</string>
+    <string name="app_please_enter_web_link">请输入网站链接</string>
+    <string name="app_add_collected_web">添加网站</string>
+    <string name="app_edit_collected_web">编辑网站</string>
+    <string name="app_add_success">添加成功</string>
+    <string name="app_edit_success">编辑成功</string>
+    <string name="app_please_enter_full_url">请输入完整的url</string>
 </resources>

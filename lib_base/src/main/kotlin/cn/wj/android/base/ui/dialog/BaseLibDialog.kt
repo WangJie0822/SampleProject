@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
-import cn.wj.android.base.tools.DEVICE_SCREEN_HEIGHT
-import cn.wj.android.base.tools.statusBarHeight
 import cn.wj.android.common.Tagable
 import java.util.*
 
@@ -35,11 +33,7 @@ abstract class BaseLibDialog
     /** Dialog 宽度 单位：px  */
     protected var mDialogWidth: Int = WindowManager.LayoutParams.MATCH_PARENT
     /** Dialog 高度 单位：px */
-    protected var mDialogHeight: Int = if (DEVICE_SCREEN_HEIGHT - statusBarHeight == 0) {
-        WindowManager.LayoutParams.MATCH_PARENT
-    } else {
-        DEVICE_SCREEN_HEIGHT - statusBarHeight
-    }
+    protected var mDialogHeight: Int = WindowManager.LayoutParams.MATCH_PARENT
     /** Dialog 重心 [Gravity] */
     protected var mGravity: Int = Gravity.CENTER
 

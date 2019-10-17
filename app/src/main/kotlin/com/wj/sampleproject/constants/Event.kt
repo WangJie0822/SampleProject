@@ -10,3 +10,5 @@ package com.wj.sampleproject.constants
 
 /** LiveEventBus 事件 key - 取消收藏 */
 const val EVENT_COLLECTION_CANCLED = "event_collection_cancled"
+/** LiveEventBus 事件 key - 刷新收藏网站列表 */
+const val EVENT_COLLECTION_REFRESH_COLLECTED_WEB = "event_collection_refresh_collected_web"

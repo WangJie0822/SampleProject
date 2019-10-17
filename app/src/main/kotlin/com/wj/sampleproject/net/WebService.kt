@@ -81,6 +81,49 @@ interface WebService {
     ): NetResult<Any>
 
     /**
+     * 获取收藏网站列表
+     */
+    @GET(UrlDefinition.GET_COLLECTED_WEB_LIST)
+    suspend fun getCollectedWebList(): NetResult<ArrayList<CollectedWebEntity>>
+
+    /**
+     * 删除收藏网站
+     *
+     * @param id 网站 id
+     */
+    @FormUrlEncoded
+    @POST(UrlDefinition.DELETE_COLLECTED_WEB)
+    suspend fun deleteCollectedWeb(@Field("id") id: String): NetResult<Any>
+
+    /**
+     * 收藏网站
+     *
+     * @param name 网站名
+     * @param link 网站链接
+     */
+    @FormUrlEncoded
+    @POST(UrlDefinition.COLLECT_WEB)
+    suspend fun collectWeb(
+            @Field("name") name: String,
+            @Field("link") link: String
+    ): NetResult<Any>
+
+    /**
+     * 编辑收藏网站
+     *
+     * @param id 网站 id
+     * @param name 网站名
+     * @param link 网站链接
+     */
+    @FormUrlEncoded
+    @POST(UrlDefinition.EDIT_COLLECTED_WEB)
+    suspend fun editCollectedWeb(
+            @Field("id") id: String,
+            @Field("name") name: String,
+            @Field("link") link: String
+    ): NetResult<Any>
+
+    /**
      * 获取体系分类列表
      */
     @GET(UrlDefinition.GET_SYSTEM_CATEGORY_LIST)
