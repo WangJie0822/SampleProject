@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.SystemArticlesActivity
 import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentSystemCategoryBinding
@@ -43,6 +44,13 @@ class SystemCategoryFragment
         // 目录列表
         viewModel.listData.observe(this, Observer {
             mAdapter.loadData(it.orEmpty())
+        })
+        // 跳转体系文章列表
+        viewModel.jumpSystemData.observe(this, Observer {
+            if (null == it) {
+                return@Observer
+            }
+            SystemArticlesActivity.actionStart(mContext, it.name.orEmpty(), it.id.orEmpty())
         })
     }
 

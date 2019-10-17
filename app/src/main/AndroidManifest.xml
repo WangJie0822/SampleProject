@@ -69,6 +69,11 @@
             android:configChanges="screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <!-- 体系文章列表界面 -->
+        <activity
+            android:name=".activity.SystemArticlesActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

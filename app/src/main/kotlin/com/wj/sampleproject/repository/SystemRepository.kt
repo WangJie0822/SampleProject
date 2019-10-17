@@ -27,4 +27,14 @@ class SystemRepository : KoinComponent {
     suspend fun getNavigationList() = withContext(Dispatchers.IO) {
         mWebService.getNavigationList()
     }
+
+    /**
+     * 获取体系下文章列表
+     *
+     * @param pageNum 页码
+     * @param cid 体系目录 id
+     */
+    suspend fun getSystemArticleList(pageNum: Int, cid: String) = withContext(Dispatchers.IO) {
+        mWebService.getSystemArticleList(pageNum, cid)
+    }
 }

@@ -7,7 +7,6 @@ import cn.wj.android.logger.Logger
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.entity.SystemCategoryEntity
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.ext.toSnackbarMsg
 import com.wj.sampleproject.repository.SystemRepository
 import kotlinx.coroutines.launch
 
@@ -21,13 +20,15 @@ class SystemCategoryViewModel
 constructor(private val repository: SystemRepository)
     : BaseViewModel() {
 
-    /** TODO 目录点击 */
-    val onCategoryItemClick: (SystemCategoryEntity) -> Unit = { item ->
-        snackbarData.postValue(item.name.toSnackbarMsg())
-    }
-
     /** 列表数据 */
     val listData = MutableLiveData<ArrayList<SystemCategoryEntity>>()
+    /** 跳转体系列表 */
+    val jumpSystemData = MutableLiveData<SystemCategoryEntity>()
+
+    /** 目录点击 */
+    val onCategoryItemClick: (SystemCategoryEntity) -> Unit = { item ->
+        jumpSystemData.postValue(item)
+    }
 
     /**
      * 获取分类数据

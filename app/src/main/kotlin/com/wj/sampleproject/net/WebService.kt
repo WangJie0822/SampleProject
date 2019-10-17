@@ -136,6 +136,18 @@ interface WebService {
     suspend fun getNavigationList(): NetResult<ArrayList<NavigationListEntity>>
 
     /**
+     * 获取体系下文章列表
+     *
+     * @param pageNum 页码
+     * @param cid 体系目录 id
+     */
+    @GET(UrlDefinition.GET_SYSTEM_ARTICLE_LIST)
+    suspend fun getSystemArticleList(
+            @Path("pageNum") pageNum: Int,
+            @Query("cid") cid: String
+    ): NetResult<ArticleListEntity>
+
+    /**
      * 获取公众号列表
      */
     @GET(UrlDefinition.GET_BJNEWS_LIST)

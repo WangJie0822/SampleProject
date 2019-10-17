@@ -47,6 +47,8 @@ object UrlDefinition {
     const val GET_SYSTEM_CATEGORY_LIST = "/tree/json"
     /** 获取导航列表 */
     const val GET_NAVIGATION_LIST = "/navi/json"
+    /** 获取体系文章列表 */
+    const val GET_SYSTEM_ARTICLE_LIST = "/article/list/{pageNum}/json"
 
     /** 获取公众号列表 */
     const val GET_BJNEWS_LIST = "/wxarticle/chapters/json"

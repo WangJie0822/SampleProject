@@ -21,26 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/app_colorPrimary"
-            android:bind_toolbar_navigationClick="@{viewModel.onNavigationClick}"
             android:bind_toolbar_itemClick="@{viewModel.onMenuItemClick}"
+            android:bind_toolbar_navigationClick="@{viewModel.onNavigationClick}"
+            android:bind_toolbar_title="@{viewModel.title}"
             android:theme="@style/app_toolbar"
             app:menu="@menu/app_menu_webview"
-            app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="60dp"
-                android:singleLine="true"
-                android:text="@{viewModel.title}"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                tools:text="@sample/article_list.json/data/datas/title" />
-
-        </androidx.appcompat.widget.Toolbar>
+            app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
+            tools:title="@sample/article_list.json/data/datas/title" />
 
         <View style="@style/app_dividing.horizontal" />
 
