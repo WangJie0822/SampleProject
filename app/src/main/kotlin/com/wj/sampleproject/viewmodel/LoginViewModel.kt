@@ -1,7 +1,7 @@
 package com.wj.sampleproject.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.base.tools.getString
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.isNotNullAndBlank
@@ -125,7 +125,7 @@ constructor(private val repository: MyRepository)
      * 注册
      */
     private fun register() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 显示进度条弹窗
                 progressData.postValue(ProgressModel(cancelable = false))
@@ -156,7 +156,7 @@ constructor(private val repository: MyRepository)
      * 登录
      */
     private fun login() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 显示进度条弹窗
                 progressData.postValue(ProgressModel(cancelable = false))

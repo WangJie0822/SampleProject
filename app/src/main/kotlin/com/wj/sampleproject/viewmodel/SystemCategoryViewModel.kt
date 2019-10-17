@@ -1,7 +1,7 @@
 package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.base.mvvm.BaseViewModel
@@ -34,7 +34,7 @@ constructor(private val repository: SystemRepository)
      * 获取分类数据
      */
     fun getSystemCategoryList() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 val result = repository.getSystemCategoryList()
                 if (result.success()) {

@@ -171,14 +171,6 @@ dependencies {
     // 约束性布局
     implementation rootProject.ext.dependencies["androidx_constraint"]
 
-    // paging
-    implementation rootProject.ext.dependencies["jetpack_paging-ktx"]
-    // ViewModel Kotlin 扩展
-    implementation rootProject.ext.dependencies["jetpack_viewmodel-ktx"]
-    // navigation
-    implementation rootProject.ext.dependencies["jetpack_navigation-ui-ktx"]
-    implementation rootProject.ext.dependencies["jetpack_navigation-fragment-ktx"]
-
     // Lifecycle 拓展
     implementation rootProject.ext.dependencies["androidx_lifecycle-extensions"]
 

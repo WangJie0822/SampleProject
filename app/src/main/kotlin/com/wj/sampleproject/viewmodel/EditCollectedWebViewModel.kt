@@ -1,7 +1,7 @@
 package com.wj.sampleproject.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.base.tools.isNotUrl
 import cn.wj.android.logger.Logger
 import com.jeremyliao.liveeventbus.LiveEventBus
@@ -78,7 +78,7 @@ constructor(private val collectRepository: CollectRepository)
      * 收藏网站
      */
     private fun collectWeb() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 显示弹窗
                 progressData.postValue(ProgressModel())
@@ -108,7 +108,7 @@ constructor(private val collectRepository: CollectRepository)
      * 编辑收藏网站
      */
     private fun editCollectedWeb() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 显示弹窗
                 progressData.postValue(ProgressModel())

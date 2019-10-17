@@ -1,7 +1,7 @@
 package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.activity.WebViewActivity
@@ -38,7 +38,7 @@ constructor(private val repository: SystemRepository)
      * 获取导航列表
      */
     fun getNavigationList() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 val result = repository.getNavigationList()
                 if (result.success()) {

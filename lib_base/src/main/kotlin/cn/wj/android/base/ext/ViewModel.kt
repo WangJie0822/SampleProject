@@ -16,7 +16,7 @@ private const val JOB_KEY = "cn.wj.android.lifecycle.TagableCoroutineScope.JOB_K
 /**
  * Tagable 接口的 协程范围
  */
-val Tagable.coroutineScope: CoroutineScope
+val Tagable.tagableScope: CoroutineScope
     get() {
         val scope: CoroutineScope? = this.getTag(JOB_KEY)
         if (scope != null) {

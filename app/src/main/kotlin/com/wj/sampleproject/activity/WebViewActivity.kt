@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import cn.wj.android.base.tools.jumpToBrowser
 import cn.wj.android.base.utils.AppManager
@@ -39,9 +38,7 @@ class WebViewActivity
         viewModel.title.set(intent.getStringExtra(ACTION_TITLE).orEmpty())
 
         // 加载 Fragment
-        supportFragmentManager.commit(true) {
-            replace(R.id.fl_fragment, webViewFragment)
-        }
+        supportFragmentManager.beginTransaction().replace(R.id.fl_fragment, webViewFragment).commit()
     }
 
     override fun initObserve() {

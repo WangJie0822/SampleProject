@@ -4,8 +4,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
@@ -92,7 +92,7 @@ constructor(private val collectRepository: CollectRepository)
      * 获取收藏网站列表
      */
     private fun getCollectedWebList() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 val result = collectRepository.getCollectedWebList()
                 if (result.success()) {
@@ -116,7 +116,7 @@ constructor(private val collectRepository: CollectRepository)
      * @param item 网站数据对象
      */
     private fun deleteCollectedWeb(item: CollectedWebEntity) {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 progressData.postValue(ProgressModel())
                 val result = collectRepository.deleteCollectedWeb(item.id.orEmpty())

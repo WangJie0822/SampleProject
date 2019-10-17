@@ -1,8 +1,8 @@
 package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
@@ -87,7 +87,7 @@ constructor(
      * 获取公众号文章列表
      */
     private fun getBjnewsArticles() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 获取文章列表数据
                 val result = bjnewsRepository.getBjnewsArticles(bjnewsId, pageNum)
@@ -114,7 +114,7 @@ constructor(
      * @param item 文章对象
      */
     private fun collect(item: ArticleEntity) {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 收藏
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
@@ -138,7 +138,7 @@ constructor(
      * @param item 文章对象
      */
     private fun unCollect(item: ArticleEntity) {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 取消收藏
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())

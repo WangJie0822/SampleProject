@@ -1,8 +1,8 @@
 package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.base.tools.getString
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
@@ -82,7 +82,7 @@ constructor(private val repository: MyRepository)
      * 用户退出登录
      */
     private fun logout() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 显示弹窗
                 progressData.postValue(ProgressModel())

@@ -4,8 +4,8 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.ext.orEmpty
@@ -129,7 +129,7 @@ constructor(
      * 获取热搜数据
      */
     fun getHotSearch() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 获取热搜数据
                 val result = searchRepository.getHotSearch()
@@ -152,7 +152,7 @@ constructor(
      * 获取搜索列表
      */
     private fun getSearchList() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 获取文章列表数据
                 val result = searchRepository.search(pageNum, keywords.get().orEmpty())
@@ -183,7 +183,7 @@ constructor(
      * @param item 文章对象
      */
     private fun collect(item: ArticleEntity) {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 收藏
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
@@ -207,7 +207,7 @@ constructor(
      * @param item 文章对象
      */
     private fun unCollect(item: ArticleEntity) {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 取消收藏
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())

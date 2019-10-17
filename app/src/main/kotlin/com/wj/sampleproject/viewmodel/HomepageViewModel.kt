@@ -3,8 +3,8 @@ package com.wj.sampleproject.viewmodel
 import android.view.MenuItem
 import android.view.MotionEvent
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
+import cn.wj.android.base.ext.tagableScope
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
@@ -136,7 +136,7 @@ constructor(
      * 获取首页 Banner 列表
      */
     fun getHomepageBannerList() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 获取 Banner 数据
                 val result = homepageRepository.getHomepageBannerList()
@@ -164,7 +164,7 @@ constructor(
             return
         }
         // 新建协程
-        carouselJob = viewModelScope.launch(Dispatchers.IO) {
+        carouselJob = tagableScope.launch(Dispatchers.IO) {
             while (isActive) {
                 // 延时
                 delay(MAIN_BANNER_TRANSFORM_INTERVAL_MS)
@@ -191,7 +191,7 @@ constructor(
      * 获取首页文章列表
      */
     private fun getHomepageArticleList() {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 获取文章列表数据
                 val result = homepageRepository.getHomepageArticleList(pageNum)
@@ -218,7 +218,7 @@ constructor(
      * @param item 文章对象
      */
     private fun collect(item: ArticleEntity) {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 收藏
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
@@ -242,7 +242,7 @@ constructor(
      * @param item 文章对象
      */
     private fun unCollect(item: ArticleEntity) {
-        viewModelScope.launch {
+        tagableScope.launch {
             try {
                 // 取消收藏
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())
