@@ -58,27 +58,35 @@ class HomepageFragment
     override fun initView() {
 
         // 配置文章列表
-        mArticlesAdapter.viewModel = viewModel
-        mArticlesAdapter.setEmptyView(R.layout.app_layout_placeholder)
-        mArticlesAdapter.showHeaderWhenEmpty = true
-        mBinding.rvArticles.layoutManager = WrapContentLinearLayoutManager()
-        mBinding.rvArticles.adapter = mArticlesAdapter
+        mBinding.rvArticles.let { rv ->
+            rv.layoutManager = WrapContentLinearLayoutManager()
+            rv.adapter = mArticlesAdapter.also {
+                it.viewModel = viewModel
+                it.setEmptyView(R.layout.app_layout_placeholder)
+                it.showHeaderWhenEmpty = true
+            }
+        }
     }
 
     override fun initObserve() {
         // Banner 列表
-        viewModel.bannerData.observe(this, Observer {
+        viewModel.bannerData.observe(this, Observer { list ->
             // 配置 Banner 列表
-            val mBannerBinding = AppLayoutHomepageBannerBinding.inflate(
+            AppLayoutHomepageBannerBinding.inflate(
                     LayoutInflater.from(mContext), null, false
-            )
-            mBannerAdapter.mViewModel = viewModel
-            mBannerBinding.vpBanner.adapter = mBannerAdapter
-            mArticlesAdapter.addHeaderView(mBannerBinding.root)
+            ).also { binding ->
+                binding.viewModel = viewModel
+                binding.vpBanner.let { vp ->
+                    vp.adapter = mBannerAdapter.also {
+                        it.viewModel = viewModel
+                    }
+                }
+                mArticlesAdapter.addHeaderView(binding.root)
+            }
             // 更新 Banner 列表
-            mBannerAdapter.refresh(it)
+            mBannerAdapter.refresh(list)
             // 设置 Banner 数量并开启轮播
-            viewModel.bannerCount = it.size
+            viewModel.bannerCount = list.size
         })
         // 文章列表
         viewModel.articleListData.observe(this, Observer {

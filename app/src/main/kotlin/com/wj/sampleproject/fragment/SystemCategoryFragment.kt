@@ -33,9 +33,10 @@ class SystemCategoryFragment
 
     override fun initView() {
         // 配置 RecyclerView
-        mAdapter.viewModel = viewModel
-        mBinding.rvSystemCategory.layoutManager = WrapContentLinearLayoutManager()
-        mBinding.rvSystemCategory.adapter = mAdapter
+        mBinding.rvSystemCategory.let { rv ->
+            rv.layoutManager = WrapContentLinearLayoutManager()
+            rv.adapter = mAdapter.also { it.viewModel = viewModel }
+        }
     }
 
     override fun initObserve() {

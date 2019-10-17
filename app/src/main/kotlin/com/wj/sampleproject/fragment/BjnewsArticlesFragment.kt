@@ -45,11 +45,13 @@ class BjnewsArticlesFragment
         viewModel.bjnewsId = bjnews?.id.orEmpty()
 
         // 配置文章列表
-        mArticlesAdapter.viewModel = viewModel
-        mArticlesAdapter.setEmptyView(R.layout.app_layout_placeholder)
-        mArticlesAdapter.showHeaderWhenEmpty = true
-        mBinding.rvBjnewsArticles.layoutManager = WrapContentLinearLayoutManager()
-        mBinding.rvBjnewsArticles.adapter = mArticlesAdapter
+        mBinding.rvBjnewsArticles.let { rv ->
+            rv.layoutManager = WrapContentLinearLayoutManager()
+            rv.adapter = mArticlesAdapter.also {
+                it.viewModel = viewModel
+                it.setEmptyView(R.layout.app_layout_placeholder)
+            }
+        }
     }
 
     override fun initObserve() {

@@ -34,10 +34,13 @@ class CollectionActivity : BaseActivity<CollectionViewModel, AppActivityCollecti
         setContentView(R.layout.app_activity_collection)
 
         // 配置文章列表
-        mArticlesAdapter.viewModel = viewModel
-        mArticlesAdapter.setEmptyView(R.layout.app_layout_placeholder)
-        mBinding.rvArticles.layoutManager = WrapContentLinearLayoutManager()
-        mBinding.rvArticles.adapter = mArticlesAdapter
+        mBinding.rvArticles.let { rv ->
+            rv.layoutManager = WrapContentLinearLayoutManager()
+            rv.adapter = mArticlesAdapter.also {
+                it.viewModel = viewModel
+                it.setEmptyView(R.layout.app_layout_placeholder)
+            }
+        }
 
         // 自动加载数据
         viewModel.refreshing.set(true)

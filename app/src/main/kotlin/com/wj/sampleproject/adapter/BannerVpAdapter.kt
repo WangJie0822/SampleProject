@@ -13,7 +13,7 @@ import com.wj.sampleproject.viewmodel.HomepageViewModel
  */
 class BannerVpAdapter : PagerAdapter() {
 
-    var mViewModel: HomepageViewModel? = null
+    var viewModel: HomepageViewModel? = null
 
     private val mData = arrayListOf<BannerEntity>()
 
@@ -30,7 +30,7 @@ class BannerVpAdapter : PagerAdapter() {
                 LayoutInflater.from(container.context),
                 container, false
         )
-        binding.viewModel = mViewModel
+        binding.viewModel = viewModel
         binding.item = mData[position]
 
         container.addView(binding.root)

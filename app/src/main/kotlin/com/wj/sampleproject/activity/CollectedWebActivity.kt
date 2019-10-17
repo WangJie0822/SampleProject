@@ -41,10 +41,13 @@ class CollectedWebActivity : BaseActivity<CollectedWebViewModel, AppActivityColl
         setContentView(R.layout.app_activity_collected_web)
 
         // 配置 RecyclerView
-        mAdapter.viewModel = viewModel
-        mAdapter.setEmptyView(R.layout.app_layout_placeholder)
-        mBinding.rvWebs.layoutManager = FlowLayoutManager()
-        mBinding.rvWebs.adapter = mAdapter
+        mBinding.rvWebs.let { rv ->
+            rv.layoutManager = FlowLayoutManager()
+            rv.adapter = mAdapter.also {
+                it.viewModel = viewModel
+                it.setEmptyView(R.layout.app_layout_placeholder)
+            }
+        }
 
         // 自动加载数据
         viewModel.refreshing.set(true)

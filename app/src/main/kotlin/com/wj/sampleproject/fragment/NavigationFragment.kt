@@ -33,9 +33,10 @@ class NavigationFragment
 
     override fun initView() {
         // 配置 RecyclerView
-        mAdapter.viewModel = viewModel
-        mBinding.rvNavigation.layoutManager = WrapContentLinearLayoutManager()
-        mBinding.rvNavigation.adapter = mAdapter
+        mBinding.rvNavigation.let { rv ->
+            rv.layoutManager = WrapContentLinearLayoutManager()
+            rv.adapter = mAdapter.also { it.viewModel = viewModel }
+        }
     }
 
     override fun initObserve() {
