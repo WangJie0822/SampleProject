@@ -56,6 +56,20 @@ class WebViewActivity
         return webViewFragment.onKeyDown(keyCode) || super.onKeyDown(keyCode, event)
     }
 
+
+    /**
+     * 界面跳转数据 Model
+     */
+    data class ActionModel
+    /**
+     * @param title 标题
+     * @param url 打开链接
+     */
+    constructor(
+            var title: String,
+            var url: String
+    )
+
     companion object {
         /**
          * 界面入口

@@ -49,6 +49,10 @@ class CollectionActivity : BaseActivity<CollectionViewModel, AppActivityCollecti
             // 更新文章列表
             mArticlesAdapter.submitList(it)
         })
+        // WebView 跳转
+        viewModel.jumpWebViewData.observe(this, Observer {
+            WebViewActivity.actionStart(mContext, it.title, it.url)
+        })
     }
 
     companion object {

@@ -1,13 +1,11 @@
 package com.wj.sampleproject.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.base.tools.getString
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
-import com.wj.sampleproject.activity.CollectedWebActivity
-import com.wj.sampleproject.activity.CollectionActivity
-import com.wj.sampleproject.activity.LoginActivity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.dialog.GeneralDialog
 import com.wj.sampleproject.ext.snackbarMsg
@@ -29,6 +27,13 @@ class MyViewModel
 constructor(private val repository: MyRepository)
     : BaseViewModel() {
 
+    /** 跳转登录 */
+    val jumpLoginData = MutableLiveData<Int>()
+    /** 跳转我的收藏 */
+    val jumpCollectionData = MutableLiveData<Int>()
+    /** 跳转收藏网站 */
+    val jumpCollectedWebData = MutableLiveData<Int>()
+
     /** 用户头像地址 */
     val avatarUrl: BindingField<String> = BindingField()
 
@@ -39,7 +44,7 @@ constructor(private val repository: MyRepository)
     val onTopClick: () -> Unit = {
         if (null == UserHelper.userInfo) {
             // 未登录，跳转登录
-            LoginActivity.actionStart()
+            jumpLoginData.postValue(0)
         } else {
             // 已登录，提示是否退出登录
             showDialogData.postValue(GeneralDialog.newBuilder()
@@ -55,10 +60,10 @@ constructor(private val repository: MyRepository)
     val onMyCollectionClick: () -> Unit = {
         if (null == UserHelper.userInfo) {
             // 未登录，跳转登录
-            LoginActivity.actionStart()
+            jumpLoginData.postValue(0)
         } else {
             // 已登录，跳转我的收藏列表
-            CollectionActivity.actionStart()
+            jumpCollectionData.postValue(0)
         }
     }
 
@@ -66,10 +71,10 @@ constructor(private val repository: MyRepository)
     val onCollectedWebClick: () -> Unit = {
         if (null == UserHelper.userInfo) {
             // 未登录，跳转登录
-            LoginActivity.actionStart()
+            jumpLoginData.postValue(0)
         } else {
             // 已登录，跳转收藏网站列表
-            CollectedWebActivity.actionStart()
+            jumpCollectedWebData.postValue(0)
         }
     }
 

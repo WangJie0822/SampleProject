@@ -1,7 +1,11 @@
 package com.wj.sampleproject.fragment
 
+import androidx.lifecycle.Observer
 import cn.wj.android.base.tools.getString
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.CollectedWebActivity
+import com.wj.sampleproject.activity.CollectionActivity
+import com.wj.sampleproject.activity.LoginActivity
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentMyBinding
 import com.wj.sampleproject.helper.UserHelper
@@ -31,6 +35,21 @@ class MyFragment
     }
 
     override fun initView() {
+    }
+
+    override fun initObserve() {
+        // 跳转登录
+        viewModel.jumpLoginData.observe(this, Observer {
+            LoginActivity.actionStart(mContext)
+        })
+        // 跳转我的收藏
+        viewModel.jumpCollectionData.observe(this, Observer {
+            CollectionActivity.actionStart(mContext)
+        })
+        // 跳转网站收藏
+        viewModel.jumpCollectedWebData.observe(this, Observer {
+            CollectedWebActivity.actionStart(mContext)
+        })
     }
 
     companion object {

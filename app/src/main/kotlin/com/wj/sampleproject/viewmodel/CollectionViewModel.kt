@@ -39,6 +39,8 @@ constructor(private val collectRepository: CollectRepository)
 
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
+    /** 跳转 WebView 数据 */
+    val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
 
     /** 返回点击 */
     val onBackClick: () -> Unit = {
@@ -70,7 +72,7 @@ constructor(private val collectRepository: CollectRepository)
     /** 文章列表条目点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
-        WebViewActivity.actionStart(title = item.title.orEmpty(), url = item.link.orEmpty())
+        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
     }
 
     /** 文章收藏点击 */

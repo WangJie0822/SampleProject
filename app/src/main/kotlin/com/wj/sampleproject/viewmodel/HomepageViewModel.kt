@@ -10,7 +10,6 @@ import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
-import com.wj.sampleproject.activity.SearchActivity
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
 import com.wj.sampleproject.base.mvvm.BaseViewModel
@@ -45,6 +44,10 @@ constructor(
     val bannerData = MutableLiveData<ArrayList<BannerEntity>>()
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
+    /** 跳转 WebView 数据 */
+    val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
+    /** 跳转搜索数据 */
+    val jumpSearchData = MutableLiveData<Int>()
 
     /** Banner 轮播 job */
     private var carouselJob: Job? = null
@@ -52,7 +55,7 @@ constructor(
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
         if (it.itemId == R.id.menu_search) {
-            SearchActivity.actionStart()
+            jumpSearchData.postValue(0)
         }
         false
     }
@@ -113,7 +116,7 @@ constructor(
     /** 文章列表条目点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
-        WebViewActivity.actionStart(title = item.title.orEmpty(), url = item.link.orEmpty())
+        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
     }
 
     /** 文章收藏点击 */

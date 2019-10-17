@@ -14,11 +14,11 @@ class WebViewViewModel
     val title: BindingField<String> = BindingField()
 
     /** 返回点击 */
-    val navigationData = MutableLiveData<Long>()
+    val navigationData = MutableLiveData<Int>()
 
     /** 返回点击 */
     val onNavigationClick: () -> Unit = {
         // 返回
-        navigationData.postValue(System.currentTimeMillis())
+        navigationData.postValue(0)
     }
 }

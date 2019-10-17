@@ -5,6 +5,8 @@ import androidx.lifecycle.Observer
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.SearchActivity
+import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
@@ -82,6 +84,14 @@ class HomepageFragment
         viewModel.articleListData.observe(this, Observer {
             // 更新文章列表
             mArticlesAdapter.submitList(it)
+        })
+        // WebView 跳转
+        viewModel.jumpWebViewData.observe(this, Observer {
+            WebViewActivity.actionStart(mContext, it.title, it.url)
+        })
+        // 跳转搜索
+        viewModel.jumpSearchData.observe(this, Observer {
+            SearchActivity.actionStart(mContext)
         })
         // 取消收藏事件
         LiveEventBus.get(EVENT_COLLECTION_CANCLED, String::class.java)
