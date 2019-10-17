@@ -86,6 +86,7 @@ val repositoryModule: Module = module {
     single { ProjectRepository() }
     single { MyRepository() }
     single { CollectRepository() }
+    single { SearchRepository() }
 }
 
 /**
@@ -113,7 +114,7 @@ val viewModelModule: Module = module {
     viewModel { ProjectViewModel(get()) }
     viewModel { ProjectArticlesViewModel(get(), get()) }
     viewModel { MyViewModel(get()) }
-    viewModel { SearchViewModel() }
+    viewModel { SearchViewModel(get(), get()) }
     viewModel { WebViewViewModel() }
     viewModel { WebViewFragViewModel() }
     viewModel { LoginViewModel(get()) }
