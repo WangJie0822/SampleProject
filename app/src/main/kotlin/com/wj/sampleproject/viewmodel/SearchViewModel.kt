@@ -1,16 +1,23 @@
 package com.wj.sampleproject.viewmodel
 
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
 import cn.wj.android.common.ext.condition
+import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.ext.orEmpty
+import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
+import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
+import com.wj.sampleproject.entity.HotSearchEntity
 import com.wj.sampleproject.ext.showMsg
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
@@ -35,13 +42,35 @@ constructor(
     /** 页码 */
     private var pageNum = NET_PAGE_START
 
+    /** 热搜数据 */
+    val hotSearchData = MutableLiveData<ArrayList<HotSearchEntity>>()
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
     /** 跳转 WebView 数据 */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
 
     /** 搜索关键字 */
-    val keywords = BindingField("")
+    val keywords = BindingField("") { _, value ->
+        if (value.isNullOrBlank()) {
+            showHotSearch.set(true)
+        }
+    }
+
+    /** 标记 - 是否显示搜索热词 */
+    val showHotSearch = BindingField(true)
+
+    /** 软键盘搜索 */
+    val onSearchAction: (TextView, Int, KeyEvent?) -> Boolean = { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            // 搜索
+            if (keywords.get().isNullOrBlank()) {
+                snackbarData.postValue(SnackbarModel(R.string.app_please_enter_keywords))
+            } else {
+                onRefresh.invoke()
+            }
+        }
+        false
+    }
 
     /** 标记 - 是否正在刷新 */
     val refreshing: BindingField<Boolean> = BindingField(false)
@@ -64,6 +93,11 @@ constructor(
     /** 标记 - 是否没有更多 */
     val noMore: BindingField<Boolean> = BindingField(true)
 
+    /** 返回点击 */
+    val onBackClick = {
+        uiCloseData.postValue(UiCloseModel())
+    }
+
     /** 文章 item 点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
@@ -83,16 +117,64 @@ constructor(
         }
     }
 
-    /** 返回点击 */
-    val onBackClick = {
-        uiCloseData.postValue(UiCloseModel())
+    /** 热门搜索条目点击 */
+    val onHotSearchItemClick: (HotSearchEntity) -> Unit = { item ->
+        keywords.set(item.name)
+        if (keywords.get().isNotNullAndBlank()) {
+            onRefresh.invoke()
+        }
+    }
+
+    /**
+     * 获取热搜数据
+     */
+    fun getHotSearch() {
+        viewModelScope.launch {
+            try {
+                // 获取热搜数据
+                val result = searchRepository.getHotSearch()
+                if (result.success()) {
+                    // 获取成功，刷新列表
+                    hotSearchData.postValue(result.data.orEmpty())
+                } else {
+                    // 获取失败，提示
+                    snackbarData.postValue(result.toError())
+                }
+            } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "getHotSearch")
+                // 获取失败，提示、回滚收藏状态
+                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+            }
+        }
     }
 
     /**
      * 获取搜索列表
      */
     private fun getSearchList() {
-
+        viewModelScope.launch {
+            try {
+                // 获取文章列表数据
+                val result = searchRepository.search(pageNum, keywords.get().orEmpty())
+                if (result.success()) {
+                    // 请求成功
+                    val newList = articleListData.value.toNewList(result.data?.datas, refreshing.get())
+                    if (newList.isNotEmpty()) {
+                        showHotSearch.set(false)
+                    }
+                    articleListData.postValue(newList)
+                    noMore.set(result.data?.over?.toBoolean().condition)
+                } else {
+                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                }
+            } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "getSearchList")
+                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+            } finally {
+                refreshing.set(false)
+                loadMore.set(false)
+            }
+        }
     }
 
     /**

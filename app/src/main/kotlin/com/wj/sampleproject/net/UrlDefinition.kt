@@ -64,4 +64,9 @@ object UrlDefinition {
     const val REGISTER = "/user/register"
     /** 退出登录 */
     const val LOGOUT = "/user/logout/json"
+
+    /** 获取搜索热词 */
+    const val GET_HOT_SEARCH = "/hotkey/json"
+    /** 搜索 */
+    const val SEARCH = "/article/query/{pageNum}/json"
 }

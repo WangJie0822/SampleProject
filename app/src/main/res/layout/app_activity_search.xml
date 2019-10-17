@@ -31,13 +31,18 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="60dp"
                 android:background="@drawable/app_shape_search_bg"
+                android:bind_et_onEditorAction="@{viewModel.onSearchAction}"
                 android:drawablePadding="4dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:hint="@string/app_please_enter_keywords"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="4dp"
+                android:singleLine="true"
                 android:text="@={viewModel.keywords}"
                 android:textColor="@color/app_text_color_black"
                 android:textColorHint="@color/app_text_color_gray"
@@ -50,32 +55,64 @@
 
         <View style="@style/app_dividing.horizontal" />
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/app_window_bg"
-            android:bind_smart_loadMore="@={viewModel.loadMore}"
-            android:bind_smart_noMore="@{viewModel.noMore}"
-            android:bind_smart_onLoadMore="@{viewModel.onLoadMore}"
-            android:bind_smart_onRefresh="@{viewModel.onRefresh}"
-            android:bind_smart_refreshing="@={viewModel.refreshing}"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_search"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/app_recycler_item_articles" />
+                android:bind_visibility="@{viewModel.showHotSearch}"
+                android:orientation="vertical">
 
-            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/app_hot_search" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_hot_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12sp"
+                    tools:layoutManager="cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager"
+                    tools:listitem="@layout/app_recycler_item_hot_search" />
+
+            </LinearLayout>
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:background="@color/app_window_bg"
+                android:bind_smart_loadMore="@={viewModel.loadMore}"
+                android:bind_smart_noMore="@{viewModel.noMore}"
+                android:bind_smart_onLoadMore="@{viewModel.onLoadMore}"
+                android:bind_smart_onRefresh="@{viewModel.onRefresh}"
+                android:bind_smart_refreshing="@={viewModel.refreshing}"
+                android:bind_visibility="@{!viewModel.showHotSearch}"
+                android:visibility="gone">
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/app_recycler_item_articles" />
+
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        </FrameLayout>
 
     </LinearLayout>
 

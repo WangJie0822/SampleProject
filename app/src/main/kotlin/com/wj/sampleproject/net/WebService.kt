@@ -206,4 +206,23 @@ interface WebService {
      */
     @GET(UrlDefinition.LOGOUT)
     suspend fun logout(): NetResult<Any>
+
+    /**
+     * 获取搜索热词
+     */
+    @GET(UrlDefinition.GET_HOT_SEARCH)
+    suspend fun getHotSearch(): NetResult<ArrayList<HotSearchEntity>>
+
+    /**
+     * 搜索
+     *
+     * @param pageNum 页码
+     * @param keywords 关键字
+     */
+    @FormUrlEncoded
+    @POST(UrlDefinition.SEARCH)
+    suspend fun search(
+            @Path("pageNum") pageNum: Int,
+            @Field("k") keywords: String
+    ): NetResult<ArticleListEntity>
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.wj.sampleproject.entity.HotSearchEntity" />
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.viewmodel.SearchViewModel" />
+    </data>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/app_shape_hot_search_bg"
+        android:bind_onClick="@{viewModel.onHotSearchItemClick}"
+        android:bind_onClick_item="@{item}"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp"
+        android:text="@{item.name}"
+        android:textColor="#2F69F5"
+        android:textSize="12sp"
+        tools:text="@sample/article_list.json/data/datas/tags/name" />
+
+</layout>
