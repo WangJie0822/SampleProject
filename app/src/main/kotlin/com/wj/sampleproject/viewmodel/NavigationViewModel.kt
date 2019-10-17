@@ -4,11 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
+import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.NavigationListEntity
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.ext.toSnackbarMsg
 import com.wj.sampleproject.repository.SystemRepository
 import kotlinx.coroutines.launch
 
@@ -22,13 +22,17 @@ class NavigationViewModel
 constructor(private val repository: SystemRepository)
     : BaseViewModel() {
 
-    /** TODO 导航条目点击 */
-    val onNavigationItemClick: (ArticleEntity) -> Unit = { item ->
-        snackbarData.postValue(item.title.toSnackbarMsg())
-    }
-
     /** 列表数据 */
     val listData = MutableLiveData<ArrayList<NavigationListEntity>>()
+
+    /** 跳转 WebView */
+    val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
+
+    /** 导航条目点击 */
+    val onNavigationItemClick: (ArticleEntity) -> Unit = { item ->
+        // 跳转 WebView
+        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
+    }
 
     /**
      * 获取导航列表

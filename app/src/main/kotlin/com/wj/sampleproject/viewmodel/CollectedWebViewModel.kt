@@ -6,17 +6,15 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.tools.jumpToBrowser
-import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.mvvm.BaseViewModel
 import com.wj.sampleproject.entity.CollectedWebEntity
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.model.ProgressModel
-import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.CollectRepository
 import kotlinx.coroutines.launch
@@ -41,6 +39,8 @@ constructor(private val collectRepository: CollectRepository)
     val popupMenuData = MutableLiveData<PopupModel>()
     /** 编辑弹窗数据 */
     val editDialogData = MutableLiveData<CollectedWebEntity>()
+    /** 跳转 WebView */
+    val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
 
     /** 返回点击 */
     val onBackClick: () -> Unit = {
@@ -66,11 +66,8 @@ constructor(private val collectRepository: CollectRepository)
 
     /** 列表点击 */
     val onItemClick: (CollectedWebEntity) -> Unit = { item ->
-        // 打开原生浏览器
-        if (!item.link?.jumpToBrowser().condition) {
-            // 打开失败
-            snackbarData.postValue(SnackbarModel(R.string.app_url_not_match))
-        }
+        // 打开 WebView
+        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.name.orEmpty(), item.link.orEmpty()))
     }
 
     /** 列表长按点击 */

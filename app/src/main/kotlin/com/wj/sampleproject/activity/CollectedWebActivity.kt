@@ -72,6 +72,10 @@ class CollectedWebActivity : BaseActivity<CollectedWebViewModel, AppActivityColl
         viewModel.editDialogData.observe(this, Observer {
             EditCollectedWebDialog.actionShow(mContext, it)
         })
+        // 跳转 WebView
+        viewModel.jumpWebViewData.observe(this, Observer {
+            WebViewActivity.actionStart(mContext, it.title, it.url)
+        })
         // LiveEvent
         LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB)
                 .observe(this, Observer {

@@ -37,7 +37,24 @@
     <!-- Toolber 样式 -->
     <style name="app_toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="actionMenuTextColor">@color/app_colorAccent</item>
+        <!-- 字体大小 -->
         <item name="android:textSize">14sp</item>
+        <!--ToolBar 字体颜色 -->
+        <item name="titleTextColor">@color/app_text_color_black</item>
+        <!-- 溢出菜单图标颜色 -->
+        <item name="colorControlNormal">@android:color/white</item>
+        <!-- 右侧溢出菜单图标自定义 -->
+        <!--        <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow</item>-->
+        <!-- 是否覆盖锚点，默认为true，即盖住 Toolbar -->
+        <item name="overlapAnchor">false</item>
+        <!-- 弹出层背景颜色 -->
+        <item name="android:colorBackground">@color/app_white</item>
+        <!-- 设置弹出菜单文字颜色 -->
+        <item name="android:textColor">@color/app_text_color_black</item>
+        <!-- 弹出层垂直方向上的偏移，即在竖直方向上距离Toolbar的距离，值为负则会盖住Toolbar -->
+        <item name="android:dropDownVerticalOffset">0dp</item>
+        <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
+        <item name="android:dropDownHorizontalOffset">0dp</item>
     </style>
 
     <!-- 分隔线样式 -->

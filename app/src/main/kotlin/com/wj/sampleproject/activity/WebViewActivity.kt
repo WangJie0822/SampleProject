@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
+import cn.wj.android.base.tools.jumpToBrowser
 import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
@@ -49,6 +50,10 @@ class WebViewActivity
             if (!webViewFragment.onKeyDown()) {
                 finish()
             }
+        })
+        // 浏览器打开
+        viewModel.jumpBorwser.observe(this, Observer {
+            webViewFragment.currentUrl.jumpToBrowser(mContext)
         })
     }
 

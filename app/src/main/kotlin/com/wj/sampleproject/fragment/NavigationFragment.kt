@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.NavigationRvAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentNavigationBinding
@@ -43,6 +44,10 @@ class NavigationFragment
         // 导航列表
         viewModel.listData.observe(this, Observer {
             mAdapter.loadData(it)
+        })
+        // 跳转 WebView
+        viewModel.jumpWebViewData.observe(this, Observer {
+            WebViewActivity.actionStart(mContext, it.title, it.url)
         })
     }
 

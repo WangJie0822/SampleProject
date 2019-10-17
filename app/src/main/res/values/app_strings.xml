@@ -53,4 +53,5 @@
     <string name="app_please_enter_full_url">请输入完整的url</string>
     <string name="app_please_enter_keywords">请输入关键字</string>
     <string name="app_hot_search">热门搜索</string>
+    <string name="app_open_in_browser">浏览器打开</string>
 </resources>

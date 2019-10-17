@@ -29,6 +29,10 @@ class WebViewFragment
         arguments?.getString(ACTION_WEB_URL, "").orEmpty()
     }
 
+    /** 当前 url */
+    val currentUrl: String
+        get() = mBinding.wv.url
+
     override fun initView() {
 
         // 配置 WebView

@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_collect"
-        android:icon="@drawable/app_vector_favorite_black_24dp"
-        android:title="@string/app_collection"
-        app:itemIconTint="#FFF"
-        app:showAsAction="always" />
+        android:id="@+id/menu_browser"
+        android:icon="@drawable/app_vector_public_white_24dp"
+        android:title="@string/app_open_in_browser"
+        app:showAsAction="collapseActionView" />
 
 </menu>
