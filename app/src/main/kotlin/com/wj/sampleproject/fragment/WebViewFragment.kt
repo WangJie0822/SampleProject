@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -45,6 +46,20 @@ class WebViewFragment
         webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
 
         mBinding.wv.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+
+        mBinding.wv.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView, newProgress: Int) {
+                if (newProgress == 100) {
+                    mBinding.pb.visibility = View.GONE
+                } else {
+                    if (View.INVISIBLE == mBinding.pb.visibility) {
+                        mBinding.pb.visibility = View.VISIBLE
+                    }
+                    mBinding.pb.progress = newProgress
+                }
+                super.onProgressChanged(view, newProgress)
+            }
+        }
 
         mBinding.wv.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
