@@ -208,13 +208,17 @@ dependencies {
     // Tablayout
     implementation rootProject.ext.dependencies["tablayout"]
 
-    // 依赖 base 库
+    // 依赖库
     implementation project(":lib_base")
     implementation project(":lib_common")
-    implementation project(":lib_start_activity4result")
+    // DataBinding 适配器
     implementation project(":lib_databinding_adapter")
+    // 日志打印
     implementation project(":lib_logger")
+    // Okhttp 拦截器
     implementation project(':lib_okhttp_interceptor')
+    // RecyclerView 适配器、布局管理器
     implementation project(":lib_recyclerview")
+    // 自定义 View
     implementation project(":lib_views_custom")
 }

@@ -10,6 +10,7 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.ACTION_NET_TO_LOGIN
 import com.wj.sampleproject.databinding.AppActivityLoginBinding
+import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.viewmodel.LoginViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -28,6 +29,12 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity_login)
+
+        // 关闭除首页外所有界面
+        AppManager.finishAllWithout(LoginActivity::class.java, MainActivity::class.java)
+
+        // 清除登录信息
+        UserHelper.userInfo = null
 
         if (intent.getBooleanExtra(ACTION_NET_TO_LOGIN, false).orFalse()) {
             // 从网络拦截跳转，提示

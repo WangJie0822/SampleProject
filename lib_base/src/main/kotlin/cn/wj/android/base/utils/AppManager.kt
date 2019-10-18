@@ -234,17 +234,35 @@ object AppManager {
     /**
      * 结束指定 Activity 之外的其他 Activity
      *
-     * @param activity 指定不关闭的 Activity
+     * @param activitys 指定不关闭的 Activity
      */
     @JvmStatic
-    fun finishAllWithout(activity: Activity?) {
-        if (activity == null) {
-            return
+    fun finishAllWithout(vararg activitys: Activity) {
+        for (activity in activitys) {
+            remove(activity)
         }
-        remove(activity)
         finishAllActivity()
-        add(activity)
+        for (activity in activitys) {
+            add(activity)
+        }
     }
+
+    /**
+     * 结束指定 Activity 之外的其他 Activity
+     *
+     * @param activitys 指定不关闭的 Activity 类对象
+     */
+    @JvmStatic
+    fun finishAllWithout(vararg activitys: Class<out Activity>) {
+        for (activity in activitys) {
+            remove(getActivity(activity))
+        }
+        finishAllActivity()
+        for (activity in activitys) {
+            add(getActivity(activity))
+        }
+    }
+
 
     /**
      * 结束指定 Activity
