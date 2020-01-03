@@ -221,4 +221,6 @@ dependencies {
     implementation project(":lib_recyclerview")
     // 自定义 View
     implementation project(":lib_views_custom")
+    // 侧滑返回
+    implementation project(":lib_swipe_back")
 }

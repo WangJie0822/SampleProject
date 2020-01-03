@@ -2,9 +2,12 @@ package com.wj.sampleproject.base.ui
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import cn.wj.android.base.ui.activity.BaseBindingLibActivity
+import cn.wj.android.swipeback.helper.SwipeBackHelper
+import cn.wj.android.swipeback.helper.dispatchTouchEvent
 import com.google.android.material.snackbar.Snackbar
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.mvvm.BaseViewModel
@@ -18,15 +21,21 @@ import com.wj.sampleproject.helper.ProgressDialogHelper
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     : BaseBindingLibActivity<VM, DB>() {
 
+    protected var mSwipeBackHelper: SwipeBackHelper? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        mSwipeBackHelper = SwipeBackHelper(this)
         observeData()
     }
 
     override fun onPause() {
         super.onPause()
         ProgressDialogHelper.dismiss()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean = mSwipeBackHelper.dispatchTouchEvent(ev) {
+        super.dispatchTouchEvent(ev)
     }
 
     override fun getResources(): Resources? {
