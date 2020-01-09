@@ -16,22 +16,32 @@
 
 ## 给你瞅瞅
 * 首页
-![首页](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/homepage.png)
+  ![首页](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/homepage.png)
+
 * 搜索
-![搜索](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/search.png)
+  ![搜索](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/search.png)
+
 * 项目
-![项目](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/project.png)
+  ![项目](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/project.png)
+
 * 网页
-![网页](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/webview.png)
+  ![网页](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/webview.png)
+
 * 我的
-![我的](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/my.png)
+  ![我的](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/my.png)
+
 * 登录
-![登录](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/login.png)
+  ![登录](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/login.png)
+
+* 侧滑返回效果：
+
+  ![侧滑返回效果](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/images/swipe-back.gif)
 
 ## 最后
+
 * 注意：由于 lib_recyclerview 库中用到了反射，所以需要添加混淆规则：
 > -keep class cn.wj.android.recyclerview.\*\* { \*; } 
 > -keep class * extends cn.wj.android.recyclerview.\*\* { \*; }
-* apk下载地址:[https://raw.githubusercontent.com/WangJie0822/SampleProject/master/app/apk/sample_online_release_v1.0.0.apk](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/app/apk/sample_online_release_v1.0.0.apk)
+* apk下载地址:[https://raw.githubusercontent.com/WangJie0822/SampleProject/master/app/apk/sample_online_release_v1.0.0.apk](https://raw.githubusercontent.com/WangJie0822/SampleProject/master/demo/sample_online_release_v1.0.0.apk)
 * 项目地址：[https://github.com/WangJie0822/SampleProject](https://github.com/WangJie0822/SampleProject)
 * 暂时就做了这些功能，后续再加上。
