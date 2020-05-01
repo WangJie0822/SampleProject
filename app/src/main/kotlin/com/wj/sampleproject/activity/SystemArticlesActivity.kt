@@ -15,7 +15,7 @@ import com.wj.sampleproject.constants.ACTION_TITLE
 import com.wj.sampleproject.databinding.AppActivitySystemArticlesBinding
 import com.wj.sampleproject.viewmodel.SystemArticlesViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 体系文章列表

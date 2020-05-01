@@ -85,7 +85,7 @@
                 app:layout_goneMarginTop="36dp"
                 tools:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容" />
 
-            <cn.wj.android.views.custom.DrawableTextView
+            <cn.wj.android.views.custom.FixedTextView
                 android:id="@+id/tv_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,9 +102,9 @@
                 android:text="@{viewModel.selectStr}"
                 android:textColor="@color/app_text_color_black"
                 android:textSize="14sp"
-                app:dtv_drawableStart="@drawable/app_selector_general_dialog_select"
-                app:dtv_drawableStartHeight="20dp"
-                app:dtv_drawableStartWidth="20dp"
+                app:ftv_drawableStart="@drawable/app_selector_general_dialog_select"
+                app:ftv_drawableStartHeight="20dp"
+                app:ftv_drawableStartWidth="20dp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"

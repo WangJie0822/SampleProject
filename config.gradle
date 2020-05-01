@@ -27,76 +27,161 @@ ext {
             "androidx_test_runner"                 : 'androidx.test:runner:1.2.0',
             "androidx_test_espresso-core"          : 'androidx.test.espresso:espresso-core:3.2.0',
 
-            // android - v4
-            "android_support-v4"                   : "com.android.support:support-v4:28.0.0",
-            // android - v7
-            "android_appcompat-v7"                 : "com.android.support:appcompat-v7:28.0.0",
-            // android - design
-            "android_design"                       : "com.android.support:design:28.0.0",
-            // android - 约束性布局
-            "android_constraint"                   : "com.android.support.constraint:constraint-layout:1.1.3",
-            // android - 百分比布局
-            "android_percent"                      : "com.android.support:percent:28.0.0",
-            // android - 注解库
-            "android_annotations"                  : "com.android.support:support-annotations:28.0.0",
-            // android - Recyclerview
-            "android_recyclerview"                 : "com.android.support:recyclerview-v7:28.0.0",
-            // android - Dex 分包
-            "android_multidex"                     : "com.android.support:multidex:1.0.3",
-            // android - LifeCycle 扩展
-            "android_lifecycle-extensions"         : "android.arch.lifecycle:extensions:1.1.1",
-
             // androidx - v4
             "androidx_support-v4"                  : "androidx.legacy:legacy-support-v4:1.0.0",
             // androidx - v7
             "androidx_appcompat-v7"                : "androidx.appcompat:appcompat:1.1.0",
             // androidx - design
-            "androidx_design"                      : "com.google.android.material:material:1.1.0-alpha10",
+            "androidx_design"                      : "com.google.android.material:material:1.1.0",
             // androidx - 约束性布局
-            "androidx_constraint"                  : "androidx.constraintlayout:constraintlayout:2.0.0-beta2",
+            "androidx_constraint"                  : "androidx.constraintlayout:constraintlayout:2.0.0-beta4",
             // androidx - Recyclerview
-            "androidx_recyclerview"                : "androidx.recyclerview:recyclerview:1.1.0-beta04",
+            "androidx_recyclerview"                : "androidx.recyclerview:recyclerview:1.1.0",
             // androidx - Dex 分包
             "androidx_multidex"                    : "androidx.multidex:multidex:2.0.1",
             // androidx - LifeCycle 扩展
-            "androidx_lifecycle-extensions"        : "androidx.lifecycle:lifecycle-extensions:2.1.0",
-            // androidx - ViewPager2
-            "androidx_viewpager2"                  : "androidx.viewpager2:viewpager2:1.0.0-beta05",
+            "androidx_lifecycle-extensions"        : "androidx.lifecycle:lifecycle-extensions:2.2.0",
+
+            // androidx - room
+            "androidx_room-runtime"                : "androidx.room:room-runtime:2.2.5",
+            "androidx_room-compiler"               : "androidx.room:room-compiler:2.2.5",
+            "androidx_room-ktx"                    : "androidx.room:room-ktx:2.2.5",
+            "androidx_room-rxjava2"                : "androidx.room:room-rxjava2:2.2.5",
+            "androidx_room-testing"                : "androidx.room:room-testing:2.2.5",
 
             // jetpack - paging
-            "jetpack_paging"                       : "androidx.paging:paging-runtime:2.1.0",
+            "jetpack_paging"                       : "androidx.paging:paging-runtime:2.1.2",
             // jetpak - navigation
-            "jetpack_navigation-fragment"          : "androidx.navigation:navigation-fragment:2.1.0",
-            "jetpack_navigation-ui"                : "androidx.navigation:navigation-ui:2.1.0",
+            "jetpack_navigation-fragment"          : "androidx.navigation:navigation-fragment:2.2.2",
+            "jetpack_navigation-ui"                : "androidx.navigation:navigation-ui:2.2.2",
 
             // KTX
-            "ktx_core"                             : 'androidx.core:core-ktx:1.1.0',
+            "ktx_core"                             : 'androidx.core:core-ktx:1.2.0',
             // ktx - ViewModel Kotlin 拓展
-            "jetpack_viewmodel-ktx"                : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0",
-            // ktx jetpak - navigation
-            "jetpack_navigation-fragment-ktx"      : "androidx.navigation:navigation-fragment-ktx:2.1.0",
-            "jetpack_navigation-ui-ktx"            : "androidx.navigation:navigation-ui-ktx:2.1.0",
-            // jetpack - paging
-            "jetpack_paging-ktx"                   : "androidx.paging:paging-runtime-ktx:2.1.0",
+            "jetpack_viewmodel-ktx"                : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0",
+            // ktx - lifecycle Kotlin 拓展
+            "jetpack_lifecycle-ktx"                : "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0",
+            // ktx - livedata Kotlin 拓展
+            "jetpack_livedata-ktx"                 : "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0",
+            // ktx - paging Kotlin 拓展
+            "jetpack_paging-ktx"                   : "androidx.paging:paging-runtime-ktx:2.1.2",
+            // ktx - navigation Kotlin 拓展
+            "jetpack_navigation-fragment-ktx"      : "androidx.navigation:navigation-fragment-ktx:2.2.2",
+            "jetpack_navigation-ui-ktx"            : "androidx.navigation:navigation-ui-ktx:2.2.2",
 
-            // Kotlin 协程
-            "coroutines"                           : 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0',
+            // Kotlin 协程 https://www.kotlincn.net/docs/reference/coroutines/coroutines-guide.html
+            "coroutines"                           : 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5',
 
-            // Gson
-            "gson"                                 : "com.google.code.gson:gson:2.8.5",
+            // Gson https://github.com/google/gson
+            "gson"                                 : "com.google.code.gson:gson:2.8.6",
 
-            // Koin
-            "koin"                                 : "org.koin:koin-android:2.0.1",
-            "koin-test"                            : "org.koin:koin-test:2.0.1",
-            "koin-scope"                           : "org.koin:koin-android-scope:2.0.1",
-            "koin-viewmodel"                       : "org.koin:koin-android-viewmodel:2.0.1",
+            // zxing https://github.com/zxing/zxing
+            "zxing"                                : "com.google.zxing:core:3.4.0",
 
-            // 阿里热修复
+            // Koin https://github.com/InsertKoinIO/koin
+            "android-koin"                         : "org.koin:koin-android:2.1.5",
+            "android-koin-test"                    : "org.koin:koin-test:2.1.5",
+            "android-koin-scope"                   : "org.koin:koin-android-scope:2.1.5",
+            "android-koin-viewmodel"               : "org.koin:koin-android-viewmodel:2.1.5",
+            "android-koin-ext"                     : "org.koin:koin-android-ext:2.1.5",
+            "androidx-koin-scope"                  : "org.koin:koin-androidx-scope:2.1.5",
+            "androidx-koin-viewmodel"              : "org.koin:koin-androidx-viewmodel:2.1.5",
+            "androidx-koin-ext"                    : "org.koin:koin-androidx-ext:2.1.5",
+
+            // RxJava https://github.com/ReactiveX/RxJava
+            "rxjava2"                              : "io.reactivex.rxjava2:rxjava:2.2.19",
+            // RxAndroid
+            "rxandroid2"                           : "io.reactivex.rxjava2:rxandroid:2.1.1",
+            // RxKotlin
+            "rxkotlin2"                            : "io.reactivex.rxjava2:rxkotlin:2.4.0",
+
+            // 美团多渠道 https://github.com/Meituan-Dianping/walle
+            "walle-channel"                        : "com.meituan.android.walle:library:1.1.6",
+
+            // Glide https://github.com/bumptech/glide
+            "glide"                                : "com.github.bumptech.glide:glide:4.11.0",
+            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.11.0",
+
+            // okhttp https://github.com/square/okhttp
+            "okhttp"                               : "com.squareup.okhttp3:okhttp:4.6.0",
+            "okhttp-urlconnection"                 : "com.squareup.okhttp3:okhttp-urlconnection:4.6.0",
+            "okhttp-logging"                       : "com.squareup.okhttp3:logging-interceptor:4.6.0",
+
+            // Nohttp网络框架 https://github.com/yanzhenjie/NoHttp
+            "nohttp"                               : "com.yanzhenjie.nohttp:nohttp:1.1.11",
+            "nohttp-okhttp"                        : "com.yanzhenjie.nohttp:okhttp:1.1.11",
+
+            // retrofit https://github.com/square/retrofit
+            "retrofit"                             : "com.squareup.retrofit2:retrofit:2.8.1",
+            "retrofit-rxjava2"                     : "com.squareup.retrofit2:adapter-rxjava2:2.8.1",
+            "retrofit-gson"                        : "com.squareup.retrofit2:converter-gson:2.8.1",
+
+            // RxPermission https://github.com/tbruyelle/RxPermissions
+            "rxpermission"                         : "com.github.tbruyelle:rxpermissions:0.10.2",
+
+            // SmartRefreshLayout https://github.com/scwang90/SmartRefreshLayout
+            "smartrefresh"                         : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0",
+            "smartrefresh-header"                  : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0",
+
+            // Tablayout https://github.com/H07000223/FlycoTabLayout
+            "tablayout"                            : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
+
+            // androidx - livedatabus https://github.com/JeremyLiao/LiveEventBus
+            "androidx-livedatabus"                 : "com.jeremyliao:live-event-bus-x:1.5.1",
+
+            // evenbus https://github.com/greenrobot/EventBus
+            "eventbus"                             : "org.greenrobot:eventbus:3.2.0",
+
+            // Gif 图显示控件 https://github.com/koral--/android-gif-drawable
+            "gif-drawable"                         : "pl.droidsonroids.gif:android-gif-drawable:1.2.18",
+
+            // 老九兼容库 https://github.com/JakeWharton/NineOldAndroids
+            "nine-old"                             : "com.nineoldandroids:library:2.4.0",
+
+            // 状态栏工具 https://github.com/gyf-dev/ImmersionBar
+            "immersionbar"                         : "com.gyf.immersionbar:immersionbar:3.0.0",
+            "immersionbar-ktx"                     : "com.gyf.immersionbar:immersionbar-ktx:3.0.0",
+
+            // Activity 侧滑返回 https://github.com/ikew0ng/SwipeBackLayout
+            "swipebacklayout"                      : "me.imid.swipebacklayout.lib:library:1.1.0",
+
+            // 图片选择器 https://github.com/LuckSiege/PictureSelector
+            "picture-selector"                     : "com.github.LuckSiege.PictureSelector:picture_library:v2.4.2",
+
+            // 内存泄漏检测 https://square.github.io/leakcanary/
+            "leakcanary-debug"                     : "com.squareup.leakcanary:leakcanary-android:2.2",
+            "leakcanary-release"                   : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.3",
+
+            // RecyclerView 适配器 https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+            "recyclerview-adapter"                 : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50",
+
+            // ViewPager 指示器 https://github.com/LuckyJayce/ViewPagerIndicator
+            "viewPager-indicator"                  : "com.shizhefei:ViewPagerIndicator:1.1.7",
+
+            // 左滑删除菜单 https://github.com/mcxtzhang/SwipeDelMenuLayout
+            "swipe-delete-menu-layout"             : "com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0",
+
+            // 微信 SDK https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417751808&token=&lang=zh_CN
+            "wechat-sdk"                           : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8",
+
+            // Xutils3 https://github.com/wyouflf/xUtils3
+            "xutils-3"                             : "org.xutils:xutils:3.5.0",
+
+            // doraemonkit https://github.com/didi/DoraemonKit
+            "doraemonkit-debug"                    : "com.didichuxing.doraemonkit:doraemonkit:2.0.1",
+            "doraemonkit-release"                  : "com.didichuxing.doraemonkit:doraemonkit-no-op:2.0.2",
+
+            // bugly https://bugly.qq.com/v2/index
+            "bugly-crashreport"                    : "com.tencent.bugly:crashreport:3.1.0",
+            "bugly-nativecrashreport"              : "com.tencent.bugly:nativecrashreport:3.7.1",
+            "bugly-upgrade"                        : "com.tencent.bugly:crashreport_upgrade:1.4.2",
+
+            // 阿里热修复 https://help.aliyun.com/document_detail/61082.html?spm=a2c4g.11174283.3.6.14e030c3TRFq87
             "ali-hotfix"                           : "com.aliyun.ams:alicloud-android-hotfix:3.2.8",
-            // 阿里路由 Arouter
+            // 阿里路由 Arouter https://github.com/alibaba/ARouter
             "ali-arouter"                          : "com.alibaba:arouter-api:1.5.0",
             "ali-arouter-compiler"                 : "com.alibaba:arouter-compiler:1.2.2",
-            // 阿里 FastJson
+            // 阿里 FastJson https://github.com/alibaba/fastjson
             "ali-fastjson"                         : "com.alibaba:fastjson:1.1.71.android",
             // 阿里视频上传
             "ali-video-upload"                     : "com.aliyun.video.android:upload:1.5.2",
@@ -105,45 +190,21 @@ ext {
             // 阿里 DNS
             "ali-httpdns"                          : "com.aliyun.ams:alicloud-android-httpdns:1.+",
 
-            // 腾讯移动分析
-            "tencent-mta"                          : "com.qq.mta:mta:3.3.0-beta",
-            "tencent-mid"                          : "com.tencent.mid:mid:3.73-a",
+            // 腾讯移动分析 https://mta.qq.com/docs/
+            "tencent-mta"                          : "com.qq.mta:mta:3.4.7-Release",
+            "tencent-mid"                          : "com.tencent.mid:mid:4.06-Release",
             // 可视化埋点
-            "tencent-visual"                       : "com.qq.visual:visual:1.0.7-alpha",
-            // MMKV
+            "tencent-visual"                       : "com.qq.visual:visual:3.3.1-release",
+            // MMKV https://github.com/tencent/mmkv
             "tencent-mmkv"                         : "com.tencent:mmkv:1.0.23",
 
-            // RxJava2
-            "rxjava2"                              : "io.reactivex.rxjava2:rxjava:2.2.12",
-            // RxAndroid2
-            "rxandroid2"                           : "io.reactivex.rxjava2:rxandroid:2.1.1",
-            // RxKotlin2
-            "rxkotlin2"                            : "io.reactivex.rxjava2:rxkotlin:2.4.0",
-
-            // Glide
-            "glide"                                : "com.github.bumptech.glide:glide:4.9.0",
-            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.9.0",
-
-            // okhttp
-            "okhttp"                               : "com.squareup.okhttp3:okhttp:4.1.0",
-            "okhttp-urlconnection"                 : "com.squareup.okhttp3:okhttp-urlconnection:4.1.0",
-            "okhttp-logging"                       : "com.squareup.okhttp3:logging-interceptor:4.1.0",
-
-            // retrofit
-            "retrofit"                             : "com.squareup.retrofit2:retrofit:2.6.1",
-            "retrofit-rxjava2"                     : "com.squareup.retrofit2:adapter-rxjava2:2.6.1",
-            "retrofit-gson"                        : "com.squareup.retrofit2:converter-gson:2.6.1",
-            // retrofit 协程适配器
-            "retrofit-coroutines"                  : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2",
-
-            // SmartRefreshLayout
-            "smartrefresh"                         : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0",
-            "smartrefresh-header"                  : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0",
-
-            // Tablayout
-            "tablayout"                            : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
-
-            // androidx - livedatabus
-            "androidx-livedatabus"                 : "com.jeremyliao:live-event-bus-x:1.5.1",
+            // 极光推送 http://docs.jiguang.cn/jpush/client/Android/android_sdk/
+            "jpush"                                : "cn.jiguang.sdk:jpush:3.4.1",
+            "jcore"                                : "cn.jiguang.sdk:jcore:2.2.4",
+            // 极光推送 厂商通道 http://7ada533e.wiz03.com/share/s/1WSBc-0u_kLk2kYFC-0kPhgJ21HFAN3IsAQG2WhWBN1EbzNU
+            "jpush-huawei"                         : "cn.jiguang.sdk.plugin:huawei:3.4.1",
+            "jpush-vivo"                           : "cn.jiguang.sdk.plugin:vivo:3.4.1",
+            "jpush-xiaomi"                         : "cn.jiguang.sdk.plugin:xiaomi:3.4.1",
+            "jpush-oppo"                           : "cn.jiguang.sdk.plugin:oppo:3.4.1",
     ]
 }

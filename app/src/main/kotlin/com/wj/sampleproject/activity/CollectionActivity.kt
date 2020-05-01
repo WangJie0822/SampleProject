@@ -13,7 +13,7 @@ import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.databinding.AppActivityCollectionBinding
 import com.wj.sampleproject.viewmodel.CollectionViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 收藏界面

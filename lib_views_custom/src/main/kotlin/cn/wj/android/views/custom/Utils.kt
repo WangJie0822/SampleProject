@@ -17,7 +17,7 @@ internal fun <N : Number> N.dip2px(context: Context): Float {
  *
  * @return 对应的 px 值
  */
-fun <N : Number> N.sp2px(context: Context): Float {
+internal fun <N : Number> N.sp2px(context: Context): Float {
     val density = context.resources.displayMetrics.scaledDensity
     return this.toFloat() * density
 }

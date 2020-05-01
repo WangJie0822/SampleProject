@@ -1,7 +1,7 @@
 package com.wj.sampleproject.fragment
 
 import androidx.lifecycle.Observer
-import cn.wj.android.base.tools.getString
+import cn.wj.android.base.ext.string
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.CollectedWebActivity
 import com.wj.sampleproject.activity.CollectionActivity
@@ -10,7 +10,7 @@ import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentMyBinding
 import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.viewmodel.MyViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 我的
@@ -26,7 +26,7 @@ class MyFragment
         super.onResume()
 
         if (null == UserHelper.userInfo) {
-            viewModel.userName.set(R.string.app_un_login.getString())
+            viewModel.userName.set(R.string.app_un_login.string)
             viewModel.avatarUrl.set("")
         } else {
             viewModel.userName.set(UserHelper.userInfo?.username)

@@ -13,11 +13,11 @@ import com.wj.sampleproject.databinding.AppActivityLoginBinding
 import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.viewmodel.LoginViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 登录界面
- * <p/>
+ *
  * 创建时间：2019/10/14
  *
  * @author 王杰

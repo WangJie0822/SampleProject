@@ -2,7 +2,7 @@ package com.wj.sampleproject.base.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
-import cn.wj.android.base.ui.popup.BaseLibPopupWindow
+import com.wj.android.ui.popup.BaseLibPopupWindow
 
 /**
  * PopupWindow 基类，封装了一些兼容性处理

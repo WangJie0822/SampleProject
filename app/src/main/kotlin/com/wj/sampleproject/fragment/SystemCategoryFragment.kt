@@ -10,7 +10,7 @@ import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentSystemCategoryBinding
 import com.wj.sampleproject.viewmodel.SystemCategoryViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 体系目录列表界面

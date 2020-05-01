@@ -40,5 +40,5 @@ dependencies {
     implementation rootProject.ext.dependencies["androidx_recyclerview"]
 
     // Common 库
-    implementation project(":lib_common")
+    api project(":lib_common")
 }

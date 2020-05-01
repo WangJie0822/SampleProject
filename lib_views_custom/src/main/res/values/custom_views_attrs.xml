@@ -82,22 +82,22 @@
         <attr name="mhnsv_maxHeight" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="DrawableTextView">
-        <attr name="dtv_drawableStart" format="reference" />
-        <attr name="dtv_drawableStartWidth" format="dimension|reference" />
-        <attr name="dtv_drawableStartHeight" format="dimension|reference" />
+    <declare-styleable name="FixedTextView">
+        <attr name="ftv_drawableStart" format="reference" />
+        <attr name="ftv_drawableStartWidth" format="dimension|reference" />
+        <attr name="ftv_drawableStartHeight" format="dimension|reference" />
 
-        <attr name="dtv_drawableEnd" format="reference" />
-        <attr name="dtv_drawableEndWidth" format="dimension|reference" />
-        <attr name="dtv_drawableEndHeight" format="dimension|reference" />
+        <attr name="ftv_drawableEnd" format="reference" />
+        <attr name="ftv_drawableEndWidth" format="dimension|reference" />
+        <attr name="ftv_drawableEndHeight" format="dimension|reference" />
 
-        <attr name="dtv_drawableTop" format="reference" />
-        <attr name="dtv_drawableTopWidth" format="dimension|reference" />
-        <attr name="dtv_drawableTopHeight" format="dimension|reference" />
+        <attr name="ftv_drawableTop" format="reference" />
+        <attr name="ftv_drawableTopWidth" format="dimension|reference" />
+        <attr name="ftv_drawableTopHeight" format="dimension|reference" />
 
-        <attr name="dtv_drawableBottom" format="reference" />
-        <attr name="dtv_drawableBottomWidth" format="dimension|reference" />
-        <attr name="dtv_drawableBottomHeight" format="dimension|reference" />
+        <attr name="ftv_drawableBottom" format="reference" />
+        <attr name="ftv_drawableBottomWidth" format="dimension|reference" />
+        <attr name="ftv_drawableBottomHeight" format="dimension|reference" />
     </declare-styleable>
 
     <declare-styleable name="DrawableEditText">

@@ -1,10 +1,10 @@
 package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import cn.wj.android.base.ext.tagableScope
+import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.repository.ProjectRepository
@@ -12,22 +12,21 @@ import kotlinx.coroutines.launch
 
 /**
  * 项目 ViewModel
- */
-class ProjectViewModel
-/**
+ *
  * @param repository 项目相关数据仓库
  */
-constructor(private val repository: ProjectRepository)
-    : BaseViewModel() {
-
+class ProjectViewModel(
+        private val repository: ProjectRepository
+) : BaseViewModel() {
+    
     /** 项目分类数据 */
     val listData = MutableLiveData<ArrayList<CategoryEntity>>()
-
+    
     /**
      * 获取新项目分类列表
      */
     fun getProjectCategory() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 val result = repository.getProjectCategory()
                 if (result.success()) {

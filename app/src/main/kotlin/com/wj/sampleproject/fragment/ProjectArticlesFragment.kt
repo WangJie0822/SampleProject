@@ -14,7 +14,7 @@ import com.wj.sampleproject.databinding.AppFragmentProjectArticlesBinding
 import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.viewmodel.ProjectArticlesViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 项目文章页面

@@ -1,6 +1,6 @@
 package com.wj.sampleproject.ext
 
-import cn.wj.android.base.tools.getString
+import cn.wj.android.base.ext.string
 import com.wj.sampleproject.R
 import com.wj.sampleproject.model.SnackbarModel
 import java.net.ConnectException
@@ -12,7 +12,7 @@ val Throwable.showMsg: String
         is SocketTimeoutException -> R.string.app_net_error_timeout
         is ConnectException -> R.string.app_net_error_connect
         else -> R.string.app_net_error_failed
-    }.getString()
+    }.string
 
 /** 用于提示的错误信息 */
 val Throwable.snackbarMsg: SnackbarModel

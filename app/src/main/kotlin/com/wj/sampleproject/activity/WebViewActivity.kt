@@ -15,32 +15,32 @@ import com.wj.sampleproject.constants.ACTION_WEB_URL
 import com.wj.sampleproject.databinding.AppActivityWebviewBinding
 import com.wj.sampleproject.fragment.WebViewFragment
 import com.wj.sampleproject.viewmodel.WebViewViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * H5 界面
  */
 class WebViewActivity
     : BaseActivity<WebViewViewModel, AppActivityWebviewBinding>() {
-
+    
     override val viewModel: WebViewViewModel by viewModel()
-
+    
     /** WebView Fragment 对象 */
     private val webViewFragment: WebViewFragment by lazy {
         WebViewFragment.actionCreate(intent.getStringExtra(ACTION_TITLE).orEmpty(), intent.getStringExtra(ACTION_WEB_URL).orEmpty())
     }
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity_webview)
-
+        
         // 获取标题
         viewModel.title.set(intent.getStringExtra(ACTION_TITLE).orEmpty())
-
+        
         // 加载 Fragment
         supportFragmentManager.beginTransaction().replace(R.id.fl_fragment, webViewFragment).commit()
     }
-
+    
     override fun initObserve() {
         // 返回点击
         viewModel.navigationData.observe(this, Observer {
@@ -50,15 +50,14 @@ class WebViewActivity
         })
         // 浏览器打开
         viewModel.jumpBorwser.observe(this, Observer {
-            webViewFragment.currentUrl.jumpToBrowser(mContext)
+            jumpToBrowser(webViewFragment.currentUrl, mContext)
         })
     }
-
+    
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return webViewFragment.onKeyDown(keyCode) || super.onKeyDown(keyCode, event)
     }
-
-
+    
     /**
      * 界面跳转数据 Model
      */
@@ -71,7 +70,7 @@ class WebViewActivity
             var title: String,
             var url: String
     )
-
+    
     companion object {
         /**
          * 界面入口

@@ -25,6 +25,6 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // OkHttp
-    implementation rootProject.ext.dependencies["okhttp"]
+    compileOnly rootProject.ext.dependencies["okhttp"]
 
 }

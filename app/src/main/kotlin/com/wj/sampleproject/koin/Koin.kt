@@ -12,8 +12,8 @@ import com.wj.sampleproject.adapter.NavigationRvAdapter
 import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
 import com.wj.sampleproject.constants.SP_KEY_COOKIES
 import com.wj.sampleproject.entity.CookieEntity
-import com.wj.sampleproject.ext.toEntity
-import com.wj.sampleproject.ext.toJson
+import com.wj.sampleproject.ext.toJsonString
+import com.wj.sampleproject.ext.toTypeEntity
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
 import com.wj.sampleproject.repository.*
@@ -22,7 +22,7 @@ import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -32,11 +32,11 @@ import retrofit2.converter.gson.GsonConverterFactory
  * 网络请求 Module
  */
 val netModule: Module = module {
-
+    
     single {
         //缓存路径
         val logger = object : InterceptorLogger {
-            override fun log(msg: String) {
+            override fun invoke(msg: String) {
                 Logger.t("NET").i(msg)
             }
         }
@@ -44,25 +44,25 @@ val netModule: Module = module {
                 .retryOnConnectionFailure(true)
                 .cookieJar(object : CookieJar {
                     override fun loadForRequest(url: HttpUrl): List<Cookie> {
-                        val cookieEntity = MMKV.defaultMMKV().decodeString(SP_KEY_COOKIES, "").toEntity(CookieEntity::class.java)
+                        val cookieEntity = MMKV.defaultMMKV().decodeString(SP_KEY_COOKIES, "").toTypeEntity<CookieEntity>()
                         return cookieEntity?.cookies.orEmpty()
                     }
-
+    
                     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
                         if (cookies.size > 1) {
                             val ls = arrayListOf<Cookie>()
                             ls.addAll(cookies)
                             val cookieEntity = CookieEntity(ls)
-                            MMKV.defaultMMKV().encode(SP_KEY_COOKIES, cookieEntity.toJson())
+                            MMKV.defaultMMKV().encode(SP_KEY_COOKIES, cookieEntity.toJsonString())
                         }
                     }
                 })
                 .addNetworkInterceptor(
-                        LoggerInterceptor(logger, if (BuildConfig.DEBUG) LoggerInterceptor.Level.BODY else LoggerInterceptor.Level.NONE)
+                        LoggerInterceptor(logger, if (BuildConfig.DEBUG) LoggerInterceptor.LEVEL_BODY else LoggerInterceptor.LEVEL_NONE)
                 )
                 .build()
     }
-
+    
     single<Retrofit> {
         Retrofit.Builder()
                 .baseUrl(UrlDefinition.BASE_URL)
@@ -70,7 +70,7 @@ val netModule: Module = module {
                 .client(get<OkHttpClient>())
                 .build()
     }
-
+    
     single<WebService> {
         get<Retrofit>().create(WebService::class.java)
     }

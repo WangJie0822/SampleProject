@@ -8,7 +8,6 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import cn.wj.android.common.ext.condition
 
 /**
  * SwipeRefreshLayout DataBinding 适配器
@@ -36,7 +35,7 @@ fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, @ColorInt color: 
  */
 @BindingAdapter("android:bind_srl_schemeColors")
 fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, colorStr: String?) {
-    if (colorStr.isNullOrBlank()) {
+    if (null == colorStr) {
         return
     }
     // 获取颜色集合
@@ -65,8 +64,8 @@ fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, colorStr: String?
  * @param refreshing 是否刷新
  */
 @BindingAdapter("android:bind_srl_refreshing")
-fun setSwipeRefreshLayoutRefreshing(srl: SwipeRefreshLayout, refreshing: Boolean?) {
-    srl.isRefreshing = refreshing.condition
+fun setSwipeRefreshLayoutRefreshing(srl: SwipeRefreshLayout, refreshing: Boolean) {
+    srl.isRefreshing = refreshing
 }
 
 /**

@@ -15,7 +15,7 @@ import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
 import com.wj.sampleproject.databinding.AppLayoutHomepageBannerBinding
 import com.wj.sampleproject.viewmodel.HomepageViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 主界面 - 首页

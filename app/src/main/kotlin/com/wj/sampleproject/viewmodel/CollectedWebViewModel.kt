@@ -3,15 +3,15 @@ package com.wj.sampleproject.viewmodel
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
-import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.ext.tagableScope
+import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.CollectedWebEntity
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.model.ProgressModel
@@ -22,31 +22,33 @@ import kotlinx.coroutines.launch
 /**
  * 收藏网站 ViewModel
  *
+ * @param collectRepository 收藏相关数据仓库
+ *
  * 创建时间：2019/10/16
  *
  * @author 王杰
  */
-class CollectedWebViewModel
-/**
- * @param collectRepository 收藏相关数据仓库
- */
-constructor(private val collectRepository: CollectRepository)
-    : BaseViewModel() {
-
+class CollectedWebViewModel(
+        private val collectRepository: CollectRepository
+) : BaseViewModel() {
+    
     /** 列表数据 */
     val websListData = MutableLiveData<ArrayList<CollectedWebEntity>>()
+    
     /** PopupMenu 数据 */
     val popupMenuData = MutableLiveData<PopupModel>()
+    
     /** 编辑弹窗数据 */
     val editDialogData = MutableLiveData<CollectedWebEntity>()
+    
     /** 跳转 WebView */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
-
+    
     /** 返回点击 */
     val onBackClick: () -> Unit = {
         uiCloseData.postValue(UiCloseModel())
     }
-
+    
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
         if (it.itemId == R.id.menu_add) {
@@ -55,21 +57,21 @@ constructor(private val collectRepository: CollectRepository)
         }
         false
     }
-
+    
     /** 标记 - 是否正在刷新 */
-    val refreshing: BindingField<Boolean> = BindingField(false)
-
+    val refreshing: ObservableBoolean = ObservableBoolean(false)
+    
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         getCollectedWebList()
     }
-
+    
     /** 列表点击 */
     val onItemClick: (CollectedWebEntity) -> Unit = { item ->
         // 打开 WebView
         jumpWebViewData.postValue(WebViewActivity.ActionModel(item.name.orEmpty(), item.link.orEmpty()))
     }
-
+    
     /** 列表长按点击 */
     val onItemLongClick: (View, CollectedWebEntity) -> Boolean = { v, item ->
         popupMenuData.postValue(PopupModel(v, PopupMenu.OnMenuItemClickListener {
@@ -87,12 +89,12 @@ constructor(private val collectRepository: CollectRepository)
         }))
         true
     }
-
+    
     /**
      * 获取收藏网站列表
      */
     private fun getCollectedWebList() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 val result = collectRepository.getCollectedWebList()
                 if (result.success()) {
@@ -109,14 +111,14 @@ constructor(private val collectRepository: CollectRepository)
             }
         }
     }
-
+    
     /**
      * 删除收藏网站
      *
      * @param item 网站数据对象
      */
     private fun deleteCollectedWeb(item: CollectedWebEntity) {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 progressData.postValue(ProgressModel())
                 val result = collectRepository.deleteCollectedWeb(item.id.orEmpty())

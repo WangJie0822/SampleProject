@@ -12,7 +12,7 @@ import okhttp3.Response
  * @param dynamicParams 动态 Param 参数 [Map] 集合
  * @param staticHeaders 静态 Header 参数 [Map] 集合
  * @param dynamicHeaders 动态 Header 参数 [Map] 集合
- * @param logger 日志打印接口 [InterceptorLogger], 默认实现 [InterceptorLogger.DEFAULT]
+ * @param logger 日志打印接口 [InterceptorLogger], 默认实现 [DEFAULT_LOGGER]
  *
  * @author 王杰
  */
@@ -21,7 +21,7 @@ class ParamsInterceptor private constructor(
         private val dynamicParams: Map<String, DynamicParams> = mapOf(),
         private val staticHeaders: Map<String, String> = mapOf(),
         private val dynamicHeaders: Map<String, DynamicParams> = mapOf(),
-        private val logger: InterceptorLogger = InterceptorLogger.DEFAULT
+        private val logger: InterceptorLogger = DEFAULT_LOGGER
 ) : Interceptor {
 
     companion object {
@@ -93,10 +93,74 @@ class ParamsInterceptor private constructor(
         logStr.append("---------->> Intercept to add parameters <<---------- end")
 
         // 打印日志
-        logger.log(logStr.toString())
+        logger.invoke(logStr.toString())
 
         return chain.proceed(requestBuilder.build())
     }
+    
+    //    override fun intercept(chain: Interceptor.Chain): Response {
+    //
+    //        // 日志文本
+    //        val logStr = StringBuilder("---------->> Intercept to add parameters <<---------- start\n")
+    //
+    //        // 获取请求信息
+    //        val oldRequest = chain.request()
+    //
+    //        // 从旧的请求中获取建造者
+    //        val builder = oldRequest.url
+    //                .newBuilder()
+    //                .scheme(oldRequest.url.scheme)
+    //                .host(oldRequest.url.host)
+    //
+    //        if (staticParams.isNotEmpty()) {
+    //            // 添加固定参数
+    //            for ((key, value) in staticParams) {
+    //                builder.addQueryParameter(key, value)
+    //                logStr.append("static params ---------->> $key ---------->> $value \n")
+    //            }
+    //        }
+    //
+    //        if (dynamicParams.isNotEmpty()) {
+    //            // 添加动态参数
+    //            for ((key, value) in dynamicParams) {
+    //                val dynamicParam = value.invoke()
+    //                builder.addQueryParameter(key, dynamicParam)
+    //                logStr.append("dynamic params ---------->> $key ---------->> $dynamicParam \n")
+    //            }
+    //        }
+    //
+    //        // 生成新的 Url
+    //        val url = builder.build()
+    //
+    //        // 生成新的请求
+    //        val requestBuilder = oldRequest.newBuilder()
+    //                .method(oldRequest.method, oldRequest.body)
+    //                .url(url)
+    //
+    //        if (staticHeaders.isNotEmpty()) {
+    //            // 添加固定头
+    //            for ((key, value) in staticHeaders) {
+    //                requestBuilder.addHeader(key, value)
+    //                logStr.append("static headers ---------->> $key ---------->> $value \n")
+    //            }
+    //        }
+    //
+    //        if (dynamicHeaders.isNotEmpty()) {
+    //            // 添加动态头
+    //            for ((key, value) in dynamicHeaders) {
+    //                val dynamicHeader = value.invoke()
+    //                requestBuilder.addHeader(key, dynamicHeader)
+    //                logStr.append("dynamic params ---------->> $key ---------->> $dynamicHeader \n")
+    //            }
+    //        }
+    //
+    //        logStr.append("---------->> Intercept to add parameters <<---------- end")
+    //
+    //        // 打印日志
+    //        logger.invoke(logStr.toString())
+    //
+    //        return chain.proceed(requestBuilder.build())
+    //    }
 
     /**
      * 建造者类
@@ -111,7 +175,7 @@ class ParamsInterceptor private constructor(
         /** 动态参数 添加到 Headers */
         private val dynamicHeaders: HashMap<String, DynamicParams> = hashMapOf()
         /** 日志打印接口 */
-        private var logger = InterceptorLogger.DEFAULT
+        private var logger = DEFAULT_LOGGER
 
         /**
          * 添加静态参数
@@ -165,19 +229,6 @@ class ParamsInterceptor private constructor(
         fun logger(logger: InterceptorLogger): Builder {
             this.logger = logger
             return this
-        }
-
-        /**
-         * 设置日志打印接口
-         *
-         * @param logger 日志打印接口
-         */
-        fun logger(logger: (String) -> Unit): Builder {
-            return logger(object : InterceptorLogger {
-                override fun log(msg: String) {
-                    logger.invoke(msg)
-                }
-            })
         }
 
         /**

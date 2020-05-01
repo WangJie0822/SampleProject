@@ -2,10 +2,6 @@ package com.wj.sampleproject.entity
 
 /**
  * 首页 Banner 数据实体类
- */
-class BannerEntity
-/**
- * 构造方法
  *
  * @param desc 描述
  * @param id Banner id
@@ -16,7 +12,7 @@ class BannerEntity
  * @param type ？
  * @param url 跳转链接
  */
-constructor(
+class BannerEntity(
         var desc: String? = "",
         var id: String? = "",
         var imagePath: String? = "",

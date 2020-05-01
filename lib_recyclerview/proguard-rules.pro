@@ -19,7 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
-# lib_recyclerview
--keep class cn.wj.android.recyclerview.** { *; }
--keep class * extends cn.wj.android.recyclerview.** { *; }

@@ -50,7 +50,7 @@
 
         </LinearLayout>
 
-        <cn.wj.android.views.custom.DrawableTextView
+        <cn.wj.android.views.custom.FixedTextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="?selectableItemBackground"
@@ -62,14 +62,14 @@
             android:text="@string/app_my_collection"
             android:textColor="@color/app_text_color_black"
             android:textSize="16sp"
-            app:dtv_drawableEnd="@drawable/app_vector_arrow_right_gray_24dp"
-            app:dtv_drawableEndHeight="24dp"
-            app:dtv_drawableEndWidth="24dp"
-            app:dtv_drawableStart="@drawable/app_vector_favorite_border_primary_24dp"
-            app:dtv_drawableStartHeight="24dp"
-            app:dtv_drawableStartWidth="24dp" />
+            app:ftv_drawableEnd="@drawable/app_vector_arrow_right_gray_24dp"
+            app:ftv_drawableEndHeight="24dp"
+            app:ftv_drawableEndWidth="24dp"
+            app:ftv_drawableStart="@drawable/app_vector_favorite_border_primary_24dp"
+            app:ftv_drawableStartHeight="24dp"
+            app:ftv_drawableStartWidth="24dp" />
 
-        <cn.wj.android.views.custom.DrawableTextView
+        <cn.wj.android.views.custom.FixedTextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="?selectableItemBackground"
@@ -81,12 +81,12 @@
             android:text="@string/app_collected_web"
             android:textColor="@color/app_text_color_black"
             android:textSize="16sp"
-            app:dtv_drawableEnd="@drawable/app_vector_arrow_right_gray_24dp"
-            app:dtv_drawableEndHeight="24dp"
-            app:dtv_drawableEndWidth="24dp"
-            app:dtv_drawableStart="@drawable/app_vector_web_asset_primary_24dp"
-            app:dtv_drawableStartHeight="24dp"
-            app:dtv_drawableStartWidth="24dp" />
+            app:ftv_drawableEnd="@drawable/app_vector_arrow_right_gray_24dp"
+            app:ftv_drawableEndHeight="24dp"
+            app:ftv_drawableEndWidth="24dp"
+            app:ftv_drawableStart="@drawable/app_vector_web_asset_primary_24dp"
+            app:ftv_drawableStartHeight="24dp"
+            app:ftv_drawableStartWidth="24dp" />
 
 
     </LinearLayout>

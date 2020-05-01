@@ -73,7 +73,7 @@ fun setViewPagerOffscreenPageLimit(vp: ViewPager, offscreenPageLimit: Int?) {
  * @param smoothScroll 是否平滑滚动
  */
 @BindingAdapter("android:bind_vp_currentItem", "android:bind_vp_smoothScroll", requireAll = false)
-fun setViewPagerCurrentItem(vp: ViewPager, currentItem: Int?, smoothScroll: Boolean? = false) {
+fun setViewPagerCurrentItem(vp: ViewPager, currentItem: Int?, smoothScroll: Boolean?) {
     if (null == currentItem) {
         return
     }

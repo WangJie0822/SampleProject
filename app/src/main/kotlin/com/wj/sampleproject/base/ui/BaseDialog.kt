@@ -3,9 +3,9 @@ package com.wj.sampleproject.base.ui
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import cn.wj.android.base.ui.dialog.BaseBindingLibDialog
 import com.google.android.material.snackbar.Snackbar
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.android.ui.dialog.BaseBindingLibDialog
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.helper.ProgressDialogHelper
 
 /**

@@ -451,4 +451,8 @@ class EasyPickerView<T> @JvmOverloads constructor(
     fun setOnScrollChangedListener(onScrollChangedListener: OnScrollChangedListener) {
         this.onScrollChangedListener = onScrollChangedListener
     }
+    
+    fun getCurrentData(): T {
+        return dataList[getCurIndex()]
+    }
 }

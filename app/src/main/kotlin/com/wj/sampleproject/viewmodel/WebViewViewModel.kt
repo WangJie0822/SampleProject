@@ -1,25 +1,26 @@
 package com.wj.sampleproject.viewmodel
 
 import android.view.MenuItem
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import cn.wj.android.base.databinding.BindingField
 import com.wj.sampleproject.R
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 
 /**
  * WebView 界面
  */
 class WebViewViewModel
     : BaseViewModel() {
-
+    
     /** 返回点击数据 */
     val navigationData = MutableLiveData<Int>()
+    
     /** 浏览器打开 */
     val jumpBorwser = MutableLiveData<Int>()
-
+    
     /** 标题文本 */
-    val title: BindingField<String> = BindingField()
-
+    val title: ObservableField<String> = ObservableField()
+    
     /** 菜单 Item 点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = { item ->
         if (item.itemId == R.id.menu_browser) {
@@ -28,7 +29,7 @@ class WebViewViewModel
         }
         true
     }
-
+    
     /** 返回点击 */
     val onNavigationClick: () -> Unit = {
         // 返回

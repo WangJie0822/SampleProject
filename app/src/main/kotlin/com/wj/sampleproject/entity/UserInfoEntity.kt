@@ -3,14 +3,6 @@ package com.wj.sampleproject.entity
 /**
  * 用户信息数据实体类
  *
- * * 创建时间：2019/10/14
- *
- * @author 王杰
- */
-data class UserInfoEntity
-/**
- * 主构造函数
- *
  * @param admin 是否是管理员
  * @param chapterTops ？
  * @param collectIds ？
@@ -23,8 +15,12 @@ data class UserInfoEntity
  * @param token 用户 token
  * @param type ？
  * @param username 用户名
+ *
+ * * 创建时间：2019/10/14
+ *
+ * @author 王杰
  */
-constructor(
+data class UserInfoEntity(
         var admin: String? = "",
         var chapterTops: ArrayList<Any>? = arrayListOf(),
         var collectIds: ArrayList<Any>? = arrayListOf(),

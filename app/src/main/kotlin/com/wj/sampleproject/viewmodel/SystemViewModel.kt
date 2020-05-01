@@ -1,7 +1,8 @@
 package com.wj.sampleproject.viewmodel
 
-import cn.wj.android.base.databinding.BindingField
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.TAB_SYSTEM_NAVIGATION
 import com.wj.sampleproject.constants.TAB_SYSTEM_SYSTEM
 
@@ -10,19 +11,19 @@ import com.wj.sampleproject.constants.TAB_SYSTEM_SYSTEM
  */
 class SystemViewModel
     : BaseViewModel() {
-
+    
     /** 标记 - 体系是否选中 */
-    val systemSelected: BindingField<Boolean> = BindingField(true)
-
+    val systemSelected: ObservableBoolean = ObservableBoolean(true)
+    
     /** ViewPager 下标 */
-    val currentItem: BindingField<Int> = BindingField(TAB_SYSTEM_SYSTEM)
-
+    val currentItem: ObservableInt = ObservableInt(TAB_SYSTEM_SYSTEM)
+    
     /** 体系点击 */
     val onSystemClick: () -> Unit = {
         systemSelected.set(true)
         currentItem.set(TAB_SYSTEM_SYSTEM)
     }
-
+    
     /** 导航点击 */
     val onNavigationClick: () -> Unit = {
         systemSelected.set(false)

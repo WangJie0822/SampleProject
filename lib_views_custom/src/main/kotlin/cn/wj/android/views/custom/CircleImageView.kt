@@ -13,7 +13,6 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import kotlin.math.min
 
 /**
@@ -213,15 +212,18 @@ class CircleImageView
     }
 
     fun setTextColorResource(@ColorRes colorResource: Int) {
-        textColor = ContextCompat.getColor(context, colorResource)
+        @Suppress("DEPRECATION")
+        textColor = resources.getColor(colorResource)
     }
 
     fun setBorderColorResource(@ColorRes borderColorRes: Int) {
-        borderColor = ContextCompat.getColor(context, borderColorRes)
+        @Suppress("DEPRECATION")
+        borderColor = context.resources.getColor(borderColorRes)
     }
 
     fun setFillColorResource(@ColorRes fillColorRes: Int) {
-        fillColor = ContextCompat.getColor(context, fillColorRes)
+        @Suppress("DEPRECATION")
+        fillColor = context.resources.getColor(fillColorRes)
     }
 
     override fun setImageBitmap(bm: Bitmap?) {
@@ -269,7 +271,7 @@ class CircleImageView
 
         return try {
             val bitmap = if (drawable is ColorDrawable) {
-                Bitmap.createBitmap(COLOR_DRAWABLE_DIMENSION, COLOR_DRAWABLE_DIMENSION, BITMAP_CONFIG)
+                Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG)
             } else {
                 Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, BITMAP_CONFIG)
             }
@@ -384,7 +386,7 @@ class CircleImageView
         private val SCALE_TYPE = ScaleType.CENTER_CROP
 
         private val BITMAP_CONFIG = Bitmap.Config.ARGB_8888
-        private const val COLOR_DRAWABLE_DIMENSION = 2
+        private const val COLORDRAWABLE_DIMENSION = 2
 
         private const val DEFAULT_BORDER_WIDTH = 0
         private const val DEFAULT_BORDER_COLOR = Color.BLACK

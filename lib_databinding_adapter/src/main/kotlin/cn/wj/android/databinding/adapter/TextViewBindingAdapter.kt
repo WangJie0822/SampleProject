@@ -2,13 +2,18 @@
 
 package cn.wj.android.databinding.adapter
 
+import android.graphics.Paint
 import android.text.Editable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
-import cn.wj.android.common.tools.parseColor
+import cn.wj.android.base.tools.parseColorFromString
+import cn.wj.android.base.tools.parseHtmlFromString
+import cn.wj.android.common.ext.condition
 
 /**
  * TextView DataBinding 适配器
@@ -38,11 +43,11 @@ fun addTextChangedListener(
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             before?.invoke(s, start, count, after)
         }
-
+    
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             on?.invoke(s, start, before, count)
         }
-
+    
         override fun afterTextChanged(s: Editable?) {
             after?.invoke(s)
         }
@@ -74,7 +79,7 @@ fun setTextColor(tv: TextView, colorStr: String?) {
     if (colorStr.isNullOrBlank()) {
         return
     }
-    val color = colorStr.parseColor() ?: return
+    val color = parseColorFromString(colorStr) ?: return
     tv.setTextColor(color)
 }
 
@@ -86,10 +91,10 @@ fun setTextColor(tv: TextView, colorStr: String?) {
  */
 @BindingAdapter("android:bind_tv_text")
 fun setText(tv: TextView, @StringRes resId: Int?) {
-    if (null == resId) {
+    if (null != resId || resId == 0) {
         return
     }
-    tv.setText(resId)
+    tv.text = resId
 }
 
 /**
@@ -97,10 +102,29 @@ fun setText(tv: TextView, @StringRes resId: Int?) {
  *
  * @param tv     [TextView] 对象
  * @param cs CharSequence 对象
+ * @param textSpan 设置 TextSpan 方法块
  */
-@BindingAdapter("android:bind_tv_text")
-fun setText(tv: TextView, cs: CharSequence?) {
-    tv.text = cs
+@BindingAdapter("android:bind_tv_text", "android:bind_tv_text_span", requireAll = false)
+fun setText(tv: TextView, cs: CharSequence?, textSpan: ((SpannableString) -> Unit)?) {
+    if (null != cs && null != textSpan) {
+        tv.movementMethod = LinkMovementMethod.getInstance()
+        val ss = SpannableString(cs)
+        textSpan.invoke(ss)
+        tv.text = ss
+    } else {
+        tv.text = cs
+    }
+}
+
+/**
+ * 设置 TextView 文本显示
+ *
+ * @param tv     [TextView] 对象
+ * @param html html 文本
+ */
+@BindingAdapter("android:bind_tv_html")
+fun setText(tv: TextView, html: String?) {
+    tv.text = parseHtmlFromString(html.orEmpty())
 }
 
 /**
@@ -126,4 +150,16 @@ fun setGravity(tv: TextView, gravity: Int?) {
         return
     }
     tv.gravity = gravity
+}
+
+/**
+ * 设置是否显示中划线
+ */
+@BindingAdapter("android:bind_tv_show_strikethru")
+fun showStrikeThru(tv: TextView, show: Boolean?) {
+    if (show.condition) {
+        tv.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    } else {
+        tv.paintFlags = 0
+    }
 }

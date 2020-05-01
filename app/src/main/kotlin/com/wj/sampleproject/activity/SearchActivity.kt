@@ -16,7 +16,7 @@ import com.wj.sampleproject.databinding.AppActivitySearchBinding
 import com.wj.sampleproject.entity.HotSearchEntity
 import com.wj.sampleproject.viewmodel.SearchViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 搜索界面

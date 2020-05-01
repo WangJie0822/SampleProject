@@ -38,10 +38,16 @@ fun <T> ArrayList<T>?.orEmpty(): ArrayList<T> {
 }
 
 /**
- * 若为空 返回空集合
+ * 从当前集合中获取一个新的集合对象
+ *
+ * @return 相同数据的集合对象
  */
-fun <T> List<T>?.orEmpty(): List<T> {
-    return this ?: listOf()
+fun <T> ArrayList<T>?.newList(): ArrayList<T> {
+    val list = arrayListOf<T>()
+    if (null != this) {
+        list.addAll(this)
+    }
+    return list
 }
 
 /**

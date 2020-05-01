@@ -27,5 +27,5 @@ fun setToolbarNavigationClick(toolbar: Toolbar, click: (() -> Unit)?) {
  */
 @BindingAdapter("android:bind_toolbar_title")
 fun setToolbarTitle(toolbar: Toolbar, title: String?) {
-    toolbar.setTitle(title)
+    toolbar.title = title
 }

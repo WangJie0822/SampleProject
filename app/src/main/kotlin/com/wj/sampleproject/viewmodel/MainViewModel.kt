@@ -1,8 +1,8 @@
 package com.wj.sampleproject.viewmodel
 
-import cn.wj.android.base.databinding.BindingField
+import androidx.databinding.ObservableInt
 import com.wj.sampleproject.R
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.*
 
 /**
@@ -10,10 +10,10 @@ import com.wj.sampleproject.constants.*
  */
 class MainViewModel
     : BaseViewModel() {
-
+    
     /** ViewPage 当前位置 */
-    val currentItem: BindingField<Int> = BindingField(TAB_MAIN_BOTTOM_HOMEPAGE)
-
+    val currentItem: ObservableInt = ObservableInt(TAB_MAIN_BOTTOM_HOMEPAGE)
+    
     /** 底部菜单选中回调 */
     val onItemSelected: (Int) -> Boolean = { itemId ->
         val targetPosition = when (itemId) {

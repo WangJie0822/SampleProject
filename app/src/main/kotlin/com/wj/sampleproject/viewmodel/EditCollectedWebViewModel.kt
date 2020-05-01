@@ -1,12 +1,12 @@
 package com.wj.sampleproject.viewmodel
 
-import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.ext.tagableScope
-import cn.wj.android.base.tools.isNotUrl
+import androidx.databinding.ObservableField
+import androidx.lifecycle.viewModelScope
+import cn.wj.android.common.ext.isNotUrl
 import cn.wj.android.logger.Logger
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.EVENT_COLLECTION_REFRESH_COLLECTED_WEB
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.model.ProgressModel
@@ -18,39 +18,38 @@ import kotlinx.coroutines.launch
 /**
  * 编辑收藏网站 ViewModel
  *
+ * @param collectRepository 收藏相关数据仓库
+ *
  * - 创建时间：2019/10/17
  *
  * @author 王杰
  */
-class EditCollectedWebViewModel
-/**
- * @param collectRepository 收藏相关数据仓库
- */
-constructor(private val collectRepository: CollectRepository)
-    : BaseViewModel() {
-
+class EditCollectedWebViewModel(
+        private val collectRepository: CollectRepository
+) : BaseViewModel() {
+    
     /** 网站 id */
     var id = ""
-
+    
     /** 标题文本 */
-    val titleStr = BindingField("")
-
+    val titleStr: ObservableField<String> = ObservableField<String>("")
+    
     /** 网站名 */
-    val webName = BindingField("")
-
+    val webName: ObservableField<String> = ObservableField<String>("")
+    
     /** 网站链接 */
-    val webLink = BindingField("")
-
+    val webLink: ObservableField<String> = ObservableField<String>("")
+    
     /** 关闭按钮点击  */
     val onCloseClick = {
         uiCloseData.postValue(UiCloseModel())
     }
-
+    
     /** 消极按钮点击  */
     val onNegativeClick = {
         uiCloseData.postValue(UiCloseModel())
     }
-
+    
     /** 积极按钮点击  */
     val onPositiveClick = fun() {
         if (webName.get().isNullOrBlank()) {
@@ -73,12 +72,12 @@ constructor(private val collectRepository: CollectRepository)
             editCollectedWeb()
         }
     }
-
+    
     /**
      * 收藏网站
      */
     private fun collectWeb() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 显示弹窗
                 progressData.postValue(ProgressModel())
@@ -103,12 +102,12 @@ constructor(private val collectRepository: CollectRepository)
             }
         }
     }
-
+    
     /**
      * 编辑收藏网站
      */
     private fun editCollectedWeb() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 显示弹窗
                 progressData.postValue(ProgressModel())

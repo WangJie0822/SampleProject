@@ -17,7 +17,7 @@ import com.wj.sampleproject.databinding.AppActivityCollectedWebBinding
 import com.wj.sampleproject.dialog.EditCollectedWebDialog
 import com.wj.sampleproject.entity.CollectedWebEntity
 import com.wj.sampleproject.viewmodel.CollectedWebViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 收藏网站界面

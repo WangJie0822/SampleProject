@@ -24,9 +24,11 @@ fun setEditTextSelection(et: EditText, selection: Int?) {
     if (null == selection) {
         return
     }
-    if (selection in 0..et.text.length) {
-        et.setSelection(selection)
-    }
+    et.postDelayed({
+        if (selection in 0..et.text.length) {
+            et.setSelection(selection)
+        }
+    }, 200)
 }
 
 /**
@@ -37,9 +39,6 @@ fun setEditTextSelection(et: EditText, selection: Int?) {
  */
 @BindingAdapter("android:bind_inputType")
 fun setEditTextInputType(et: EditText, inputType: TransformationMethod?) {
-    if (null == inputType) {
-        return
-    }
     et.transformationMethod = inputType
 }
 

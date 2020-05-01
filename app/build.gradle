@@ -171,20 +171,23 @@ dependencies {
     // 约束性布局
     implementation rootProject.ext.dependencies["androidx_constraint"]
 
-    // Lifecycle 拓展
-    implementation rootProject.ext.dependencies["androidx_lifecycle-extensions"]
-
     // ktx
     implementation rootProject.ext.dependencies["ktx_core"]
+
+    // ViewModel 拓展
+    implementation rootProject.ext.dependencies["jetpack_viewmodel-ktx"]
+    // LifeCycle 拓展
+    implementation rootProject.ext.dependencies["jetpack_lifecycle-ktx"]
+    // LiveData 拓展
+    implementation rootProject.ext.dependencies["jetpack_livedata-ktx"]
 
     // 协程
     implementation rootProject.ext.dependencies["coroutines"]
 
     // Koin
-    implementation rootProject.ext.dependencies["koin"]
-    implementation rootProject.ext.dependencies["koin-scope"]
-    implementation rootProject.ext.dependencies["koin-viewmodel"]
-    testImplementation rootProject.ext.dependencies["koin-test"]
+    implementation rootProject.ext.dependencies["androidx-koin-scope"]
+    implementation rootProject.ext.dependencies["androidx-koin-viewmodel"]
+    implementation rootProject.ext.dependencies["androidx-koin-ext"]
 
     // livedatabus
     implementation rootProject.ext.dependencies["androidx-livedatabus"]
@@ -208,19 +211,13 @@ dependencies {
     // Tablayout
     implementation rootProject.ext.dependencies["tablayout"]
 
-    // 依赖库
-    implementation project(":lib_base")
-    implementation project(":lib_common")
-    // DataBinding 适配器
+    // 依赖 base 库
+    implementation project(":lib_ui")
     implementation project(":lib_databinding_adapter")
-    // 日志打印
     implementation project(":lib_logger")
-    // Okhttp 拦截器
     implementation project(':lib_okhttp_interceptor')
-    // RecyclerView 适配器、布局管理器
     implementation project(":lib_recyclerview")
-    // 自定义 View
     implementation project(":lib_views_custom")
-    // 侧滑返回
+    implementation project(':lib_forresult')
     implementation project(":lib_swipe_back")
 }

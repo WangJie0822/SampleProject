@@ -81,9 +81,6 @@ abstract class BaseRvListAdapter<VH : BaseRvViewHolder<E>, E>
     /** 标记 - 显示空布局时是否显示脚布局 默认不显示 */
     var showFooterWhenEmpty = false
 
-    /** 标记 - 第一次加载 */
-    private var firstLoad = true
-
     /** 空布局点击事件监听 */
     private var mEmptyClickListener: OnEmptyClickListener? = null
 
@@ -253,7 +250,7 @@ abstract class BaseRvListAdapter<VH : BaseRvViewHolder<E>, E>
      *
      * @return 是否显示空布局
      */
-    protected fun isShowEmpty() = mEmptyLayout != null && mEmptyLayout!!.childCount > 0 && mDiffer.currentList.size <= 0 && !firstLoad
+    protected fun isShowEmpty() = mEmptyLayout != null && mEmptyLayout!!.childCount > 0 && mDiffer.currentList.size <= 0
 
     /**
      * 判断是否是空布局
@@ -597,33 +594,11 @@ abstract class BaseRvListAdapter<VH : BaseRvViewHolder<E>, E>
 
     open fun onCurrentListChanged(previousList: List<E>, currentList: List<E>) {}
 
-    internal fun fixPosition(position: Int): Int {
-        return if (haveHeader()) {
-            position + 1
-        } else {
-            position
-        }
-    }
-
     fun submitList(list: List<E>?) {
-        if (firstLoad) {
-            // 设置数据，第一次加载置否
-            firstLoad = false
-            if (list.isNullOrEmpty()) {
-                // 没有数据，刷新界面
-                notifyDataSetChanged()
-            }
-        }
         mDiffer.submitList(list)
     }
 
     fun submitList(list: List<E>?, commitCallback: Runnable?) {
-        if (firstLoad) {
-            firstLoad = false
-        }
-        if (mDiffer.currentList.isEmpty() && list.isNullOrEmpty()) {
-            notifyDataSetChanged()
-        }
         mDiffer.submitList(list, commitCallback)
     }
 }

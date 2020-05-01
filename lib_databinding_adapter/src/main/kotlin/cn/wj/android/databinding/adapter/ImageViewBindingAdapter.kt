@@ -18,10 +18,7 @@ import androidx.databinding.BindingAdapter
  */
 @BindingAdapter("android:bind_src")
 fun src(iv: ImageView, @DrawableRes resId: Int?) {
-    if (null == resId) {
-        return
-    }
-    if (0 != resId) {
+    if (null != resId && 0 != resId) {
         iv.setImageResource(resId)
     }
 }
@@ -34,14 +31,13 @@ fun src(iv: ImageView, @DrawableRes resId: Int?) {
  */
 @BindingAdapter("android:bind_src")
 fun setImageResource(iv: ImageView, res: String?) {
-    if (res.isNullOrBlank()) {
-        return
-    }
-    if (res.startsWith(IMG_DRAWABLE_MARK)) {
-        val realRes = res.split(":")[1]
-        iv.setImageResource(realRes.getIdentifier(iv.context, "drawable"))
-    } else if (res.startsWith(IMG_MIPMAP_MARK)) {
-        val realRes = res.split(":")[1]
-        iv.setImageResource(realRes.getIdentifier(iv.context, "mipmap"))
+    if (null != res && res.isNotBlank()) {
+        if (res.startsWith(IMG_DRAWABLE_MARK)) {
+            val realRes = res.split(":")[1]
+            iv.setImageResource(realRes.getIdentifier(iv.context, "drawable"))
+        } else if (res.startsWith(IMG_MIPMAP_MARK)) {
+            val realRes = res.split(":")[1]
+            iv.setImageResource(realRes.getIdentifier(iv.context, "mipmap"))
+        }
     }
 }

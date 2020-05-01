@@ -1,6 +1,6 @@
 package com.wj.sampleproject.entity
 
-import cn.wj.android.base.databinding.BindingField
+import androidx.databinding.ObservableBoolean
 import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.ext.isNotNullAndEmpty
 import cn.wj.android.common.ext.orFalse
@@ -8,10 +8,6 @@ import com.wj.sampleproject.constants.STR_TRUE
 
 /**
  * 首页文章列表数据实体类
- */
-data class ArticleListEntity
-/**
- * 构造方法
  *
  * @param curPage 当前页码
  * @param offset 已显示数量
@@ -21,7 +17,7 @@ data class ArticleListEntity
  * @param over 是否结束
  * @param datas 文章数据
  */
-constructor(
+data class ArticleListEntity(
         var curPage: String? = "",
         var offset: String? = "",
         var pageCount: String? = "",
@@ -33,10 +29,6 @@ constructor(
 
 /**
  * 文章对象数据实体类
- */
-data class ArticleEntity
-/**
- * 构造方法
  *
  * @param apkLink APK 下载链接
  * @param author 作者
@@ -65,7 +57,7 @@ data class ArticleEntity
  * @param zan 赞 数量
  * @param top 自设属性 是否置顶
  */
-constructor(
+data class ArticleEntity(
         var apkLink: String? = "",
         var author: String? = "",
         var chapterId: String? = "",
@@ -96,18 +88,18 @@ constructor(
     /** 标记 - 是否置顶 */
     val isTop: Boolean
         get() = top == STR_TRUE
-
+    
     /** 标记 - 是否最新 */
     val isNew: Boolean
         get() = fresh?.toBoolean().orFalse()
-
+    
     /** 标记 - 是否显示标签 */
     val showTags: Boolean
         get() = tags.isNotNullAndEmpty()
-
+    
     /** 标记 - 是否收藏 */
-    val collected: BindingField<Boolean> = BindingField(false)
-
+    val collected: ObservableBoolean = ObservableBoolean(false)
+    
     /** 标记 - 是否显示封面 */
     val showEnvelope: Boolean
         get() = envelopePic.isNotNullAndBlank()
@@ -115,15 +107,11 @@ constructor(
 
 /**
  * 文章标签数据实体类
- */
-data class ArticleTagEntity
-/**
- * 构造方法
  *
  * @param name 标签名
  * @param url 标签地址
  */
-constructor(
+data class ArticleTagEntity(
         var name: String? = "",
         var url: String? = ""
 )

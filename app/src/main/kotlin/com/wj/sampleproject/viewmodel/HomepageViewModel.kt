@@ -2,9 +2,10 @@ package com.wj.sampleproject.viewmodel
 
 import android.view.MenuItem
 import android.view.MotionEvent
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
-import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.ext.tagableScope
+import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
@@ -12,7 +13,7 @@ import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.MAIN_BANNER_TRANSFORM_INTERVAL_MS
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
@@ -25,33 +26,34 @@ import kotlinx.coroutines.*
 
 /**
  * 主界面 - 首页 ViewModel
- */
-class HomepageViewModel
-/**
+ *
  * @param homepageRepository 主页数据仓库
  * @param collectRepository 收藏相关数据仓库
  */
-constructor(
+class HomepageViewModel(
         private val homepageRepository: HomepageRepository,
         private val collectRepository: CollectRepository
 ) : BaseViewModel(),
         ArticleListViewModel {
-
+    
     /** 页码 */
     private var pageNum = NET_PAGE_START
-
+    
     /** Banner 列表数据 */
     val bannerData = MutableLiveData<ArrayList<BannerEntity>>()
+    
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
+    
     /** 跳转 WebView 数据 */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
+    
     /** 跳转搜索数据 */
     val jumpSearchData = MutableLiveData<Int>()
-
+    
     /** Banner 轮播 job */
     private var carouselJob: Job? = null
-
+    
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
         if (it.itemId == R.id.menu_search) {
@@ -59,13 +61,13 @@ constructor(
         }
         false
     }
-
+    
     /** Banner 下标 */
-    val bannerCurrent: BindingField<Int> = BindingField()
-
+    val bannerCurrent: ObservableInt = ObservableInt()
+    
     /** Banner 预加载页数 */
-    val bannerLimit: BindingField<Int> = BindingField()
-
+    val bannerLimit: ObservableInt = ObservableInt()
+    
     /** Banner 数量 */
     var bannerCount: Int = 0
         set(value) {
@@ -75,7 +77,7 @@ constructor(
             // 开启轮询
             startCarousel()
         }
-
+    
     /** Banner 触摸事件 */
     val onBannerTouch: (MotionEvent) -> Boolean = { event ->
         when (event.action) {
@@ -90,35 +92,35 @@ constructor(
         }
         false
     }
-
+    
     /** 标记 - 是否正在刷新 */
-    val refreshing: BindingField<Boolean> = BindingField(false)
-
+    val refreshing: ObservableBoolean = ObservableBoolean(false)
+    
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         pageNum = NET_PAGE_START
         noMore.set(false)
         getHomepageArticleList()
     }
-
+    
     /** 标记 - 是否正在加载更多 */
-    val loadMore: BindingField<Boolean> = BindingField(false)
-
+    val loadMore: ObservableBoolean = ObservableBoolean(false)
+    
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
         pageNum++
         getHomepageArticleList()
     }
-
+    
     /** 标记 - 是否没有更多 */
-    val noMore: BindingField<Boolean> = BindingField(false)
-
+    val noMore: ObservableBoolean = ObservableBoolean(false)
+    
     /** 文章列表条目点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
         jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
     }
-
+    
     /** 文章收藏点击 */
     override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
         if (item.collected.get().condition) {
@@ -131,12 +133,12 @@ constructor(
             collect(item)
         }
     }
-
+    
     /**
      * 获取首页 Banner 列表
      */
     fun getHomepageBannerList() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 获取 Banner 数据
                 val result = homepageRepository.getHomepageBannerList()
@@ -152,7 +154,7 @@ constructor(
             }
         }
     }
-
+    
     /**
      * 开启 Banner 轮播
      */
@@ -164,17 +166,17 @@ constructor(
             return
         }
         // 新建协程
-        carouselJob = tagableScope.launch(Dispatchers.IO) {
+        carouselJob = viewModelScope.launch(Dispatchers.IO) {
             while (isActive) {
                 // 延时
                 delay(MAIN_BANNER_TRANSFORM_INTERVAL_MS)
                 // 切换
-                val current = bannerCurrent.get() ?: 0
+                val current = bannerCurrent.get()
                 bannerCurrent.set((current + 1) % bannerCount)
             }
         }
     }
-
+    
     /**
      * 关闭 Banner 轮播
      */
@@ -186,12 +188,12 @@ constructor(
             carouselJob = null
         }
     }
-
+    
     /**
      * 获取首页文章列表
      */
     private fun getHomepageArticleList() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 获取文章列表数据
                 val result = homepageRepository.getHomepageArticleList(pageNum)
@@ -211,14 +213,14 @@ constructor(
             }
         }
     }
-
+    
     /**
      * 收藏
      *
      * @param item 文章对象
      */
     private fun collect(item: ArticleEntity) {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 收藏
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
@@ -235,14 +237,14 @@ constructor(
             }
         }
     }
-
+    
     /**
      * 取消收藏
      *
      * @param item 文章对象
      */
     private fun unCollect(item: ArticleEntity) {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 取消收藏
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())

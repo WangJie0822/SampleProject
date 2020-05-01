@@ -10,7 +10,7 @@ class AdapterListUpdateNoAnimCallback
 /**
  * Creates an AdapterListUpdateCallback that will dispatch update events to the given adapter.
  *
- * @param mAdapter The Adapter to send updates to.
+ * @param adapter The Adapter to send updates to.
  */
 (private val mAdapter: RecyclerView.Adapter<*>) : ListUpdateCallback {
 

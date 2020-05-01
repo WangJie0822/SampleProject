@@ -29,7 +29,15 @@ abstract class BaseRvListDBAdapter<out VH : BaseRvDBViewHolder<DB, E>, DB : View
      * @param diffCallback 数据是否相同回调
      * @param anim 是否使用动画
      */
-    constructor(diffCallback: DiffUtil.ItemCallback<E>, anim: Boolean = false) : super(diffCallback, anim)
+    constructor(diffCallback: DiffUtil.ItemCallback<E> = object : DiffUtil.ItemCallback<E>() {
+        override fun areItemsTheSame(oldItem: E, newItem: E): Boolean {
+            return oldItem === newItem
+        }
+    
+        override fun areContentsTheSame(oldItem: E, newItem: E): Boolean {
+            return oldItem.toString() == newItem.toString()
+        }
+    }, anim: Boolean = false) : super(diffCallback, anim)
 
     /**
      * 构造方法

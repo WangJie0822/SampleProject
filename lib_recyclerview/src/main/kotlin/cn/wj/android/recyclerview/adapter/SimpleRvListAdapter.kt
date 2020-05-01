@@ -12,8 +12,17 @@ import java.lang.reflect.ParameterizedType
  *
  * @author 王杰
  */
-class SimpleRvListAdapter<E>(override val layoutResID: Int, areContentsTheSame: AreContentsTheSame<E>, anim: Boolean = false)
-    : BaseRvListDBAdapter<
+class SimpleRvListAdapter<E>
+/**
+ * @param layoutResID 布局 id
+ * @param areContentsTheSame 内容是否相同
+ * @param anim 是否开启动画
+ */
+constructor(
+        override val layoutResID: Int,
+        areContentsTheSame: AreContentsTheSame<E> = { old, new -> old.toString() == new.toString() },
+        anim: Boolean = false
+) : BaseRvListDBAdapter<
         SimpleRvListAdapter.ViewHolder<E>,
         ViewDataBinding,
         Any,

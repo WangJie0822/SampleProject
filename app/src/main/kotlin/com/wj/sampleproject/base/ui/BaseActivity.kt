@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.MotionEvent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import cn.wj.android.base.ui.activity.BaseBindingLibActivity
 import cn.wj.android.swipeback.helper.SwipeBackHelper
 import cn.wj.android.swipeback.helper.dispatchTouchEvent
 import com.google.android.material.snackbar.Snackbar
+import com.wj.android.ui.activity.BaseBindingLibActivity
 import com.wj.sampleproject.R
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.helper.ProgressDialogHelper
 
 /**

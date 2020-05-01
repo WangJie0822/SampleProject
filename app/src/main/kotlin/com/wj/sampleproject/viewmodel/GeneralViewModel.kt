@@ -1,12 +1,14 @@
 package com.wj.sampleproject.viewmodel
 
-import android.text.TextUtils
 import android.view.Gravity
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
-import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.tools.getString
+import cn.wj.android.base.ext.string
+import cn.wj.android.common.ext.isNotNullAndBlank
 import com.wj.sampleproject.R
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.model.UiCloseModel
 
 /**
@@ -17,63 +19,63 @@ import com.wj.sampleproject.model.UiCloseModel
  * @author 王杰
  */
 class GeneralViewModel : BaseViewModel() {
-
+    
     /** 消极按钮点击  */
     val negativeClickData = MutableLiveData<Long>()
+    
     /** 积极按钮点击  */
     val positiveClickData = MutableLiveData<Long>()
-
-    /** 标记 - 是否显示标题  */
-    val showTitle = BindingField(false)
-
+    
     /** 标题文本  */
-    // 文本为空时不显示标题
-    val titleStr = BindingField("", { _, value -> showTitle.set(!TextUtils.isEmpty(value)) })
-
+    val titleStr: ObservableField<String> = ObservableField("")
+    
+    /** 标记 - 是否显示标题  */
+    val showTitle: ObservableBoolean = object : ObservableBoolean(titleStr) {
+        override fun get(): Boolean {
+            return titleStr.get().isNotNullAndBlank()
+        }
+    }
+    
     /** 内容文本  */
-    val contentStr = BindingField("")
-
+    val contentStr: ObservableField<String> = ObservableField("")
+    
     /** 内容文本重心  */
-    val contentGravity = BindingField(Gravity.START or Gravity.CENTER_VERTICAL)
-
+    val contentGravity: ObservableInt = ObservableInt(Gravity.START or Gravity.CENTER_VERTICAL)
+    
     /** 标记 - 是否显示选择器  */
-    val showSelect = BindingField(false)
-
+    val showSelect: ObservableBoolean = ObservableBoolean(false)
+    
     /** 标记 - 选择器是否选中  */
-    val selected = BindingField(false)
-
+    val selected: ObservableBoolean = ObservableBoolean(false)
+    
     /** 选择器文本 - 默认：不再提示  */
-    val selectStr = BindingField(R.string.app_no_longer_tips.getString())
-
+    val selectStr: ObservableField<String> = ObservableField(R.string.app_no_longer_tips.string)
+    
     /** 标记 - 是否显示消极按钮  */
-    val showNegativeButton = BindingField(true)
-
+    val showNegativeButton: ObservableBoolean = ObservableBoolean(true)
+    
     /** 消极按钮文本 - 默认：取消  */
-    val negativeButtonStr = BindingField(R.string.app_cancel.getString())
-
+    val negativeButtonStr: ObservableField<String> = ObservableField(R.string.app_cancel.string)
+    
     /** 标记 - 是否显示积极按钮  */
-    val showPositiveButton = BindingField(true)
-
+    val showPositiveButton: ObservableBoolean = ObservableBoolean(true)
+    
     /** 积极按钮文本 - 默认：确认  */
-    val positiveButtonStr = BindingField(R.string.app_confirm.getString())
-
+    val positiveButtonStr: ObservableField<String> = ObservableField(R.string.app_confirm.string)
+    
     /** 关闭按钮点击  */
     val onCloseClick = { uiCloseData.postValue(UiCloseModel()) }
-
+    
     /** 选择器点击  */
     val onSelectClick = fun() {
         // 选择状态置反
         val oldSelected = selected.get()
-        if (null == oldSelected) {
-            selected.set(true)
-            return
-        }
         selected.set(!oldSelected)
     }
-
+    
     /** 消极按钮点击  */
     val onNegativeClick = { negativeClickData.postValue(System.currentTimeMillis()) }
-
+    
     /** 积极按钮点击  */
     val onPositiveClick = { positiveClickData.postValue(System.currentTimeMillis()) }
 }

@@ -1,15 +1,15 @@
 package com.wj.sampleproject.viewmodel
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
-import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.ext.tagableScope
+import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.ext.showMsg
@@ -20,56 +20,56 @@ import kotlinx.coroutines.launch
 
 /**
  * 公众号文章 ViewModel
- */
-class BjnewsArticlesViewModel
-/**
+ *
  * @param bjnewsRepository 公众号相关数据仓库
  * @param collectRepository 收藏相关数据仓库
  */
-constructor(
+class BjnewsArticlesViewModel(
         private val bjnewsRepository: BjnewsRepository,
         private val collectRepository: CollectRepository
 ) : BaseViewModel(),
         ArticleListViewModel {
-
+    
     /** 公众号 id */
     var bjnewsId = ""
+    
     /** 页码 */
     private var pageNum = NET_PAGE_START
-
+    
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
+    
     /** 跳转 WebView 数据 */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
-
+    
     /** 标记 - 是否正在刷新 */
-    val refreshing: BindingField<Boolean> = BindingField(false)
-
+    val refreshing: ObservableBoolean = ObservableBoolean(false)
+    
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         pageNum = NET_PAGE_START
         noMore.set(false)
         getBjnewsArticles()
     }
-
+    
     /** 标记 - 是否正在加载更多 */
-    val loadMore: BindingField<Boolean> = BindingField(false)
-
+    val loadMore: ObservableBoolean = ObservableBoolean(false)
+    
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
         pageNum++
         getBjnewsArticles()
     }
-
+    
     /** 标记 - 是否没有更多 */
-    val noMore: BindingField<Boolean> = BindingField(false)
-
+    val noMore: ObservableBoolean = ObservableBoolean(false)
+    
     /** 文章 item 点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
         jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
     }
-
+    
     /** 文章收藏点击 */
     override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
         if (item.collected.get().condition) {
@@ -82,12 +82,12 @@ constructor(
             collect(item)
         }
     }
-
+    
     /**
      * 获取公众号文章列表
      */
     private fun getBjnewsArticles() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 获取文章列表数据
                 val result = bjnewsRepository.getBjnewsArticles(bjnewsId, pageNum)
@@ -107,14 +107,14 @@ constructor(
             }
         }
     }
-
+    
     /**
      * 收藏
      *
      * @param item 文章对象
      */
     private fun collect(item: ArticleEntity) {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 收藏
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
@@ -131,14 +131,14 @@ constructor(
             }
         }
     }
-
+    
     /**
      * 取消收藏
      *
      * @param item 文章对象
      */
     private fun unCollect(item: ArticleEntity) {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 取消收藏
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())

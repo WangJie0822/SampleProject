@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -18,10 +17,6 @@ android {
             java.srcDirs = ['src/main/java', 'src/main/kotlin']
             jniLibs.srcDirs = ['libs']
         }
-    }
-
-    dataBinding { // DataBinding 开启
-        enabled true
     }
 }
 

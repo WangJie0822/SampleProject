@@ -1,17 +1,11 @@
 package com.wj.sampleproject.entity
 
-import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * 收藏网站数据实体类
  *
- * - 创建时间：2019/10/16
- *
- * @author 王杰
- */
-data class CollectedWebEntity
-/**
  * @param desc 描述
  * @param icon 图标
  * @param id 网站id
@@ -20,8 +14,13 @@ data class CollectedWebEntity
  * @param order ？
  * @param userId 用户 id
  * @param visible 是否显示
+ *
+ * - 创建时间：2019/10/16
+ *
+ * @author 王杰
  */
-constructor(
+@Parcelize
+data class CollectedWebEntity(
         var desc: String? = "",
         var icon: String? = "",
         var id: String? = "",
@@ -30,40 +29,4 @@ constructor(
         var order: String? = "",
         var userId: String? = "",
         var visible: String? = ""
-) : Parcelable {
-
-    constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString())
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(desc)
-        parcel.writeString(icon)
-        parcel.writeString(id)
-        parcel.writeString(link)
-        parcel.writeString(name)
-        parcel.writeString(order)
-        parcel.writeString(userId)
-        parcel.writeString(visible)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<CollectedWebEntity> {
-        override fun createFromParcel(parcel: Parcel): CollectedWebEntity {
-            return CollectedWebEntity(parcel)
-        }
-
-        override fun newArray(size: Int): Array<CollectedWebEntity?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+) : Parcelable

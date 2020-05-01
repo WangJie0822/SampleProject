@@ -6,7 +6,7 @@ import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import cn.wj.android.common.log.InternalLog
+import cn.wj.android.base.log.InternalLog
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.system.exitProcess
@@ -32,6 +32,9 @@ object AppManager {
 
     /** 前台界面个数 */
     private var foregroundCount = 0
+    
+    /** App 前后台切换回调 */
+    private var mAppForgrountStatusChangeCallback: ((Boolean) -> Unit)? = null
 
     /** Activity 生命周期回调接口*/
     private val mActivityLifecycleCallbacks = object : Application.ActivityLifecycleCallbacks {
@@ -46,6 +49,10 @@ object AppManager {
         }
 
         override fun onActivityStarted(activity: Activity?) {
+            if (foregroundCount == 0) {
+                // App 回到前台
+                mAppForgrountStatusChangeCallback?.invoke(true)
+            }
             foregroundCount++
             InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityStarted")
         }
@@ -60,6 +67,10 @@ object AppManager {
 
         override fun onActivityStopped(activity: Activity?) {
             foregroundCount--
+            if (foregroundCount == 0) {
+                // App 退到后台
+                mAppForgrountStatusChangeCallback?.invoke(false)
+            }
             InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityStopped")
         }
 
@@ -109,6 +120,17 @@ object AppManager {
         mApplication = application
         application.unregisterActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
+    }
+    
+    /**
+     * 设置 App 前后台状态切换监听
+     *
+     * @param onChange 切换回调
+     * - true：回到前台 or false：退到后台
+     */
+    @JvmStatic
+    fun setOnAppForgroundStatusChangeListener(onChange: (Boolean) -> Unit) {
+        this.mAppForgrountStatusChangeCallback = onChange
     }
 
     /**
@@ -234,35 +256,46 @@ object AppManager {
     /**
      * 结束指定 Activity 之外的其他 Activity
      *
-     * @param activitys 指定不关闭的 Activity
+     * @param activity 指定不关闭的 Activity
      */
     @JvmStatic
-    fun finishAllWithout(vararg activitys: Activity) {
-        for (activity in activitys) {
-            remove(activity)
+    fun finishAllWithout(activity: Activity?) {
+        if (activity == null) {
+            return
         }
+        remove(activity)
         finishAllActivity()
-        for (activity in activitys) {
-            add(activity)
-        }
+        add(activity)
     }
-
+    
     /**
      * 结束指定 Activity 之外的其他 Activity
      *
-     * @param activitys 指定不关闭的 Activity 类对象
+     * @param activity 指定不关闭的 Activity
      */
     @JvmStatic
-    fun finishAllWithout(vararg activitys: Class<out Activity>) {
-        for (activity in activitys) {
-            remove(getActivity(activity))
+    fun finishAllWithout(vararg clazz: Class<out Activity>) {
+        if (clazz.isEmpty()) {
+            return
+        }
+        val ls = arrayListOf<Activity>()
+        for (clz in clazz) {
+            val activity = getActivity(clz)
+            if (null != activity) {
+                ls.add(activity)
+            }
+        }
+        if (ls.isEmpty()) {
+            return
+        }
+        for (activity in ls) {
+            remove(activity)
         }
         finishAllActivity()
-        for (activity in activitys) {
-            add(getActivity(activity))
+        for (activity in ls) {
+            add(activity)
         }
     }
-
 
     /**
      * 结束指定 Activity

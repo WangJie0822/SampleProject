@@ -1,15 +1,16 @@
 package com.wj.sampleproject.viewmodel
 
-import cn.wj.android.base.databinding.BindingField
-import cn.wj.android.base.ext.tagableScope
-import cn.wj.android.base.tools.getString
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import androidx.lifecycle.viewModelScope
+import cn.wj.android.base.ext.string
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.isNotNullAndBlank
-import cn.wj.android.common.ext.length
+import cn.wj.android.common.ext.orElse
 import cn.wj.android.logger.Logger
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
-import com.wj.sampleproject.base.mvvm.BaseViewModel
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.PASSWORD_MIN_LENGTH
 import com.wj.sampleproject.constants.SP_KEY_USER_NAME
 import com.wj.sampleproject.ext.snackbarMsg
@@ -23,69 +24,76 @@ import kotlinx.coroutines.launch
 /**
  * 登录 ViewModel
  *
+ * @param repository 我的相关数据仓库
+ *
  * * 创建时间：2019/10/14
  *
  * @author 王杰
  */
-class LoginViewModel
-/**
- * 主构造函数
- *
- * @param repository 我的相关数据仓库
- */
-constructor(private val repository: MyRepository)
-    : BaseViewModel() {
-
+class LoginViewModel(
+        private val repository: MyRepository
+) : BaseViewModel() {
+    
     /** 标记 - 是否是注册 */
-    val register = BindingField(true) { _, value ->
-        buttonStr.set(if (value.condition) {
-            // 注册
-            R.string.app_register
-        } else {
-            // 登录
-            R.string.app_login
-        }.getString())
-    }
-
-    /** 标记 - 是否显示清空用户名 */
-    val showUserNameClear = BindingField(false)
-
+    val register: ObservableBoolean = ObservableBoolean(true)
+    
     /** 用户名 */
-    val userName = BindingField(MMKV.defaultMMKV().decodeString(SP_KEY_USER_NAME, "")) { _, value ->
-        showUserNameClear.set(value.isNotNullAndBlank())
+    val userName: ObservableField<String> = ObservableField(MMKV.defaultMMKV().decodeString(SP_KEY_USER_NAME, ""))
+    
+    /** 标记 - 是否显示清空用户名 */
+    val showUserNameClear: ObservableBoolean = object : ObservableBoolean(userName) {
+        override fun get(): Boolean {
+            return userName.get().isNotNullAndBlank()
+        }
     }
-
-    /** 密码 */
-    val password = BindingField("") { _, _ ->
-        checkBtnEnable()
-    }
-
-    /** 再次输入密码 */
-    val passwordAgain = BindingField("") { _, _ ->
-        checkBtnEnable()
-    }
-
+    
     /** 是否允许按钮点击 */
-    val buttonEnable = BindingField(false)
-
+    val buttonEnable: ObservableBoolean = ObservableBoolean(false)
+    
     /** 按钮文本 */
-    val buttonStr = BindingField(R.string.app_register.getString())
-
+    val buttonStr: ObservableField<String> = object : ObservableField<String>(register) {
+        override fun get(): String? {
+            return if (register.get()) {
+                // 注册
+                R.string.app_register
+            } else {
+                // 登录
+                R.string.app_login
+            }.string
+        }
+    }
+    
+    /** 密码 */
+    val password: ObservableField<String> = object : ObservableField<String>("") {
+        override fun set(value: String?) {
+            super.set(value)
+            checkBtnEnable()
+        }
+    }
+    
+    /** 再次输入密码 */
+    val passwordAgain: ObservableField<String> = object : ObservableField<String>("") {
+        override fun set(value: String?) {
+            super.set(value)
+            checkBtnEnable()
+        }
+    }
+    
     /** 关闭点击 */
     val onCloseClick: () -> Unit = {
         uiCloseData.postValue(UiCloseModel())
     }
-
+    
     /** 注册、登录点击 */
     val onTabClick: (Boolean) -> Unit = { registerClick ->
         register.set(registerClick)
     }
-
+    
     /** 清空用户名点击 */
     val onUserNameClearClick: () -> Unit = {
         userName.set("")
     }
-
+    
     /** 按钮点击 */
     val onButtonClick: () -> Unit = fun() {
         if (!buttonEnable.get().condition) {
@@ -120,12 +128,12 @@ constructor(private val repository: MyRepository)
             login()
         }
     }
-
+    
     /**
      * 注册
      */
     private fun register() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 显示进度条弹窗
                 progressData.postValue(ProgressModel(cancelable = false))
@@ -151,12 +159,12 @@ constructor(private val repository: MyRepository)
             }
         }
     }
-
+    
     /**
      * 登录
      */
     private fun login() {
-        tagableScope.launch {
+        viewModelScope.launch {
             try {
                 // 显示进度条弹窗
                 progressData.postValue(ProgressModel(cancelable = false))
@@ -184,18 +192,18 @@ constructor(private val repository: MyRepository)
             }
         }
     }
-
+    
     /**
      * 检查并设置按钮是否允许点击
      */
     private fun checkBtnEnable() {
         buttonEnable.set(if (register.get().condition) {
             // 注册，两次输入密码长度一致且长度大于最小密码长度
-            password.get().length() == passwordAgain.get().length()
-                    && passwordAgain.get().length() >= PASSWORD_MIN_LENGTH
+            password.get()?.length == passwordAgain.get()?.length
+                    && passwordAgain.get()?.length.orElse(0) >= PASSWORD_MIN_LENGTH
         } else {
             // 登录，密码长度大于最小密码长度
-            password.get().length() >= PASSWORD_MIN_LENGTH
+            password.get()?.length.orElse(0) >= PASSWORD_MIN_LENGTH
         })
     }
 }

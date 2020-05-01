@@ -7,12 +7,14 @@ import android.graphics.Color
 import android.os.Build
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import cn.wj.android.base.constants.DEFAULT_CLICK_THROTTLE_MS
+import cn.wj.android.base.ext.setOnThrottleClickListener
 import cn.wj.android.common.ext.condition
-import cn.wj.android.common.ext.orTrue
 
 /**
  * View DataBinding 适配器
@@ -26,16 +28,9 @@ import cn.wj.android.common.ext.orTrue
  * @param throttle 点击筛选时间，单位 ms
  */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
-fun setViewOnClick(v: View, click: ((View) -> Unit)?, throttle: Int?) {
-    val interval = throttle ?: 1000
-    v.setOnClickListener {
-        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastTime > interval) {
-            click?.invoke(v)
-            v.setTag(R.id.databinding_view_click_tag, currentTime)
-        }
-    }
+fun setViewOnClick(v: View, click: ((View) -> Unit)?, throttle: Long?) {
+    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
+    v.setOnThrottleClickListener({ click?.invoke(v) }, interval)
 }
 
 /**
@@ -45,16 +40,9 @@ fun setViewOnClick(v: View, click: ((View) -> Unit)?, throttle: Int?) {
  * @param click 点击回调
  */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
-fun setViewOnClick(v: View, click: (() -> Unit)?, throttle: Int?) {
-    val interval = throttle ?: 1000
-    v.setOnClickListener {
-        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastTime > interval) {
-            click?.invoke()
-            v.setTag(R.id.databinding_view_click_tag, currentTime)
-        }
-    }
+fun setViewOnClick(v: View, click: (() -> Unit)?, throttle: Long?) {
+    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
+    v.setOnThrottleClickListener({ click?.invoke() }, interval)
 }
 
 /**
@@ -64,16 +52,9 @@ fun setViewOnClick(v: View, click: (() -> Unit)?, throttle: Int?) {
  * @param click 点击回调
  */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
-fun <T> setViewOnClick(v: View, click: ((View, T) -> Unit)?, item: T, throttle: Int?) {
-    val interval = throttle ?: 1000
-    v.setOnClickListener {
-        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastTime > interval) {
-            click?.invoke(v, item)
-            v.setTag(R.id.databinding_view_click_tag, currentTime)
-        }
-    }
+fun <T> setViewOnClick(v: View, click: ((View, T) -> Unit)?, item: T, throttle: Long?) {
+    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
+    v.setOnThrottleClickListener({ click?.invoke(v, item) }, interval)
 }
 
 /**
@@ -83,87 +64,9 @@ fun <T> setViewOnClick(v: View, click: ((View, T) -> Unit)?, item: T, throttle: 
  * @param click 点击回调
  */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
-fun <T> setViewOnClick(v: View, click: ViewItemClickListener<T>?, item: T, throttle: Int?) {
-    val interval = throttle ?: 1000
-    v.setOnClickListener {
-        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastTime > interval) {
-            click?.onItemClick(item)
-            v.setTag(R.id.databinding_view_click_tag, currentTime)
-        }
-    }
-}
-
-/**
- * View 点击事件
- */
-interface ViewItemClickListener<T> {
-    fun onItemClick(item: T)
-}
-
-/**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
-@BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
-fun <T> setViewOnClick(v: View, click: ((T) -> Unit)?, item: T, throttle: Int?) {
-    val interval = throttle ?: 1000
-    v.setOnClickListener {
-        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastTime > interval) {
-            click?.invoke(item)
-            v.setTag(R.id.databinding_view_click_tag, currentTime)
-        }
-    }
-}
-
-/**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param listener 点击回调
- */
-@BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
-fun setViewOnClick(v: View, listener: View.OnClickListener?, throttle: Int?) {
-    val interval = throttle ?: 1000
-    v.setOnClickListener {
-        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastTime > interval) {
-            listener?.onClick(v)
-            v.setTag(R.id.databinding_view_click_tag, currentTime)
-        }
-    }
-}
-
-/**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param listener 点击回调
- */
-@BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
-fun setViewOnClick(v: View, listener: ViewClickListener?, throttle: Int?) {
-    val interval = throttle ?: 1000
-    v.setOnClickListener {
-        val lastTime = (v.getTag(R.id.databinding_view_click_tag) as? Long) ?: 0L
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastTime > interval) {
-            listener?.onClick()
-            v.setTag(R.id.databinding_view_click_tag, currentTime)
-        }
-    }
-}
-
-/**
- * View 点击事件
- */
-interface ViewClickListener {
-    fun onClick()
+fun <T> setViewOnClick(v: View, click: ((T) -> Unit)?, item: T, throttle: Long?) {
+    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
+    v.setOnThrottleClickListener({ click?.invoke(item) }, interval)
 }
 
 /**
@@ -231,8 +134,8 @@ fun setViewVisibility(v: View, visibility: Int?) {
  * @param show 是否显示
  */
 @BindingAdapter("android:bind_visibility", "android:bind_visibility_gone", requireAll = false)
-fun setViewVisibility(v: View, show: Boolean?, gone: Boolean?) {
-    v.visibility = if (show.orTrue()) View.VISIBLE else if (gone.orTrue()) View.GONE else View.INVISIBLE
+fun setViewVisibility(v: View, show: Boolean?, gone: Boolean? = true) {
+    v.visibility = if (show.condition) View.VISIBLE else if (gone != false) View.GONE else View.INVISIBLE
 }
 
 /**
@@ -314,12 +217,18 @@ fun setViewFocusableListener(v: View, change: ((View, Boolean) -> Unit)?, listen
  *
  * @param v [View] 对象
  * @param onGlobal 回调
+ * @param single 是否只执行一次
  */
-@BindingAdapter("android:bind_onGlobal")
-fun setViewOnGlobal(v: View, onGlobal: ((View) -> Unit)?) {
-    v.viewTreeObserver.addOnGlobalLayoutListener {
-        onGlobal?.invoke(v)
-    }
+@BindingAdapter("android:bind_onGlobal", "android:bind_onGlobal_single", requireAll = false)
+fun setViewOnGlobal(v: View, onGlobal: ((View) -> Unit)?, single: Boolean?) {
+    v.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            onGlobal?.invoke(v)
+            if (single.condition) {
+                v.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        }
+    })
 }
 
 /**
@@ -328,11 +237,16 @@ fun setViewOnGlobal(v: View, onGlobal: ((View) -> Unit)?) {
  * @param v [View] 对象
  * @param onGlobal 回调
  */
-@BindingAdapter("android:bind_onGlobal")
-fun setViewOnGlobal(v: View, onGlobal: (() -> Unit)?) {
-    v.viewTreeObserver.addOnGlobalLayoutListener {
-        onGlobal?.invoke()
-    }
+@BindingAdapter("android:bind_onGlobal", "android:bind_onGlobal_single", requireAll = false)
+fun setViewOnGlobal(v: View, onGlobal: (() -> Unit)?, single: Boolean?) {
+    v.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            onGlobal?.invoke()
+            if (single.condition) {
+                v.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        }
+    })
 }
 
 /**
@@ -344,7 +258,7 @@ fun setViewOnGlobal(v: View, onGlobal: (() -> Unit)?) {
 @BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
 fun <T> setViewOnTouch(v: View, onTouch: ((View, MotionEvent, T) -> Boolean)?, item: T) {
     v.setOnTouchListener { _, event ->
-        onTouch?.invoke(v, event, item) ?: false
+        onTouch?.invoke(v, event, item).condition
     }
 }
 
@@ -368,7 +282,7 @@ fun setViewOnTouch(v: View, onTouch: ((View, MotionEvent) -> Boolean)?) {
 @BindingAdapter("android:bind_onTouch")
 fun setViewOnTouch(v: View, onTouch: ((MotionEvent) -> Boolean)?) {
     v.setOnTouchListener { _, ev ->
-        onTouch?.invoke(ev) ?: false
+        onTouch?.invoke(ev).condition
     }
 }
 
@@ -381,7 +295,7 @@ fun setViewOnTouch(v: View, onTouch: ((MotionEvent) -> Boolean)?) {
 @BindingAdapter("android:bind_onTouch")
 fun setViewOnTouch(v: View, onTouch: (() -> Boolean)?) {
     v.setOnTouchListener { _, _ ->
-        onTouch?.invoke() ?: false
+        onTouch?.invoke().condition
     }
 }
 
@@ -394,7 +308,7 @@ fun setViewOnTouch(v: View, onTouch: (() -> Boolean)?) {
 @BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
 fun <T> setViewOnTouch(v: View, onTouch: ((MotionEvent, T) -> Boolean)?, item: T) {
     v.setOnTouchListener { _, ev ->
-        onTouch?.invoke(ev, item) ?: false
+        onTouch?.invoke(ev, item).condition
     }
 }
 
@@ -407,7 +321,7 @@ fun <T> setViewOnTouch(v: View, onTouch: ((MotionEvent, T) -> Boolean)?, item: T
 @BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
 fun <T> setViewOnTouch(v: View, onTouch: ((T) -> Boolean)?, item: T) {
     v.setOnTouchListener { _, _ ->
-        onTouch?.invoke(item) ?: false
+        onTouch?.invoke(item).condition
     }
 }
 
@@ -432,10 +346,7 @@ fun setBackground(v: View, color: String?) {
  */
 @BindingAdapter("android:bind_background")
 fun setBackgroundRes(v: View, resId: Int?) {
-    if (null == resId) {
-        return
-    }
-    if (0 == resId) {
+    if (null == resId || 0 == resId) {
         v.background = null
     } else {
         v.setBackgroundResource(resId)
@@ -460,15 +371,15 @@ fun setElevation(v: View, elevation: Float?) {
  * 设置 View 动画列表
  * - 仅 API >= LOLLIPOP 有效
  *
- * @param animatorId 动画列表 id
+ * @param anmatorId 动画列表 id
  */
 @BindingAdapter("android:bind_stateListAnimator")
-fun setStateListAnimator(v: View, animatorId: Int?) {
-    if (null == animatorId) {
+fun setStateListAnimator(v: View, anmatorId: Int?) {
+    if (null == anmatorId) {
         return
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        v.stateListAnimator = AnimatorInflater.loadStateListAnimator(v.context, animatorId)
+        v.stateListAnimator = AnimatorInflater.loadStateListAnimator(v.context, anmatorId)
     }
 }
 
@@ -481,4 +392,42 @@ fun setAlpha(v: View, alpha: Float?) {
         return
     }
     v.alpha = alpha
+}
+
+/**
+ * 设置点击事件
+ *
+ * @param v [View] 对象
+ * @param click 点击回调
+ */
+@BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
+fun <T> setViewOnClick(v: View, click: ViewItemClickListener<T>?, item: T, throttle: Long?) {
+    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
+    v.setOnThrottleClickListener({ click?.onItemClick(item) }, interval)
+}
+
+/**
+ * View 点击事件
+ */
+interface ViewItemClickListener<T> {
+    fun onItemClick(item: T)
+}
+
+/**
+ * 设置点击事件
+ *
+ * @param v [View] 对象
+ * @param listener 点击回调
+ */
+@BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
+fun setViewOnClick(v: View, listener: ViewClickListener?, throttle: Long?) {
+    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
+    v.setOnThrottleClickListener({ listener?.onClick() }, interval)
+}
+
+/**
+ * View 点击事件
+ */
+interface ViewClickListener {
+    fun onClick()
 }

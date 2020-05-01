@@ -32,6 +32,6 @@ dependencies {
     // v7
     implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
     
-    // Common 库
-    implementation project(":lib_common")
+    // Base 库
+    api project(":lib_base")
 }
