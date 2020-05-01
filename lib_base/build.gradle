@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'com.github.dcendents.android-maven'
-//group='com.github.WangJie0822'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.WangJie0822'
 
 android {
 
@@ -42,6 +42,6 @@ dependencies {
     implementation rootProject.ext.dependencies["coroutines"]
 
     // Common 库
-//    api 'com.github.WangJie0822.SampleProject:lib_common:1.0.1'
+//    api 'com.github.WangJie0822.SampleProject:lib_common:0.0.1'
     api project(":lib_common")
 }
