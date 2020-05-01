@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+//apply plugin: 'com.github.dcendents.android-maven'
+//group='com.github.WangJie0822'
 
 android {
 
@@ -29,9 +31,6 @@ dependencies {
     // Kotlin 支持
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // 协程
-    implementation rootProject.ext.dependencies["coroutines"]
-
     // v4
     implementation rootProject.ext.dependencies["androidx_support-v4"]
     // v7
@@ -39,6 +38,10 @@ dependencies {
     // RecyclerView
     implementation rootProject.ext.dependencies["androidx_recyclerview"]
 
+    // 协程
+    implementation rootProject.ext.dependencies["coroutines"]
+
     // Common 库
+//    api 'com.github.WangJie0822.SampleProject:lib_base:1.0.1'
     api project(":lib_base")
 }
