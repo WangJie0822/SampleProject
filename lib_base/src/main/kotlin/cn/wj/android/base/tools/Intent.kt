@@ -103,6 +103,7 @@ fun jumpToBrowser(url: String, context: Context = AppManager.getContext()) {
  *
  * @param context [Context] 对象
  */
+@JvmOverloads
 fun jumpToDevelopment(context: Context = AppManager.getContext()) {
     try {
         val intent = Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS).apply {

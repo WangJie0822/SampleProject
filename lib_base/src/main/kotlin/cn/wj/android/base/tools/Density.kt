@@ -18,6 +18,7 @@ import kotlin.math.roundToInt
  *
  * @return 屏幕宽度，单位：px
  */
+@JvmOverloads
 fun getDeviceScreenWidth(context: Context = AppManager.getContext()): Int {
     return context.resources.displayMetrics.widthPixels
 }
@@ -29,6 +30,7 @@ fun getDeviceScreenWidth(context: Context = AppManager.getContext()): Int {
  *
  * @return 屏幕高度，单位：px
  */
+@JvmOverloads
 fun getDeviceScreenHeight(context: Context = AppManager.getContext()): Int {
     return context.resources.displayMetrics.heightPixels
 }
@@ -96,6 +98,7 @@ fun <N : Number> sp2px(spValue: N, context: Context = AppManager.getContext()): 
  *
  * @return 对应的 sp 值
  */
+@JvmOverloads
 fun <N : Number> px2sp(pxValue: N, context: Context = AppManager.getContext()): Float {
     val density = context.resources.displayMetrics.scaledDensity
     return pxValue.toFloat() / density

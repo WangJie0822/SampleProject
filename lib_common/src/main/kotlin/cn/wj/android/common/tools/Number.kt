@@ -80,6 +80,7 @@ fun <N : Number> N?.toBigDecimalOrZero(): BigDecimal {
  *
  * @return 格式化之后的字符串
  */
+@JvmOverloads
 fun String?.decimalFormat(format: String = "0.00"): String {
     return DecimalFormat(format).format(toDoubleOrZero())
 }
@@ -91,6 +92,7 @@ fun String?.decimalFormat(format: String = "0.00"): String {
  *
  * @return 格式化之后的字符串
  */
+@JvmOverloads
 fun <N : Number> N?.decimalFormat(format: String = "0.00"): String {
     return DecimalFormat(format).format(toDoubleOrZero())
 }

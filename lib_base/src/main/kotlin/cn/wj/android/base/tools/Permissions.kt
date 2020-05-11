@@ -22,6 +22,7 @@ import cn.wj.android.base.utils.AppManager
  *
  * @return 是否开启通知权限
  */
+@JvmOverloads
 fun isNotificationEnable(context: Context = AppManager.getContext()): Boolean {
     return NotificationManagerCompat.from(context).areNotificationsEnabled()
 }

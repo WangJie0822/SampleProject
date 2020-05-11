@@ -19,6 +19,7 @@ const val DATE_FORMAT_DEFAULT = "yyyy-MM-dd"
  *
  * @param format 日期时间格式
  */
+@JvmOverloads
 fun <N : Number> N.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
     return try {
         SimpleDateFormat(format, Locale.getDefault()).format(this)
@@ -32,6 +33,7 @@ fun <N : Number> N.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
  *
  * @param format 日期时间格式
  */
+@JvmOverloads
 fun Date.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
     return try {
         SimpleDateFormat(format, Locale.getDefault()).format(this)
@@ -52,7 +54,8 @@ fun String.paresDate(format: String): Date {
 }
 
 /**
- * 将字符串时间转换为 Long 类型时间
+ * 将字符串时间转
+@JvmOverloads换为 Long 类型时间
  */
 fun String?.toLongTime(format: String = DATE_FORMAT_DEFAULT): Long {
     return if (this.isNullOrEmpty()) {

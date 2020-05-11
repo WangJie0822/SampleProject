@@ -26,13 +26,13 @@ abstract class BaseLibDialog
     protected lateinit var mRootView: View
     
     /** Dialog 宽度 单位：px  */
-    protected var dialogWidth: Int = WindowManager.LayoutParams.MATCH_PARENT
+    open var dialogWidth: Int = WindowManager.LayoutParams.MATCH_PARENT
     
     /** Dialog 高度 单位：px */
-    protected var dialogHeight: Int = WindowManager.LayoutParams.MATCH_PARENT
+    open var dialogHeight: Int = WindowManager.LayoutParams.MATCH_PARENT
     
     /** Dialog 重心 [Gravity] */
-    protected var gravity: Int = Gravity.CENTER
+    open var gravity: Int = Gravity.CENTER
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

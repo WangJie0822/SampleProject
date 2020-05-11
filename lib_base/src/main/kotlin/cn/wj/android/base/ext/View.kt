@@ -84,6 +84,7 @@ fun View?.hideSoftKeyboard() {
  * @param onClick 点击回调
  * @param interval 点击间隔时间，单位：ms，默认：[DEFAULT_CLICK_THROTTLE_MS]
  */
+@JvmOverloads
 inline fun View.disposeThrottleClick(onClick: () -> Unit, interval: Long = DEFAULT_CLICK_THROTTLE_MS) {
     if (interval > 0) {
         val lastTime = (this.getTag(R.id.base_view_click_tag) as? Long) ?: 0L
@@ -104,6 +105,7 @@ inline fun View.disposeThrottleClick(onClick: () -> Unit, interval: Long = DEFAU
  * @param onClick 点击回调
  * @param interval 点击间隔时间，单位：ms，默认：[DEFAULT_CLICK_THROTTLE_MS]
  */
+@JvmOverloads
 inline fun View.setOnThrottleClickListener(crossinline onClick: () -> Unit, interval: Long = DEFAULT_CLICK_THROTTLE_MS) {
     this.setOnClickListener {
         this.disposeThrottleClick({

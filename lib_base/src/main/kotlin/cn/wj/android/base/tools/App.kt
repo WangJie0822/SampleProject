@@ -33,6 +33,7 @@ const val ALGORITHM_SHA256 = "SHA256"
  *  - MD5: [ALGORITHM_MD5] or SHA1: [ALGORITHM_SHA1] or SHA256: [ALGORITHM_SHA256]
  */
 @Suppress("DEPRECATION")
+@JvmOverloads
 fun getSignature(context: Context, algorithm: String, packageName: String? = null): String {
     // 包管理器
     val pm = context.packageManager

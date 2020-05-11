@@ -237,7 +237,7 @@ object AppUtil {
             }
             return picturePath
         } else {
-            val file = File(imgUri.path)
+            val file = File(imgUri.path.orEmpty())
             if (!file.exists()) {
                 val toast = Toast.makeText(context, "找不到图片", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)

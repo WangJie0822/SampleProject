@@ -12,7 +12,7 @@ import com.wj.android.ui.viewmodel.BaseLibViewModel
  *
  * @author 王杰
  */
-abstract class BaseMvvmLibDialog<VM : com.wj.android.ui.viewmodel.BaseLibViewModel>
+abstract class BaseMvvmLibDialog<VM : BaseLibViewModel>
     : BaseLibDialog() {
 
     /** 当前界面 ViewModel 对象 */

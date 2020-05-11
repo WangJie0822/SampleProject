@@ -19,7 +19,7 @@ import com.wj.android.ui.viewmodel.BaseLibViewModel
  *
  * @author 王杰
  */
-abstract class BaseBindingLibFragment<VM : com.wj.android.ui.viewmodel.BaseLibViewModel, DB : ViewDataBinding>
+abstract class BaseBindingLibFragment<VM : BaseLibViewModel, DB : ViewDataBinding>
     : BaseMvvmLibFragment<VM>() {
 
     /** DataBinding 对象 */

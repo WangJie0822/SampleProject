@@ -20,7 +20,7 @@ import com.wj.android.ui.viewmodel.BaseLibViewModel
  *
  * @author 王杰
  */
-abstract class BaseBindingLibDialog<VM : com.wj.android.ui.viewmodel.BaseLibViewModel, DB : ViewDataBinding>
+abstract class BaseBindingLibDialog<VM : BaseLibViewModel, DB : ViewDataBinding>
     : BaseMvvmLibDialog<VM>() {
 
     /** DataBinding 对象 */

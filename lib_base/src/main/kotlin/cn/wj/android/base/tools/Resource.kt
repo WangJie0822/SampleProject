@@ -28,8 +28,8 @@ import java.util.*
  *
  * @return 颜色值
  */
-@JvmOverloads
 @ColorInt
+@JvmOverloads
 fun getColorById(@ColorRes colorResId: Int, context: Context = AppManager.getContext()): Int {
     return ContextCompat.getColor(context, colorResId)
 }

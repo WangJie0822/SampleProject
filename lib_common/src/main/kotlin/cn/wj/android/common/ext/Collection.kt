@@ -56,6 +56,7 @@ fun <T> ArrayList<T>?.newList(): ArrayList<T> {
  * @param list 新的数据
  * @param clean 是否清空旧数据
  */
+@JvmOverloads
 fun <T> List<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean? = false): List<T> {
     val ls = mutableListOf<T>()
     if (!clean.condition) {
@@ -71,6 +72,7 @@ fun <T> List<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean? = false): 
  * @param list 新的数据
  * @param clean 是否清空旧数据
  */
+@JvmOverloads
 fun <T> ArrayList<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean? = false): ArrayList<T> {
     val ls = arrayListOf<T>()
     if (!clean.condition) {

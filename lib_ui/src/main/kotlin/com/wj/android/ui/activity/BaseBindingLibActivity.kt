@@ -16,7 +16,7 @@ import com.wj.android.ui.viewmodel.BaseLibViewModel
  *
  * @author 王杰
  */
-abstract class BaseBindingLibActivity<VM : com.wj.android.ui.viewmodel.BaseLibViewModel, DB : ViewDataBinding>
+abstract class BaseBindingLibActivity<VM : BaseLibViewModel, DB : ViewDataBinding>
     : BaseMvvmLibActivity<VM>() {
 
     /** DataBinding 对象 */
@@ -28,7 +28,7 @@ abstract class BaseBindingLibActivity<VM : com.wj.android.ui.viewmodel.BaseLibVi
                 LayoutInflater.from(mContext),
                 layoutResID, null, false
         )
-    
+
         // 绑定生命周期管理
         mBinding.lifecycleOwner = this
 

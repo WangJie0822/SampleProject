@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "DEPRECATION")
 
 package cn.wj.android.base.simple
 
@@ -6,8 +6,6 @@ import android.inputmethodservice.KeyboardView
 
 /**
  * 设置软键盘监听
- *
- * @sample cn.wj.android.base.sample.KeyboardActionListener.setOnKeyboardActionListener
  *
  * @author 王杰
  */
