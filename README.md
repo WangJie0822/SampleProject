@@ -8,7 +8,7 @@
 * MVVM 架构
 * Jetpack 组件
 * DataBinding
-* Kotlin 依赖注入
+* Koin 依赖注入
 * Retrofit + 协程 网络加载
 * Glide 图片加载
 * SmartRefreshLayout 刷新
