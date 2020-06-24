@@ -67,7 +67,7 @@ class CollectionActivity : BaseActivity<CollectionViewModel, AppActivityCollecti
         fun actionStart(context: Context = AppManager.getContext()) {
             context.startActivity(Intent(context, CollectionActivity::class.java).apply {
                 if (context !is Activity) {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
             })
         }

@@ -57,7 +57,7 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
             val intent = Intent(context, LoginActivity::class.java).apply {
                 putExtra(ACTION_NET_TO_LOGIN, fromNet)
                 if (context !is Activity) {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
             }
             context.startActivity(intent)

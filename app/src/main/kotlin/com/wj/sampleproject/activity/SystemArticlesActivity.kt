@@ -77,7 +77,7 @@ class SystemArticlesActivity : BaseActivity<SystemArticlesViewModel, AppActivity
                 putExtra(ACTION_TITLE, title)
                 putExtra(ACTION_SYSTEM_ID, cid)
                 if (context !is Activity) {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
             })
         }

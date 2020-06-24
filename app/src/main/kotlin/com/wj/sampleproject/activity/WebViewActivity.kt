@@ -84,7 +84,7 @@ class WebViewActivity
                 putExtra(ACTION_TITLE, title)
                 putExtra(ACTION_WEB_URL, url)
                 if (context !is Activity) {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
             })
         }
