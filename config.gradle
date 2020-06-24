@@ -15,17 +15,17 @@ ext {
     ]
     dependencies = [
             // 测试
-            "test_junit"                           : 'junit:junit:4.12',
+            "test_junit"                           : "junit:junit:4.13",
 
-            "test_mokito_inline"                   : 'org.mockito:mockito-inline:3.0.0',
-            "test_mokito_android"                  : 'org.mockito:mockito-android:3.0.0',
+            "test_mokito_inline"                   : "org.mockito:mockito-inline:3.3.3",
+            "test_mokito_android"                  : "org.mockito:mockito-android:3.3.3",
 
-            "test_uiautomator_v18"                 : 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3',
+            "test_uiautomator_v18"                 : "com.android.support.test.uiautomator:uiautomator-v18:2.1.3",
 
-            "androidx_test_ext_junit"              : 'androidx.test.ext:junit:1.1.1',
-            "androidx_test_rules"                  : 'androidx.test:rules:1.2.0',
-            "androidx_test_runner"                 : 'androidx.test:runner:1.2.0',
-            "androidx_test_espresso-core"          : 'androidx.test.espresso:espresso-core:3.2.0',
+            "androidx_test_ext_junit"              : "androidx.test.ext:junit:1.1.1",
+            "androidx_test_rules"                  : "androidx.test:rules:1.2.0",
+            "androidx_test_runner"                 : "androidx.test:runner:1.2.0",
+            "androidx_test_espresso-core"          : "androidx.test.espresso:espresso-core:3.2.0",
 
             // androidx - v4
             "androidx_support-v4"                  : "androidx.legacy:legacy-support-v4:1.0.0",
@@ -34,7 +34,7 @@ ext {
             // androidx - design
             "androidx_design"                      : "com.google.android.material:material:1.1.0",
             // androidx - 约束性布局
-            "androidx_constraint"                  : "androidx.constraintlayout:constraintlayout:2.0.0-beta4",
+            "androidx_constraint"                  : "androidx.constraintlayout:constraintlayout:2.0.0-beta7",
             // androidx - Recyclerview
             "androidx_recyclerview"                : "androidx.recyclerview:recyclerview:1.1.0",
             // androidx - Dex 分包
@@ -79,21 +79,21 @@ ext {
             "zxing"                                : "com.google.zxing:core:3.4.0",
 
             // Koin https://github.com/InsertKoinIO/koin
-            "android-koin"                         : "org.koin:koin-android:2.1.5",
-            "android-koin-test"                    : "org.koin:koin-test:2.1.5",
-            "android-koin-scope"                   : "org.koin:koin-android-scope:2.1.5",
-            "android-koin-viewmodel"               : "org.koin:koin-android-viewmodel:2.1.5",
-            "android-koin-ext"                     : "org.koin:koin-android-ext:2.1.5",
-            "androidx-koin-scope"                  : "org.koin:koin-androidx-scope:2.1.5",
-            "androidx-koin-viewmodel"              : "org.koin:koin-androidx-viewmodel:2.1.5",
-            "androidx-koin-ext"                    : "org.koin:koin-androidx-ext:2.1.5",
+            "android-koin"                         : "org.koin:koin-android:2.1.6",
+            "android-koin-test"                    : "org.koin:koin-test:2.1.6",
+            "android-koin-scope"                   : "org.koin:koin-android-scope:2.1.6",
+            "android-koin-viewmodel"               : "org.koin:koin-android-viewmodel:2.1.6",
+            "android-koin-ext"                     : "org.koin:koin-android-ext:2.1.6",
+            "androidx-koin-scope"                  : "org.koin:koin-androidx-scope:2.1.6",
+            "androidx-koin-viewmodel"              : "org.koin:koin-androidx-viewmodel:2.1.6",
+            "androidx-koin-ext"                    : "org.koin:koin-androidx-ext:2.1.6",
 
             // RxJava https://github.com/ReactiveX/RxJava
-            "rxjava2"                              : "io.reactivex.rxjava2:rxjava:2.2.19",
+            "rxjava2"                              : "io.reactivex.rxjava2:rxjava:3.0.4",
             // RxAndroid
-            "rxandroid2"                           : "io.reactivex.rxjava2:rxandroid:2.1.1",
+            "rxandroid2"                           : "io.reactivex.rxjava2:rxandroid:3.0.0",
             // RxKotlin
-            "rxkotlin2"                            : "io.reactivex.rxjava2:rxkotlin:2.4.0",
+            "rxkotlin2"                            : "io.reactivex.rxjava2:rxkotlin:3.0.0",
 
             // 美团多渠道 https://github.com/Meituan-Dianping/walle
             "walle-channel"                        : "com.meituan.android.walle:library:1.1.6",
@@ -103,18 +103,14 @@ ext {
             "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.11.0",
 
             // okhttp https://github.com/square/okhttp
-            "okhttp"                               : "com.squareup.okhttp3:okhttp:4.6.0",
-            "okhttp-urlconnection"                 : "com.squareup.okhttp3:okhttp-urlconnection:4.6.0",
-            "okhttp-logging"                       : "com.squareup.okhttp3:logging-interceptor:4.6.0",
-
-            // Nohttp网络框架 https://github.com/yanzhenjie/NoHttp
-            "nohttp"                               : "com.yanzhenjie.nohttp:nohttp:1.1.11",
-            "nohttp-okhttp"                        : "com.yanzhenjie.nohttp:okhttp:1.1.11",
+            "okhttp"                               : "com.squareup.okhttp3:okhttp:4.7.2",
+            "okhttp-urlconnection"                 : "com.squareup.okhttp3:okhttp-urlconnection:4.7.2",
+            "okhttp-logging"                       : "com.squareup.okhttp3:logging-interceptor:4.7.2",
 
             // retrofit https://github.com/square/retrofit
-            "retrofit"                             : "com.squareup.retrofit2:retrofit:2.8.1",
-            "retrofit-rxjava2"                     : "com.squareup.retrofit2:adapter-rxjava2:2.8.1",
-            "retrofit-gson"                        : "com.squareup.retrofit2:converter-gson:2.8.1",
+            "retrofit"                             : "com.squareup.retrofit2:retrofit:2.9.0",
+            "retrofit-rxjava2"                     : "com.squareup.retrofit2:adapter-rxjava2:2.9.0",
+            "retrofit-gson"                        : "com.squareup.retrofit2:converter-gson:2.9.0",
 
             // RxPermission https://github.com/tbruyelle/RxPermissions
             "rxpermission"                         : "com.github.tbruyelle:rxpermissions:0.10.2",
@@ -127,16 +123,13 @@ ext {
             "tablayout"                            : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
 
             // androidx - livedatabus https://github.com/JeremyLiao/LiveEventBus
-            "androidx-livedatabus"                 : "com.jeremyliao:live-event-bus-x:1.5.1",
+            "androidx-livedatabus"                 : "com.jeremyliao:live-event-bus-x:1.7.2",
 
             // evenbus https://github.com/greenrobot/EventBus
             "eventbus"                             : "org.greenrobot:eventbus:3.2.0",
 
             // Gif 图显示控件 https://github.com/koral--/android-gif-drawable
-            "gif-drawable"                         : "pl.droidsonroids.gif:android-gif-drawable:1.2.18",
-
-            // 老九兼容库 https://github.com/JakeWharton/NineOldAndroids
-            "nine-old"                             : "com.nineoldandroids:library:2.4.0",
+            "gif-drawable"                         : "pl.droidsonroids.gif:android-gif-drawable:1.2.20",
 
             // 状态栏工具 https://github.com/gyf-dev/ImmersionBar
             "immersionbar"                         : "com.gyf.immersionbar:immersionbar:3.0.0",
@@ -146,30 +139,27 @@ ext {
             "swipebacklayout"                      : "me.imid.swipebacklayout.lib:library:1.1.0",
 
             // 图片选择器 https://github.com/LuckSiege/PictureSelector
-            "picture-selector"                     : "com.github.LuckSiege.PictureSelector:picture_library:v2.4.2",
+            "picture-selector"                     : "com.github.LuckSiege.PictureSelector:picture_library:v2.5.8",
 
             // 内存泄漏检测 https://square.github.io/leakcanary/
-            "leakcanary-debug"                     : "com.squareup.leakcanary:leakcanary-android:2.2",
+            "leakcanary-debug"                     : "com.squareup.leakcanary:leakcanary-android:2.4",
             "leakcanary-release"                   : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.3",
 
             // RecyclerView 适配器 https://github.com/CymChad/BaseRecyclerViewAdapterHelper
-            "recyclerview-adapter"                 : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50",
+            "recyclerview-adapter"                 : "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4",
 
             // ViewPager 指示器 https://github.com/LuckyJayce/ViewPagerIndicator
-            "viewPager-indicator"                  : "com.shizhefei:ViewPagerIndicator:1.1.7",
-
-            // 左滑删除菜单 https://github.com/mcxtzhang/SwipeDelMenuLayout
-            "swipe-delete-menu-layout"             : "com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0",
+            "viewPager-indicator"                  : "com.shizhefei:ViewPagerIndicator:1.1.9.androidx",
 
             // 微信 SDK https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417751808&token=&lang=zh_CN
             "wechat-sdk"                           : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8",
 
             // Xutils3 https://github.com/wyouflf/xUtils3
-            "xutils-3"                             : "org.xutils:xutils:3.5.0",
+            "xutils-3"                             : "org.xutils:xutils:3.8.12",
 
             // doraemonkit https://github.com/didi/DoraemonKit
-            "doraemonkit-debug"                    : "com.didichuxing.doraemonkit:doraemonkit:2.0.1",
-            "doraemonkit-release"                  : "com.didichuxing.doraemonkit:doraemonkit-no-op:2.0.2",
+            "doraemonkit-debug"                    : "com.didichuxing.doraemonkit:doraemonkit:3.1.8",
+            "doraemonkit-release"                  : "com.didichuxing.doraemonkit:doraemonkit-no-op:3.1.8",
 
             // bugly https://bugly.qq.com/v2/index
             "bugly-crashreport"                    : "com.tencent.bugly:crashreport:3.1.0",
