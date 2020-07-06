@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import cn.wj.android.base.adapter.FragVpAdapter
+import cn.wj.android.base.adapter.creator
 import cn.wj.android.base.ext.string
 import cn.wj.android.base.utils.AppManager
 import com.tencent.mmkv.MMKV
@@ -21,28 +21,26 @@ import kotlin.math.absoluteValue
 
 class MainActivity
     : BaseActivity<MainViewModel, AppActivityMainBinding>() {
-    
+
     override val viewModel: MainViewModel by viewModel()
-    
+
     /** 上次返回点击时间 */
     private var lastBackPressMs = 0L
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity_main)
-        
+
         // 初始化 MMKV
         MMKV.initialize(mContext)
-        
+
         // 配置适配器
         mBinding.cvpMain.adapter = FragVpAdapter.newBuilder()
                 .manager(supportFragmentManager)
-                .creator(object : FragVpAdapter.Creator {
-                    override val count: Int
-                        get() = 5
-            
-                    override fun createFragment(position: Int): Fragment {
-                        return when (position) {
+                .creator {
+                    count(5)
+                    createFragment { position ->
+                        when (position) {
                             TAB_MAIN_BOTTOM_HOMEPAGE -> HomepageFragment.actionCreate()
                             TAB_MAIN_BOTTOM_SYSTEM -> SystemFragment.actionCreate()
                             TAB_MAIN_BOTTOM_BJNEWS -> BjnewsFragment.actionCreate()
@@ -50,10 +48,10 @@ class MainActivity
                             else -> MyFragment.actionCreate()
                         }
                     }
-                })
+                }
                 .build()
     }
-    
+
     override fun onBackPressed() {
         // 当前时间
         val currentBackPressMs = System.currentTimeMillis()
@@ -67,7 +65,7 @@ class MainActivity
             moveTaskToBack(true)
         }
     }
-    
+
     companion object {
         /**
          * 界面入口
