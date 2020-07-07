@@ -32,7 +32,7 @@ object AppManager {
 
     /** 前台界面个数 */
     private var foregroundCount = 0
-    
+
     /** App 前后台切换回调 */
     private var mAppForgrountStatusChangeCallback: ((Boolean) -> Unit)? = null
 
@@ -115,13 +115,12 @@ object AppManager {
      *
      * @param application 应用 [Application] 对象
      */
-    @JvmStatic
-    fun register(application: Application) {
+    internal fun register(application: Application) {
         mApplication = application
         application.unregisterActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
     }
-    
+
     /**
      * 设置 App 前后台状态切换监听
      *
@@ -267,11 +266,11 @@ object AppManager {
         finishAllActivity()
         add(activity)
     }
-    
+
     /**
      * 结束指定 Activity 之外的其他 Activity
      *
-     * @param activity 指定不关闭的 Activity
+     * @param clazz 指定不关闭的 Activity
      */
     @JvmStatic
     fun finishAllWithout(vararg clazz: Class<out Activity>) {

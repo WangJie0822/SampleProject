@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
 import cn.wj.android.base.log.InternalLog
-import cn.wj.android.base.utils.AppManager
 import cn.wj.android.logger.AndroidLogAdapter
 import cn.wj.android.logger.Logger
 import cn.wj.android.logger.PrettyFormatStrategy
@@ -32,9 +31,6 @@ class MyApplication : Application() {
     
     override fun onCreate() {
         super.onCreate()
-        
-        // 注册应用管理
-        AppManager.register(this)
         
         // 初始化 Koin
         startKoin {

@@ -7,4 +7,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
+    <application>
+        <provider
+            android:name=".provider.InitContentProvider"
+            android:authorities="cn.wj.android.base.provider.InitContentProvider"
+            android:exported="false" />
+    </application>
+
 </manifest>
