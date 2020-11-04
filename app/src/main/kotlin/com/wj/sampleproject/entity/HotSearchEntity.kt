@@ -10,9 +10,9 @@ package com.wj.sampleproject.entity
  * @author 王杰
  */
 data class HotSearchEntity(
-        var id: String? = "",
-        var link: String? = "",
-        var name: String? = "",
-        var order: String? = "",
-        var visible: String? = ""
+        val id: String? = "",
+        val link: String? = "",
+        val name: String? = "",
+        val order: String? = "",
+        val visible: String? = ""
 )

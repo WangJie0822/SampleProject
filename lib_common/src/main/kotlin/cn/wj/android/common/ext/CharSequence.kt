@@ -10,7 +10,7 @@ package cn.wj.android.common.ext
 /**
  * 判断字符序列是否不为 null 且不是空格
  *
- * @return 字符序列为 null 或是空格：false 字符序列不为 null 且不是空格
+ * @return 是否不为 null 且不是空格
  */
 fun CharSequence?.isNotNullAndBlank(): Boolean {
     return !isNullOrBlank()
@@ -19,7 +19,7 @@ fun CharSequence?.isNotNullAndBlank(): Boolean {
 /**
  * 判断字符序列是否不为 null 且不是空串
  *
- * @return 字符序列为 null 或是空串：false 字符序列不为 null 且不是空串
+ * @return 是否不为 null 且不是空串
  */
 fun CharSequence?.isNotNullAndEmpty(): Boolean {
     return !isNullOrEmpty()

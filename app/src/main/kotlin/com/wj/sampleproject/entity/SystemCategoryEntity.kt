@@ -12,11 +12,11 @@ package com.wj.sampleproject.entity
  * @param children 子目录列表
  */
 data class SystemCategoryEntity(
-        var courseId: String? = "",
-        var id: String? = "",
-        var name: String? = "",
-        var order: String? = "",
-        var parentChapterId: String? = "",
-        var visible: String? = "",
-        var children: ArrayList<SystemCategoryEntity>? = arrayListOf()
+        val courseId: String? = "",
+        val id: String? = "",
+        val name: String? = "",
+        val order: String? = "",
+        val parentChapterId: String? = "",
+        val visible: String? = "",
+        val children: ArrayList<SystemCategoryEntity>? = arrayListOf()
 )

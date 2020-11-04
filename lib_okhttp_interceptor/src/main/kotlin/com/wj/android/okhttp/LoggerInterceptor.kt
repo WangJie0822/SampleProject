@@ -253,62 +253,62 @@ constructor(
         val protocol = connection?.protocol() ?: Protocol.HTTP_1_1
         // 拼接文本
         val url = request.url
-        logStr.appendln("--> ${request.method} $url $protocol")
+        logStr.appendLine("--> ${request.method} $url $protocol")
         if (!logHeaders && requestBody != null) {
-            logStr.appendln(" (${requestBody.contentLength()}-byte body")
+            logStr.appendLine(" (${requestBody.contentLength()}-byte body")
         }
         
         if (logHeaders) {
             if (requestBody != null) {
                 if (requestBody.contentType() != null) {
-                    logStr.appendln("Content-Type ${requestBody.contentType()}")
+                    logStr.appendLine("Content-Type ${requestBody.contentType()}")
                 }
                 if (requestBody.contentLength() != -1L) {
-                    logStr.appendln("Content-Length: ${requestBody.contentLength()}")
+                    logStr.appendLine("Content-Length: ${requestBody.contentLength()}")
                 }
             }
-            
+
             // 获取拼接参数
-            logStr.appendln(">> START QueryParameters")
-            val parametersMaxLength = url.queryParameterNames.maxBy { it.length }?.length ?: 0
+            logStr.appendLine(">> START QueryParameters")
+            val parametersMaxLength = url.queryParameterNames.maxByOrNull { it.length }?.length ?: 0
             for (name in url.queryParameterNames) {
                 for (value in url.queryParameterValues(name)) {
-                    logStr.appendln("\t${name.fixLength(parametersMaxLength)}\t: \t${value}")
+                    logStr.appendLine("\t${name.fixLength(parametersMaxLength)}\t: \t${value}")
                 }
             }
-            logStr.appendln(">> END QueryParameters\n")
-            
+            logStr.appendLine(">> END QueryParameters\n")
+
             // 获取请求头
             val headers = request.headers
-            val headersMaxLength = headers.names().maxBy { it.length }?.length ?: 0
-            logStr.appendln(">> START Headers")
+            val headersMaxLength = headers.names().maxByOrNull { it.length }?.length ?: 0
+            logStr.appendLine(">> START Headers")
             for (i in 0 until headers.size) {
                 val name = headers.name(i)
                 if (!"Content-Type".equals(name, true) && !"Content-Length".equals(name, true)) {
-                    logStr.appendln("\t${name.fixLength(headersMaxLength)}\t: \t${headers.value(i)}")
+                    logStr.appendLine("\t${name.fixLength(headersMaxLength)}\t: \t${headers.value(i)}")
                 }
             }
-            logStr.appendln(">> END Headers")
-            
+            logStr.appendLine(">> END Headers")
+
             when {
                 !logBody || requestBody == null ->
-                    logStr.appendln("--> END ${request.method}")
+                    logStr.appendLine("--> END ${request.method}")
                 bodyEncoded(request.headers) ->
-                    logStr.appendln("--> END ${request.method} (encoded body omitted)")
+                    logStr.appendLine("--> END ${request.method} (encoded body omitted)")
                 else -> {
                     val buffer = Buffer()
                     requestBody.writeTo(buffer)
-                    
+
                     val contentType = requestBody.contentType()
                     val charset = contentType?.charset(UTF_8) ?: UTF_8
-                    
-                    logStr.appendln()
+
+                    logStr.appendLine()
                     if (isPlaintext(buffer)) {
-                        logStr.appendln(">> ${contentType.toString()}")
-                        logStr.appendln("  |${buffer.readString(charset)}\n")
-                        logStr.appendln("--> END ${request.method} (${requestBody.contentLength()}-byte body)")
+                        logStr.appendLine(">> ${contentType.toString()}")
+                        logStr.appendLine("  |${buffer.readString(charset)}\n")
+                        logStr.appendLine("--> END ${request.method} (${requestBody.contentLength()}-byte body)")
                     } else {
-                        logStr.appendln("--> END ${request.method} (binary ${requestBody.contentLength()}-byte body omitted")
+                        logStr.appendLine("--> END ${request.method} (binary ${requestBody.contentLength()}-byte body omitted")
                     }
                 }
             }
@@ -319,7 +319,7 @@ constructor(
         val response = try {
             chain.proceed(request)
         } catch (e: Exception) {
-            logStr.appendln("<-- HTTP FAILED: $e")
+            logStr.appendLine("<-- HTTP FAILED: $e")
             logger.invoke(logStr.toString())
             throw e
         }
@@ -330,25 +330,29 @@ constructor(
         val responseBody = response.body
         
         if (responseBody != null) {
-            logStr.appendln(
+            logStr.appendLine(
                     "<-- ${response.code} ${response.message} ${response.request.url}" +
-                            " (${tookMs}ms${if (!logHeaders)
-                                ", ${if (responseBody.contentLength() != -1L) "$responseBody-byte"
-                                else "unknown-length"} body"
-                            else ""})"
+                            " (${tookMs}ms${
+                                if (!logHeaders)
+                                    ", ${
+                                        if (responseBody.contentLength() != -1L) "$responseBody-byte"
+                                        else "unknown-length"
+                                    } body"
+                                else ""
+                            })"
             )
             
             if (logHeaders) {
                 val headers = response.headers
                 for (i in 0 until headers.size) {
-                    logStr.appendln("${headers.name(i)}: ${headers.value(i)}")
+                    logStr.appendLine("${headers.name(i)}: ${headers.value(i)}")
                 }
                 
                 when {
                     !logBody ->
-                        logStr.appendln("<-- END HTTP")
+                        logStr.appendLine("<-- END HTTP")
                     bodyEncoded(response.headers) ->
-                        logStr.appendln("--< END HTTP (encoded body omitted")
+                        logStr.appendLine("--< END HTTP (encoded body omitted")
                     else -> {
                         val source = responseBody.source()
                         source.request(Long.MAX_VALUE)
@@ -358,26 +362,27 @@ constructor(
                         val charset = contentType?.charset(UTF_8) ?: UTF_8
                         
                         if (!isPlaintext(buffer)) {
-                            logStr.appendln()
-                            logStr.appendln("<-- END HTTP (binary ${buffer.size}-byte body omitted")
+                            logStr.appendLine()
+                            logStr.appendLine("<-- END HTTP (binary ${buffer.size}-byte body omitted")
                             logger.invoke(logStr.toString())
                             return response
                         }
                         
                         if (responseBody.contentLength() != 0L) {
-                            logStr.appendln()
+                            logStr.appendLine()
                             val json = buffer.clone().readString(charset)
-                            logStr.appendln(json)
+                            logStr.appendLine(json)
                             val jsonFormat = json.jsonFormat()
-                            logStr.appendln(
+                            logStr.appendLine(
                                     if (jsonFormat.length > 200)
                                         "${jsonFormat.substring(0, 100)}\n\n The Json String was too long...\n\n ${
-                                        jsonFormat.substring(jsonFormat.length - 100)}"
+                                            jsonFormat.substring(jsonFormat.length - 100)
+                                        }"
                                     else
                                         "$jsonFormat\n"
                             )
                         }
-                        logStr.appendln("<-- END HTTP (${buffer.size}-byte body)")
+                        logStr.appendLine("<-- END HTTP (${buffer.size}-byte body)")
                     }
                 }
             }
@@ -419,7 +424,7 @@ constructor(
     
     private fun logHeader(logStr: StringBuilder, headers: Headers, i: Int) {
         val value = if (headers.name(i) in headersToRedact) "██" else headers.value(i)
-        logStr.appendln(headers.name(i) + ": " + value)
+        logStr.appendLine(headers.name(i) + ": " + value)
     }
     
     private fun bodyHasUnknownEncoding(headers: Headers): Boolean {

@@ -5,8 +5,8 @@ package com.wj.sampleproject.databinding
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import com.scwang.smartrefresh.layout.SmartRefreshLayout
-import com.scwang.smartrefresh.layout.constant.RefreshState
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.constant.RefreshState
 
 /**
  * SmartRefreshLayout DataBinding 适配器

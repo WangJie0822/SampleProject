@@ -112,7 +112,7 @@ fun CharSequence?.isNotUrl(): Boolean {
 /**
  * 判断字符序列是否满足汉字格式
  *
- * @return 满足汉字格式：[true] or 不满足汉字格式：[false]
+ * @return 满足汉字格式：true or 不满足汉字格式：false
  */
 fun CharSequence?.isZH(): Boolean {
     return isMatch(regex = "^[\\u4e00-\\u9fa5]+$")
@@ -121,7 +121,7 @@ fun CharSequence?.isZH(): Boolean {
 /**
  * 判断字符序列是否不满足汉字格式
  *
- * @return 不满足汉字格式：[true] or 满足汉字格式：[false]
+ * @return 不满足汉字格式：true or 满足汉字格式：false
  */
 fun CharSequence?.isNotZH(): Boolean {
     return !isZH()
@@ -130,7 +130,7 @@ fun CharSequence?.isNotZH(): Boolean {
 /**
  * 判断字符序列是否满足银行卡号格式
  *
- * @return 满足银行卡号格式：[true] or 不满足银行卡号格式：[false]
+ * @return 满足银行卡号格式：true or 不满足银行卡号格式：false
  */
 fun CharSequence?.isBankCardNo(): Boolean {
     return isMatch(regex = "^([1-9]{1})(\\d{14}|\\d{15}|\\d{16}|\\d{17}|\\d{18})$")
@@ -139,7 +139,7 @@ fun CharSequence?.isBankCardNo(): Boolean {
 /**
  * 判断字符序列是否不满足银行卡号格式
  *
- * @return 不满足银行卡号格式：[true] or 满足银行卡号格式：[false]
+ * @return 不满足银行卡号格式：true or 满足银行卡号格式：false
  */
 fun CharSequence?.isNotBankCardNo(): Boolean {
     return !isBankCardNo()
@@ -148,7 +148,7 @@ fun CharSequence?.isNotBankCardNo(): Boolean {
 /**
  * 判断字符序列是否满足身份证号格式
  *
- * @return 满足身份证号格式：[true] or 不满足身份证号格式：[false]
+ * @return 满足身份证号格式：true or 不满足身份证号格式：false
  */
 fun CharSequence?.isIdCardNo(): Boolean {
     return isMatch(regex = "(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]\$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}$)")
@@ -157,7 +157,7 @@ fun CharSequence?.isIdCardNo(): Boolean {
 /**
  * 判断字符序列是否不满足身份证号格式
  *
- * @return 不满足身份证号格式：[true] or 满足身份证号格式：[false]
+ * @return 不满足身份证号格式：true or 满足身份证号格式：false
  */
 fun CharSequence?.isNotIdCardNo(): Boolean {
     return !isIdCardNo()

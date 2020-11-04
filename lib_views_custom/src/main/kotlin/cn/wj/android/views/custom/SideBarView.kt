@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package cn.wj.android.views.custom
 
 import android.content.Context
@@ -35,24 +37,31 @@ class SideBarView @JvmOverloads constructor(
 
     /** 默认背景颜色 */
     private val bgColorNormal: Int
+
     /** 按下背景颜色 */
     private val bgColorPressed: Int
+
     /** 文字大小 */
     private val textSize: Int
+
     /** 默认文本颜色 */
     private val textColorNormal: Int
+
     /** 按下文本颜色 */
     private val textColorPressed: Int
 
     /** 默认画笔 */
     private val paintNormal: Paint
+
     /** 选中画笔 */
     private val paintSelect: Paint
 
     /** 控件高度 */
     private var mHeight: Int = 0
+
     /** 控件宽度 */
     private var mWidth: Int = 0
+
     /** 每个文本高度 */
     private var perHeight: Int = 0
 
@@ -134,7 +143,7 @@ class SideBarView @JvmOverloads constructor(
         when (mode) {
             MeasureSpec.EXACTLY -> result = size
             else -> {
-                val textWidth = paintNormal.measureText(letters.maxBy { it.length })
+                val textWidth = paintNormal.measureText(letters.maxByOrNull { it.length })
                 if (isWidth) {
                     result = if (suggestedMinimumWidth > textWidth) suggestedMinimumWidth else textWidth.toInt()
                     result += padding

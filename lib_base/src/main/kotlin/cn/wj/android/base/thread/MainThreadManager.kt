@@ -8,6 +8,7 @@ import android.os.Looper
 /**
  * 主线程管理器
  * - 在任意地方将代码 post 到主线程执行
+ *
  * ```
  * MainThreadManager.postToMainThread({
  *      // do something

@@ -13,11 +13,11 @@ import cn.wj.android.base.log.InternalLog
 /* ----------------------------------------------------------------------------------------- */
 
 /**
- * 解析 Html
+ * 解析 [Html]
  *
- * @param str html 文本
+ * @param str [Html] 文本
  *
- * @return 从 Html 解析出的 Spanned 对象
+ * @return 从 [Html] 解析出的 [Spanned] 对象
  */
 fun parseHtmlFromString(str: String): Spanned? {
     @Suppress("DEPRECATION")

@@ -30,9 +30,11 @@ const val ALGORITHM_SHA256 = "SHA256"
  *
  * @param context [Context] 对象
  * @param algorithm 签名算法
- *  - MD5: [ALGORITHM_MD5] or SHA1: [ALGORITHM_SHA1] or SHA256: [ALGORITHM_SHA256]
+ *
+ *  @see ALGORITHM_MD5
+ *  @see ALGORITHM_SHA1
+ *  @see ALGORITHM_SHA256
  */
-@Suppress("DEPRECATION")
 @JvmOverloads
 fun getSignature(context: Context, algorithm: String, packageName: String? = null): String {
     // 包管理器
@@ -41,6 +43,7 @@ fun getSignature(context: Context, algorithm: String, packageName: String? = nul
     val apps = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         pm.getInstalledPackages(PackageManager.GET_SIGNING_CERTIFICATES)
     } else {
+        @Suppress("DEPRECATION")
         pm.getInstalledPackages(PackageManager.GET_SIGNATURES)
     }
     
@@ -58,6 +61,7 @@ fun getSignature(context: Context, algorithm: String, packageName: String? = nul
     val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         app.signingInfo.apkContentsSigners
     } else {
+        @Suppress("DEPRECATION")
         app.signatures
     }
     if (signatures.isNullOrEmpty()) {

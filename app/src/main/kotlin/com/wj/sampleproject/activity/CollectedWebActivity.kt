@@ -1,11 +1,10 @@
 package com.wj.sampleproject.activity
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
+import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.utils.AppManager
 import cn.wj.android.recyclerview.adapter.SimpleRvListAdapter
 import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
@@ -55,7 +54,7 @@ class CollectedWebActivity : BaseActivity<CollectedWebViewModel, AppActivityColl
 
     override fun initObserve() {
         // 收藏列表
-        viewModel.websListData.observe(this, Observer {
+        viewModel.websListData.observe(this, {
             mAdapter.submitList(it)
         })
         // Popup
@@ -69,16 +68,16 @@ class CollectedWebActivity : BaseActivity<CollectedWebViewModel, AppActivityColl
             }.show()
         })
         // 编辑弹窗
-        viewModel.editDialogData.observe(this, Observer {
+        viewModel.editDialogData.observe(this, {
             EditCollectedWebDialog.actionShow(mContext, it)
         })
         // 跳转 WebView
-        viewModel.jumpWebViewData.observe(this, Observer {
+        viewModel.jumpWebViewData.observe(this, {
             WebViewActivity.actionStart(mContext, it.title, it.url)
         })
         // LiveEvent
         LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB)
-                .observe(this, Observer {
+                .observe(this, {
                     viewModel.refreshing.set(true)
                 })
     }
@@ -90,11 +89,7 @@ class CollectedWebActivity : BaseActivity<CollectedWebViewModel, AppActivityColl
          * @param context Context 对象
          */
         fun actionStart(context: Context = AppManager.getContext()) {
-            context.startActivity(Intent(context, CollectedWebActivity::class.java).apply {
-                if (context !is Activity) {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            })
+            context.startTargetActivity(CollectedWebActivity::class.java)
         }
     }
 }

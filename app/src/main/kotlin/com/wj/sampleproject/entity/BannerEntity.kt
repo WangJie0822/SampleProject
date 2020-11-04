@@ -12,13 +12,13 @@ package com.wj.sampleproject.entity
  * @param type ？
  * @param url 跳转链接
  */
-class BannerEntity(
-        var desc: String? = "",
-        var id: String? = "",
-        var imagePath: String? = "",
-        var isVisible: String? = "",
-        var order: String? = "",
-        var title: String? = "",
-        var type: String? = "",
-        var url: String? = ""
+data class BannerEntity(
+        val desc: String? = "",
+        val id: String? = "",
+        val imagePath: String? = "",
+        val isVisible: String? = "",
+        val order: String? = "",
+        val title: String? = "",
+        val type: String? = "",
+        val url: String? = ""
 )

@@ -17,7 +17,7 @@ import java.util.*
  * 复制到剪切板
  *
  * @param text 要复制的文本
- * @param context Context 对象
+ * @param context [Context] 对象
  * @param label 标签
  */
 @JvmOverloads
@@ -27,11 +27,11 @@ fun copyToClipboard(text: String, context: Context = AppManager.getContext(), la
 }
 
 /**
- * 将 ByteArray 转换为 16 进制 String
+ * 将 [ByteArray] 转换为 16 进制 [String]
  *
- * @param bytes Byte 数组
+ * @param bytes [Byte] 数组
  *
- * @return 转换后的 16 进制 String
+ * @return 转换后的 16 进制 [String]
  */
 fun bytesToHexString(bytes: ByteArray?): String {
     val stringBuilder = StringBuilder("")
@@ -50,11 +50,11 @@ fun bytesToHexString(bytes: ByteArray?): String {
 }
 
 /**
- * 将 16 进制 String 转换为 ByteArray
+ * 将 16 进制 [String] 转换为 [ByteArray]
  *
- * @param str 16 进制 String
+ * @param str 16 进制 [String]
  *
- * @return 转换后的 Byte 数组
+ * @return 转换后的 [Byte] 数组
  */
 fun hexStringToBytes(str: String?): ByteArray? {
     if (str == null || str == "") {

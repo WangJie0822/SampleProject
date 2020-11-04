@@ -10,6 +10,8 @@ import android.os.Looper
  *
  * @param runnable 在主线程执行的代码
  * @param delay 延时时间：ms
+ *
+ * @see MainThreadManager
  */
 @JvmOverloads
 fun runOnMainThread(runnable: Runnable, delay: Long = 0) {

@@ -11,6 +11,6 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class CategoryEntity(
-        var id: String? = "",
-        var name: String? = ""
+        val id: String? = "",
+        val name: String? = ""
 ) : Parcelable

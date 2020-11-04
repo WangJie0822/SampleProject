@@ -9,6 +9,8 @@ import android.widget.TextView
 /**
  * 设置文本变化监听
  *
+ * @see SimpleTextWatcher
+ *
  * @author 王杰
  */
 fun TextView.addTextChangedListener(init: SimpleTextWatcher.() -> Unit) {

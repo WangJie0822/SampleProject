@@ -78,19 +78,21 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             }
             snackBar.show()
         })
-        viewModel.progressData.observe(this, Observer { progress ->
+        viewModel.progressData.observe(this, { progress ->
             if (null == progress || !progress.show) {
                 ProgressDialogHelper.dismiss()
             } else {
                 ProgressDialogHelper.show(mContext, progress.cancelable)
             }
         })
-        viewModel.uiCloseData.observe(this, Observer { close ->
+        viewModel.uiCloseData.observe(this, { close ->
             close?.let { model ->
                 setResult(model.resultCode, model.result)
                 finish()
             }
         })
-        viewModel.showDialogData.observe(this, Observer { builder -> builder.build().show(mContext) })
+        viewModel.showDialogData.observe(this, { builder ->
+            builder.build().show(mContext)
+        })
     }
 }

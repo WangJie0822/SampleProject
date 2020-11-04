@@ -173,3 +173,6 @@ fun Fragment.runWithPermissions(vararg permissions: String, result: () -> Unit) 
                 }
             })
 }
+
+
+

@@ -21,17 +21,17 @@ package com.wj.sampleproject.entity
  * @author 王杰
  */
 data class UserInfoEntity(
-        var admin: String? = "",
-        var chapterTops: ArrayList<Any>? = arrayListOf(),
-        var collectIds: ArrayList<Any>? = arrayListOf(),
-        var email: String? = "",
-        var icon: String? = "",
-        var id: String? = "",
-        var nickname: String? = "",
-        var password: String? = "",
-        var publicName: String? = "",
-        var token: String? = "",
-        var type: String? = "",
-        var username: String? = ""
+        val admin: String? = "",
+        val chapterTops: ArrayList<Any>? = arrayListOf(),
+        val collectIds: ArrayList<Any>? = arrayListOf(),
+        val email: String? = "",
+        val icon: String? = "",
+        val id: String? = "",
+        val nickname: String? = "",
+        val password: String? = "",
+        val publicName: String? = "",
+        val token: String? = "",
+        val type: String? = "",
+        val username: String? = ""
 )
 

@@ -25,6 +25,9 @@ fun <T : Collection<*>> T?.isNotNullAndEmpty(): Boolean {
 
 /**
  * 交换位置
+ *
+ * @param fromPosition 位置1
+ * @param toPosition 位置2
  */
 fun List<*>.swap(fromPosition: Int, toPosition: Int) {
     Collections.swap(this, fromPosition, toPosition)
@@ -57,9 +60,9 @@ fun <T> ArrayList<T>?.newList(): ArrayList<T> {
  * @param clean 是否清空旧数据
  */
 @JvmOverloads
-fun <T> List<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean? = false): List<T> {
+fun <T> List<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean = false): List<T> {
     val ls = mutableListOf<T>()
-    if (!clean.condition) {
+    if (!clean) {
         ls.addAll(this.orEmpty())
     }
     ls.addAll(list.orEmpty())
@@ -73,9 +76,9 @@ fun <T> List<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean? = false): 
  * @param clean 是否清空旧数据
  */
 @JvmOverloads
-fun <T> ArrayList<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean? = false): ArrayList<T> {
+fun <T> ArrayList<T>?.toNewList(list: List<T>? = listOf(), clean: Boolean = false): ArrayList<T> {
     val ls = arrayListOf<T>()
-    if (!clean.condition) {
+    if (!clean) {
         ls.addAll(this.orEmpty())
     }
     ls.addAll(list.orEmpty())

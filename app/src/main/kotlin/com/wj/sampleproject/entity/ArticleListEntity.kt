@@ -18,13 +18,13 @@ import com.wj.sampleproject.constants.STR_TRUE
  * @param datas 文章数据
  */
 data class ArticleListEntity(
-        var curPage: String? = "",
-        var offset: String? = "",
-        var pageCount: String? = "",
-        var size: String? = "",
-        var total: String? = "",
-        var over: String? = "",
-        var datas: ArrayList<ArticleEntity>? = arrayListOf()
+        val curPage: String? = "",
+        val offset: String? = "",
+        val pageCount: String? = "",
+        val size: String? = "",
+        val total: String? = "",
+        val over: String? = "",
+        val datas: ArrayList<ArticleEntity>? = arrayListOf()
 )
 
 /**
@@ -58,32 +58,32 @@ data class ArticleListEntity(
  * @param top 自设属性 是否置顶
  */
 data class ArticleEntity(
-        var apkLink: String? = "",
-        var author: String? = "",
-        var chapterId: String? = "",
-        var chapterName: String? = "",
-        var collect: String? = "",
-        var courseId: String? = "",
-        var desc: String? = "",
-        var envelopePic: String? = "",
-        var fresh: String? = "",
-        var id: String? = "",
-        var link: String? = "",
-        var niceDate: String? = "",
-        var origin: String? = "",
-        var originId: String? = "",
-        var prefix: String? = "",
-        var projectLink: String? = "",
-        var publishTime: String? = "",
-        var superChapterId: String? = "",
-        var superChapterName: String? = "",
-        var tags: ArrayList<ArticleTagEntity>? = arrayListOf(),
-        var title: String? = "",
-        var type: String? = "",
-        var userId: String? = "",
-        var visible: String? = "",
-        var zan: String? = "",
-        var top: String? = ""
+        val apkLink: String? = "",
+        val author: String? = "",
+        val chapterId: String? = "",
+        val chapterName: String? = "",
+        val collect: String? = "",
+        val courseId: String? = "",
+        val desc: String? = "",
+        val envelopePic: String? = "",
+        val fresh: String? = "",
+        val id: String? = "",
+        val link: String? = "",
+        val niceDate: String? = "",
+        val origin: String? = "",
+        val originId: String? = "",
+        val prefix: String? = "",
+        val projectLink: String? = "",
+        val publishTime: String? = "",
+        val superChapterId: String? = "",
+        val superChapterName: String? = "",
+        val tags: ArrayList<ArticleTagEntity>? = arrayListOf(),
+        val title: String? = "",
+        val type: String? = "",
+        val userId: String? = "",
+        val visible: String? = "",
+        val zan: String? = "",
+        val top: String? = ""
 ) {
     /** 标记 - 是否置顶 */
     val isTop: Boolean
@@ -112,6 +112,6 @@ data class ArticleEntity(
  * @param url 标签地址
  */
 data class ArticleTagEntity(
-        var name: String? = "",
-        var url: String? = ""
+        val name: String? = "",
+        val url: String? = ""
 )

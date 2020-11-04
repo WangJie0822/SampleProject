@@ -26,7 +26,7 @@
             app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
             app:title="@string/app_my_collection" />
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:bind_smart_loadMore="@={viewModel.loadMore}"
@@ -35,7 +35,7 @@
             android:bind_smart_onRefresh="@{viewModel.onRefresh}"
             android:bind_smart_refreshing="@={viewModel.refreshing}">
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            <com.scwang.smart.refresh.header.ClassicsHeader
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -45,11 +45,11 @@
                 android:layout_height="match_parent"
                 tools:listitem="@layout/app_recycler_item_articles" />
 
-            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            <com.scwang.smart.refresh.footer.ClassicsFooter
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
 

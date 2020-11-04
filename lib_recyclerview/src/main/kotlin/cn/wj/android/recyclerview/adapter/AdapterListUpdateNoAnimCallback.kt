@@ -5,14 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 
 /**
  * 无动画回调
- */
-class AdapterListUpdateNoAnimCallback
-/**
- * Creates an AdapterListUpdateCallback that will dispatch update events to the given adapter.
+ * - 数据变化直接更新
  *
- * @param adapter The Adapter to send updates to.
+ * @param mAdapter 需要更新的 [RecyclerView.Adapter] 对象
  */
-(private val mAdapter: RecyclerView.Adapter<*>) : ListUpdateCallback {
+class AdapterListUpdateNoAnimCallback(private val mAdapter: RecyclerView.Adapter<*>)
+    : ListUpdateCallback {
 
     /** {@inheritDoc}  */
     override fun onInserted(position: Int, count: Int) {

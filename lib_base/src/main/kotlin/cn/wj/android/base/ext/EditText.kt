@@ -5,9 +5,9 @@ package cn.wj.android.base.ext
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import cn.wj.android.base.log.InternalLog
 import cn.wj.android.common.ext.orEmpty
 
 /**
@@ -38,7 +38,7 @@ fun EditText.showSoftInputOnFocus(show: Boolean) {
             setShowSoftInputOnFocus.isAccessible = false
             setShowSoftInputOnFocus.invoke(this, show)
         } catch (e: Exception) {
-            Log.e("Common_EditText ---->>", e.localizedMessage.orEmpty())
+            InternalLog.e("Common_EditText ---->>", e.localizedMessage.orEmpty())
         }
     }
 }

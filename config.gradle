@@ -20,18 +20,26 @@ ext {
             "test_mokito"                          : "3.3.3",
             // room
             "room"                                 : "2.2.5",
+            // paging
+            "paging"                               : "2.1.2",
             // navigation
-            "navigation"                           : "2.2.2",
+            "navigation"                           : "2.3.1",
+            // lifecycle
+            "lifecycle"                            : "2.2.0",
+            // activity
+            "activity"                             : "1.1.0",
+            // fragment
+            "fragment"                             : "1.2.5",
             // koin
             "koin"                                 : "2.1.6",
             // Glide
             "glide"                                : "4.11.0",
             // okhttp
-            "okhttp"                               : "4.7.2",
+            "okhttp"                               : "4.9.0",
             // retrofit
             "retrofit"                             : "2.9.0",
             // smartrefresh
-            "smartrefresh"                         : "1.1.0",
+            "smartrefresh"                         : "2.0.1",
             // immersionbar
             "immersionbar"                         : "3.0.0",
             // doraemonkit
@@ -55,18 +63,26 @@ ext {
             // androidx - v4
             "androidx_support-v4"                  : "androidx.legacy:legacy-support-v4:1.0.0",
             // androidx - v7
-            "androidx_appcompat-v7"                : "androidx.appcompat:appcompat:1.1.0",
+            "androidx_appcompat-v7"                : "androidx.appcompat:appcompat:1.2.0",
             // androidx - design
-            "androidx_design"                      : "com.google.android.material:material:1.1.0",
+            "androidx_design"                      : "com.google.android.material:material:1.2.1",
             // androidx - Recyclerview
             "androidx_recyclerview"                : "androidx.recyclerview:recyclerview:1.1.0",
             // androidx - LifeCycle 扩展
             "androidx_lifecycle-extensions"        : "androidx.lifecycle:lifecycle-extensions:2.2.0",
             // androidx - 约束性布局
-            "androidx_constraint"                  : "androidx.constraintlayout:constraintlayout:2.0.0-beta7",
+            "androidx_constraint"                  : "androidx.constraintlayout:constraintlayout:2.0.4",
 
             // androidx - Dex 分包
             "androidx_multidex"                    : "androidx.multidex:multidex:2.0.1",
+
+            // androidx activity
+            "androidx_activity"                    : "androidx.activity:activity:${version.activity}",
+            "androidx_activity-ktx"                : "androidx.activity:activity-ktx:${version.activity}",
+
+            // androidx fragment
+            "androidx_fragment"                    : "androidx.fragment:fragment:${version.fragment}",
+            "androidx_fragment-ktx"                : "androidx.fragment:fragment-ktx:${version.fragment}",
 
             // androidx - room
             "androidx_room-runtime"                : "androidx.room:room-runtime:${version.room}",
@@ -76,28 +92,37 @@ ext {
             "androidx_room-testing"                : "androidx.room:room-testing:${version.room}",
 
             // jetpack - paging
-            "jetpack_paging"                       : "androidx.paging:paging-runtime:2.1.2",
+            "jetpack_paging_runtime"               : "androidx.paging:paging-runtime:${version.paging}",
+            "jetpack_paging_common"                : "androidx.paging:paging-common:${version.paging}",
+            "jetpack_paging_rxjava2"               : "androidx.paging:paging-rxjava2:${version.paging}",
+            "jetpack_paging_runtime-ktx"           : "androidx.paging:paging-runtime-ktx:${version.paging}",
+            "jetpack_paging_common-ktx"            : "androidx.paging:paging-common-ktx:${version.paging}",
+            "jetpack_paging_rxjava2-ktx"           : "androidx.paging:paging-rxjava2-ktx:${version.paging}",
 
             // jetpak - navigation
             "jetpack_navigation-fragment"          : "androidx.navigation:navigation-fragment:${version.navigation}",
             "jetpack_navigation-ui"                : "androidx.navigation:navigation-ui:${version.navigation}",
+            "jetpack_navigation-runtime"           : "androidx.navigation:navigation-runtime:${version.navigation}",
+            "jetpack_navigation-common"            : "androidx.navigation:navigation-common:${version.navigation}",
             // ktx - navigation Kotlin 拓展
             "jetpack_navigation-fragment-ktx"      : "androidx.navigation:navigation-fragment-ktx:${version.navigation}",
             "jetpack_navigation-ui-ktx"            : "androidx.navigation:navigation-ui-ktx:${version.navigation}",
+            "jetpack_navigation-runtime-ktx"       : "androidx.navigation:navigation-runtime-ktx:${version.navigation}",
+            "jetpack_navigation-common-ktx"        : "androidx.navigation:navigation-common-ktx:${version.navigation}",
 
             // KTX
-            "ktx_core"                             : 'androidx.core:core-ktx:1.2.0',
+            "ktx_core"                             : "androidx.core:core-ktx:1.3.2",
+
             // ktx - ViewModel Kotlin 拓展
-            "jetpack_viewmodel-ktx"                : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0",
+            "jetpack_viewmodel-ktx"                : "androidx.lifecycle:lifecycle-viewmodel-ktx:${version.lifecycle}",
             // ktx - lifecycle Kotlin 拓展
-            "jetpack_lifecycle-ktx"                : "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0",
+            "jetpack_lifecycle-ktx"                : "androidx.lifecycle:lifecycle-runtime-ktx:${version.lifecycle}",
             // ktx - livedata Kotlin 拓展
-            "jetpack_livedata-ktx"                 : "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0",
-            // ktx - paging Kotlin 拓展
-            "jetpack_paging-ktx"                   : "androidx.paging:paging-runtime-ktx:2.1.2",
+            "jetpack_livedata-ktx"                 : "androidx.lifecycle:lifecycle-livedata-ktx:${version.lifecycle}",
 
             // Kotlin 协程 https://www.kotlincn.net/docs/reference/coroutines/coroutines-guide.html
-            "coroutines"                           : 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5',
+            // https://github.com/Kotlin/kotlinx.coroutines
+            "coroutines"                           : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0",
 
             // Gson https://github.com/google/gson
             "gson"                                 : "com.google.code.gson:gson:2.8.6",
@@ -123,7 +148,7 @@ ext {
             "rxkotlin2"                            : "io.reactivex.rxjava2:rxkotlin:3.0.0",
 
             // 美团多渠道 https://github.com/Meituan-Dianping/walle
-            "walle-channel"                        : "com.meituan.android.walle:library:1.1.6",
+            "walle-channel"                        : "com.meituan.android.walle:library:1.1.7",
 
             // Glide https://github.com/bumptech/glide
             "glide"                                : "com.github.bumptech.glide:glide:${version.glide}",
@@ -143,8 +168,10 @@ ext {
             "rxpermission"                         : "com.github.tbruyelle:rxpermissions:0.10.2",
 
             // SmartRefreshLayout https://github.com/scwang90/SmartRefreshLayout
-            "smartrefresh"                         : "com.scwang.smartrefresh:SmartRefreshLayout:${version.smartrefresh}",
-            "smartrefresh-header"                  : "com.scwang.smartrefresh:SmartRefreshHeader:${version.smartrefresh}",
+            "smartrefresh"                         : "com.scwang.smart:refresh-layout-kernel:${version.smartrefresh}",
+            // 经典刷新
+            "smartrefresh-header-classics"         : "com.scwang.smart:refresh-header-classics:${version.smartrefresh}",
+            "smartrefresh-footer-classics"         : "com.scwang.smart:refresh-footer-classics:${version.smartrefresh}",
 
             // Tablayout https://github.com/H07000223/FlycoTabLayout
             "tablayout"                            : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
@@ -166,7 +193,7 @@ ext {
             "swipebacklayout"                      : "me.imid.swipebacklayout.lib:library:1.1.0",
 
             // 图片选择器 https://github.com/LuckSiege/PictureSelector
-            "picture-selector"                     : "com.github.LuckSiege.PictureSelector:picture_library:v2.5.8",
+            "picture-selector"                     : "com.github.LuckSiege.PictureSelector:picture_library:v2.5.9",
 
             // 内存泄漏检测 https://square.github.io/leakcanary/
             "leakcanary-debug"                     : "com.squareup.leakcanary:leakcanary-android:2.4",

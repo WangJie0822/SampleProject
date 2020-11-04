@@ -1,7 +1,6 @@
 package com.wj.sampleproject.fragment
 
 import android.view.LayoutInflater
-import androidx.lifecycle.Observer
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
@@ -56,7 +55,6 @@ class HomepageFragment
     }
 
     override fun initView() {
-
         // 配置文章列表
         mBinding.rvArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
@@ -64,46 +62,48 @@ class HomepageFragment
                 it.viewModel = viewModel
                 it.setEmptyView(R.layout.app_layout_placeholder)
                 it.showHeaderWhenEmpty = true
+                // 配置 Banner 列表
+                AppLayoutHomepageBannerBinding.inflate(
+                        LayoutInflater.from(mContext), null, false
+                ).also { binding ->
+                    binding.viewModel = viewModel
+                    binding.vpBanner.let { vp ->
+                        vp.adapter = mBannerAdapter.also { adapter ->
+                            adapter.viewModel = viewModel
+                        }
+                    }
+                    it.addHeaderView(binding.root)
+                }
             }
         }
+
+
     }
 
     override fun initObserve() {
         // Banner 列表
-        viewModel.bannerData.observe(this, Observer { list ->
-            // 配置 Banner 列表
-            AppLayoutHomepageBannerBinding.inflate(
-                    LayoutInflater.from(mContext), null, false
-            ).also { binding ->
-                binding.viewModel = viewModel
-                binding.vpBanner.let { vp ->
-                    vp.adapter = mBannerAdapter.also {
-                        it.viewModel = viewModel
-                    }
-                }
-                mArticlesAdapter.addHeaderView(binding.root)
-            }
+        viewModel.bannerData.observe(this, { list ->
             // 更新 Banner 列表
             mBannerAdapter.refresh(list)
             // 设置 Banner 数量并开启轮播
             viewModel.bannerCount = list.size
         })
         // 文章列表
-        viewModel.articleListData.observe(this, Observer {
+        viewModel.articleListData.observe(this, {
             // 更新文章列表
             mArticlesAdapter.submitList(it)
         })
         // WebView 跳转
-        viewModel.jumpWebViewData.observe(this, Observer {
+        viewModel.jumpWebViewData.observe(this, {
             WebViewActivity.actionStart(mContext, it.title, it.url)
         })
         // 跳转搜索
-        viewModel.jumpSearchData.observe(this, Observer {
+        viewModel.jumpSearchData.observe(this, {
             SearchActivity.actionStart(mContext)
         })
         // 取消收藏事件
         LiveEventBus.get(EVENT_COLLECTION_CANCLED, String::class.java)
-                .observe(this, Observer { id ->
+                .observe(this, { id ->
                     val item = mArticlesAdapter.mDiffer.currentList.firstOrNull { it.id == id }
                     item?.collected?.set(false)
                 })

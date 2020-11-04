@@ -12,29 +12,32 @@ import java.util.*
 import kotlin.system.exitProcess
 
 /**
- * 应用程序 Activity 管理类
- * - 用于 Activity 管理和应用程序退出
- * - 强烈建议在 Application$onCreate 方法中调用 register 方法注册，否则会导致 Activity 管理不完整
+ * 应用程序 [Activity] 管理类
+ * - 用于 [Activity] 管理和应用程序退出
+ * - [Application] 启动会自动注册
  *
  * @author 王杰
  */
 @Suppress("unused")
 object AppManager {
 
-    /** Application 对象 */
+    /** [Application] 对象 */
     private var mApplication: Application? = null
 
-    /** 保存 Activity 对象的堆栈 */
+    /** 保存 [Activity] 对象的堆栈 */
     private val activityStack: Stack<WeakReference<Activity>> = Stack()
 
-    /** 忽略列表 */
-    private val ignoreActivitys = arrayListOf<Class<out Activity>>()
+    /**
+     * 忽略列表
+     * - 列表中的 [Activity] 对象不会被纳入管理
+     */
+    private val ignoreActivities = arrayListOf<Class<out Activity>>()
 
-    /** 前台界面个数 */
+    /** 前台界面数量 */
     private var foregroundCount = 0
 
     /** App 前后台切换回调 */
-    private var mAppForgrountStatusChangeCallback: ((Boolean) -> Unit)? = null
+    private var mAppForegroundStatusChangeCallback: ((Boolean) -> Unit)? = null
 
     /** Activity 生命周期回调接口*/
     private val mActivityLifecycleCallbacks = object : Application.ActivityLifecycleCallbacks {
@@ -51,7 +54,7 @@ object AppManager {
         override fun onActivityStarted(activity: Activity?) {
             if (foregroundCount == 0) {
                 // App 回到前台
-                mAppForgrountStatusChangeCallback?.invoke(true)
+                mAppForegroundStatusChangeCallback?.invoke(true)
             }
             foregroundCount++
             InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityStarted")
@@ -69,7 +72,7 @@ object AppManager {
             foregroundCount--
             if (foregroundCount == 0) {
                 // App 退到后台
-                mAppForgrountStatusChangeCallback?.invoke(false)
+                mAppForegroundStatusChangeCallback?.invoke(false)
             }
             InternalLog.i("AppManager", "Activity: ${activity?.javaClass?.simpleName} ----> onActivityStopped")
         }
@@ -83,7 +86,7 @@ object AppManager {
     /**
      * 获取前台界面数量
      *
-     * @return 前台 Activity 数量
+     * @return 前台 [Activity] 数量
      */
     @JvmStatic
     fun getForegroundCount(): Int {
@@ -111,7 +114,8 @@ object AppManager {
     }
 
     /**
-     * 注册 Application
+     * 注册 [Application]
+     * * 应用启动后自动调用
      *
      * @param application 应用 [Application] 对象
      */
@@ -128,12 +132,12 @@ object AppManager {
      * - true：回到前台 or false：退到后台
      */
     @JvmStatic
-    fun setOnAppForgroundStatusChangeListener(onChange: (Boolean) -> Unit) {
-        this.mAppForgrountStatusChangeCallback = onChange
+    fun setOnAppForegroundStatusChangeListener(onChange: (Boolean) -> Unit) {
+        this.mAppForegroundStatusChangeCallback = onChange
     }
 
     /**
-     * 获取可用 Application 对象
+     * 获取可用的 [Application] 对象
      */
     @JvmStatic
     fun getApplication(): Application {
@@ -158,10 +162,13 @@ object AppManager {
     }
 
     /**
-     * 通过反射获取当前 Application 对象
+     * 通过反射获取当前 [Application] 对象
      *
-     * @return 当前 Application 对象
+     * @return 当前 [Application] 对象
+     *
+     * @throws NullPointerException 获取失败抛出异常
      */
+    @Throws(NullPointerException::class)
     private fun getApplicationByReflect(): Application {
         try {
             @SuppressLint("PrivateApi")
@@ -177,45 +184,46 @@ object AppManager {
     }
 
     /**
-     * 将 Activity 类对象添加到忽略列表
+     * 将 [Activity] 类对象添加到忽略列表
+     *
+     * @param classArray [Activity] 类对象，可变参数
      */
     @JvmStatic
-    fun addToIgnore(vararg clazzs: Class<out Activity>) {
-        ignoreActivitys.addAll(clazzs)
+    fun addToIgnore(vararg classArray: Class<out Activity>) {
+        ignoreActivities.addAll(classArray)
     }
 
     /**
-     * 添加 Activity 到堆栈
-     *
-     * @param activity Activity 对象
+     * [Activity.onCreate] 回调
+     * - 添加 [Activity] 到栈堆
+     * @param activity [Activity] 对象
      */
     @JvmStatic
-    fun onCreate(activity: Activity?) {
-        if (activity != null && ignoreActivitys.contains(activity.javaClass)) {
-            // 不添加在忽略列表中的 Activity
+    private fun onCreate(activity: Activity?) {
+        if (activity != null && ignoreActivities.contains(activity.javaClass)) {
+            // 不管理在忽略列表中的 Activity
             return
         }
         add(activity)
     }
 
     /**
-     * 将 Activity 从堆栈移除
+     * [Activity.onDestroy] 回调
+     * - 从栈堆移除 [Activity] 对象
      *
-     * @param activity Activity 对象
+     * @param activity [Activity] 对象
      */
     @JvmStatic
-    fun onDestroy(activity: Activity?) {
-        if (activity != null && ignoreActivitys.contains(activity.javaClass)) {
-            // 不移除在忽略列表中的 Activity
-            return
-        }
+    private fun onDestroy(activity: Activity?) {
         remove(activity)
     }
 
     /**
-     * 判断当前堆栈中是否存在对应 Activity
+     * 判断当前堆栈中是否存在对应 [Activity]
      *
-     * @param clazz Activity 类对象
+     * @param clazz [Activity] 类对象
+     *
+     * @return 是否存在
      */
     @JvmStatic
     fun contains(clazz: Class<out Activity>): Boolean {
@@ -223,7 +231,9 @@ object AppManager {
     }
 
     /**
-     * 将 Activity 加入堆栈
+     * 将 [Activity] 加入堆栈
+     *
+     * @param activity [Activity] 对象
      */
     @JvmStatic
     fun add(activity: Activity?) {
@@ -234,61 +244,64 @@ object AppManager {
     }
 
     /**
-     * 将 Activity 从堆栈移除
+     * 将 [Activity] 从堆栈移除
      *
-     * @param activity Activity 对象
+     * @param activity [Activity] 对象
      */
     @JvmStatic
     fun remove(activity: Activity?) {
         if (activity == null) {
             return
         }
-        var remove: WeakReference<Activity>? = null
-        activityStack.forEach { weak ->
-            if (weak.get() == activity) {
-                remove = weak
-            }
+        val index = activityStack.indexOfFirst {
+            it.get() == activity
         }
-        activityStack.remove(remove)
+        if (index in 0 until activityStack.size) {
+            activityStack.removeElementAt(index)
+        }
     }
 
     /**
-     * 结束指定 Activity 之外的其他 Activity
+     * 结束指定 [Activity] 之外的其他 [Activity]
      *
-     * @param activity 指定不关闭的 Activity
+     * @param activities 指定不关闭的 [Activity]，可变参数
      */
     @JvmStatic
-    fun finishAllWithout(activity: Activity?) {
-        if (activity == null) {
+    fun finishAllWithout(vararg activities: Activity?) {
+        if (activities.isEmpty()) {
             return
         }
-        remove(activity)
+        activities.forEach {
+            remove(it)
+        }
         finishAllActivity()
-        add(activity)
+        activities.forEach {
+            add(it)
+        }
     }
 
     /**
-     * 结束指定 Activity 之外的其他 Activity
+     * 结束指定 [Activity] 之外的其他 [Activity]
      *
-     * @param clazz 指定不关闭的 Activity
+     * @param classArray 指定不关闭的 [Activity] 类对象，可变参数
      */
     @JvmStatic
-    fun finishAllWithout(vararg clazz: Class<out Activity>) {
-        if (clazz.isEmpty()) {
+    fun finishAllWithout(vararg classArray: Class<out Activity>) {
+        if (classArray.isEmpty()) {
             return
         }
         val ls = arrayListOf<Activity>()
-        for (clz in clazz) {
-            val activity = getActivity(clz)
-            if (null != activity) {
-                ls.add(activity)
+        classArray.forEach {
+            val element = getActivity(it)
+            if (null != element) {
+                ls.add(element)
             }
         }
         if (ls.isEmpty()) {
             return
         }
-        for (activity in ls) {
-            remove(activity)
+        ls.forEach {
+            remove(it)
         }
         finishAllActivity()
         for (activity in ls) {
@@ -297,9 +310,9 @@ object AppManager {
     }
 
     /**
-     * 结束指定 Activity
+     * 结束指定 [Activity]
      *
-     * @param clazz Activity 类对象
+     * @param clazz [Activity] 类对象
      */
     @JvmStatic
     fun finishActivity(clazz: Class<out Activity>) {
@@ -308,21 +321,21 @@ object AppManager {
     }
 
     /**
-     * 结束指定 Activity
+     * 结束指定 [Activity]
      *
-     * @param clazzs Activity 类对象
+     * @param classArray [Activity] 类对象，可变参数
      */
     @JvmStatic
-    fun finishActivities(vararg clazzs: Class<out Activity>) {
-        for (clazz in clazzs) {
+    fun finishActivities(vararg classArray: Class<out Activity>) {
+        for (clazz in classArray) {
             finishActivity(clazz)
         }
     }
 
     /**
-     * 获取栈顶的 Activity
+     * 获取栈顶的 [Activity]
      *
-     * @return 栈顶的 Activity 对象
+     * @return 栈顶的 [Activity] 对象
      */
     @JvmStatic
     fun peekActivity(): Activity? {
@@ -334,25 +347,25 @@ object AppManager {
     }
 
     /**
-     * 根据类，获取 Activity 对象
+     * 根据类，获取 [Activity] 对象
      *
-     * @param clazz  Activity 类
-     * @param A      Activity 类型
+     * @param clazz  [Activity] 类
+     * @param A      [Activity] 类型
      *
-     * @return       Activity 对象
+     * @return       [Activity] 对象
      */
     @JvmStatic
     fun <A : Activity> getActivity(clazz: Class<A>): A? {
         @Suppress("UNCHECKED_CAST")
-        return activityStack.firstOrNull { it.get()?.javaClass == clazz }?.get() as A?
+        return activityStack.firstOrNull { it.get()?.javaClass == clazz }?.get() as? A?
     }
 
     /**
-     * 根据下标，获取 Activity 对象
+     * 根据下标，获取 [Activity] 对象
      *
-     * @param index  Activity 下标
+     * @param index  [Activity] 下标
      *
-     * @return       Activity 对象
+     * @return       [Activity] 对象
      */
     @JvmStatic
     fun getActivity(index: Int): Activity? {
@@ -360,9 +373,9 @@ object AppManager {
     }
 
     /**
-     * 获取堆栈中 Activity 数量
+     * 获取堆栈中 [Activity] 数量
      *
-     * @return Activity 数量
+     * @return [Activity] 数量
      */
     @JvmStatic
     fun getStackSize(): Int {
@@ -370,12 +383,12 @@ object AppManager {
     }
 
     /**
-     * 结束所有 Activity
+     * 结束所有 [Activity]
      */
     @JvmStatic
     private fun finishAllActivity() {
-        for (weak in activityStack) {
-            weak.get()?.finish()
+        activityStack.forEach {
+            it.get()?.finish()
         }
         activityStack.clear()
     }

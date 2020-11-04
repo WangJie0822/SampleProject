@@ -22,8 +22,9 @@ android {
         }
     }
 
-    dataBinding { // DataBinding 开启
-        enabled true
+    buildFeatures {
+        // DataBinding 开启
+        dataBinding = true
     }
 
     compileOptions {

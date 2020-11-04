@@ -13,9 +13,9 @@ import com.wj.sampleproject.model.SnackbarModel
  * @param data 请求返回数据
  */
 data class NetResult<T>(
-        var errorCode: Int = -1,
-        var errorMsg: String? = "",
-        var data: T? = null
+        val errorCode: Int = -1,
+        val errorMsg: String? = "",
+        val data: T? = null
 ) {
     
     /**

@@ -1,12 +1,10 @@
 package com.wj.sampleproject.repository
 
-import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import retrofit2.http.POST
 
 /**
  * 我的相关数据仓库
@@ -34,7 +32,6 @@ class MyRepository : KoinComponent {
      * @param password 密码
      * @param repassword 重复密码
      */
-    @POST(UrlDefinition.REGISTER)
     suspend fun register(username: String, password: String, repassword: String) = withContext(Dispatchers.IO) {
         mWebService.register(username, password, repassword)
     }

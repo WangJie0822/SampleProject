@@ -82,7 +82,9 @@ fun View?.hideSoftKeyboard() {
  * - 这里的 View 只用于快速点击判断
  *
  * @param onClick 点击回调
- * @param interval 点击间隔时间，单位：ms，默认：[DEFAULT_CLICK_THROTTLE_MS]
+ * @param interval 点击间隔时间，单位：ms
+ *
+ * @see DEFAULT_CLICK_THROTTLE_MS
  */
 @JvmOverloads
 inline fun View.disposeThrottleClick(onClick: () -> Unit, interval: Long = DEFAULT_CLICK_THROTTLE_MS) {
@@ -103,7 +105,9 @@ inline fun View.disposeThrottleClick(onClick: () -> Unit, interval: Long = DEFAU
  * - 在间隔时间内点击事件拦截
  *
  * @param onClick 点击回调
- * @param interval 点击间隔时间，单位：ms，默认：[DEFAULT_CLICK_THROTTLE_MS]
+ * @param interval 点击间隔时间，单位：ms
+ *
+ * @see DEFAULT_CLICK_THROTTLE_MS
  */
 @JvmOverloads
 inline fun View.setOnThrottleClickListener(crossinline onClick: () -> Unit, interval: Long = DEFAULT_CLICK_THROTTLE_MS) {

@@ -8,8 +8,8 @@ import android.net.Uri
 import cn.wj.android.base.utils.AppManager
 
 /**
- * 用于初始化的 ContenProvider
- * > 启动自动初始化，不需要手动初始化
+ * 用于初始化的 [ContentProvider]
+ * - 启动自动初始化，不需要手动初始化
  *
  * - 创建时间：2020/7/7
  *

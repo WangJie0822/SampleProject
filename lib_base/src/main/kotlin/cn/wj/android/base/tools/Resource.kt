@@ -112,11 +112,11 @@ const val RESOURCE_DEFAULT_FONT_SCALE = 1f
  *
  * @return 修正后的 Resources 对象
  *
- * <pre>
+ * ```
  * override fun getResources(): Resources {
  *     return fixFontScaleResources(super.getResources(), applicationContext)
  * }
- * </pre>
+ * ```
  */
 @JvmOverloads
 fun fixFontScaleResources(resource: Resources?, context: Context? = null): Resources? {
@@ -144,7 +144,7 @@ fun fixFontScaleResources(resource: Resources?, context: Context? = null): Resou
  * @return 文件输入流
  */
 @JvmOverloads
-fun getAssetsStramByName(fileName: String, context: Context = AppManager.getContext()): InputStream? {
+fun getAssetsStreamByName(fileName: String, context: Context = AppManager.getContext()): InputStream? {
     return try {
         context.assets.open(fileName)
     } catch (e: IOException) {
@@ -164,7 +164,7 @@ fun getAssetsStramByName(fileName: String, context: Context = AppManager.getCont
 @JvmOverloads
 fun getAssetsStringByName(fileName: String, context: Context = AppManager.getContext()): String? {
     return try {
-        val br = BufferedReader(InputStreamReader(getAssetsStramByName(fileName, context)))
+        val br = BufferedReader(InputStreamReader(getAssetsStreamByName(fileName, context)))
         val sb = StringBuilder()
         var line: String?
         while (true) {

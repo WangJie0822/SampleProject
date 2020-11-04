@@ -50,7 +50,7 @@ val File.md5: String
     }
 
 /**
- * 将 ByteArray 转为 16 进制字符串
+ * 将 [ByteArray] 转为 16 进制字符串
  */
 fun ByteArray.toHex(): String {
     //转成16进制后是32字节

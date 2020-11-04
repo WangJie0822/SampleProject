@@ -26,7 +26,7 @@ fun RecyclerView.getLastVisiblePosition(): Int {
     return when (val layoutManager = this.layoutManager) {
         is LinearLayoutManager -> layoutManager.findLastVisibleItemPosition()
         is GridLayoutManager -> layoutManager.findLastVisibleItemPosition()
-        is StaggeredGridLayoutManager -> layoutManager.findLastVisibleItemPositions(null).max()
+        is StaggeredGridLayoutManager -> layoutManager.findLastVisibleItemPositions(null).maxOrNull()
                 ?: -1
         else -> -1
     }

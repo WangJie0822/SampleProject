@@ -70,12 +70,8 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
         // 消极按钮点击
         viewModel.negativeClickData.observe(this, Observer {
             // 选中状态
-            var selected = false
-            val selectedObj = viewModel.selected.get()
-            if (null != selectedObj) {
-                selected = selectedObj
-            }
-    
+            val selected = viewModel.selected.get()
+
             if (null != onNegativeAction) {
                 // 优先处理 Action
                 onNegativeAction?.invoke(selected)
@@ -83,13 +79,13 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
                 dismiss()
                 return@Observer
             }
-    
+
             if (null != onNegativeClick) {
                 // 处理 Click
                 onNegativeClick?.invoke(this, selected)
                 return@Observer
             }
-    
+
             // 未设置监听，默认隐藏
             dismiss()
         })
@@ -97,12 +93,8 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
         // 积极按钮点击
         viewModel.positiveClickData.observe(this, Observer {
             // 选中状态
-            var selected = false
-            val selectedObj = viewModel.selected.get()
-            if (null != selectedObj) {
-                selected = selectedObj
-            }
-    
+            val selected = viewModel.selected.get()
+
             if (null != onPositiveAction) {
                 // 优先处理 Action
                 onPositiveAction?.invoke(selected)
@@ -110,13 +102,13 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
                 dismiss()
                 return@Observer
             }
-    
+
             if (null != onPositiveClick) {
                 // 处理 Click
                 onPositiveClick?.invoke(this, selected)
                 return@Observer
             }
-    
+
             // 未设置监听，默认隐藏
             dismiss()
         })

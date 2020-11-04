@@ -45,7 +45,8 @@ fun Date.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
 /**
  * 将时间字符串格式化为指定类型
  */
-fun String.paresDate(format: String): Date {
+@JvmOverloads
+fun String.paresDate(format: String = DATE_FORMAT_DEFAULT): Date {
     return try {
         SimpleDateFormat(format, Locale.getDefault()).parse(this)
     } catch (e: ParseException) {
@@ -54,9 +55,9 @@ fun String.paresDate(format: String): Date {
 }
 
 /**
- * 将字符串时间转
-@JvmOverloads换为 Long 类型时间
+ * 将字符串时间转换为 Long 类型时间
  */
+@JvmOverloads
 fun String?.toLongTime(format: String = DATE_FORMAT_DEFAULT): Long {
     return if (this.isNullOrEmpty()) {
         Date().time

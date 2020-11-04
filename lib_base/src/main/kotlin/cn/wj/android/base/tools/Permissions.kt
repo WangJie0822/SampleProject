@@ -16,7 +16,7 @@ import cn.wj.android.base.utils.AppManager
  */
 
 /**
- * 通知是否打开
+ * 通知权限是否打开
  *
  * @param context [Context] 对象
  *

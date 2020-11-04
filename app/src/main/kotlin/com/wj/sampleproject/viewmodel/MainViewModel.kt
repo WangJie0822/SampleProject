@@ -6,7 +6,9 @@ import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.*
 
 /**
- *  ViewModel
+ *  主界面 ViewModel
+ *
+ *  @author 王杰
  */
 class MainViewModel
     : BaseViewModel() {

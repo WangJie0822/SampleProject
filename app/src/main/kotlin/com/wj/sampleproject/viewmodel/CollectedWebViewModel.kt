@@ -31,54 +31,54 @@ import kotlinx.coroutines.launch
 class CollectedWebViewModel(
         private val collectRepository: CollectRepository
 ) : BaseViewModel() {
-    
+
     /** 列表数据 */
     val websListData = MutableLiveData<ArrayList<CollectedWebEntity>>()
-    
+
     /** PopupMenu 数据 */
     val popupMenuData = MutableLiveData<PopupModel>()
-    
+
     /** 编辑弹窗数据 */
     val editDialogData = MutableLiveData<CollectedWebEntity>()
-    
+
     /** 跳转 WebView */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
-    
+
     /** 返回点击 */
     val onBackClick: () -> Unit = {
-        uiCloseData.postValue(UiCloseModel())
+        uiCloseData.value = UiCloseModel()
     }
-    
+
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
         if (it.itemId == R.id.menu_add) {
             // 添加
-            editDialogData.postValue(CollectedWebEntity())
+            editDialogData.value = CollectedWebEntity()
         }
         false
     }
-    
+
     /** 标记 - 是否正在刷新 */
     val refreshing: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         getCollectedWebList()
     }
-    
+
     /** 列表点击 */
     val onItemClick: (CollectedWebEntity) -> Unit = { item ->
         // 打开 WebView
-        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.name.orEmpty(), item.link.orEmpty()))
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.name.orEmpty(), item.link.orEmpty())
     }
-    
+
     /** 列表长按点击 */
     val onItemLongClick: (View, CollectedWebEntity) -> Boolean = { v, item ->
-        popupMenuData.postValue(PopupModel(v, PopupMenu.OnMenuItemClickListener {
+        popupMenuData.value = (PopupModel(v, {
             when (it.itemId) {
                 R.id.menu_edit -> {
                     // 编辑
-                    editDialogData.postValue(item)
+                    editDialogData.value = item
                 }
                 R.id.menu_delete -> {
                     // 删除
@@ -89,7 +89,7 @@ class CollectedWebViewModel(
         }))
         true
     }
-    
+
     /**
      * 获取收藏网站列表
      */
@@ -99,19 +99,19 @@ class CollectedWebViewModel(
                 val result = collectRepository.getCollectedWebList()
                 if (result.success()) {
                     // 获取成功
-                    websListData.postValue(result.data.orEmpty())
+                    websListData.value = result.data.orEmpty()
                 } else {
-                    snackbarData.postValue(result.toError())
+                    snackbarData.value = result.toError()
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getCollectedWebList")
-                snackbarData.postValue(throwable.snackbarMsg)
+                snackbarData.value = throwable.snackbarMsg
             } finally {
                 refreshing.set(false)
             }
         }
     }
-    
+
     /**
      * 删除收藏网站
      *
@@ -120,21 +120,21 @@ class CollectedWebViewModel(
     private fun deleteCollectedWeb(item: CollectedWebEntity) {
         viewModelScope.launch {
             try {
-                progressData.postValue(ProgressModel())
+                progressData.value = (ProgressModel())
                 val result = collectRepository.deleteCollectedWeb(item.id.orEmpty())
                 if (result.success()) {
                     // 删除成功，从列表移除
                     val ls = websListData.value.toNewList()
                     ls.remove(item)
-                    websListData.postValue(ls)
+                    websListData.value = ls
                 } else {
-                    snackbarData.postValue(result.toError())
+                    snackbarData.value = result.toError()
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getCollectedWebList")
-                snackbarData.postValue(throwable.snackbarMsg)
+                snackbarData.value = throwable.snackbarMsg
             } finally {
-                progressData.postValue(null)
+                progressData.value = null
             }
         }
     }
@@ -142,13 +142,11 @@ class CollectedWebViewModel(
 
 /**
  * Popup 显示数据 Model
- */
-data class PopupModel
-/**
+ *
  * @param view 锚点 View
  * @param callback 点击回调
  */
-constructor(
-        var view: View,
-        var callback: PopupMenu.OnMenuItemClickListener
+data class PopupModel(
+        val view: View,
+        val callback: PopupMenu.OnMenuItemClickListener
 )

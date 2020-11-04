@@ -84,7 +84,7 @@
 
             </LinearLayout>
 
-            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            <com.scwang.smart.refresh.layout.SmartRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/app_window_bg"
@@ -96,7 +96,7 @@
                 android:bind_visibility="@{!viewModel.showHotSearch}"
                 android:visibility="gone">
 
-                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                <com.scwang.smart.refresh.header.ClassicsHeader
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -106,11 +106,11 @@
                     android:layout_height="match_parent"
                     tools:listitem="@layout/app_recycler_item_articles" />
 
-                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                <com.scwang.smart.refresh.footer.ClassicsFooter
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
         </FrameLayout>
 

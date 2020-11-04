@@ -28,14 +28,14 @@
             app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
             app:title="@string/app_collected_web" />
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:bind_smart_loadMore_enable="@{false}"
             android:bind_smart_onRefresh="@{viewModel.onRefresh}"
             android:bind_smart_refreshing="@={viewModel.refreshing}">
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            <com.scwang.smart.refresh.header.ClassicsHeader
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -46,7 +46,7 @@
                 tools:layoutManager="cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager"
                 tools:listitem="@layout/app_recycler_item_collected_web" />
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
 

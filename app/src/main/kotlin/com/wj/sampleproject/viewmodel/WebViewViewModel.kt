@@ -16,7 +16,7 @@ class WebViewViewModel
     val navigationData = MutableLiveData<Int>()
     
     /** 浏览器打开 */
-    val jumpBorwser = MutableLiveData<Int>()
+    val jumpBrowser = MutableLiveData<Int>()
     
     /** 标题文本 */
     val title: ObservableField<String> = ObservableField()
@@ -25,7 +25,7 @@ class WebViewViewModel
     val onMenuItemClick: (MenuItem) -> Boolean = { item ->
         if (item.itemId == R.id.menu_browser) {
             // 浏览器打开
-            jumpBorwser.postValue(0)
+            jumpBrowser.postValue(0)
         }
         true
     }

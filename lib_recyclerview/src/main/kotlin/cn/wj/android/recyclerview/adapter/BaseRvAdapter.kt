@@ -61,7 +61,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         isEmpty(position) -> VIEW_TYPE_EMPTY     // 空布局
         isHeader(position) -> VIEW_TYPE_HEADER   // 头布局
         isFooter(position) -> VIEW_TYPE_FOOTER   // 脚布局
-        else -> customViewType(if (haveHeader()) position - 1 else position) // 其他布局
+        else -> customViewType(if (hasHeader()) position - 1 else position) // 其他布局
     }
 
     /**
@@ -73,9 +73,9 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
 
     override fun getItemCount() = if (isShowEmpty()) {
         // 显示空布局
-        if (haveHeader() && showHeaderWhenEmpty) {
+        if (hasHeader() && showHeaderWhenEmpty) {
             // 有头布局，且显示
-            if (haveFooter() && showFooterWhenEmpty) {
+            if (hasFooter() && showFooterWhenEmpty) {
                 // 有脚布局，且显示
                 3
             } else {
@@ -84,7 +84,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
             }
         } else {
             // 无头布局或不显示
-            if (haveFooter() && showFooterWhenEmpty) {
+            if (hasFooter() && showFooterWhenEmpty) {
                 // 有脚布局，且显示
                 2
             } else {
@@ -94,9 +94,9 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         }
     } else {
         // 不显示空布局
-        if (haveHeader()) {
+        if (hasHeader()) {
             // 有头布局
-            if (haveFooter()) {
+            if (hasFooter()) {
                 // 有脚布局
                 mData.size + 2
             } else {
@@ -105,7 +105,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
             }
         } else {
             // 无头布局
-            if (haveFooter()) {
+            if (hasFooter()) {
                 // 有脚布局
                 mData.size + 1
             } else {
@@ -158,7 +158,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
             // 头布局、脚布局、空布局，返回不做操作
             return
         }
-        customBindViewHolder(holder, if (haveHeader()) position - 1 else position)
+        customBindViewHolder(holder, if (hasHeader()) position - 1 else position)
     }
 
     protected open fun customBindViewHolder(holder: BaseRvViewHolder<E>, position: Int) {
@@ -228,7 +228,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      */
     protected fun isEmpty(position: Int) = if (isShowEmpty()) {
         // 显示空布局
-        if (haveHeader() && showHeaderWhenEmpty) {
+        if (hasHeader() && showHeaderWhenEmpty) {
             // 有头布局且显示
             position == 1
         } else {
@@ -278,7 +278,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
             if (isShowEmpty()) {
                 // 显示空布局
                 var position = 0
-                if (haveHeader() && showHeaderWhenEmpty) {
+                if (hasHeader() && showHeaderWhenEmpty) {
                     // 有头布局并且显示
                     position++
                 }
@@ -412,7 +412,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      *
      * @return 是否有头布局
      */
-    protected fun haveHeader() = mHeaderLayout != null && mHeaderLayout!!.childCount > 0
+    fun hasHeader() = mHeaderLayout != null && mHeaderLayout!!.childCount > 0
 
     /**
      * 根据下标判断是否是头布局
@@ -420,9 +420,9 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      * @param position View 下标
      * @return 是否是头布局
      */
-    protected fun isHeader(position: Int) = if (isShowEmpty()) {
+    fun isHeader(position: Int) = if (isShowEmpty()) {
         // 显示空布局
-        if (haveHeader() && showHeaderWhenEmpty) {
+        if (hasHeader() && showHeaderWhenEmpty) {
             // 有头布局且显示
             position == 0
         } else {
@@ -431,7 +431,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
         }
     } else {
         // 不显示空布局
-        haveHeader() && position == 0
+        hasHeader() && position == 0
     }
 
     /**
@@ -439,14 +439,14 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      *
      * @return 头布局位置
      */
-    protected fun getHeaderViewPosition() = if (haveHeader()) 0 else -1
+    protected fun getHeaderViewPosition() = if (hasHeader()) 0 else -1
 
     /**
      * 判断是否有脚布局
      *
      * @return 是否有脚布局
      */
-    protected fun haveFooter() = mFooterLayout != null && mFooterLayout!!.childCount > 0
+    fun hasFooter() = mFooterLayout != null && mFooterLayout!!.childCount > 0
 
     /**
      * 根据下标判断是否是脚布局
@@ -454,7 +454,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      * @param position View 下标
      * @return 是否是脚布局
      */
-    protected fun isFooter(position: Int) = if (!haveFooter()) {
+    fun isFooter(position: Int) = if (!hasFooter()) {
         // 没有脚布局或不显示
         false
     } else {
@@ -477,7 +477,7 @@ abstract class BaseRvAdapter<out VH : BaseRvViewHolder<E>, E>
      *
      * @return 脚布局位置
      */
-    protected fun getFooterViewPosition() = if (!haveFooter() || (isShowEmpty() && !showFooterWhenEmpty)) {
+    protected fun getFooterViewPosition() = if (!hasFooter() || (isShowEmpty() && !showFooterWhenEmpty)) {
         // 不显示脚布局
         -1
     } else {

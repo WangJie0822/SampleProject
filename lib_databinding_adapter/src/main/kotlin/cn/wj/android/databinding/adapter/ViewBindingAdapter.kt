@@ -3,6 +3,7 @@
 package cn.wj.android.databinding.adapter
 
 import android.animation.AnimatorInflater
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.view.MotionEvent
@@ -255,6 +256,7 @@ fun setViewOnGlobal(v: View, onGlobal: (() -> Unit)?, single: Boolean?) {
  * @param v [View] 对象
  * @param onTouch 回调
  */
+@SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
 fun <T> setViewOnTouch(v: View, onTouch: ((View, MotionEvent, T) -> Boolean)?, item: T) {
     v.setOnTouchListener { _, event ->
@@ -279,6 +281,7 @@ fun setViewOnTouch(v: View, onTouch: ((View, MotionEvent) -> Boolean)?) {
  * @param v [View] 对象
  * @param onTouch 回调
  */
+@SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch")
 fun setViewOnTouch(v: View, onTouch: ((MotionEvent) -> Boolean)?) {
     v.setOnTouchListener { _, ev ->
@@ -292,6 +295,7 @@ fun setViewOnTouch(v: View, onTouch: ((MotionEvent) -> Boolean)?) {
  * @param v [View] 对象
  * @param onTouch 回调
  */
+@SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch")
 fun setViewOnTouch(v: View, onTouch: (() -> Boolean)?) {
     v.setOnTouchListener { _, _ ->
@@ -305,6 +309,7 @@ fun setViewOnTouch(v: View, onTouch: (() -> Boolean)?) {
  * @param v [View] 对象
  * @param onTouch 回调
  */
+@SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
 fun <T> setViewOnTouch(v: View, onTouch: ((MotionEvent, T) -> Boolean)?, item: T) {
     v.setOnTouchListener { _, ev ->
@@ -318,6 +323,7 @@ fun <T> setViewOnTouch(v: View, onTouch: ((MotionEvent, T) -> Boolean)?, item: T
  * @param v [View] 对象
  * @param onTouch 回调
  */
+@SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
 fun <T> setViewOnTouch(v: View, onTouch: ((T) -> Boolean)?, item: T) {
     v.setOnTouchListener { _, _ ->
@@ -371,15 +377,15 @@ fun setElevation(v: View, elevation: Float?) {
  * 设置 View 动画列表
  * - 仅 API >= LOLLIPOP 有效
  *
- * @param anmatorId 动画列表 id
+ * @param animatorId 动画列表 id
  */
 @BindingAdapter("android:bind_stateListAnimator")
-fun setStateListAnimator(v: View, anmatorId: Int?) {
-    if (null == anmatorId) {
+fun setStateListAnimator(v: View, animatorId: Int?) {
+    if (null == animatorId) {
         return
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        v.stateListAnimator = AnimatorInflater.loadStateListAnimator(v.context, anmatorId)
+        v.stateListAnimator = AnimatorInflater.loadStateListAnimator(v.context, animatorId)
     }
 }
 

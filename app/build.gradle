@@ -31,11 +31,6 @@ android {
 
         // 开启 Dex 分包
         multiDexEnabled true
-
-//        ndk {
-//            // 支持的 cpu 类型
-//            abiFilters 'armeabi', 'armeabi-v7a'
-//        }
     }
 
     signingConfigs {
@@ -127,9 +122,9 @@ android {
         keepRuntimeAnnotatedClasses false
     }
 
-    dataBinding {
+    buildFeatures {
         // DataBinding 开启
-        enabled true
+        dataBinding = true
     }
 
     lintOptions {
@@ -176,6 +171,11 @@ dependencies {
     // 约束性布局
     implementation rootProject.ext.dependencies["androidx_constraint"]
 
+    // activity
+    implementation rootProject.ext.dependencies["androidx_activity-ktx"]
+    // fragment
+    implementation rootProject.ext.dependencies["androidx_fragment-ktx"]
+
     // ktx
     implementation rootProject.ext.dependencies["ktx_core"]
 
@@ -212,6 +212,8 @@ dependencies {
 
     // SmartRefreshLayout
     implementation rootProject.ext.dependencies["smartrefresh"]
+    implementation rootProject.ext.dependencies["smartrefresh-header-classics"]
+    implementation rootProject.ext.dependencies["smartrefresh-footer-classics"]
 
     // Tablayout
     implementation rootProject.ext.dependencies["tablayout"]
@@ -223,6 +225,5 @@ dependencies {
     implementation project(':lib_okhttp_interceptor')
     implementation project(":lib_recyclerview")
     implementation project(":lib_views_custom")
-    implementation project(':lib_forresult')
     implementation project(":lib_swipe_back")
 }

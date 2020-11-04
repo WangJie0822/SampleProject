@@ -7,6 +7,8 @@ import android.inputmethodservice.KeyboardView
 /**
  * 设置软键盘监听
  *
+ * @see SimpleKeyboardActionListener
+ *
  * @author 王杰
  */
 fun KeyboardView.setOnKeyboardActionListener(init: SimpleKeyboardActionListener.() -> Unit) {
@@ -15,6 +17,9 @@ fun KeyboardView.setOnKeyboardActionListener(init: SimpleKeyboardActionListener.
     this.setOnKeyboardActionListener(listener)
 }
 
+/**
+ * 简易实现的软键盘监听类
+ */
 open class SimpleKeyboardActionListener : KeyboardView.OnKeyboardActionListener {
 
     private var onPress: ((Int) -> Unit)? = null

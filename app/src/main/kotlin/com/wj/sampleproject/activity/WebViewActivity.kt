@@ -49,7 +49,7 @@ class WebViewActivity
             }
         })
         // 浏览器打开
-        viewModel.jumpBorwser.observe(this, Observer {
+        viewModel.jumpBrowser.observe(this, Observer {
             jumpToBrowser(webViewFragment.currentUrl, mContext)
         })
     }

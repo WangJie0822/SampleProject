@@ -21,12 +21,12 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class CollectedWebEntity(
-        var desc: String? = "",
-        var icon: String? = "",
-        var id: String? = "",
-        var link: String? = "",
-        var name: String? = "",
-        var order: String? = "",
-        var userId: String? = "",
-        var visible: String? = ""
+        val desc: String? = "",
+        val icon: String? = "",
+        val id: String? = "",
+        val link: String? = "",
+        val name: String? = "",
+        val order: String? = "",
+        val userId: String? = "",
+        val visible: String? = ""
 ) : Parcelable

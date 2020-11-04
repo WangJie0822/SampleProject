@@ -8,7 +8,7 @@ package com.wj.sampleproject.entity
  * @param articles 导航列表
  */
 data class NavigationListEntity(
-        var cid: String? = "",
-        var name: String? = "",
-        var articles: ArrayList<ArticleEntity>? = arrayListOf()
+        val cid: String? = "",
+        val name: String? = "",
+        val articles: ArrayList<ArticleEntity>? = arrayListOf()
 )

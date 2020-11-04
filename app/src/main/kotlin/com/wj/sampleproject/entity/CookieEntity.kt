@@ -12,5 +12,5 @@ import okhttp3.Cookie
  * @author 王杰
  */
 data class CookieEntity(
-        var cookies: ArrayList<Cookie>? = arrayListOf()
+        val cookies: ArrayList<Cookie>? = arrayListOf()
 )
