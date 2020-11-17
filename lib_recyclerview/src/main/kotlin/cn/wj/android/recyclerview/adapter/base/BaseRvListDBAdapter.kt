@@ -1,4 +1,4 @@
-package cn.wj.android.recyclerview.adapter
+package cn.wj.android.recyclerview.adapter.base
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import cn.wj.android.recyclerview.BR
+import cn.wj.android.recyclerview.defaultDiffCallback
+import cn.wj.android.recyclerview.holder.BaseRvDBViewHolder
+import cn.wj.android.recyclerview.holder.BaseRvViewHolder
 
 /**
  * RecyclerView 适配器基类
@@ -26,61 +29,30 @@ abstract class BaseRvListDBAdapter<out VH : BaseRvDBViewHolder<DB, E>, DB : View
     /**
      * 构造方法
      *
-     * @param diffCallback 数据是否相同回调
+     * @param config Differ config
      * @param anim 是否使用动画
      */
-    constructor(diffCallback: DiffUtil.ItemCallback<E> = object : DiffUtil.ItemCallback<E>() {
-        override fun areItemsTheSame(oldItem: E, newItem: E): Boolean {
-            return oldItem === newItem
-        }
-    
-        override fun areContentsTheSame(oldItem: E, newItem: E): Boolean {
-            return oldItem.toString() == newItem.toString()
-        }
-    }, anim: Boolean = false) : super(diffCallback, anim)
+    constructor(anim: Boolean, config: AsyncDifferConfig<E>) : super(anim, config)
 
     /**
      * 构造方法
      *
-     * @param config Differ config
      * @param anim 是否使用动画
+     * @param diffCallback 数据是否相同回调
      */
-    constructor(config: AsyncDifferConfig<E>, anim: Boolean = false) : super(config, anim)
+    constructor(anim: Boolean = true, diffCallback: DiffUtil.ItemCallback<E> = defaultDiffCallback()) : super(anim, diffCallback)
 
     /** 事件处理  */
     var viewModel: VM? = null
 
-    /**
-     * 创建ViewHolder
-     *
-     * @param binding DataBinding对象
-     *
-     * @return ViewHolder 对象
-     */
-    protected open fun createViewHolder(binding: DB): BaseRvDBViewHolder<DB, E> {
+    override fun createSpecialViewHolder(view: View): BaseRvViewHolder<E> {
         @Suppress("UNCHECKED_CAST")
-        val holderConstructor = (getVHClass() as Class<BaseRvDBViewHolder<DB, E>>).getConstructor(getDBClass())
-        return holderConstructor.newInstance(binding)
-    }
-
-    /**
-     * 创建ViewHolder 使用头布局时必须重写
-     *
-     * @param view View对象
-     *
-     * @return ViewHolder
-     */
-    override fun createViewHolder(view: View): BaseRvViewHolder<E> {
-        @Suppress("UNCHECKED_CAST")
-        val clazz = getVHClass().superclass as Class<BaseRvViewHolder<E>>
+        val clazz = getViewHolderClass().superclass as Class<BaseRvViewHolder<E>>
         val constructor = clazz.getConstructor(View::class.java)
         return constructor.newInstance(view)
     }
 
-    /**
-     * 除特殊布局外的其他布局，一种布局无需变化，多种布局重写
-     */
-    override fun customCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRvDBViewHolder<DB, E> {
+    override fun createCustomViewHolder(parent: ViewGroup, viewType: Int): BaseRvViewHolder<E> {
         // 普通布局
         // 加载布局，初始化 DataBinding
         val binding = DataBindingUtil.inflate<DB>(
@@ -96,19 +68,27 @@ abstract class BaseRvListDBAdapter<out VH : BaseRvDBViewHolder<DB, E>, DB : View
     }
 
     /**
-     * 获取 ViewHolder 的类
+     * 创建ViewHolder
      *
-     * @return ViewHolder 实际类型
+     * @param binding DataBinding对象
+     *
+     * @return ViewHolder 对象
      */
-    override fun getVHClass() = getActualTypeList()[0] as Class<*>
+    protected open fun createViewHolder(binding: DB): BaseRvDBViewHolder<DB, E> {
+        @Suppress("UNCHECKED_CAST")
+        val holderConstructor = (getViewHolderClass() as Class<BaseRvDBViewHolder<DB, E>>).getConstructor(getDataBindingClass())
+        return holderConstructor.newInstance(binding)
+    }
 
     /**
      * 获取 DataBinding 的类
      *
      * @return DataBinding 的实际类型
      */
-    @Suppress("UNCHECKED_CAST")
-    protected open fun getDBClass() = getActualTypeList()[1] as Class<DB>
+    protected open fun getDataBindingClass(): Class<DB> {
+        @Suppress("UNCHECKED_CAST")
+        return getActualTypeList()[1] as Class<DB>
+    }
 
     /** 布局 id */
     abstract val layoutResID: Int

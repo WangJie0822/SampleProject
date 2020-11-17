@@ -1,4 +1,4 @@
-package com.wj.sampleproject.koin
+package com.wj.sampleproject.di
 
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * 网络请求 Module
  */
 val netModule: Module = module {
-    
+
     single {
         //缓存路径
         val logger = object : InterceptorLogger {
@@ -44,10 +44,15 @@ val netModule: Module = module {
                 .retryOnConnectionFailure(true)
                 .cookieJar(object : CookieJar {
                     override fun loadForRequest(url: HttpUrl): List<Cookie> {
-                        val cookieEntity = MMKV.defaultMMKV().decodeString(SP_KEY_COOKIES, "").toTypeEntity<CookieEntity>()
+                        val cookieEntity = try {
+                            MMKV.defaultMMKV().decodeString(SP_KEY_COOKIES, "").toTypeEntity<CookieEntity>()
+                        } catch (e: Exception) {
+                            Logger.t("NET").e(e, "loadCookie")
+                            null
+                        }
                         return cookieEntity?.cookies.orEmpty()
                     }
-    
+
                     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
                         if (cookies.size > 1) {
                             val ls = arrayListOf<Cookie>()
@@ -62,7 +67,7 @@ val netModule: Module = module {
                 )
                 .build()
     }
-    
+
     single<Retrofit> {
         Retrofit.Builder()
                 .baseUrl(UrlDefinition.BASE_URL)
@@ -70,7 +75,7 @@ val netModule: Module = module {
                 .client(get<OkHttpClient>())
                 .build()
     }
-    
+
     single<WebService> {
         get<Retrofit>().create(WebService::class.java)
     }
@@ -80,13 +85,13 @@ val netModule: Module = module {
  * 数据仓库 Module
  */
 val repositoryModule: Module = module {
-    single { HomepageRepository() }
-    single { SystemRepository() }
-    single { BjnewsRepository() }
-    single { ProjectRepository() }
-    single { MyRepository() }
-    single { CollectRepository() }
-    single { SearchRepository() }
+    factory { HomepageRepository() }
+    factory { SystemRepository() }
+    factory { BjnewsRepository() }
+    factory { ProjectRepository() }
+    factory { MyRepository() }
+    factory { CollectRepository() }
+    factory { SearchRepository() }
 }
 
 /**

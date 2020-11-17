@@ -1,4 +1,4 @@
-package cn.wj.android.recyclerview.adapter
+package cn.wj.android.recyclerview.holder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import cn.wj.android.base.utils.AppManager
-import cn.wj.android.recyclerview.adapter.SimpleRvAdapter
+import cn.wj.android.recyclerview.adapter.simple.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
@@ -28,6 +28,7 @@ class SearchActivity
 
     /** 文章列表适配器 */
     private val mArticlesAdapter: ArticleListRvAdapter by inject()
+
     /** 搜索热词列表适配器 */
     private val mHotSearchAdapter = SimpleRvAdapter<HotSearchEntity>(R.layout.app_recycler_item_hot_search)
 

@@ -7,6 +7,7 @@ import com.wj.sampleproject.constants.STR_TRUE
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.net.WebService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -36,13 +37,18 @@ class HomepageRepository : KoinComponent {
         val ls = arrayListOf<ArticleEntity>()
         if (pageNum == NET_PAGE_START) {
             // 刷新获取置顶文章列表
-            val tops = mWebService.getHomepageTopArticleList().data.orEmpty()
-            tops.forEach {
+            val tops = async {
+                mWebService.getHomepageTopArticleList().data.orEmpty()
+            }
+            tops.await().forEach {
                 ls.add(it.copy(top = STR_TRUE))
             }
         }
         // 获取文章列表
-        val result = mWebService.getHomepageArticleList(pageNum)
+        val resultAsync = async {
+            mWebService.getHomepageArticleList(pageNum)
+        }
+        val result = resultAsync.await()
         // 添加文章列表到 ls
         ls.addAll(result.data?.datas.orEmpty())
         // 处理收藏状态

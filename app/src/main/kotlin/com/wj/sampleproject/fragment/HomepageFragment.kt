@@ -28,6 +28,7 @@ class HomepageFragment
 
     /** Banner 列表适配器 */
     private val mBannerAdapter: BannerVpAdapter by inject()
+
     /** 文章列表适配器 */
     private val mArticlesAdapter: ArticleListRvAdapter by inject()
 
@@ -61,7 +62,7 @@ class HomepageFragment
             rv.adapter = mArticlesAdapter.also {
                 it.viewModel = viewModel
                 it.setEmptyView(R.layout.app_layout_placeholder)
-                it.showHeaderWhenEmpty = true
+                it.showHeaderWhenEmpty(true)
                 // 配置 Banner 列表
                 AppLayoutHomepageBannerBinding.inflate(
                         LayoutInflater.from(mContext), null, false

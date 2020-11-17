@@ -1,4 +1,4 @@
-package cn.wj.android.recyclerview.adapter
+package cn.wj.android.recyclerview.adapter.callback
 
 import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView

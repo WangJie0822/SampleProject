@@ -1,7 +1,9 @@
-package cn.wj.android.recyclerview.adapter
+package cn.wj.android.recyclerview.adapter.callback
 
 import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
+import cn.wj.android.recyclerview.adapter.base.BaseRvAdapter
+import cn.wj.android.recyclerview.adapter.base.BaseRvListAdapter
 
 /**
  * 有动画回调

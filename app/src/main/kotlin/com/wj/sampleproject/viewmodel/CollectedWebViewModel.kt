@@ -74,7 +74,7 @@ class CollectedWebViewModel(
 
     /** 列表长按点击 */
     val onItemLongClick: (View, CollectedWebEntity) -> Boolean = { v, item ->
-        popupMenuData.value = (PopupModel(v, {
+        popupMenuData.value = (PopupModel(v) {
             when (it.itemId) {
                 R.id.menu_edit -> {
                     // 编辑
@@ -86,7 +86,7 @@ class CollectedWebViewModel(
                 }
             }
             true
-        }))
+        })
         true
     }
 
@@ -120,7 +120,7 @@ class CollectedWebViewModel(
     private fun deleteCollectedWeb(item: CollectedWebEntity) {
         viewModelScope.launch {
             try {
-                progressData.value = (ProgressModel())
+                progressData.value = ProgressModel()
                 val result = collectRepository.deleteCollectedWeb(item.id.orEmpty())
                 if (result.success()) {
                     // 删除成功，从列表移除

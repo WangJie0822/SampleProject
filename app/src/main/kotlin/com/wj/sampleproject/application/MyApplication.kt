@@ -9,10 +9,10 @@ import cn.wj.android.logger.Logger
 import cn.wj.android.logger.PrettyFormatStrategy
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.BuildConfig
-import com.wj.sampleproject.koin.adapterModule
-import com.wj.sampleproject.koin.netModule
-import com.wj.sampleproject.koin.repositoryModule
-import com.wj.sampleproject.koin.viewModelModule
+import com.wj.sampleproject.di.adapterModule
+import com.wj.sampleproject.di.netModule
+import com.wj.sampleproject.di.repositoryModule
+import com.wj.sampleproject.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

@@ -43,7 +43,7 @@ class NavigationFragment
     override fun initObserve() {
         // 导航列表
         viewModel.listData.observe(this, Observer {
-            mAdapter.loadData(it)
+            mAdapter.loadMore(it)
         })
         // 跳转 WebView
         viewModel.jumpWebViewData.observe(this, Observer {

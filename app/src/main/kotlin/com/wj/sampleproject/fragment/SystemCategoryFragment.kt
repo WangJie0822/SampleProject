@@ -43,7 +43,7 @@ class SystemCategoryFragment
     override fun initObserve() {
         // 目录列表
         viewModel.listData.observe(this, Observer {
-            mAdapter.loadData(it.orEmpty())
+            mAdapter.loadMore(it.orEmpty())
         })
         // 跳转体系文章列表
         viewModel.jumpSystemData.observe(this, Observer {

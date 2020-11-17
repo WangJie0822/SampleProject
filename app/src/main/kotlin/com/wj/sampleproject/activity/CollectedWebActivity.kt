@@ -6,7 +6,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.utils.AppManager
-import cn.wj.android.recyclerview.adapter.SimpleRvListAdapter
+import cn.wj.android.recyclerview.adapter.simple.SimpleRvListAdapter
 import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
@@ -25,15 +25,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  * @author 王杰
  */
-class CollectedWebActivity : BaseActivity<CollectedWebViewModel, AppActivityCollectedWebBinding>() {
+class CollectedWebActivity
+    : BaseActivity<CollectedWebViewModel, AppActivityCollectedWebBinding>() {
 
     override val viewModel: CollectedWebViewModel by viewModel()
 
     /** 列表适配器对象 */
-    private val mAdapter = SimpleRvListAdapter<CollectedWebEntity>(
-            R.layout.app_recycler_item_collected_web,
-            { old, new -> old == new }, true
-    )
+    private val mAdapter = SimpleRvListAdapter<CollectedWebEntity>(R.layout.app_recycler_item_collected_web)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

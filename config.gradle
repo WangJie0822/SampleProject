@@ -240,7 +240,7 @@ ext {
             // 可视化埋点
             "tencent-visual"                       : "com.qq.visual:visual:3.3.1-release",
             // MMKV https://github.com/tencent/mmkv
-            "tencent-mmkv"                         : "com.tencent:mmkv:1.0.23",
+            "tencent-mmkv"                         : "com.tencent:mmkv:1.2.5",
 
             // 极光推送 http://docs.jiguang.cn/jpush/client/Android/android_sdk/
             "jpush"                                : "cn.jiguang.sdk:jpush:3.4.1",

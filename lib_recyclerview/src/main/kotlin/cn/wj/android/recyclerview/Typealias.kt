@@ -9,3 +9,5 @@ package cn.wj.android.recyclerview
 
 /** 类型别名，RecyclerView 空布局点击 */
 typealias OnEmptyClickListener = () -> Unit
+
+typealias AreContentsTheSame<E> = (E, E) -> Boolean

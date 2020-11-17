@@ -1,33 +1,36 @@
-package cn.wj.android.recyclerview.adapter
+package cn.wj.android.recyclerview.adapter.simple
 
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
+import cn.wj.android.recyclerview.AreContentsTheSame
+import cn.wj.android.recyclerview.adapter.base.BaseRvListDBAdapter
+import cn.wj.android.recyclerview.holder.BaseRvDBViewHolder
+import cn.wj.android.recyclerview.holder.BaseRvViewHolder
 import java.lang.reflect.ParameterizedType
 
 /**
  * 简易 列表适配器
- * - 使用 Databinding
+ * - 使用 DataBinding
  * - 数据绑定对象名为 viewModel
+ *
+ * @param layoutResID 布局 id
+ * @param anim 是否开启动画
+ * @param areContentsTheSame 内容是否相同
  *
  * @author 王杰
  */
-class SimpleRvListAdapter<E>
-/**
- * @param layoutResID 布局 id
- * @param areContentsTheSame 内容是否相同
- * @param anim 是否开启动画
- */
-constructor(
+class SimpleRvListAdapter<E>(
         override val layoutResID: Int,
-        areContentsTheSame: AreContentsTheSame<E> = { old, new -> old.toString() == new.toString() },
-        anim: Boolean = false
+        anim: Boolean = true,
+        areContentsTheSame: AreContentsTheSame<E> = { old, new -> old.toString() == new.toString() }
 ) : BaseRvListDBAdapter<
         SimpleRvListAdapter.ViewHolder<E>,
         ViewDataBinding,
         Any,
         E>(
-        object : DiffUtil.ItemCallback<E>() {
+        anim = anim,
+        diffCallback = object : DiffUtil.ItemCallback<E>() {
             override fun areItemsTheSame(oldItem: E, newItem: E): Boolean {
                 return oldItem === newItem
             }
@@ -35,12 +38,14 @@ constructor(
             override fun areContentsTheSame(oldItem: E, newItem: E): Boolean {
                 return areContentsTheSame(oldItem, newItem)
             }
-        }, anim
+        }
 ) {
 
-    override fun getVHClass() = ((getActualTypeList()[0] as ParameterizedType).rawType) as Class<*>
+    override fun getViewHolderClass(): Class<BaseRvViewHolder<E>> {
+        @Suppress("UNCHECKED_CAST")
+        return ((getActualTypeList()[0] as ParameterizedType).rawType) as Class<BaseRvViewHolder<E>>
+    }
 
-    @Suppress("unused")
     class ViewHolder<E> : BaseRvDBViewHolder<ViewDataBinding, E> {
 
         constructor(view: View) : super(view)
@@ -48,5 +53,3 @@ constructor(
         constructor(binding: ViewDataBinding) : super(binding)
     }
 }
-
-typealias AreContentsTheSame<E> = (E, E) -> Boolean
