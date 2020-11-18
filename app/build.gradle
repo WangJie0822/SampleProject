@@ -1,3 +1,5 @@
+import com.wj.build.*
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -6,26 +8,26 @@ apply plugin: 'kotlin-kapt'
 android {
 
     // 编译 SDK 版本
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileSdkVersion AppConfigs.compile_sdk_version
     // 编译工具版本
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    buildToolsVersion AppConfigs.build_tools_version
 
     // 资源前缀
     resourcePrefix "app"
 
     defaultConfig {
         // 应用 id
-        applicationId "com.wj.sampleproject"
+        applicationId AppConfigs.application_id
 
         // 最低支持版本
-        minSdkVersion rootProject.ext.android.minSdkVersion
+        minSdkVersion AppConfigs.min_sdk_version
         // 目标 SDK 版本
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        targetSdkVersion AppConfigs.target_sdk_version
 
         // 应用版本号
-        versionCode rootProject.ext.android.versionCode
+        versionCode AppConfigs.version_code
         // 应用版本名
-        versionName rootProject.ext.android.versionName
+        versionName AppConfigs.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -36,18 +38,18 @@ android {
     signingConfigs {
         // 签名配置
         release {
-            keyAlias 'test'
-            keyPassword '123123'
-            storeFile file('android_test.jks')
-            storePassword '123123'
+            keyAlias SigningConfigs.key_alias
+            keyPassword SigningConfigs.key_password
+            storeFile file(SigningConfigs.store_file)
+            storePassword SigningConfigs.store_password
             v1SigningEnabled true
             v2SigningEnabled true
         }
         debug {
-            keyAlias 'test'
-            keyPassword '123123'
-            storeFile file('android_test.jks')
-            storePassword '123123'
+            keyAlias SigningConfigs.key_alias
+            keyPassword SigningConfigs.key_password
+            storeFile file(SigningConfigs.store_file)
+            storePassword SigningConfigs.store_password
             v1SigningEnabled true
             v2SigningEnabled true
         }
@@ -150,73 +152,71 @@ android {
 
 dependencies {
     // 测试
-    testImplementation rootProject.ext.dependencies["test_junit"]
-    androidTestImplementation rootProject.ext.dependencies["androidx_test_runner"]
-    androidTestImplementation rootProject.ext.dependencies["androidx_test_espresso-core"]
-    androidTestImplementation rootProject.ext.dependencies["androidx_test_ext_junit"]
+    testImplementation Dependencies.test_junit
+    androidTestImplementation Dependencies.androidx_test_runner
+    androidTestImplementation Dependencies.androidx_test_espresso_core
+    androidTestImplementation Dependencies.androidx_test_ext_junit
 
-    // .jar .aar 包
-    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
     // Kotlin jdk
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Dependencies.kotlin_jdk
 
     // v4
-    implementation rootProject.ext.dependencies["androidx_support-v4"]
+    implementation Dependencies.androidx_legacy
     // v7
-    implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
+    implementation Dependencies.androidx_appcompat
     // design
-    implementation rootProject.ext.dependencies["androidx_design"]
+    implementation Dependencies.androidx_material
     // RecyclerView
-    implementation rootProject.ext.dependencies["androidx_recyclerview"]
+    implementation Dependencies.androidx_recyclerview
     // 约束性布局
-    implementation rootProject.ext.dependencies["androidx_constraint"]
+    implementation Dependencies.androidx_constraint
 
     // activity
-    implementation rootProject.ext.dependencies["androidx_activity-ktx"]
+    implementation Dependencies.androidx_activity_ktx
     // fragment
-    implementation rootProject.ext.dependencies["androidx_fragment-ktx"]
+    implementation Dependencies.androidx_fragment_ktx
 
     // ktx
-    implementation rootProject.ext.dependencies["ktx_core"]
+    implementation Dependencies.androidx_core_ktx
 
     // ViewModel 拓展
-    implementation rootProject.ext.dependencies["jetpack_viewmodel-ktx"]
+    implementation Dependencies.androidx_lifecycle_viewmodel_ktx
     // LifeCycle 拓展
-    implementation rootProject.ext.dependencies["jetpack_lifecycle-ktx"]
+    implementation Dependencies.androidx_lifecycle_ktx
     // LiveData 拓展
-    implementation rootProject.ext.dependencies["jetpack_livedata-ktx"]
+    implementation Dependencies.androidx_lifecycle_livedata_ktx
 
     // 协程
-    implementation rootProject.ext.dependencies["coroutines"]
+    implementation Dependencies.kotlin_coroutines
 
     // Koin
-    implementation rootProject.ext.dependencies["androidx-koin-scope"]
-    implementation rootProject.ext.dependencies["androidx-koin-viewmodel"]
-    implementation rootProject.ext.dependencies["androidx-koin-ext"]
+    implementation Dependencies.koin_scope
+    implementation Dependencies.koin_viewmodel
+    implementation Dependencies.koin_ext
 
-    // livedatabus
-    implementation rootProject.ext.dependencies["androidx-livedatabus"]
+    // LiveEventBus
+    implementation Dependencies.live_event_bus
 
     // OkHttp
-    implementation rootProject.ext.dependencies["okhttp"]
+    implementation Dependencies.okhttp
 
     // Retrofit
-    implementation rootProject.ext.dependencies["retrofit"]
-    implementation rootProject.ext.dependencies["retrofit-gson"]
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofit_gson
 
     // Glide
-    implementation rootProject.ext.dependencies["glide"]
+    implementation Dependencies.glide
 
     // MMKV 数据存储
-    implementation rootProject.ext.dependencies["tencent-mmkv"]
+    implementation Dependencies.tencent_mmkv
 
     // SmartRefreshLayout
-    implementation rootProject.ext.dependencies["smartrefresh"]
-    implementation rootProject.ext.dependencies["smartrefresh-header-classics"]
-    implementation rootProject.ext.dependencies["smartrefresh-footer-classics"]
+    implementation Dependencies.smart_refresh
+    implementation Dependencies.smart_refresh_header_classics
+    implementation Dependencies.smart_refresh_footer_classics
 
     // Tablayout
-    implementation rootProject.ext.dependencies["tablayout"]
+    implementation Dependencies.tablayout
 
     // 依赖 base 库
     implementation project(":lib_ui")

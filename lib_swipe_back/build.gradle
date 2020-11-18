@@ -1,3 +1,6 @@
+import com.wj.build.AppConfigs
+import com.wj.build.Dependencies
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
@@ -5,13 +8,13 @@ group='com.github.WangJie0822'
 
 android {
 
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileSdkVersion AppConfigs.compile_sdk_version
 
     resourcePrefix "swipe"
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        minSdkVersion AppConfigs.min_sdk_version
+        targetSdkVersion AppConfigs.target_sdk_version
     }
 
     sourceSets {
@@ -28,8 +31,8 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Dependencies.kotlin_jdk
 
     // v7
-    implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
+    implementation Dependencies.androidx_appcompat
 }

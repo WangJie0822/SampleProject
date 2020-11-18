@@ -1,18 +1,21 @@
+import com.wj.build.AppConfigs
+import com.wj.build.Dependencies
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.WangJie0822'
+group = 'com.github.WangJie0822'
 
 android {
 
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileSdkVersion AppConfigs.compile_sdk_version
 
     resourcePrefix "base"
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        minSdkVersion AppConfigs.min_sdk_version
+        targetSdkVersion AppConfigs.target_sdk_version
     }
 
     sourceSets {
@@ -35,17 +38,17 @@ android {
 
 dependencies {
     // Kotlin 支持
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    
+    implementation Dependencies.kotlin_jdk
+
     // v4
-    implementation rootProject.ext.dependencies["androidx_support-v4"]
+    implementation Dependencies.androidx_legacy
     // v7
-    implementation rootProject.ext.dependencies["androidx_appcompat-v7"]
+    implementation Dependencies.androidx_appcompat
     // RecyclerView
-    implementation rootProject.ext.dependencies["androidx_recyclerview"]
+    implementation Dependencies.androidx_recyclerview
 
     // 协程
-    implementation rootProject.ext.dependencies["coroutines"]
+    implementation Dependencies.kotlin_coroutines
 
     // Common 库
 //    api 'com.github.WangJie0822.SampleProject:lib_common:0.0.1'
