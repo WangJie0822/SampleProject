@@ -21,7 +21,7 @@ import com.wj.sampleproject.helper.ProgressDialogHelper
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     : BaseBindingLibActivity<VM, DB>() {
 
-    protected var mSwipeBackHelper: SwipeBackHelper? = null
+    private var mSwipeBackHelper: SwipeBackHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         ProgressDialogHelper.dismiss()
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean = mSwipeBackHelper.dispatchTouchEvent(ev) {
-        super.dispatchTouchEvent(ev)
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        return mSwipeBackHelper.dispatchTouchEvent(ev) {
+            super.dispatchTouchEvent(ev)
+        }
     }
 
     override fun getResources(): Resources? {
@@ -70,19 +72,19 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             snackBar.setTextColor(it.contentColor)
             snackBar.setBackgroundTint(it.contentBgColor)
             if (it.actionText != null && it.onAction != null) {
-                snackBar.setAction(it.actionText!!, it.onAction)
+                snackBar.setAction(it.actionText, it.onAction)
                 snackBar.setActionTextColor(it.actionColor)
             }
             if (it.onCallback != null) {
-                snackBar.addCallback(it.onCallback!!)
+                snackBar.addCallback(it.onCallback)
             }
             snackBar.show()
         })
         viewModel.progressData.observe(this, { progress ->
-            if (null == progress || !progress.show) {
+            if (null == progress) {
                 ProgressDialogHelper.dismiss()
             } else {
-                ProgressDialogHelper.show(mContext, progress.cancelable)
+                ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
             }
         })
         viewModel.uiCloseData.observe(this, { close ->

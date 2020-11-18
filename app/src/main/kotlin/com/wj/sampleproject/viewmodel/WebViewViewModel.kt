@@ -11,28 +11,28 @@ import com.wj.sampleproject.base.viewmodel.BaseViewModel
  */
 class WebViewViewModel
     : BaseViewModel() {
-    
+
     /** 返回点击数据 */
     val navigationData = MutableLiveData<Int>()
-    
+
     /** 浏览器打开 */
     val jumpBrowser = MutableLiveData<Int>()
-    
+
     /** 标题文本 */
     val title: ObservableField<String> = ObservableField()
-    
+
     /** 菜单 Item 点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = { item ->
         if (item.itemId == R.id.menu_browser) {
             // 浏览器打开
-            jumpBrowser.postValue(0)
+            jumpBrowser.value = 0
         }
         true
     }
-    
+
     /** 返回点击 */
     val onNavigationClick: () -> Unit = {
         // 返回
-        navigationData.postValue(0)
+        navigationData.value = 0
     }
 }

@@ -2,8 +2,8 @@
 
 package com.wj.sampleproject.dialog
 
-import android.os.Bundle
 import android.view.Gravity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -22,33 +22,28 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @author 王杰
  */
 class GeneralDialog
-/**
- * 私有化构造
- *
- * 请使用 [.newBuilder] 获取对象
- */
-private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() {
-    
+    : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() {
+
     /** 消极按钮点击  */
     private var onNegativeClick: OnDialogClickListener? = null
-    
+
     /** 积极按钮点击  */
     private var onPositiveClick: OnDialogClickListener? = null
-    
+
     /** 消极按钮点击  */
     private var onNegativeAction: OnDialogActionListener? = null
-    
+
     /** 积极按钮点击  */
     private var onPositiveAction: OnDialogActionListener? = null
-    
+
     /** Builder 对象  */
     var builder: Builder? = null
-    
+
     // 提高可见范围，对外暴露
     public override val viewModel: GeneralViewModel by viewModel()
-    
+
     override val layoutResId = R.layout.app_dialog_general
-    
+
     override fun initView() {
         // 从 argument 中获取数据
         val arguments = arguments ?: return
@@ -65,7 +60,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
         viewModel.showPositiveButton.set(arguments.getBoolean(ACTION_SHOW_POSITIVE_BUTTON, true))
         viewModel.positiveButtonStr.set(arguments.getString(ACTION_POSITIVE_BUTTON_STR))
     }
-    
+
     override fun initObserve() {
         // 消极按钮点击
         viewModel.negativeClickData.observe(this, Observer {
@@ -89,7 +84,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             // 未设置监听，默认隐藏
             dismiss()
         })
-        
+
         // 积极按钮点击
         viewModel.positiveClickData.observe(this, Observer {
             // 选中状态
@@ -113,7 +108,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             dismiss()
         })
     }
-    
+
     /**
      * 消极按钮点击事件
      *
@@ -122,7 +117,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
     private fun setOnNegativeClick(onNegativeClick: OnDialogClickListener?) {
         this.onNegativeClick = onNegativeClick
     }
-    
+
     /**
      * 积极按钮点击事件
      *
@@ -131,7 +126,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
     private fun setOnPositiveClick(onPositiveClick: OnDialogClickListener?) {
         this.onPositiveClick = onPositiveClick
     }
-    
+
     /**
      * 消极按钮点击事件
      *
@@ -143,7 +138,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
     private fun setOnNegativeAction(onNegativeAction: OnDialogActionListener?) {
         this.onNegativeAction = onNegativeAction
     }
-    
+
     /**
      * 积极按钮点击事件
      *
@@ -155,15 +150,15 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
     private fun setOnPositiveAction(onPositiveAction: OnDialogActionListener?) {
         this.onPositiveAction = onPositiveAction
     }
-    
+
     fun show(activity: FragmentActivity) {
         show(activity.supportFragmentManager, "GeneralDialog")
     }
-    
+
     fun show(fragment: Fragment) {
         show(fragment.childFragmentManager, "GeneralDialog")
     }
-    
+
     /**
      * [GeneralDialog] 通用弹窗建造者对象
      */
@@ -176,55 +171,55 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
      *
      * @param builder [Builder] 对象
      */(builder: Builder?) {
-        
+
         /** 标记 - 能否取消  */
         private var cancelable = false
-        
+
         /** 标记 - 是否显示标题  */
         private var showTitle = false
-        
+
         /** 标题文本  */
         private var titleStr = ""
-        
+
         /** 内容文本  */
         private var contentStr = ""
-        
+
         /** 内容文本重心  */
         private var contentGravity = Gravity.START or Gravity.CENTER_VERTICAL
-        
+
         /** 标记 - 是否显示选择器  */
         private var showSelect = false
-        
+
         /** 标记 - 选择器是否选中  */
         private var selected = false
-        
+
         /** 选择器文本 - 默认：不再提示  */
         private var selectStr = R.string.app_no_longer_tips.string
-        
+
         /** 标记 - 是否显示消极按钮  */
         private var showNegativeButton = true
-        
+
         /** 消极按钮文本 - 默认：取消  */
         private var negativeButtonStr = R.string.app_cancel.string
-        
+
         /** 标记 - 是否显示积极按钮  */
         private var showPositiveButton = true
-        
+
         /** 积极按钮文本 - 默认：确认  */
         private var positiveButtonStr = R.string.app_confirm.string
-        
+
         /** 消极按钮点击  */
         private var onNegativeClick: OnDialogClickListener? = null
-        
+
         /** 积极按钮点击  */
         private var onPositiveClick: OnDialogClickListener? = null
-        
+
         /** 消极按钮点击  */
         private var onNegativeAction: OnDialogActionListener? = null
-        
+
         /** 积极按钮点击  */
         private var onPositiveAction: OnDialogActionListener? = null
-        
+
         init {
             if (null != builder) {
                 cancelable = builder.cancelable
@@ -245,7 +240,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
                 onPositiveAction = builder.onPositiveAction
             }
         }
-        
+
         /**
          * 设置能否取消
          *
@@ -257,7 +252,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.cancelable = cancelable
             return this
         }
-        
+
         /**
          * 设置是否显示标题
          *
@@ -269,7 +264,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.showTitle = showTitle
             return this
         }
-        
+
         /**
          * 设置标题文本
          *
@@ -281,7 +276,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.titleStr = titleStr
             return this
         }
-        
+
         /**
          * 设置内容文本
          *
@@ -293,7 +288,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.contentStr = contentStr
             return this
         }
-        
+
         /**
          * 设置内容文本重心
          *
@@ -305,7 +300,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.contentGravity = gravity
             return this
         }
-        
+
         /**
          * 设置是否显示选择器
          *
@@ -317,7 +312,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.showSelect = showSelect
             return this
         }
-        
+
         /**
          * 设置选择器默认选择状态
          *
@@ -329,7 +324,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.selected = selected
             return this
         }
-        
+
         /**
          * 设置选择器提示文本
          *
@@ -341,7 +336,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.selectStr = selectStr
             return this
         }
-        
+
         /**
          * 设置是否显示消极按钮
          *
@@ -353,7 +348,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.showNegativeButton = showNegativeButton
             return this
         }
-        
+
         /**
          * 设置消极按钮显示文本
          *
@@ -365,7 +360,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.negativeButtonStr = negativeButtonStr
             return this
         }
-        
+
         /**
          * 设置是否显示积极按钮
          *
@@ -377,7 +372,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.showPositiveButton = showPositiveButton
             return this
         }
-        
+
         /**
          * 积极按钮显示文本
          *
@@ -389,7 +384,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.positiveButtonStr = positiveButtonStr
             return this
         }
-        
+
         /**
          * 消极按钮点击事件
          *
@@ -401,7 +396,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.onNegativeClick = onNegativeClick
             return this
         }
-        
+
         /**
          * 积极按钮点击事件
          *
@@ -413,7 +408,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.onPositiveClick = onPositiveClick
             return this
         }
-        
+
         /**
          * 消极按钮点击事件
          *
@@ -428,7 +423,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.onNegativeAction = onNegativeAction
             return this
         }
-        
+
         /**
          * 积极按钮点击事件
          *
@@ -443,7 +438,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.onPositiveAction = onPositiveAction
             return this
         }
-        
+
         /**
          * 消极按钮点击事件
          *
@@ -457,7 +452,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.onNegativeClick = onNegativeClick
             return this
         }
-        
+
         /**
          * 设置积极按钮
          *
@@ -471,7 +466,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.onPositiveClick = onPositiveClick
             return this
         }
-        
+
         /**
          * 消极按钮点击事件
          *
@@ -488,7 +483,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.onNegativeAction = onNegativeAction
             return this
         }
-        
+
         /**
          * 设置积极按钮
          *
@@ -505,72 +500,72 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
             this.onPositiveAction = onPositiveAction
             return this
         }
-        
+
         /**
          * 建造 [GeneralDialog] 对象
          *
          * @return [GeneralDialog] 对象
          */
         fun build(): GeneralDialog {
-            val dialog = GeneralDialog()
-            dialog.isCancelable = cancelable
-            val args = Bundle()
-            args.putBoolean(ACTION_SHOW_TITLE, showTitle)
-            args.putString(ACTION_TITLE_STR, titleStr)
-            args.putString(ACTION_CONTENT_STR, contentStr)
-            args.putInt(ACTION_CONTENT_GRAVITY, contentGravity)
-            args.putBoolean(ACTION_SHOW_SELECT, showSelect)
-            args.putBoolean(ACTION_SELECTED, selected)
-            args.putString(ACTION_SELECT_STR, selectStr)
-            args.putBoolean(ACTION_SHOW_NEGATIVE_BUTTON, showNegativeButton)
-            args.putString(ACTION_NEGATIVE_BUTTON_STR, negativeButtonStr)
-            args.putBoolean(ACTION_SHOW_POSITIVE_BUTTON, showPositiveButton)
-            args.putString(ACTION_POSITIVE_BUTTON_STR, positiveButtonStr)
-            dialog.arguments = args
-            dialog.setOnNegativeClick(onNegativeClick)
-            dialog.setOnNegativeAction(onNegativeAction)
-            dialog.setOnPositiveClick(onPositiveClick)
-            dialog.setOnPositiveAction(onPositiveAction)
-            dialog.builder = this
-            return dialog
+            return GeneralDialog().apply {
+                isCancelable = cancelable
+                arguments = bundleOf(
+                        ACTION_SHOW_TITLE to showTitle,
+                        ACTION_TITLE_STR to titleStr,
+                        ACTION_CONTENT_STR to contentStr,
+                        ACTION_CONTENT_GRAVITY to contentGravity,
+                        ACTION_SHOW_SELECT to showSelect,
+                        ACTION_SELECTED to selected,
+                        ACTION_SELECT_STR to selectStr,
+                        ACTION_SHOW_NEGATIVE_BUTTON to showNegativeButton,
+                        ACTION_NEGATIVE_BUTTON_STR to negativeButtonStr,
+                        ACTION_SHOW_POSITIVE_BUTTON to showPositiveButton,
+                        ACTION_POSITIVE_BUTTON_STR to positiveButtonStr
+                )
+                setOnNegativeClick(onNegativeClick)
+                setOnNegativeAction(onNegativeAction)
+                setOnPositiveClick(onPositiveClick)
+                setOnPositiveAction(onPositiveAction)
+                builder = this@Builder
+            }
         }
     }
-    
+
     companion object {
-        
+
         /** 参数 Key - 是否显示标题  */
         private const val ACTION_SHOW_TITLE = "action_show_title"
-        
+
         /** 参数 Key - 标题文本  */
         private const val ACTION_TITLE_STR = "action_title_str"
-        
+
         /** 参数 Key - 内容文本  */
         private const val ACTION_CONTENT_STR = "action_content_str"
-        
+
         /** 参数 Key - 内容文本重心  */
         private const val ACTION_CONTENT_GRAVITY = "action_content_gravity"
-        
+
         /** 参数 Key - 是否显示选择器  */
         private const val ACTION_SHOW_SELECT = "action_show_select"
-        
+
         /** 参数 Key - 选择器是否选中  */
         private const val ACTION_SELECTED = "action_selected"
-        
+
         /** 参数 Key - 选择器文本  */
         private const val ACTION_SELECT_STR = "ACTION_SELECT_STR"
-        
+
         /** 参数 Key - 是否显示消极按钮  */
         private const val ACTION_SHOW_NEGATIVE_BUTTON = "action_show_negative_button"
-        
+
         /** 参数 Key - 消极按钮文本  */
         private const val ACTION_NEGATIVE_BUTTON_STR = "action_negative_button_str"
-        
+
         /** 参数 Key - 是否显示积极按钮  */
         private const val ACTION_SHOW_POSITIVE_BUTTON = "action_show_positive_button"
-        
+
         /** 参数 Key - 积极按钮文本  */
         private const val ACTION_POSITIVE_BUTTON_STR = "action_positive_button_str"
-        
+
         /**
          * 新建 [Builder] 建造者对象
          *
@@ -579,7 +574,7 @@ private constructor() : BaseDialog<GeneralViewModel, AppDialogGeneralBinding>() 
         fun newBuilder(): Builder {
             return Builder(null)
         }
-        
+
         /**
          * 从已有 [Builder] 建造者对象 新建 [Builder] 建造者对象
          *

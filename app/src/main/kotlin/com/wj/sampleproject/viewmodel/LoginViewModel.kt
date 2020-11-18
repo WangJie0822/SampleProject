@@ -33,23 +33,23 @@ import kotlinx.coroutines.launch
 class LoginViewModel(
         private val repository: MyRepository
 ) : BaseViewModel() {
-    
+
     /** 标记 - 是否是注册 */
     val register: ObservableBoolean = ObservableBoolean(true)
-    
+
     /** 用户名 */
     val userName: ObservableField<String> = ObservableField(MMKV.defaultMMKV().decodeString(SP_KEY_USER_NAME, ""))
-    
+
     /** 标记 - 是否显示清空用户名 */
     val showUserNameClear: ObservableBoolean = object : ObservableBoolean(userName) {
         override fun get(): Boolean {
             return userName.get().isNotNullAndBlank()
         }
     }
-    
+
     /** 是否允许按钮点击 */
     val buttonEnable: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 按钮文本 */
     val buttonStr: ObservableField<String> = object : ObservableField<String>(register) {
         override fun get(): String? {
@@ -62,7 +62,7 @@ class LoginViewModel(
             }.string
         }
     }
-    
+
     /** 密码 */
     val password: ObservableField<String> = object : ObservableField<String>("") {
         override fun set(value: String?) {
@@ -70,7 +70,7 @@ class LoginViewModel(
             checkBtnEnable()
         }
     }
-    
+
     /** 再次输入密码 */
     val passwordAgain: ObservableField<String> = object : ObservableField<String>("") {
         override fun set(value: String?) {
@@ -78,22 +78,22 @@ class LoginViewModel(
             checkBtnEnable()
         }
     }
-    
+
     /** 关闭点击 */
     val onCloseClick: () -> Unit = {
-        uiCloseData.postValue(UiCloseModel())
+        uiCloseData.value = UiCloseModel()
     }
-    
+
     /** 注册、登录点击 */
     val onTabClick: (Boolean) -> Unit = { registerClick ->
         register.set(registerClick)
     }
-    
+
     /** 清空用户名点击 */
     val onUserNameClearClick: () -> Unit = {
         userName.set("")
     }
-    
+
     /** 按钮点击 */
     val onButtonClick: () -> Unit = fun() {
         if (!buttonEnable.get().condition) {
@@ -102,22 +102,22 @@ class LoginViewModel(
         }
         if (userName.get().isNullOrBlank()) {
             // 用户名为空
-            snackbarData.postValue(SnackbarModel(R.string.app_please_enter_user_name))
+            snackbarData.value = SnackbarModel(R.string.app_please_enter_user_name)
             return
         }
         if (password.get().isNullOrBlank()) {
             // 密码为空
-            snackbarData.postValue(SnackbarModel(R.string.app_please_enter_password))
+            snackbarData.value = SnackbarModel(R.string.app_please_enter_password)
             return
         }
         if (password.get().orEmpty().length < PASSWORD_MIN_LENGTH) {
             // 密码长度小于最低长度
-            snackbarData.postValue(SnackbarModel(R.string.app_password_length_must_larger_than_six))
+            snackbarData.value = SnackbarModel(R.string.app_password_length_must_larger_than_six)
             return
         }
         if (register.get().condition && password.get() != passwordAgain.get()) {
             // 注册且密码不匹配
-            snackbarData.postValue(SnackbarModel(R.string.app_re_set_password_not_match))
+            snackbarData.value = SnackbarModel(R.string.app_re_set_password_not_match)
             return
         }
         if (register.get().condition) {
@@ -128,7 +128,7 @@ class LoginViewModel(
             login()
         }
     }
-    
+
     /**
      * 注册
      */
@@ -136,7 +136,7 @@ class LoginViewModel(
         viewModelScope.launch {
             try {
                 // 显示进度条弹窗
-                progressData.postValue(ProgressModel(cancelable = false))
+                progressData.value = ProgressModel(cancelable = false)
                 val result = repository.register(userName.get().orEmpty(), password.get().orEmpty(), passwordAgain.get().orEmpty())
                 if (result.success()) {
                     // 注册成功，保存用户信息
@@ -144,22 +144,22 @@ class LoginViewModel(
                     // 保存用户账号
                     MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
                     // 关闭当前界面
-                    uiCloseData.postValue(UiCloseModel())
+                    uiCloseData.value = UiCloseModel()
                 } else {
                     // 注册失败，提示错误
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 // 打印错误日志
                 Logger.t("NET").e(throwable, "register")
-                snackbarData.postValue(throwable.snackbarMsg)
+                snackbarData.value = throwable.snackbarMsg
             } finally {
                 // 隐藏进度条弹窗
-                progressData.postValue(null)
+                progressData.value = null
             }
         }
     }
-    
+
     /**
      * 登录
      */
@@ -167,7 +167,7 @@ class LoginViewModel(
         viewModelScope.launch {
             try {
                 // 显示进度条弹窗
-                progressData.postValue(ProgressModel(cancelable = false))
+                progressData.value = ProgressModel(cancelable = false)
                 val result = repository.login(userName.get().orEmpty(), password.get().orEmpty())
                 if (result.success()) {
                     // 登录成功，保存用户信息
@@ -175,24 +175,24 @@ class LoginViewModel(
                     // 保存用户账号
                     MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
                     // 关闭当前界面
-                    uiCloseData.postValue(UiCloseModel())
+                    uiCloseData.value = UiCloseModel()
                 } else {
                     // 登录失败，提示错误
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 // 打印错误日志
                 Logger.t("NET").e(throwable, "login")
-                snackbarData.postValue(throwable.snackbarMsg)
+                snackbarData.value = throwable.snackbarMsg
             } finally {
                 // 隐藏进度条弹窗
-                progressData.postValue(null)
+                progressData.value = null
                 // 重置按钮状态
                 checkBtnEnable()
             }
         }
     }
-    
+
     /**
      * 检查并设置按钮是否允许点击
      */

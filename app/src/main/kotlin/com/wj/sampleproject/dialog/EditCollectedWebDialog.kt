@@ -18,13 +18,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  * @author 王杰
  */
-class EditCollectedWebDialog : BaseDialog<EditCollectedWebViewModel, AppDialogEditCollectedWebBinding>() {
-    
+class EditCollectedWebDialog
+    : BaseDialog<EditCollectedWebViewModel, AppDialogEditCollectedWebBinding>() {
+
     override val viewModel: EditCollectedWebViewModel by viewModel()
-    
+
     override val layoutResId: Int = R.layout.app_dialog_edit_collected_web
-    
+
     override fun initView() {
+        isCancelable = false
         // 获取数据
         val entity: CollectedWebEntity? = arguments?.getParcelable(ACTION_EDIT_COLLECTED_WEB)
         if (null == entity || entity.id.isNullOrBlank()) {
@@ -38,7 +40,7 @@ class EditCollectedWebDialog : BaseDialog<EditCollectedWebViewModel, AppDialogEd
             viewModel.webLink.set(entity.link)
         }
     }
-    
+
     companion object {
         /**
          * 显示弹窗

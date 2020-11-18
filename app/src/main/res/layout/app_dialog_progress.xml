@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/app_shape_progress_dialog_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="12dp">
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.viewmodel.ProgressViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:bind_onClick="@{viewModel.onBlankClick}">
+
+        <androidx.constraintlayout.helper.widget.Layer
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/app_shape_progress_dialog_bg"
+            android:padding="12dp"
+            app:constraint_referenced_ids="pb_progress,tv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/pb_progress"
@@ -17,15 +34,26 @@
             android:indeterminateBehavior="repeat"
             android:indeterminateDrawable="@anim/app_anim_progress_dialog"
             android:indeterminateDuration="1500"
-            android:visibility="visible" />
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/app_in_request"
-            android:textColor="@color/app_text_color_white" />
+            android:text="@{viewModel.hintStr}"
+            android:textColor="@color/app_text_color_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pb_progress"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_in_request" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

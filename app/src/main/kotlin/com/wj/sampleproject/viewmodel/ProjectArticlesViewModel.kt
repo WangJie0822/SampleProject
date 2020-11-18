@@ -29,46 +29,46 @@ class ProjectArticlesViewModel(
         private val collectRepository: CollectRepository
 ) : BaseViewModel(),
         ArticleListViewModel {
-    
+
     /** 项目分类 id */
     var categoryId = ""
-    
+
     /** 页码 */
     private var pageNum = NET_PAGE_START
-    
+
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
-    
+
     /** 跳转 WebView 数据 */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
-    
+
     /** 标记 - 是否正在刷新 */
     val refreshing: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         pageNum = NET_PAGE_START
         getBjnewsArticles()
     }
-    
+
     /** 标记 - 是否正在加载更多 */
     val loadMore: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
         pageNum++
         getBjnewsArticles()
     }
-    
+
     /** 标记 - 是否没有更多 */
     val noMore: ObservableBoolean = ObservableBoolean(true)
-    
+
     /** 文章 item 点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
-        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty())
     }
-    
+
     /** 文章收藏点击 */
     override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
         if (item.collected.get().condition) {
@@ -81,7 +81,7 @@ class ProjectArticlesViewModel(
             collect(item)
         }
     }
-    
+
     /**
      * 获取公众号文章列表
      */
@@ -92,21 +92,21 @@ class ProjectArticlesViewModel(
                 val result = projectRepository.getProjectList(categoryId, pageNum)
                 if (result.success()) {
                     // 请求成功
-                    articleListData.postValue(articleListData.value.toNewList(result.data?.datas, refreshing.get()))
+                    articleListData.value = articleListData.value.toNewList(result.data?.datas, refreshing.get())
                     noMore.set(result.data?.over?.toBoolean().condition)
                 } else {
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
             } finally {
                 refreshing.set(false)
                 loadMore.set(false)
             }
         }
     }
-    
+
     /**
      * 收藏
      *
@@ -119,18 +119,18 @@ class ProjectArticlesViewModel(
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
                 if (!result.success()) {
                     // 收藏失败，提示、回滚收藏状态
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                     item.collected.set(false)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "collect")
                 // 收藏失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
                 item.collected.set(false)
             }
         }
     }
-    
+
     /**
      * 取消收藏
      *
@@ -143,13 +143,13 @@ class ProjectArticlesViewModel(
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())
                 if (!result.success()) {
                     // 取消收藏失败，提示、回滚收藏状态
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                     item.collected.set(true)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "unCollect")
                 // 取消收藏失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
                 item.collected.set(true)
             }
         }

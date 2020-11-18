@@ -38,7 +38,7 @@ fun setOnNavigationItemSelectedListener(bnv: BottomNavigationView,
  * @param selectedId 选中 item 的 id
  */
 @BindingAdapter("android:bind_bnv_selectedId")
-fun setNavagationSelectedId(bnv: BottomNavigationView, @IdRes selectedId: Int) {
+fun setNavigationSelectedId(bnv: BottomNavigationView, @IdRes selectedId: Int) {
     bnv.selectedItemId = selectedId
 }
 
@@ -50,6 +50,6 @@ fun setNavagationSelectedId(bnv: BottomNavigationView, @IdRes selectedId: Int) {
  * @return 选中 item 的 id
  */
 @InverseBindingAdapter(attribute = "android:bind_bnv_selectedId")
-fun getNavagationSelectedId(bnv: BottomNavigationView): Int {
+fun getNavigationSelectedId(bnv: BottomNavigationView): Int {
     return bnv.selectedItemId
 }

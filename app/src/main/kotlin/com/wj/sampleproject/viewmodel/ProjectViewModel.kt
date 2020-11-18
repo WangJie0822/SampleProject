@@ -18,10 +18,10 @@ import kotlinx.coroutines.launch
 class ProjectViewModel(
         private val repository: ProjectRepository
 ) : BaseViewModel() {
-    
+
     /** 项目分类数据 */
     val listData = MutableLiveData<ArrayList<CategoryEntity>>()
-    
+
     /**
      * 获取新项目分类列表
      */
@@ -31,13 +31,13 @@ class ProjectViewModel(
                 val result = repository.getProjectCategory()
                 if (result.success()) {
                     // 获取成功
-                    listData.postValue(result.data.orEmpty())
+                    listData.value = result.data.orEmpty()
                 } else {
-                    snackbarData.postValue(result.toError())
+                    snackbarData.value = result.toError()
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.postValue(throwable.snackbarMsg)
+                snackbarData.value = throwable.snackbarMsg
             }
         }
     }

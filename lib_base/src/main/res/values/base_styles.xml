@@ -17,9 +17,9 @@
         <!-- 边框 -->
         <item name="android:windowFrame">@null</item>
         <!-- Dialog以外的区域模糊效果 -->
-        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
         <!-- 半透明 -->
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
 </resources>

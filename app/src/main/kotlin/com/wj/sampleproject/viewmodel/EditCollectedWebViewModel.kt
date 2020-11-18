@@ -27,41 +27,41 @@ import kotlinx.coroutines.launch
 class EditCollectedWebViewModel(
         private val collectRepository: CollectRepository
 ) : BaseViewModel() {
-    
+
     /** 网站 id */
     var id = ""
-    
+
     /** 标题文本 */
     val titleStr: ObservableField<String> = ObservableField<String>("")
-    
+
     /** 网站名 */
     val webName: ObservableField<String> = ObservableField<String>("")
-    
+
     /** 网站链接 */
     val webLink: ObservableField<String> = ObservableField<String>("")
-    
+
     /** 关闭按钮点击  */
-    val onCloseClick = {
-        uiCloseData.postValue(UiCloseModel())
+    val onCloseClick: () -> Unit = {
+        uiCloseData.value = UiCloseModel()
     }
-    
+
     /** 消极按钮点击  */
-    val onNegativeClick = {
-        uiCloseData.postValue(UiCloseModel())
+    val onNegativeClick: () -> Unit = {
+        uiCloseData.value = UiCloseModel()
     }
-    
+
     /** 积极按钮点击  */
-    val onPositiveClick = fun() {
+    val onPositiveClick: () -> Unit = fun() {
         if (webName.get().isNullOrBlank()) {
-            snackbarData.postValue(SnackbarModel(R.string.app_please_enter_web_name))
+            snackbarData.value = SnackbarModel(R.string.app_please_enter_web_name)
             return
         }
         if (webLink.get().isNullOrBlank()) {
-            snackbarData.postValue(SnackbarModel(R.string.app_please_enter_web_link))
+            snackbarData.value = SnackbarModel(R.string.app_please_enter_web_link)
             return
         }
         if (webLink.get().isNotUrl()) {
-            snackbarData.postValue(SnackbarModel(R.string.app_please_enter_full_url))
+            snackbarData.value = SnackbarModel(R.string.app_please_enter_full_url)
             return
         }
         if (id.isBlank()) {
@@ -72,7 +72,7 @@ class EditCollectedWebViewModel(
             editCollectedWeb()
         }
     }
-    
+
     /**
      * 收藏网站
      */
@@ -80,29 +80,29 @@ class EditCollectedWebViewModel(
         viewModelScope.launch {
             try {
                 // 显示弹窗
-                progressData.postValue(ProgressModel())
+                progressData.value = ProgressModel()
                 // 请求数据
                 val result = collectRepository.collectWeb(webName.get().orEmpty(), webLink.get().orEmpty())
                 if (result.success()) {
                     // 收藏成功，刷新
                     LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB).post(Any())
                     // 关闭弹窗
-                    uiCloseData.postValue(UiCloseModel())
+                    uiCloseData.value = UiCloseModel()
                 } else {
                     // 收藏失败，提示
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 // 请求异常，提示
-                snackbarData.postValue(throwable.snackbarMsg)
+                snackbarData.value = throwable.snackbarMsg
                 Logger.t("NET").e(throwable, "collectWeb")
             } finally {
                 // 隐藏弹窗
-                progressData.postValue(null)
+                progressData.value = null
             }
         }
     }
-    
+
     /**
      * 编辑收藏网站
      */
@@ -110,25 +110,25 @@ class EditCollectedWebViewModel(
         viewModelScope.launch {
             try {
                 // 显示弹窗
-                progressData.postValue(ProgressModel())
+                progressData.value = ProgressModel()
                 // 请求数据
                 val result = collectRepository.editCollectedWeb(id, webName.get().orEmpty(), webLink.get().orEmpty())
                 if (result.success()) {
                     // 编辑成功，刷新
                     LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB).post(Any())
                     // 关闭弹窗
-                    uiCloseData.postValue(UiCloseModel())
+                    uiCloseData.value = UiCloseModel()
                 } else {
                     // 编辑失败，提示
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 // 请求异常，提示
-                snackbarData.postValue(throwable.snackbarMsg)
+                snackbarData.value = throwable.snackbarMsg
                 Logger.t("NET").e(throwable, "collectWeb")
             } finally {
                 // 隐藏弹窗
-                progressData.postValue(null)
+                progressData.value = null
             }
         }
     }

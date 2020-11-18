@@ -57,7 +57,7 @@ class MainActivity
         val currentBackPressMs = System.currentTimeMillis()
         if ((currentBackPressMs - lastBackPressMs).absoluteValue > MAIN_BACK_PRESS_INTERVAL_MS) {
             // 间隔时间外，提示
-            viewModel.snackbarData.postValue(R.string.app_press_again_to_exit.string.toSnackbarMsg())
+            viewModel.snackbarData.value = R.string.app_press_again_to_exit.string.toSnackbarMsg()
             // 保存时间
             lastBackPressMs = currentBackPressMs
         } else {

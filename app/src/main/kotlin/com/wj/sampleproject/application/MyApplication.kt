@@ -22,30 +22,30 @@ import org.koin.core.logger.Level
  * 应用全局对象
  */
 class MyApplication : Application() {
-    
+
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        
+
         // Dex 分包
         MultiDex.install(this)
     }
-    
+
     override fun onCreate() {
         super.onCreate()
-        
+
         // 初始化 Koin
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@MyApplication)
             modules(listOf(netModule, viewModelModule, repositoryModule, adapterModule))
         }
-        
+
         // 初始化LiveDataBus
         LiveEventBus
                 .config()
                 .lifecycleObserverAlwaysActive(true)
                 .autoClear(false)
-        
+
         // 初始化 Logger 日志打印
         val strategy = PrettyFormatStrategy.newBuilder()
                 .tag("SAMPLE")
@@ -55,7 +55,7 @@ class MyApplication : Application() {
                 return BuildConfig.DEBUG
             }
         })
-        
+
         // base库输出日志
         InternalLog.logEnable(BuildConfig.DEBUG)
     }

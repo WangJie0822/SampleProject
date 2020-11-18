@@ -18,10 +18,10 @@ import kotlinx.coroutines.launch
 class BjnewsViewModel(
         private val repository: BjnewsRepository
 ) : BaseViewModel() {
-    
+
     /** 公众号数据 */
     val bjnewsData = MutableLiveData<ArrayList<CategoryEntity>>()
-    
+
     /**
      * 获取公众号列表
      */
@@ -31,15 +31,15 @@ class BjnewsViewModel(
                 val result = repository.getBjnewsList()
                 if (result.success()) {
                     // 获取成功
-                    bjnewsData.postValue(result.data.orEmpty())
+                    bjnewsData.value = result.data.orEmpty()
                 } else {
-                    snackbarData.postValue(result.toError())
+                    snackbarData.value = result.toError()
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.postValue(throwable.snackbarMsg)
+                snackbarData.value = throwable.snackbarMsg
             }
         }
     }
-    
+
 }

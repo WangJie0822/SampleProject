@@ -128,4 +128,5 @@ val viewModelModule: Module = module {
     viewModel { CollectedWebViewModel(get()) }
     viewModel { EditCollectedWebViewModel(get()) }
     viewModel { SystemArticlesViewModel(get(), get()) }
+    viewModel { ProgressViewModel() }
 }

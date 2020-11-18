@@ -21,16 +21,16 @@ import com.wj.sampleproject.R
  * @param onCallback Snackbar 回调
  */
 class SnackbarModel(
-        var content: String? = "",
-        @ColorInt var contentBgColor: Int = R.color.app_colorPrimaryDark.color,
-        @ColorInt var contentColor: Int = R.color.app_white.color,
-        var duration: Int = Snackbar.LENGTH_SHORT,
-        var actionText: String? = null,
-        @ColorInt var actionColor: Int = R.color.app_colorAccent.color,
-        var onAction: View.OnClickListener? = null,
-        var onCallback: Snackbar.Callback? = null
+        val content: String? = "",
+        @ColorInt val contentBgColor: Int = R.color.app_colorPrimaryDark.color,
+        @ColorInt val contentColor: Int = R.color.app_white.color,
+        val duration: Int = Snackbar.LENGTH_SHORT,
+        val actionText: String? = null,
+        @ColorInt val actionColor: Int = R.color.app_colorAccent.color,
+        val onAction: View.OnClickListener? = null,
+        val onCallback: Snackbar.Callback? = null
 ) {
-    
+
     /**
      * 次构造方法
      *

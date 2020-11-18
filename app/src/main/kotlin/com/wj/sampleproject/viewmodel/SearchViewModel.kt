@@ -37,74 +37,74 @@ class SearchViewModel(
         private val collectRepository: CollectRepository
 ) : BaseViewModel(),
         ArticleListViewModel {
-    
+
     /** 页码 */
     private var pageNum = NET_PAGE_START
-    
+
     /** 热搜数据 */
     val hotSearchData = MutableLiveData<ArrayList<HotSearchEntity>>()
-    
+
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
-    
+
     /** 跳转 WebView 数据 */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
-    
+
     /** 搜索关键字 */
     val keywords: ObservableField<String> = ObservableField("")
-    
+
     /** 标记 - 是否显示搜索热词 */
     val showHotSearch: ObservableBoolean = object : ObservableBoolean(keywords) {
         override fun get(): Boolean {
             return keywords.get().isNullOrBlank()
         }
     }
-    
+
     /** 软键盘搜索 */
     val onSearchAction: (TextView, Int, KeyEvent?) -> Boolean = { _, actionId, _ ->
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             // 搜索
             if (keywords.get().isNullOrBlank()) {
-                snackbarData.postValue(SnackbarModel(R.string.app_please_enter_keywords))
+                snackbarData.value = SnackbarModel(R.string.app_please_enter_keywords)
             } else {
                 onRefresh.invoke()
             }
         }
         false
     }
-    
+
     /** 标记 - 是否正在刷新 */
     val refreshing: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         pageNum = NET_PAGE_START
         getSearchList()
     }
-    
+
     /** 标记 - 是否正在加载更多 */
     val loadMore: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
         pageNum++
         getSearchList()
     }
-    
+
     /** 标记 - 是否没有更多 */
     val noMore: ObservableBoolean = ObservableBoolean(true)
-    
+
     /** 返回点击 */
     val onBackClick = {
-        uiCloseData.postValue(UiCloseModel())
+        uiCloseData.value = UiCloseModel()
     }
-    
+
     /** 文章 item 点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
-        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty())
     }
-    
+
     /** 文章收藏点击 */
     override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
         if (item.collected.get().condition) {
@@ -117,7 +117,7 @@ class SearchViewModel(
             collect(item)
         }
     }
-    
+
     /** 热门搜索条目点击 */
     val onHotSearchItemClick: (HotSearchEntity) -> Unit = { item ->
         keywords.set(item.name)
@@ -125,7 +125,7 @@ class SearchViewModel(
             onRefresh.invoke()
         }
     }
-    
+
     /**
      * 获取热搜数据
      */
@@ -136,19 +136,19 @@ class SearchViewModel(
                 val result = searchRepository.getHotSearch()
                 if (result.success()) {
                     // 获取成功，刷新列表
-                    hotSearchData.postValue(result.data.orEmpty())
+                    hotSearchData.value = result.data.orEmpty()
                 } else {
                     // 获取失败，提示
-                    snackbarData.postValue(result.toError())
+                    snackbarData.value = result.toError()
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getHotSearch")
                 // 获取失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
             }
         }
     }
-    
+
     /**
      * 获取搜索列表
      */
@@ -163,21 +163,21 @@ class SearchViewModel(
                     if (newList.isNotEmpty()) {
                         showHotSearch.set(false)
                     }
-                    articleListData.postValue(newList)
+                    articleListData.value = newList
                     noMore.set(result.data?.over?.toBoolean().condition)
                 } else {
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getSearchList")
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
             } finally {
                 refreshing.set(false)
                 loadMore.set(false)
             }
         }
     }
-    
+
     /**
      * 收藏
      *
@@ -190,18 +190,18 @@ class SearchViewModel(
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
                 if (!result.success()) {
                     // 收藏失败，提示、回滚收藏状态
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                     item.collected.set(false)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "collect")
                 // 收藏失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
                 item.collected.set(false)
             }
         }
     }
-    
+
     /**
      * 取消收藏
      *
@@ -214,13 +214,13 @@ class SearchViewModel(
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())
                 if (!result.success()) {
                     // 取消收藏失败，提示、回滚收藏状态
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                     item.collected.set(true)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "unCollect")
                 // 取消收藏失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
                 item.collected.set(true)
             }
         }

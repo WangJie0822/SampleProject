@@ -35,39 +35,39 @@ class HomepageViewModel(
         private val collectRepository: CollectRepository
 ) : BaseViewModel(),
         ArticleListViewModel {
-    
+
     /** 页码 */
     private var pageNum = NET_PAGE_START
-    
+
     /** Banner 列表数据 */
     val bannerData = MutableLiveData<ArrayList<BannerEntity>>()
-    
+
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
-    
+
     /** 跳转 WebView 数据 */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
-    
+
     /** 跳转搜索数据 */
     val jumpSearchData = MutableLiveData<Int>()
-    
+
     /** Banner 轮播 job */
     private var carouselJob: Job? = null
-    
+
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
         if (it.itemId == R.id.menu_search) {
-            jumpSearchData.postValue(0)
+            jumpSearchData.value = 0
         }
         false
     }
-    
+
     /** Banner 下标 */
     val bannerCurrent: ObservableInt = ObservableInt()
-    
+
     /** Banner 预加载页数 */
     val bannerLimit: ObservableInt = ObservableInt()
-    
+
     /** Banner 数量 */
     var bannerCount: Int = 0
         set(value) {
@@ -77,7 +77,7 @@ class HomepageViewModel(
             // 开启轮询
             startCarousel()
         }
-    
+
     /** Banner 触摸事件 */
     val onBannerTouch: (MotionEvent) -> Boolean = { event ->
         when (event.action) {
@@ -92,35 +92,35 @@ class HomepageViewModel(
         }
         false
     }
-    
+
     /** 标记 - 是否正在刷新 */
     val refreshing: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
         pageNum = NET_PAGE_START
         noMore.set(false)
         getHomepageArticleList()
     }
-    
+
     /** 标记 - 是否正在加载更多 */
     val loadMore: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
         pageNum++
         getHomepageArticleList()
     }
-    
+
     /** 标记 - 是否没有更多 */
     val noMore: ObservableBoolean = ObservableBoolean(false)
-    
+
     /** 文章列表条目点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
-        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty())
     }
-    
+
     /** 文章收藏点击 */
     override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
         if (item.collected.get().condition) {
@@ -133,7 +133,7 @@ class HomepageViewModel(
             collect(item)
         }
     }
-    
+
     /**
      * 获取首页 Banner 列表
      */
@@ -144,17 +144,17 @@ class HomepageViewModel(
                 val result = homepageRepository.getHomepageBannerList()
                 if (result.success()) {
                     // 请求成功
-                    bannerData.postValue(result.data.orEmpty())
+                    bannerData.value = result.data.orEmpty()
                 } else {
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
             }
         }
     }
-    
+
     /**
      * 开启 Banner 轮播
      */
@@ -176,7 +176,7 @@ class HomepageViewModel(
             }
         }
     }
-    
+
     /**
      * 关闭 Banner 轮播
      */
@@ -188,7 +188,7 @@ class HomepageViewModel(
             carouselJob = null
         }
     }
-    
+
     /**
      * 获取首页文章列表
      */
@@ -199,21 +199,21 @@ class HomepageViewModel(
                 val result = homepageRepository.getHomepageArticleList(pageNum)
                 if (result.success()) {
                     // 请求成功
-                    articleListData.postValue(articleListData.value.toNewList(result.data?.datas, refreshing.get()))
+                    articleListData.value = articleListData.value.toNewList(result.data?.datas, refreshing.get())
                     noMore.set(result.data?.over?.toBoolean().condition)
                 } else {
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getHomepageArticleList")
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
             } finally {
                 refreshing.set(false)
                 loadMore.set(false)
             }
         }
     }
-    
+
     /**
      * 收藏
      *
@@ -226,18 +226,18 @@ class HomepageViewModel(
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
                 if (!result.success()) {
                     // 收藏失败，提示、回滚收藏状态
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                     item.collected.set(false)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "collect")
                 // 收藏失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
                 item.collected.set(false)
             }
         }
     }
-    
+
     /**
      * 取消收藏
      *
@@ -250,13 +250,13 @@ class HomepageViewModel(
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())
                 if (!result.success()) {
                     // 取消收藏失败，提示、回滚收藏状态
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                     item.collected.set(true)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "unCollect")
                 // 取消收藏失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
                 item.collected.set(true)
             }
         }

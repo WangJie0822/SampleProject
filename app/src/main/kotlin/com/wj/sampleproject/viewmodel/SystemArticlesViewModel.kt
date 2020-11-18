@@ -74,14 +74,14 @@ class SystemArticlesViewModel(
     }
     
     /** 返回点击 */
-    val onBackClick = {
-        uiCloseData.postValue(UiCloseModel())
+    val onBackClick: () -> Unit = {
+        uiCloseData.value = UiCloseModel()
     }
     
     /** 文章 item 点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
-        jumpWebViewData.postValue(WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty()))
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty())
     }
     
     /** 文章收藏点击 */
@@ -107,14 +107,14 @@ class SystemArticlesViewModel(
                 val result = systemRepository.getSystemArticleList(pageNum, cid)
                 if (result.success()) {
                     // 请求成功
-                    articleListData.postValue(articleListData.value.toNewList(result.data?.datas, refreshing.get()))
+                    articleListData.value = articleListData.value.toNewList(result.data?.datas, refreshing.get())
                     noMore.set(result.data?.over?.toBoolean().condition)
                 } else {
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getArticleList")
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
             } finally {
                 refreshing.set(false)
                 loadMore.set(false)
@@ -134,13 +134,13 @@ class SystemArticlesViewModel(
                 val result = collectRepository.collectArticleInside(item.id.orEmpty())
                 if (!result.success()) {
                     // 收藏失败，提示、回滚收藏状态
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                     item.collected.set(false)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "collect")
                 // 收藏失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
                 item.collected.set(false)
             }
         }
@@ -158,13 +158,13 @@ class SystemArticlesViewModel(
                 val result = collectRepository.unCollectArticleList(item.id.orEmpty())
                 if (!result.success()) {
                     // 取消收藏失败，提示、回滚收藏状态
-                    snackbarData.postValue(SnackbarModel(result.errorMsg))
+                    snackbarData.value = SnackbarModel(result.errorMsg)
                     item.collected.set(true)
                 }
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "unCollect")
                 // 取消收藏失败，提示、回滚收藏状态
-                snackbarData.postValue(SnackbarModel(throwable.showMsg))
+                snackbarData.value = SnackbarModel(throwable.showMsg)
                 item.collected.set(true)
             }
         }

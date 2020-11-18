@@ -39,26 +39,28 @@ abstract class BaseDialog<VM : BaseViewModel, DB : ViewDataBinding>
             snackBar.setTextColor(it.contentColor)
             snackBar.setBackgroundTint(it.contentBgColor)
             if (it.actionText != null && it.onAction != null) {
-                snackBar.setAction(it.actionText!!, it.onAction)
+                snackBar.setAction(it.actionText, it.onAction)
                 snackBar.setActionTextColor(it.actionColor)
             }
             if (it.onCallback != null) {
-                snackBar.addCallback(it.onCallback!!)
+                snackBar.addCallback(it.onCallback)
             }
             snackBar.show()
         })
-        viewModel.progressData.observe(this, Observer { progress ->
-            if (null == progress || !progress.show) {
+        viewModel.progressData.observe(this, { progress ->
+            if (null == progress) {
                 ProgressDialogHelper.dismiss()
             } else {
-                ProgressDialogHelper.show(mContext, progress.cancelable)
+                ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
             }
         })
-        viewModel.uiCloseData.observe(this, Observer { close ->
+        viewModel.uiCloseData.observe(this, { close ->
             close?.let {
                 dismiss()
             }
         })
-        viewModel.showDialogData.observe(this, Observer { builder -> builder.build().show(mContext) })
+        viewModel.showDialogData.observe(this, { builder ->
+            builder.build().show(mContext)
+        })
     }
 }
