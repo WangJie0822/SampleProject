@@ -105,7 +105,7 @@ class HomepageFragment
         })
         // WebView 跳转
         viewModel.jumpWebViewData.observe(this, {
-            WebViewActivity.actionStart(mContext, it.title, it.url)
+            WebViewActivity.actionStart(mContext, it)
         })
         // 跳转搜索
         viewModel.jumpSearchData.observe(this, {

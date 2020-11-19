@@ -120,7 +120,7 @@ val viewModelModule: Module = module {
     viewModel { ProjectArticlesViewModel(get(), get()) }
     viewModel { MyViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
-    viewModel { WebViewViewModel() }
+    viewModel { WebViewViewModel(get()) }
     viewModel { WebViewFragViewModel() }
     viewModel { LoginViewModel(get()) }
     viewModel { GeneralViewModel() }

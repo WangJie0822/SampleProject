@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import cn.wj.android.base.utils.AppManager
 import cn.wj.android.recyclerview.adapter.simple.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
@@ -58,22 +57,23 @@ class SearchActivity
 
     override fun initObserve() {
         // 搜索热词
-        viewModel.hotSearchData.observe(this, Observer {
+        viewModel.hotSearchData.observe(this, {
             // 刷新热词列表
             mHotSearchAdapter.refresh(it)
         })
         // 文章列表
-        viewModel.articleListData.observe(this, Observer {
+        viewModel.articleListData.observe(this, {
             // 更新文章列表
             mArticlesAdapter.submitList(it)
         })
         // WebView 跳转
-        viewModel.jumpWebViewData.observe(this, Observer {
-            WebViewActivity.actionStart(mContext, it.title, it.url)
+        viewModel.jumpWebViewData.observe(this, {
+            WebViewActivity.actionStart(mContext, it)
         })
     }
 
     companion object {
+
         /**
          * 界面入口
          *

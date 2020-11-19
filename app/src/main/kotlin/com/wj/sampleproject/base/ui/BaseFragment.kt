@@ -66,6 +66,8 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
                 mContext.finish()
             }
         })
-        viewModel.showDialogData.observe(this, { builder -> builder.build().show(mContext) })
+        viewModel.showDialogData.observe(this, { builder ->
+            builder.build().show(mContext)
+        })
     }
 }

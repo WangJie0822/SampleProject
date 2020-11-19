@@ -1,25 +1,32 @@
 package com.wj.sampleproject.viewmodel
 
 import android.view.MenuItem
-import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
+import com.wj.sampleproject.model.UiCloseModel
+import com.wj.sampleproject.repository.CollectRepository
 
 /**
- * WebView 界面
+ * WebView 界面 ViewModel 类
  */
-class WebViewViewModel
-    : BaseViewModel() {
+class WebViewViewModel(
+        private val collectRepository: CollectRepository
+) : BaseViewModel() {
 
-    /** 返回点击数据 */
-    val navigationData = MutableLiveData<Int>()
+    /** 网页相关数据 */
+    val webData = MutableLiveData<WebViewActivity.ActionModel>()
 
     /** 浏览器打开 */
     val jumpBrowser = MutableLiveData<Int>()
 
     /** 标题文本 */
-    val title: ObservableField<String> = ObservableField()
+    val title: LiveData<String> = webData.map { input ->
+        input.title
+    }
 
     /** 菜单 Item 点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = { item ->
@@ -33,6 +40,6 @@ class WebViewViewModel
     /** 返回点击 */
     val onNavigationClick: () -> Unit = {
         // 返回
-        navigationData.value = 0
+        uiCloseData.value = UiCloseModel()
     }
 }

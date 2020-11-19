@@ -8,9 +8,9 @@ package com.wj.sampleproject.constants
  * @author 王杰
  */
 
+/** 界面跳转数据传递 key - Parcelable 数据 */
+const val ACTION_PARCELABLE = "action_parcelable"
 
-/** 界面跳转数据传递 key - 网页 url */
-const val ACTION_WEB_URL = "action_web_url"
 /** 界面跳转数据传递 key - 标题 */
 const val ACTION_TITLE = "action_title"
 /** 界面跳转数据传递 key - 公众号、项目目录 */

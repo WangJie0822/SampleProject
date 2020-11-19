@@ -1,7 +1,6 @@
 package com.wj.sampleproject.fragment
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
@@ -56,23 +55,24 @@ class BjnewsArticlesFragment
 
     override fun initObserve() {
         // 文章列表
-        viewModel.articleListData.observe(this, Observer {
+        viewModel.articleListData.observe(this, {
             // 更新文章列表
             mArticlesAdapter.submitList(it)
         })
         // WebView 跳转
-        viewModel.jumpWebViewData.observe(this, Observer {
-            WebViewActivity.actionStart(mContext, it.title, it.url)
+        viewModel.jumpWebViewData.observe(this, {
+            WebViewActivity.actionStart(mContext, it)
         })
         // 取消收藏事件
         LiveEventBus.get(EVENT_COLLECTION_CANCLED, String::class.java)
-                .observe(this, Observer { id ->
+                .observe(this, { id ->
                     val item = mArticlesAdapter.mDiffer.currentList.firstOrNull { it.id == id }
                     item?.collected?.set(false)
                 })
     }
 
     companion object {
+
         /**
          * 创建 Fragment
          *

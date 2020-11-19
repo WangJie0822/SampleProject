@@ -30,7 +30,7 @@ class NavigationViewModel(
     /** 导航条目点击 */
     val onNavigationItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView
-        jumpWebViewData.value = WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty())
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
     }
 
     /**

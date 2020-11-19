@@ -72,7 +72,7 @@ class CollectionViewModel(
     /** 文章列表条目点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
         // 跳转 WebView 打开
-        jumpWebViewData.value = WebViewActivity.ActionModel(item.title.orEmpty(), item.link.orEmpty())
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
     }
 
     /** 文章收藏点击 */

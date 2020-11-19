@@ -69,7 +69,7 @@ class CollectedWebViewModel(
     /** 列表点击 */
     val onItemClick: (CollectedWebEntity) -> Unit = { item ->
         // 打开 WebView
-        jumpWebViewData.value = WebViewActivity.ActionModel(item.name.orEmpty(), item.link.orEmpty())
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.name.orEmpty(), item.link.orEmpty())
     }
 
     /** 列表长按点击 */

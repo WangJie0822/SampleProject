@@ -183,10 +183,11 @@ dependencies {
     // ktx
     implementation Dependencies.androidx_core_ktx
 
-    // ViewModel 拓展
-    implementation Dependencies.androidx_lifecycle_viewmodel_ktx
     // LifeCycle 拓展
     implementation Dependencies.androidx_lifecycle_ktx
+    implementation Dependencies.androidx_lifecycle_extensions
+    // ViewModel 拓展
+    implementation Dependencies.androidx_lifecycle_viewmodel_ktx
     // LiveData 拓展
     implementation Dependencies.androidx_lifecycle_livedata_ktx
 

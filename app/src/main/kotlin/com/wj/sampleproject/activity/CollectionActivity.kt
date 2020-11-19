@@ -53,7 +53,7 @@ class CollectionActivity : BaseActivity<CollectionViewModel, AppActivityCollecti
         })
         // WebView 跳转
         viewModel.jumpWebViewData.observe(this, {
-            WebViewActivity.actionStart(mContext, it.title, it.url)
+            WebViewActivity.actionStart(mContext, it)
         })
     }
 

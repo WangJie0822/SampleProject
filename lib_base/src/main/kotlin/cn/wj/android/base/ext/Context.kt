@@ -7,6 +7,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import cn.wj.android.base.tools.getDeviceScreenHeight
 import cn.wj.android.base.tools.getDeviceScreenWidth
 import cn.wj.android.base.tools.getStatusBarHeight
@@ -57,5 +58,20 @@ fun Context.startTargetActivity(target: Class<out Activity>, bundles: (Intent.()
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
     bundles?.invoke(intent)
+    this.startActivity(intent)
+}
+
+/**
+ * 通过 [Context] 对象，打开类型为 [target] 的 [Activity] 界面，并携带 [bundle] 中的数据
+ * - [bundle] [Bundle] 对象，其中的数据会被添加到 [Intent] 中
+ * - [Context] 对象若不是 [Activity]，则会调用 [Intent.addFlags] ([Intent.FLAG_ACTIVITY_NEW_TASK])
+ * 在新的栈中打开
+ */
+fun Context.startTargetActivity(target: Class<out Activity>, bundle: Bundle) {
+    val intent = Intent(this, target)
+    if (this !is Activity) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    intent.putExtras(bundle)
     this.startActivity(intent)
 }
