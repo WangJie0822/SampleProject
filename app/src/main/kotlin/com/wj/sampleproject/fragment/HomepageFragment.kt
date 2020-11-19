@@ -1,6 +1,10 @@
 package com.wj.sampleproject.fragment
 
-import android.view.LayoutInflater
+import androidx.core.view.updateLayoutParams
+import cn.wj.android.base.ext.color
+import cn.wj.android.base.ext.fitsStatusBar
+import cn.wj.android.base.tools.getDeviceScreenWidth
+import cn.wj.android.base.tools.getStatusBarHeight
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
@@ -11,7 +15,6 @@ import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCLED
 import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
-import com.wj.sampleproject.databinding.AppLayoutHomepageBannerBinding
 import com.wj.sampleproject.viewmodel.HomepageViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -56,6 +59,26 @@ class HomepageFragment
     }
 
     override fun initView() {
+        // 配置标题栏
+        mBinding.abl.updateLayoutParams {
+            height = getDeviceScreenWidth() / 2
+        }
+        mBinding.ctl.run {
+            setCollapsedTitleTextColor(R.color.app_white.color)
+            setExpandedTitleColor(R.color.app_transparent.color)
+        }
+        mBinding.toolbar.run {
+            updateLayoutParams {
+                height += getStatusBarHeight()
+            }
+            fitsStatusBar()
+        }
+
+        // 配置 banner
+        mBinding.vpBanner.adapter = mBannerAdapter.also { adapter ->
+            adapter.viewModel = viewModel
+        }
+
         // 配置文章列表
         mBinding.rvArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
@@ -63,22 +86,8 @@ class HomepageFragment
                 it.viewModel = viewModel
                 it.setEmptyView(R.layout.app_layout_placeholder)
                 it.showHeaderWhenEmpty(true)
-                // 配置 Banner 列表
-                AppLayoutHomepageBannerBinding.inflate(
-                        LayoutInflater.from(mContext), null, false
-                ).also { binding ->
-                    binding.viewModel = viewModel
-                    binding.vpBanner.let { vp ->
-                        vp.adapter = mBannerAdapter.also { adapter ->
-                            adapter.viewModel = viewModel
-                        }
-                    }
-                    it.addHeaderView(binding.root)
-                }
             }
         }
-
-
     }
 
     override fun initObserve() {
@@ -111,6 +120,7 @@ class HomepageFragment
     }
 
     companion object {
+
         /**
          * 创建 Fragment
          *

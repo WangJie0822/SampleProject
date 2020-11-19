@@ -21,8 +21,8 @@
             android:background="@color/app_colorPrimary"
             android:bind_onClick="@{viewModel.onTopClick}"
             android:orientation="vertical"
-            android:paddingTop="50dp"
-            android:paddingBottom="20dp">
+            android:paddingTop="80dp"
+            android:paddingBottom="40dp">
 
             <ImageView
                 android:id="@+id/iv_avatar"

@@ -14,44 +14,51 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <FrameLayout
+            android:id="@+id/fl_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/app_colorPrimary"
-            android:theme="@style/app_toolbar">
+            android:layout_height="wrap_content"
+            android:background="@color/app_colorPrimary">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:theme="@style/app_toolbar">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:bind_onClick="@{viewModel.onSystemClick}"
-                    android:bind_selected="@{viewModel.systemSelected}"
-                    android:padding="4dp"
-                    android:text="@string/app_system"
-                    android:textColor="@color/app_selector_system_title_text"
-                    android:textSize="20sp" />
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:bind_onClick="@{viewModel.onNavigationClick}"
-                    android:bind_selected="@{!viewModel.systemSelected}"
-                    android:padding="4dp"
-                    android:text="@string/app_navigation"
-                    android:textColor="@color/app_selector_system_title_text"
-                    android:textSize="20sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackground"
+                        android:bind_onClick="@{viewModel.onSystemClick}"
+                        android:bind_selected="@{viewModel.systemSelected}"
+                        android:padding="4dp"
+                        android:text="@string/app_system"
+                        android:textColor="@color/app_selector_system_title_text"
+                        android:textSize="20sp" />
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackground"
+                        android:bind_onClick="@{viewModel.onNavigationClick}"
+                        android:bind_selected="@{!viewModel.systemSelected}"
+                        android:padding="4dp"
+                        android:text="@string/app_navigation"
+                        android:textColor="@color/app_selector_system_title_text"
+                        android:textSize="20sp" />
 
-        </androidx.appcompat.widget.Toolbar>
+                </LinearLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </FrameLayout>
 
         <cn.wj.android.views.custom.CustomViewPager
             android:id="@+id/vp_system"

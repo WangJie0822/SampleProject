@@ -14,7 +14,9 @@
         android:allowBackup="false"
         android:icon="@mipmap/app_launcher"
         android:label="@string/app_name"
+        android:maxAspectRatio="2.4"
         android:networkSecurityConfig="@xml/app_network_security_config"
+        android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
@@ -22,7 +24,15 @@
         <!-- 全面屏适配 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.2" />
+            android:value="2.4" />
+        <!-- 适配华为（huawei）刘海屏 -->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" />
+        <!-- 适配小米（xiaomi）刘海屏 -->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
 
         <!-- 欢迎界面 -->
         <activity

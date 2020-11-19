@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import cn.wj.android.base.R
 import cn.wj.android.base.constants.DEFAULT_CLICK_THROTTLE_MS
+import cn.wj.android.base.tools.getStatusBarHeight
 
 /**
  * 当前 View 是否被覆盖
  */
 fun View.isViewCovered(): Boolean {
-    
+
     /**
      * 获取 View 在父布局中的位置
      */
@@ -28,9 +29,9 @@ fun View.isViewCovered(): Boolean {
         }
         return index
     }
-    
+
     var currentView = this
-    
+
     val currentViewRect = Rect()
     val partVisible = currentView.getGlobalVisibleRect(currentViewRect)
     val totalHeightVisible = currentViewRect.bottom - currentViewRect.top >= this.measuredHeight
@@ -40,14 +41,14 @@ fun View.isViewCovered(): Boolean {
         // 如果视图的任何部分被其父视图的任何部分剪切，返回true
         return true
     }
-    
+
     while (currentView.parent is ViewGroup) {
         val currentParent = currentView.parent as ViewGroup
         if (currentParent.visibility != View.VISIBLE) {
             // 如果视图的父视图不可见，则返回true
             return true
         }
-        
+
         val start = indexOfViewInParent(currentView, currentParent)
         for (i in start + 1 until currentParent.childCount) {
             val viewRect = Rect()
@@ -116,4 +117,11 @@ inline fun View.setOnThrottleClickListener(crossinline onClick: () -> Unit, inte
             onClick.invoke()
         }, interval)
     }
+}
+
+/**
+ * 通过给 [View] 增加 *paddingTop*，来适应延伸到状态栏底部的布局
+ */
+fun View.fitsStatusBar() {
+    setPadding(paddingLeft, paddingTop + getStatusBarHeight(), paddingRight, paddingBottom)
 }

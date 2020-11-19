@@ -2,6 +2,7 @@ package com.wj.sampleproject.fragment
 
 import cn.wj.android.base.adapter.FragVpAdapter
 import cn.wj.android.base.adapter.creator
+import cn.wj.android.base.ext.fitsStatusBar
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.TAB_SYSTEM_SYSTEM
@@ -20,6 +21,8 @@ class SystemFragment
     override val layoutResId: Int = R.layout.app_fragment_system
 
     override fun initView() {
+        // 配置标题栏
+        mBinding.flToolbar.fitsStatusBar()
         // 配置 ViewPager
         mBinding.vpSystem.adapter = FragVpAdapter.newBuilder()
                 .manager(childFragmentManager)

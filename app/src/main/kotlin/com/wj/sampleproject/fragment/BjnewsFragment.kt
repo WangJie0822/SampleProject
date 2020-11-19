@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import cn.wj.android.base.adapter.FragVpAdapter
 import cn.wj.android.base.adapter.creator
+import cn.wj.android.base.ext.fitsStatusBar
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentBjnewsBinding
@@ -28,7 +29,8 @@ class BjnewsFragment
     }
 
     override fun initView() {
-
+        // 配置标题栏
+        mBinding.flToolbar.fitsStatusBar()
     }
 
     override fun initObserve() {

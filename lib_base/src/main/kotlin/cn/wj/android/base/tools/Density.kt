@@ -12,11 +12,7 @@ import kotlin.math.roundToInt
 /* ----------------------------------------------------------------------------------------- */
 
 /**
- * 获取设备屏幕宽度
- *
- * @param context [Context] 对象
- *
- * @return 屏幕宽度，单位：px
+ * 通过 [context] 对象获取并返回 **px** 单位的设备屏幕宽度
  */
 @JvmOverloads
 fun getDeviceScreenWidth(context: Context = AppManager.getContext()): Int {

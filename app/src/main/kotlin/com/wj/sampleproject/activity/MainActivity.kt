@@ -8,6 +8,7 @@ import cn.wj.android.base.adapter.FragVpAdapter
 import cn.wj.android.base.adapter.creator
 import cn.wj.android.base.ext.string
 import cn.wj.android.base.utils.AppManager
+import com.gyf.immersionbar.ktx.immersionBar
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
@@ -33,6 +34,12 @@ class MainActivity
 
         // 初始化 MMKV
         MMKV.initialize(mContext)
+
+        // 配置状态栏
+        immersionBar {
+            transparentStatusBar()
+            fitsSystemWindows(false)
+        }
 
         // 配置适配器
         mBinding.cvpMain.adapter = FragVpAdapter.newBuilder()
@@ -67,6 +74,7 @@ class MainActivity
     }
 
     companion object {
+
         /**
          * 界面入口
          *

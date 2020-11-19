@@ -14,20 +14,37 @@ import android.os.Build
 import android.view.*
 import cn.wj.android.base.log.InternalLog
 import cn.wj.android.base.utils.AppManager
+import kotlin.math.roundToInt
 
 /* ----------------------------------------------------------------------------------------- */
 /* |                                   状态栏 导航栏相关                                     | */
 /* ----------------------------------------------------------------------------------------- */
 
 /**
- * 获取状态栏高度
- *
- * @return 状态栏高度，单位：px
+ * 通过 [context] 对象，获取并返回状态栏高度
  */
-fun getStatusBarHeight(): Int {
-    val resources = Resources.getSystem()
-    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-    return resources.getDimensionPixelSize(resourceId)
+@JvmOverloads
+fun getStatusBarHeight(context: Context = AppManager.getContext()): Int {
+    var result = 0
+    try {
+        val resources = Resources.getSystem()
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            val size1 = context.resources.getDimensionPixelSize(resourceId)
+            val size2 = resources.getDimensionPixelSize(resourceId)
+            if (size2 >= size1) {
+                result = size2
+            } else {
+                val density1 = context.resources.displayMetrics.density
+                val density2 = resources.displayMetrics.density
+                val f = size1 * density2 / density1
+                result = (if (f >= 0) f + 0.5f else f - 0.5f).roundToInt()
+            }
+        }
+    } catch (throwable: Throwable) {
+        InternalLog.e("BarTools", throwable, "getStatusBarHeight")
+    }
+    return result
 }
 
 /**
@@ -144,7 +161,7 @@ fun getNavigationBarHeight(): Int {
 fun isSupportNavigationBar(context: Context = AppManager.getContext()): Boolean {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        
+
         val display = wm.defaultDisplay
         val size = Point()
         val realSize = Point()
@@ -169,7 +186,7 @@ fun isNavigationBarVisible(activity: Activity): Boolean {
     val display: Display = activity.window.windowManager.defaultDisplay
     val point = Point()
     display.getRealSize(point)
-    
+
     val decorView: View = activity.window.decorView
     val conf: Configuration = activity.resources.configuration
     show = if (Configuration.ORIENTATION_LANDSCAPE == conf.orientation) {

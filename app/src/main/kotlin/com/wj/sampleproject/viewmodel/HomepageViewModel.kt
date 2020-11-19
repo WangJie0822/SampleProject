@@ -93,6 +93,12 @@ class HomepageViewModel(
         false
     }
 
+    /** 文章列表条目点击 */
+    val onBannerItemClick: (BannerEntity) -> Unit = { item ->
+        // 跳转 WebView 打开
+        jumpWebViewData.value = WebViewActivity.ActionModel(item.title.orEmpty(), item.url.orEmpty())
+    }
+
     /** 标记 - 是否正在刷新 */
     val refreshing: ObservableBoolean = ObservableBoolean(false)
 
