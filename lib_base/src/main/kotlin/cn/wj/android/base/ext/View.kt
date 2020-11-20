@@ -120,8 +120,13 @@ inline fun View.setOnThrottleClickListener(crossinline onClick: () -> Unit, inte
 }
 
 /**
- * 通过给 [View] 增加 *paddingTop*，来适应延伸到状态栏底部的布局
+ * 通过给 [View] 增加 *paddingTop* 以及状态栏高度，来适应延伸到状态栏底部的布局
  */
 fun View.fitsStatusBar() {
-    setPadding(paddingLeft, paddingTop + getStatusBarHeight(), paddingRight, paddingBottom)
+    post {
+        layoutParams = layoutParams.apply {
+            height = measuredHeight + getStatusBarHeight()
+        }
+        setPadding(paddingLeft, paddingTop + getStatusBarHeight(), paddingRight, paddingBottom)
+    }
 }

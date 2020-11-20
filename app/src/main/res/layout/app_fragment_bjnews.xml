@@ -11,27 +11,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/fl_toolbar"
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/stl_bjnews"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/app_colorPrimary">
-
-            <com.flyco.tablayout.SlidingTabLayout
-                android:id="@+id/stl_bjnews"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:tl_divider_color="#FFFFFF"
-                app:tl_indicator_color="#FFFFFF"
-                app:tl_indicator_corner_radius="2dp"
-                app:tl_indicator_margin_top="16dp"
-                app:tl_indicator_width="20dp"
-                app:tl_tab_space_equal="false"
-                app:tl_textSelectColor="#FFFFFF"
-                app:tl_textUnselectColor="#D5D5D5"
-                app:tl_textsize="14sp" />
-
-        </FrameLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/app_colorPrimary"
+            android:bind_fits_status_bar="@{true}"
+            app:tl_divider_color="#FFFFFF"
+            app:tl_indicator_color="#FFFFFF"
+            app:tl_indicator_corner_radius="2dp"
+            app:tl_indicator_margin_top="16dp"
+            app:tl_indicator_width="20dp"
+            app:tl_tab_space_equal="false"
+            app:tl_textSelectColor="#FFFFFF"
+            app:tl_textUnselectColor="#D5D5D5"
+            app:tl_textsize="14sp" />
 
         <cn.wj.android.views.custom.CustomViewPager
             android:id="@+id/vp_bjnews"

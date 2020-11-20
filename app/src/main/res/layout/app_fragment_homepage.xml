@@ -23,12 +23,15 @@
                 android:id="@+id/abl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:bind_ratio="@{`2:1`}"
                 tools:layout_height="210dp">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/ctl"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:bind_ctl_collapsedTitleTextColor="@{@color/app_white}"
+                    android:bind_ctl_expandedTitleColor="@{@color/app_transparent}"
                     app:contentScrim="@color/app_colorPrimary"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -56,6 +59,7 @@
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?android:attr/actionBarSize"
+                        android:bind_fits_status_bar="@{true}"
                         android:bind_toolbar_itemClick="@{viewModel.onMenuItemClick}"
                         android:theme="@style/app_toolbar"
                         app:layout_collapseMode="pin"

@@ -1,10 +1,5 @@
 package com.wj.sampleproject.fragment
 
-import androidx.core.view.updateLayoutParams
-import cn.wj.android.base.ext.color
-import cn.wj.android.base.ext.fitsStatusBar
-import cn.wj.android.base.tools.getDeviceScreenWidth
-import cn.wj.android.base.tools.getStatusBarHeight
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
@@ -59,21 +54,6 @@ class HomepageFragment
     }
 
     override fun initView() {
-        // 配置标题栏
-        mBinding.abl.updateLayoutParams {
-            height = getDeviceScreenWidth() / 2
-        }
-        mBinding.ctl.run {
-            setCollapsedTitleTextColor(R.color.app_white.color)
-            setExpandedTitleColor(R.color.app_transparent.color)
-        }
-        mBinding.toolbar.run {
-            updateLayoutParams {
-                height += getStatusBarHeight()
-            }
-            fitsStatusBar()
-        }
-
         // 配置 banner
         mBinding.vpBanner.adapter = mBannerAdapter.also { adapter ->
             adapter.viewModel = viewModel

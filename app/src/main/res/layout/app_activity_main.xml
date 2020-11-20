@@ -11,35 +11,30 @@
             type="com.wj.sampleproject.viewmodel.MainViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <cn.wj.android.views.custom.CustomViewPager
             android:id="@+id/cvp_main"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:bind_vp_currentItem="@{viewModel.currentItem}"
             android:bind_vp_offscreenPageLimit="@{10}"
-            android:bind_vp_smoothScroll="@{true}"
-            app:layout_constraintBottom_toTopOf="@id/v_dividing"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:bind_vp_smoothScroll="@{false}"
             app:scrollable="false" />
 
         <View
             android:id="@+id/v_dividing"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/app_dividing_bg"
-            app:layout_constraintBottom_toTopOf="@id/bnv_main"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:background="@color/app_dividing_bg" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_main"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="#FFFFFF"
             android:bind_bnv_onItemSelected="@{viewModel.onItemSelected}"
@@ -47,11 +42,8 @@
             app:itemIconTint="@color/app_selector_main_bottom_tint"
             app:itemTextColor="@color/app_selector_main_bottom_tint"
             app:labelVisibilityMode="labeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/app_menu_main_bottom" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

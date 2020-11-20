@@ -14,8 +14,10 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import cn.wj.android.base.constants.DEFAULT_CLICK_THROTTLE_MS
+import cn.wj.android.base.ext.fitsStatusBar
 import cn.wj.android.base.ext.setOnThrottleClickListener
 import cn.wj.android.common.ext.condition
+import cn.wj.android.common.tools.toIntOrZero
 
 /**
  * View DataBinding 适配器
@@ -416,6 +418,7 @@ fun <T> setViewOnClick(v: View, click: ViewItemClickListener<T>?, item: T, throt
  * View 点击事件
  */
 interface ViewItemClickListener<T> {
+
     fun onItemClick(item: T)
 }
 
@@ -431,9 +434,64 @@ fun setViewOnClick(v: View, listener: ViewClickListener?, throttle: Long?) {
     v.setOnThrottleClickListener({ listener?.onClick() }, interval)
 }
 
-/**
- * View 点击事件
- */
+/** View 点击事件 */
 interface ViewClickListener {
+
+    /** 点击回调 */
     fun onClick()
+}
+
+/**
+ * 给 [v] 设置比例约束 [ratio] eg: `h,2:1` or `w,2:1`
+ * - [ratio]  `约束对象,宽:高`
+ */
+@BindingAdapter("android:bind_ratio")
+fun setViewDimensionRatio(v: View, ratio: String?) {
+    if (ratio.isNullOrBlank()) {
+        return
+    }
+    val params = ratio.split(",")
+    if (params.isNullOrEmpty()) {
+        return
+    }
+    // 获取比例属性
+    val values = if (params.size > 1) {
+        params[1]
+    } else {
+        params[0]
+    }.split(":")
+    val start = values[0].toIntOrZero()
+    val end = values[1].toIntOrZero()
+    if (start == 0 || end == 0) {
+        // 属性不合规
+        return
+    }
+    // 获取约束条件
+    var constraint = if (params.size > 1) {
+        params[0]
+    } else {
+        "h"
+    }
+    if (constraint != "h" || constraint != "w") {
+        // 约束不合规，默认高度约束
+        constraint = "h"
+    }
+    // 更新约束尺寸
+    v.post {
+        v.layoutParams = v.layoutParams.apply {
+            if (constraint == "h") {
+                height = v.width / start * end
+            } else {
+                width = v.height / end * start
+            }
+        }
+    }
+}
+
+@BindingAdapter("android:bind_fits_status_bar")
+fun fitsStatusBar(v: View, fits: Boolean?) {
+    if (!fits.condition) {
+        return
+    }
+    v.fitsStatusBar()
 }
