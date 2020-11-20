@@ -52,11 +52,7 @@ class NavigationFragment
 
     companion object {
 
-        /**
-         * 创建 Fragment
-         *
-         * @return 导航 Fragment
-         */
+        /** 创建 [NavigationFragment] 并返回 */
         fun actionCreate(): NavigationFragment {
             return NavigationFragment()
         }

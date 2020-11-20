@@ -5,51 +5,45 @@ import android.os.Bundle
 import android.view.MotionEvent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import cn.wj.android.base.tools.fixFontScaleResources
 import cn.wj.android.swipeback.helper.SwipeBackHelper
 import cn.wj.android.swipeback.helper.dispatchTouchEvent
 import com.google.android.material.snackbar.Snackbar
 import com.wj.android.ui.activity.BaseBindingLibActivity
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
-import com.wj.sampleproject.helper.ProgressDialogHelper
 
 /**
  * Activity 基类
+ * > 指定 ViewModel 类型 [VM] & 指定 DataBinding 类型 [DB]
  *
  * @author 王杰
  */
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     : BaseBindingLibActivity<VM, DB>() {
 
+    /** 侧滑返回帮助类对象 */
     private var mSwipeBackHelper: SwipeBackHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 初始化侧滑返回帮助类
         mSwipeBackHelper = SwipeBackHelper(this)
+        // 添加观察者
         observeData()
     }
 
-    override fun onPause() {
-        super.onPause()
-        ProgressDialogHelper.dismiss()
-    }
-
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        // 使用侧滑处理
         return mSwipeBackHelper.dispatchTouchEvent(ev) {
             super.dispatchTouchEvent(ev)
         }
     }
 
     override fun getResources(): Resources? {
-        // 禁止app字体大小跟随系统字体大小调节
-        val resources = super.getResources()
-        if (resources != null && resources.configuration.fontScale != 1.0f) {
-            val configuration = resources.configuration
-            configuration.fontScale = 1.0f
-//            resources.updateConfiguration(configuration, resources.displayMetrics)
-            createConfigurationContext(configuration)
-        }
-        return resources
+        // 修复 app 字体大小跟随系统字体大小调节
+        return fixFontScaleResources(super.getResources(), this)
     }
 
     override fun startAnim() {
@@ -60,10 +54,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         overridePendingTransition(R.anim.app_anim_alpha_in, R.anim.app_anim_right_out)
     }
 
-    /**
-     * 添加观察者
-     */
+    /** 添加观察者 */
     private fun observeData() {
+        // snackbar 提示
         viewModel.snackbarData.observe(this, Observer {
             if (it.content.isNullOrBlank()) {
                 return@Observer
@@ -80,21 +73,12 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             }
             snackBar.show()
         })
-        viewModel.progressData.observe(this, { progress ->
-            if (null == progress) {
-                ProgressDialogHelper.dismiss()
-            } else {
-                ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
-            }
-        })
+        // UI 关闭
         viewModel.uiCloseData.observe(this, { close ->
             close?.let { model ->
                 setResult(model.resultCode, model.result)
                 finish()
             }
-        })
-        viewModel.showDialogData.observe(this, { builder ->
-            builder.build().show(mContext)
         })
     }
 }

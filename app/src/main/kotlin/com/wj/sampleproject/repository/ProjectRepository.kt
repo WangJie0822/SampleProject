@@ -15,19 +15,12 @@ class ProjectRepository : KoinComponent {
     /** 网络请求服务 */
     private val mWebService: WebService by inject()
 
-    /**
-     * 获取新项目分类列表
-     */
+    /** 获取新项目分类列表 */
     suspend fun getProjectCategory() = withContext(Dispatchers.IO) {
         mWebService.getProjectCategory()
     }
 
-    /**
-     * 获取项目列表
-     *
-     * @param categoryId 分类 id
-     * @param pageNum 页码
-     */
+    /** 根据分类id[categoryId]、页码[pageNum]获取并返回项目列表 */
     suspend fun getProjectList(categoryId: String, pageNum: Int) = withContext(Dispatchers.IO) {
         // 获取项目列表
         val result = mWebService.getProjectList(pageNum, categoryId)

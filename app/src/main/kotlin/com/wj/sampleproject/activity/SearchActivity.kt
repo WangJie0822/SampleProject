@@ -1,10 +1,8 @@
 package com.wj.sampleproject.activity
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import cn.wj.android.base.utils.AppManager
+import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.recyclerview.adapter.simple.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
@@ -74,17 +72,9 @@ class SearchActivity
 
     companion object {
 
-        /**
-         * 界面入口
-         *
-         * @param context Context 对象
-         */
-        fun actionStart(context: Context = AppManager.getContext()) {
-            context.startActivity(Intent(context, SearchActivity::class.java).apply {
-                if (context !is Activity) {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            })
+        /** 使用 [context] 对象打开 [SearchActivity] 界面 */
+        fun actionStart(context: Context) {
+            context.startTargetActivity(SearchActivity::class.java)
         }
     }
 }

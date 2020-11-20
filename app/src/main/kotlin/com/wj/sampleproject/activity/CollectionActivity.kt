@@ -1,10 +1,8 @@
 package com.wj.sampleproject.activity
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import cn.wj.android.base.utils.AppManager
+import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
@@ -16,6 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 收藏界面
+ * > 用户收藏的文章列表，可取消收藏
  *
  * - 创建时间：2019/10/16
  *
@@ -58,17 +57,10 @@ class CollectionActivity : BaseActivity<CollectionViewModel, AppActivityCollecti
     }
 
     companion object {
-        /**
-         * 界面入口
-         *
-         * @param context Context 对象
-         */
-        fun actionStart(context: Context = AppManager.getContext()) {
-            context.startActivity(Intent(context, CollectionActivity::class.java).apply {
-                if (context !is Activity) {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            })
+
+        /** 使用 [context] 打开 [CollectionActivity] 界面 */
+        fun actionStart(context: Context) {
+            context.startTargetActivity(CollectionActivity::class.java)
         }
     }
 }

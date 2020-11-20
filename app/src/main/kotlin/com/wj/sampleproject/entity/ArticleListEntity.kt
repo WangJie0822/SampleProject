@@ -15,7 +15,7 @@ import com.wj.sampleproject.constants.STR_TRUE
  * @param size 当前页数据数
  * @param total 总数据量
  * @param over 是否结束
- * @param datas 文章数据
+ * @param datas 文章数据W
  */
 data class ArticleListEntity(
         val curPage: String? = "",

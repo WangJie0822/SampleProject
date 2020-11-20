@@ -8,49 +8,27 @@ import retrofit2.http.*
  */
 interface WebService {
 
-    /**
-     * 获取首页 Banner 列表
-     */
+    /** 获取并返回首页 Banner 列表 */
     @GET(UrlDefinition.GET_HOMEPAGE_BANNER_LIST)
     suspend fun getHomepageBannerList(): NetResult<ArrayList<BannerEntity>>
 
-    /**
-     * 获取首页置顶文章列表
-     */
+    /** 获取并返回首页置顶文章列表 */
     @GET(UrlDefinition.GET_HOMEPAGE_TOP_ARTICLE_LIST)
     suspend fun getHomepageTopArticleList(): NetResult<ArrayList<ArticleEntity>>
 
-    /**
-     * 获取首页文章列表
-     *
-     * @param pageNum 页码
-     */
+    /** 根据页码[pageNum]获取并返回首页文章列表 */
     @GET(UrlDefinition.GET_HOMEPAGE_ARTICLE_LIST)
     suspend fun getHomepageArticleList(@Path("pageNum") pageNum: Int): NetResult<ArticleListEntity>
 
-    /**
-     * 获取收藏列表
-     *
-     * @param pageNum 页码
-     */
+    /** 根据页码[pageNum]获取并返回收藏列表 */
     @GET(UrlDefinition.GET_COLLECTION_LIST)
     suspend fun getCollectionList(@Path("pageNum") pageNum: Int): NetResult<ArticleListEntity>
 
-    /**
-     * 收藏文章 - 站内
-     *
-     * @param id 文章 id
-     */
+    /** 通过文章[id]收藏站内文章 */
     @POST(UrlDefinition.COLLECT_ARTICLE_INSIDE)
     suspend fun collectArticleInside(@Path("id") id: String): NetResult<Any>
 
-    /**
-     * 收藏文章 - 站外
-     *
-     * @param title 标题
-     * @param author 作者
-     * @param link 链接
-     */
+    /** 根据文章标题[title]、作者[author]、链接[link]收藏站外文章 */
     @FormUrlEncoded
     @POST(UrlDefinition.COLLECT_ARTICLE_OUTSIDE)
     suspend fun collectArticleOutside(
@@ -59,20 +37,11 @@ interface WebService {
             @Field("link") link: String
     ): NetResult<Any>
 
-    /**
-     * 取消收藏 - 文章列表
-     *
-     * @param id 文章 id
-     */
+    /** 文章列表中根据文章[id]取消收藏 */
     @POST(UrlDefinition.UN_COLLECT_ARTICLE_LIST)
     suspend fun unCollectArticleList(@Path("id") id: String): NetResult<Any>
 
-    /**
-     * 取消收藏 - 我的收藏列表
-     *
-     * @param id 文章 id
-     * @param originId 我的收藏列表下发 id
-     */
+    /** 我的收藏列表根据文章[id]、列表下发[originId]取消收藏 */
     @FormUrlEncoded
     @POST(UrlDefinition.UN_COLLECT_ARTICLE_COLLECTED)
     suspend fun unCollectArticleCollected(
@@ -80,27 +49,16 @@ interface WebService {
             @Field("originId") originId: String
     ): NetResult<Any>
 
-    /**
-     * 获取收藏网站列表
-     */
+    /** 获取并返回收藏网站列表 */
     @GET(UrlDefinition.GET_COLLECTED_WEB_LIST)
     suspend fun getCollectedWebList(): NetResult<ArrayList<CollectedWebEntity>>
 
-    /**
-     * 删除收藏网站
-     *
-     * @param id 网站 id
-     */
+    /** 根据网站[id]删除收藏的网站 */
     @FormUrlEncoded
     @POST(UrlDefinition.DELETE_COLLECTED_WEB)
     suspend fun deleteCollectedWeb(@Field("id") id: String): NetResult<Any>
 
-    /**
-     * 收藏网站
-     *
-     * @param name 网站名
-     * @param link 网站链接
-     */
+    /** 根据网站名[name]、链接[link]收藏网站 */
     @FormUrlEncoded
     @POST(UrlDefinition.COLLECT_WEB)
     suspend fun collectWeb(
@@ -108,13 +66,7 @@ interface WebService {
             @Field("link") link: String
     ): NetResult<Any>
 
-    /**
-     * 编辑收藏网站
-     *
-     * @param id 网站 id
-     * @param name 网站名
-     * @param link 网站链接
-     */
+    /** 根据网站[id]修改网站名[name]、链接[link] */
     @FormUrlEncoded
     @POST(UrlDefinition.EDIT_COLLECTED_WEB)
     suspend fun editCollectedWeb(
@@ -123,42 +75,28 @@ interface WebService {
             @Field("link") link: String
     ): NetResult<Any>
 
-    /**
-     * 获取体系分类列表
-     */
+    /** 获取并返回体系分类列表 */
     @GET(UrlDefinition.GET_SYSTEM_CATEGORY_LIST)
     suspend fun getSystemCategoryList(): NetResult<ArrayList<SystemCategoryEntity>>
 
-    /**
-     * 获取导航列表
-     */
+    /** 获取并返回导航列表 */
     @GET(UrlDefinition.GET_NAVIGATION_LIST)
     suspend fun getNavigationList(): NetResult<ArrayList<NavigationListEntity>>
 
-    /**
-     * 获取体系下文章列表
-     *
-     * @param pageNum 页码
-     * @param cid 体系目录 id
-     */
+    /** 根据页码[pageNum]、体系目录[cid]获取并返回体系下文章列表 */
     @GET(UrlDefinition.GET_SYSTEM_ARTICLE_LIST)
     suspend fun getSystemArticleList(
             @Path("pageNum") pageNum: Int,
             @Query("cid") cid: String
     ): NetResult<ArticleListEntity>
 
-    /**
-     * 获取公众号列表
-     */
+    /** 获取并返回公众号列表 */
     @GET(UrlDefinition.GET_BJNEWS_LIST)
     suspend fun getBjnewsList(): NetResult<ArrayList<CategoryEntity>>
 
     /**
-     * 获取公众号文章列表
-     *
-     * @param id 公众号 id
-     * @param pageNum 页码
-     * @param keywords 搜索关键字，为空串返回全部
+     * 根据公众号id[id]、页码[pageNum]、搜索关键字[keywords]获取并返回公众号文章列表
+     * > [keywords]为可选参数，默认`""`返回所有数据
      */
     @GET(UrlDefinition.GET_BJNEWS_ARTICLES)
     suspend fun getBjnewsArticles(
@@ -167,30 +105,18 @@ interface WebService {
             @Query("k") keywords: String = ""
     ): NetResult<ArticleListEntity>
 
-    /**
-     * 获取项目分类列表
-     */
+    /** 获取并返回项目分类列表 */
     @GET(UrlDefinition.GET_PROJECT_CATEGORY)
     suspend fun getProjectCategory(): NetResult<ArrayList<CategoryEntity>>
 
-    /**
-     * 获取项目列表
-     *
-     * @param pageNum 页码
-     * @param categoryId 分类 id
-     */
+    /** 根据分类id[categoryId]、页码[pageNum]获取并返回项目列表 */
     @GET(UrlDefinition.GET_PROJECT_LIST)
     suspend fun getProjectList(
             @Path("pageNum") pageNum: Int,
             @Query("cid") categoryId: String
     ): NetResult<ArticleListEntity>
 
-    /**
-     * 用户登录
-     *
-     * @param username 用户名
-     * @param password 密码
-     */
+    /** 通过用户名[username]、密码[password]登录并返回用户信息 */
     @FormUrlEncoded
     @POST(UrlDefinition.LOGIN)
     suspend fun login(
@@ -198,39 +124,24 @@ interface WebService {
             @Field("password") password: String
     ): NetResult<UserInfoEntity>
 
-    /**
-     * 用户注册
-     *
-     * @param username 用户名
-     * @param password 密码
-     * @param repassword 重复密码
-     */
+    /** 通过用户名[username]、密码[password]注册用户并返回用户信息 */
     @FormUrlEncoded
     @POST(UrlDefinition.REGISTER)
     suspend fun register(
             @Field("username") username: String,
             @Field("password") password: String,
-            @Field("repassword") repassword: String
+            @Field("repassword") repassword: String = password
     ): NetResult<UserInfoEntity>
 
-    /**
-     * 用户退出登录
-     */
+    /** 用户退出登录 */
     @GET(UrlDefinition.LOGOUT)
     suspend fun logout(): NetResult<Any>
 
-    /**
-     * 获取搜索热词
-     */
+    /** 获取搜索热词并返回 */
     @GET(UrlDefinition.GET_HOT_SEARCH)
     suspend fun getHotSearch(): NetResult<ArrayList<HotSearchEntity>>
 
-    /**
-     * 搜索
-     *
-     * @param pageNum 页码
-     * @param keywords 关键字
-     */
+    /** 根据关键字[keywords]、页码[pageNum]搜索并返回文章列表 */
     @FormUrlEncoded
     @POST(UrlDefinition.SEARCH)
     suspend fun search(

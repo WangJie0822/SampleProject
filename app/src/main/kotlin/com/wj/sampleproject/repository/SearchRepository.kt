@@ -14,19 +14,12 @@ class SearchRepository : KoinComponent {
     /** 网络请求对象 */
     private val mWebService: WebService by inject()
 
-    /**
-     * 获取搜索热词
-     */
+    /** 获取搜索热词 */
     suspend fun getHotSearch() = withContext(Dispatchers.IO) {
         mWebService.getHotSearch()
     }
 
-    /**
-     * 搜索
-     *
-     * @param pageNum 页码
-     * @param keywords 关键字
-     */
+    /** 根据关键字[keywords]、页码[pageNum]搜索并返回文章列表 */
     suspend fun search(pageNum: Int, keywords: String) = withContext(Dispatchers.IO) {
         mWebService.search(pageNum, keywords)
     }

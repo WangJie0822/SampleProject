@@ -83,9 +83,7 @@ class BjnewsArticlesViewModel(
         }
     }
 
-    /**
-     * 获取公众号文章列表
-     */
+    /** 获取公众号文章列表 */
     private fun getBjnewsArticles() {
         viewModelScope.launch {
             try {
@@ -108,11 +106,7 @@ class BjnewsArticlesViewModel(
         }
     }
 
-    /**
-     * 收藏
-     *
-     * @param item 文章对象
-     */
+    /** 收藏文章[item] */
     private fun collect(item: ArticleEntity) {
         viewModelScope.launch {
             try {
@@ -132,11 +126,7 @@ class BjnewsArticlesViewModel(
         }
     }
 
-    /**
-     * 取消收藏
-     *
-     * @param item 文章对象
-     */
+    /** 取消收藏文章[item] */
     private fun unCollect(item: ArticleEntity) {
         viewModelScope.launch {
             try {

@@ -7,7 +7,6 @@ import com.wj.android.okhttp.InterceptorLogger
 import com.wj.android.okhttp.LoggerInterceptor
 import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
-import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.adapter.NavigationRvAdapter
 import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
 import com.wj.sampleproject.constants.SP_KEY_COOKIES
@@ -28,9 +27,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-/**
- * 网络请求 Module
- */
+/** 网络请求 Module */
 val netModule: Module = module {
 
     single {
@@ -81,9 +78,7 @@ val netModule: Module = module {
     }
 }
 
-/**
- * 数据仓库 Module
- */
+/** 数据仓库 Module */
 val repositoryModule: Module = module {
     factory { HomepageRepository() }
     factory { SystemRepository() }
@@ -94,21 +89,16 @@ val repositoryModule: Module = module {
     factory { SearchRepository() }
 }
 
-/**
- * 适配器 Module
- */
+/** 适配器 Module */
 val adapterModule: Module = module {
     factory { ArticleListRvAdapter() }
-    factory { BannerVpAdapter() }
     factory { SystemCategoryRvAdapter() }
     factory { NavigationRvAdapter() }
 }
 
-/**
- * ViewModel Module
- */
+/** ViewModel Module */
 val viewModelModule: Module = module {
-    viewModel { SplashViewModel() }
+    viewModel { BlankViewModel() }
     viewModel { MainViewModel() }
     viewModel { HomepageViewModel(get(), get()) }
     viewModel { SystemViewModel() }
@@ -121,7 +111,6 @@ val viewModelModule: Module = module {
     viewModel { MyViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
     viewModel { WebViewViewModel(get()) }
-    viewModel { WebViewFragViewModel() }
     viewModel { LoginViewModel(get()) }
     viewModel { GeneralViewModel() }
     viewModel { CollectionViewModel(get()) }

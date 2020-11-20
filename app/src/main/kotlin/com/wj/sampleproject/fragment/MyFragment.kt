@@ -1,6 +1,5 @@
 package com.wj.sampleproject.fragment
 
-import androidx.lifecycle.Observer
 import cn.wj.android.base.ext.string
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.CollectedWebActivity
@@ -8,6 +7,8 @@ import com.wj.sampleproject.activity.CollectionActivity
 import com.wj.sampleproject.activity.LoginActivity
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentMyBinding
+import com.wj.sampleproject.dialog.GeneralDialog
+import com.wj.sampleproject.helper.ProgressDialogHelper
 import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.viewmodel.MyViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,26 +39,41 @@ class MyFragment
     }
 
     override fun initObserve() {
+        // 进度弹窗
+        viewModel.progressData.observe(this, { progress ->
+            if (null == progress) {
+                ProgressDialogHelper.dismiss()
+            } else {
+                ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
+            }
+        })
+        viewModel.showLogoutDialogData.observe(this, {
+            GeneralDialog.newBuilder()
+                    .contentStr(R.string.app_are_you_sure_to_logout.string)
+                    .setOnPositiveAction {
+                        // 退出登录
+                        viewModel.logout()
+                    }
+                    .build()
+                    .show(this)
+        })
         // 跳转登录
-        viewModel.jumpLoginData.observe(this, Observer {
+        viewModel.jumpLoginData.observe(this, {
             LoginActivity.actionStart(mContext)
         })
         // 跳转我的收藏
-        viewModel.jumpCollectionData.observe(this, Observer {
+        viewModel.jumpCollectionData.observe(this, {
             CollectionActivity.actionStart(mContext)
         })
         // 跳转网站收藏
-        viewModel.jumpCollectedWebData.observe(this, Observer {
+        viewModel.jumpCollectedWebData.observe(this, {
             CollectedWebActivity.actionStart(mContext)
         })
     }
 
     companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 体系 Fragment
-         */
+
+        /** 创建 [MyFragment] 并返回 */
         fun actionCreate(): MyFragment {
             return MyFragment()
         }

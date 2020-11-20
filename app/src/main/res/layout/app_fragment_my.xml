@@ -24,17 +24,17 @@
             android:paddingTop="80dp"
             android:paddingBottom="40dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_avatar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
-                android:bind_iv_img_circle="@{true}"
+                app:shapeAppearanceOverlay="@style/app_image_circle"
                 android:bind_iv_img_default="@{@drawable/app_vector_avatar_circle_gray_24dp}"
                 android:bind_iv_img_placeholder="@{@drawable/app_vector_avatar_circle_gray_24dp}"
                 android:bind_iv_img_url="@{viewModel.avatarUrl}"
                 android:contentDescription="@null"
-                tools:background="@drawable/app_vector_avatar_circle_gray_24dp" />
+                tools:src="@drawable/app_vector_avatar_circle_gray_24dp" />
 
             <TextView
                 android:id="@+id/tv_name"

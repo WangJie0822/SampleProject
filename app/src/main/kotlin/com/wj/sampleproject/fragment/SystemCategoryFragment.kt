@@ -1,7 +1,6 @@
 package com.wj.sampleproject.fragment
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.SystemArticlesActivity
@@ -42,24 +41,20 @@ class SystemCategoryFragment
 
     override fun initObserve() {
         // 目录列表
-        viewModel.listData.observe(this, Observer {
+        viewModel.listData.observe(this, {
             mAdapter.loadMore(it.orEmpty())
         })
         // 跳转体系文章列表
-        viewModel.jumpSystemData.observe(this, Observer {
-            if (null == it) {
-                return@Observer
+        viewModel.jumpSystemData.observe(this, {
+            if (null != it) {
+                SystemArticlesActivity.actionStart(mContext, it.name.orEmpty(), it.id.orEmpty())
             }
-            SystemArticlesActivity.actionStart(mContext, it.name.orEmpty(), it.id.orEmpty())
         })
     }
 
     companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 体系目录列表 Fragment
-         */
+
+        /** 创建 [SystemCategoryFragment] 并返回 */
         fun actionCreate(): SystemCategoryFragment {
             return SystemCategoryFragment()
         }

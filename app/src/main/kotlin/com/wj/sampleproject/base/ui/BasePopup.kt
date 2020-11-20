@@ -6,6 +6,7 @@ import com.wj.android.ui.popup.BaseLibPopupWindow
 
 /**
  * PopupWindow 基类，封装了一些兼容性处理
+ * > 指定 DataBinding 类型 [DB]
  *
  * @author 王杰
  */

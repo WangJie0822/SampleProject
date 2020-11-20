@@ -1,6 +1,7 @@
 package com.wj.sampleproject.viewmodel
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.isNotUrl
 import cn.wj.android.logger.Logger
@@ -30,6 +31,9 @@ class EditCollectedWebViewModel(
 
     /** 网站 id */
     var id = ""
+
+    /** 控制进度条弹窗显示  */
+    val progressData = MutableLiveData<ProgressModel>()
 
     /** 标题文本 */
     val titleStr: ObservableField<String> = ObservableField<String>("")
@@ -73,9 +77,7 @@ class EditCollectedWebViewModel(
         }
     }
 
-    /**
-     * 收藏网站
-     */
+    /** 收藏网站 */
     private fun collectWeb() {
         viewModelScope.launch {
             try {
@@ -103,9 +105,7 @@ class EditCollectedWebViewModel(
         }
     }
 
-    /**
-     * 编辑收藏网站
-     */
+    /** 编辑收藏网站 */
     private fun editCollectedWeb() {
         viewModelScope.launch {
             try {

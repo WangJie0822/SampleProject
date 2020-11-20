@@ -1,15 +1,16 @@
 package com.wj.sampleproject.fragment
 
+import cn.wj.android.base.adapter.SimplePagerAdapter
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.SearchActivity
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
-import com.wj.sampleproject.adapter.BannerVpAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
-import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCLED
+import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCELLED
 import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
+import com.wj.sampleproject.entity.BannerEntity
 import com.wj.sampleproject.viewmodel.HomepageViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +26,7 @@ class HomepageFragment
     override val layoutResId: Int = R.layout.app_fragment_homepage
 
     /** Banner 列表适配器 */
-    private val mBannerAdapter: BannerVpAdapter by inject()
+    private val mBannerAdapter = SimplePagerAdapter<BannerEntity>(R.layout.app_viewpager_item_banner)
 
     /** 文章列表适配器 */
     private val mArticlesAdapter: ArticleListRvAdapter by inject()
@@ -92,7 +93,7 @@ class HomepageFragment
             SearchActivity.actionStart(mContext)
         })
         // 取消收藏事件
-        LiveEventBus.get(EVENT_COLLECTION_CANCLED, String::class.java)
+        LiveEventBus.get(EVENT_COLLECTION_CANCELLED, String::class.java)
                 .observe(this, { id ->
                     val item = mArticlesAdapter.mDiffer.currentList.firstOrNull { it.id == id }
                     item?.collected?.set(false)
@@ -101,11 +102,7 @@ class HomepageFragment
 
     companion object {
 
-        /**
-         * 创建 Fragment
-         *
-         * @return 首页 Fragment
-         */
+        /** 创建 [HomepageFragment] 并返回 */
         fun actionCreate(): HomepageFragment {
             return HomepageFragment()
         }

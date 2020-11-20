@@ -48,11 +48,8 @@ class ProjectFragment
     }
 
     companion object {
-        /**
-         * 创建 Fragment
-         *
-         * @return 体系 Fragment
-         */
+
+        /** 创建 [ProjectFragment] 并返回 */
         fun actionCreate(): ProjectFragment {
             return ProjectFragment()
         }

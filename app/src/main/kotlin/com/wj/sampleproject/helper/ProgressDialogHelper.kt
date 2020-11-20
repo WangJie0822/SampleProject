@@ -9,8 +9,8 @@ import com.wj.sampleproject.dialog.ProgressDialog
 
 /**
  * 加载进度条帮助类
- * <p/>
- * 创建时间：2019/10/14
+ *
+ * - 创建时间：2019/10/14
  *
  * @author 王杰
  */
@@ -19,22 +19,15 @@ object ProgressDialogHelper {
     /** 弹窗对象  */
     private var mDialog: ProgressDialog? = null
 
-    /**
-     * 显示弹窗
-     *
-     * @param activity   Activity 对象
-     * @param cancelable 能否取消
-     */
+    /** 使用 [activity] 显示弹窗，传递参数 能否取消[cancelable] & 提示文本[hint] */
     private fun showDialog(activity: FragmentActivity, cancelable: Boolean, hint: String) {
         // 显示前先隐藏
         dismissDialog()
-
-        // 初始化 Dialog
-        mDialog = ProgressDialog.actionCreate(cancelable, hint)
-        // 显示
-        mDialog!!.show(activity)
+        // 创建并显示 Dialog
+        mDialog = ProgressDialog.actionShow(activity, cancelable, hint)
     }
 
+    /** 隐藏弹窗 */
     private fun dismissDialog() {
         if (null == mDialog) {
             return
@@ -50,10 +43,8 @@ object ProgressDialogHelper {
     }
 
     /**
-     * 显示弹窗
-     *
-     * @param activity   Activity 对象
-     * @param cancelable 能否取消
+     * 使用 [activity] 显示弹窗，传递参数 能否取消 [cancelable] & 提示文本 [hint]
+     * > [cancelable] 默认 `true` & [hint] 默认 `""`
      */
     fun show(activity: FragmentActivity, cancelable: Boolean = true, hint: String = "") {
         if (AppManager.getContext().isMainProcess) {
@@ -67,9 +58,7 @@ object ProgressDialogHelper {
         }
     }
 
-    /**
-     * 隐藏弹窗
-     */
+    /** 隐藏弹窗 */
     fun dismiss() {
         if (AppManager.getContext().isMainProcess) {
             // 主线程

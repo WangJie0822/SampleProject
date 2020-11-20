@@ -22,9 +22,7 @@ class BjnewsViewModel(
     /** 公众号数据 */
     val bjnewsData = MutableLiveData<ArrayList<CategoryEntity>>()
 
-    /**
-     * 获取公众号列表
-     */
+    /** 获取公众号列表 */
     fun getBjnewsList() {
         viewModelScope.launch {
             try {

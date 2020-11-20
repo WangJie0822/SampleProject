@@ -30,9 +30,7 @@ class SystemCategoryViewModel(
         jumpSystemData.value = item
     }
 
-    /**
-     * 获取分类数据
-     */
+    /** 获取分类数据 */
     fun getSystemCategoryList() {
         viewModelScope.launch {
             try {

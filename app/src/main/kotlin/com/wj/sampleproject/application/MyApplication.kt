@@ -19,7 +19,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
 /**
- * 应用全局对象
+ * 应用全局类
  */
 class MyApplication : Application() {
 

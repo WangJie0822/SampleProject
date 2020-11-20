@@ -13,16 +13,16 @@ import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.ACTION_PARCELABLE
 import com.wj.sampleproject.databinding.AppFragmentWebViewBinding
-import com.wj.sampleproject.viewmodel.WebViewFragViewModel
+import com.wj.sampleproject.viewmodel.BlankViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * WebView 页面
  */
 class WebViewFragment
-    : BaseFragment<WebViewFragViewModel, AppFragmentWebViewBinding>() {
+    : BaseFragment<BlankViewModel, AppFragmentWebViewBinding>() {
 
-    override val viewModel: WebViewFragViewModel by viewModel()
+    override val viewModel: BlankViewModel by viewModel()
 
     override val layoutResId: Int = R.layout.app_fragment_web_view
 
@@ -100,13 +100,11 @@ class WebViewFragment
 
     companion object {
 
-        /**
-         * 创建并返回 [WebViewFragment]，携带 [model] 数据
-         */
-        fun actionCreate(model: WebViewActivity.ActionModel?): WebViewFragment {
+        /** 创建并返回 [WebViewFragment]，传递网页数据[webData] */
+        fun actionCreate(webData: WebViewActivity.ActionModel?): WebViewFragment {
             return WebViewFragment().apply {
                 arguments = bundleOf(
-                        ACTION_PARCELABLE to model
+                        ACTION_PARCELABLE to webData
                 )
             }
         }

@@ -5,7 +5,6 @@ package com.wj.sampleproject.databinding
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import cn.wj.android.common.ext.orFalse
 import cn.wj.android.databinding.adapter.IMG_RESOURCE_MARK
 import cn.wj.android.databinding.adapter.setImageResource
 import com.bumptech.glide.Glide
@@ -19,26 +18,22 @@ import java.io.File
  */
 
 /**
- * 加载图片
+ * 为 [iv] 设置网络图片 [imgUrl] 显示，占位图为 [placeholder]
+ * > 当 [imgUrl] 为空或者加载失败时，显示 [default]
  *
- * @param iv     [ImageView] 对象
- * @param imgUrl 图片 Url
- * @param placeholder 占位图片
- * @param default 默认图片
+ * > [placeholder] [default] 可使用资源类型 android:bind_params="@{@drawable/app_drawable_id}"
  */
 @BindingAdapter(
         "android:bind_iv_img_url",
         "android:bind_iv_img_placeholder",
         "android:bind_iv_img_default",
-        "android:bind_iv_img_circle",
         requireAll = false
 )
 fun setImageViewUrl(
         iv: ImageView,
         imgUrl: String?,
         placeholder: Drawable?,
-        default: Drawable?,
-        circle: Boolean?
+        default: Drawable?
 ) {
     if (imgUrl.isNullOrBlank()) {
         if (null != default) {
@@ -53,9 +48,6 @@ fun setImageViewUrl(
         if (null != default) {
             error(default)
         }
-        if (circle.orFalse()) {
-            circleCrop()
-        }
     }
     Glide.with(iv.context)
             .load(imgUrl)
@@ -64,26 +56,22 @@ fun setImageViewUrl(
 }
 
 /**
- * 加载图片
+ * 为 [iv] 设置本地图片 [path] 显示，占位图为 [placeholder]
+ * > 当 [path] 为空或者加载失败时，显示 [default]
  *
- * @param iv     [ImageView] 对象
- * @param path 图片地址
- * @param placeholder 占位图片
- * @param default 默认图片
+ * > [placeholder] [default] 可使用资源类型 android:bind_params="@{@drawable/app_drawable_id}"
  */
 @BindingAdapter(
         "android:bind_iv_img_path",
         "android:bind_iv_img_placeholder",
         "android:bind_iv_img_default",
-        "android:bind_iv_img_circle",
         requireAll = false
 )
 fun setImageViewPath(
         iv: ImageView,
         path: String?,
         placeholder: Drawable?,
-        default: Drawable?,
-        circle: Boolean?
+        default: Drawable?
 ) {
     if (path.isNullOrBlank()) {
         if (null != default) {
@@ -98,37 +86,35 @@ fun setImageViewPath(
         if (null != default) {
             error(default)
         }
-        if (circle.orFalse()) {
-            circleCrop()
-        }
     }
-    if (path.isNullOrBlank()) {
-        Glide.with(iv.context)
-                .load(default)
-    } else {
-        Glide.with(iv.context)
-                .load(File(path))
-    }
+    Glide.with(iv.context)
+            .load(File(path))
             .apply(options)
             .into(iv)
 }
 
 /**
- * 加载图片
+ * 为 [iv] 设置图片 [img] 显示，占位图为 [placeholder]
+ * > 根据 [img] 数据类型加载不同类型数据
  *
- * @param iv     [ImageView] 对象
- * @param img 图片路径
- * @param placeholder 占位图片
- * @param default 默认图片
+ * > [placeholder] [default] 可使用资源类型 android:bind_params="@{@drawable/app_drawable_id}"
+ *
+ * @see setImageViewUrl
+ * @see setImageViewPath
+ * @see setImageResource
  */
 @BindingAdapter(
         "android:bind_iv_img",
         "android:bind_iv_img_placeholder",
         "android:bind_iv_img_default",
-        "android:bind_iv_img_circle",
         requireAll = false
 )
-fun setImageViewImg(iv: ImageView, img: String?, placeholder: Drawable?, default: Drawable?, circle: Boolean?) {
+fun setImageViewImg(
+        iv: ImageView,
+        img: String?,
+        placeholder: Drawable?,
+        default: Drawable?
+) {
     if (img.isNullOrBlank()) {
         if (null != default) {
             iv.setImageDrawable(default)
@@ -137,12 +123,12 @@ fun setImageViewImg(iv: ImageView, img: String?, placeholder: Drawable?, default
     }
     if (img.contains("http:") || img.contains("https:")) {
         // url
-        setImageViewUrl(iv, img, placeholder, default, circle)
+        setImageViewUrl(iv, img, placeholder, default)
     } else if (img.contains(IMG_RESOURCE_MARK)) {
         // Resource
         setImageResource(iv, img)
     } else {
         // path
-        setImageViewPath(iv, img, placeholder, default, circle)
+        setImageViewPath(iv, img, placeholder, default)
     }
 }

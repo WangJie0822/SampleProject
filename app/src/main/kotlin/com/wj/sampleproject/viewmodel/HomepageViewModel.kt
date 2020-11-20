@@ -140,9 +140,7 @@ class HomepageViewModel(
         }
     }
 
-    /**
-     * 获取首页 Banner 列表
-     */
+    /** 获取首页 Banner 列表 */
     fun getHomepageBannerList() {
         viewModelScope.launch {
             try {
@@ -161,9 +159,7 @@ class HomepageViewModel(
         }
     }
 
-    /**
-     * 开启 Banner 轮播
-     */
+    /** 开启 Banner 轮播 */
     fun startCarousel() {
         // 关闭轮播
         stopCarousel()
@@ -183,9 +179,7 @@ class HomepageViewModel(
         }
     }
 
-    /**
-     * 关闭 Banner 轮播
-     */
+    /** 关闭 Banner 轮播 */
     fun stopCarousel() {
         if (carouselJob != null) {
             if (carouselJob?.isActive.condition) {
@@ -195,9 +189,7 @@ class HomepageViewModel(
         }
     }
 
-    /**
-     * 获取首页文章列表
-     */
+    /** 获取首页文章列表 */
     private fun getHomepageArticleList() {
         viewModelScope.launch {
             try {
@@ -220,11 +212,7 @@ class HomepageViewModel(
         }
     }
 
-    /**
-     * 收藏
-     *
-     * @param item 文章对象
-     */
+    /** 收藏文章[item] */
     private fun collect(item: ArticleEntity) {
         viewModelScope.launch {
             try {
@@ -244,11 +232,7 @@ class HomepageViewModel(
         }
     }
 
-    /**
-     * 取消收藏
-     *
-     * @param item 文章对象
-     */
+    /** 取消收藏文章[item] */
     private fun unCollect(item: ArticleEntity) {
         viewModelScope.launch {
             try {

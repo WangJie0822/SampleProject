@@ -32,6 +32,9 @@ class CollectedWebViewModel(
         private val collectRepository: CollectRepository
 ) : BaseViewModel() {
 
+    /** 控制进度条弹窗显示  */
+    val progressData = MutableLiveData<ProgressModel>()
+
     /** 列表数据 */
     val websListData = MutableLiveData<ArrayList<CollectedWebEntity>>()
 
@@ -90,9 +93,7 @@ class CollectedWebViewModel(
         true
     }
 
-    /**
-     * 获取收藏网站列表
-     */
+    /** 获取收藏网站列表 */
     private fun getCollectedWebList() {
         viewModelScope.launch {
             try {
@@ -112,11 +113,7 @@ class CollectedWebViewModel(
         }
     }
 
-    /**
-     * 删除收藏网站
-     *
-     * @param item 网站数据对象
-     */
+    /** 删除收藏网站[item] */
     private fun deleteCollectedWeb(item: CollectedWebEntity) {
         viewModelScope.launch {
             try {

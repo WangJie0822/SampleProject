@@ -66,11 +66,11 @@ class WebViewActivity
     companion object {
 
         /**
-         * 通过 [context] 打开 [WebViewActivity] 界面，携带 [model] 数据
+         * 使用 [context] 打开 [WebViewActivity] 界面，传递参数网页数据[webData]
          */
-        fun actionStart(context: Context, model: ActionModel?) {
+        fun actionStart(context: Context, webData: ActionModel?) {
             context.startTargetActivity(WebViewActivity::class.java, bundleOf(
-                    ACTION_PARCELABLE to model
+                    ACTION_PARCELABLE to webData
             ))
         }
     }

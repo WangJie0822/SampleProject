@@ -38,6 +38,10 @@ class ArticleListRvAdapter
         : BaseRvDBViewHolder<AppRecyclerItemArticlesBinding, ArticleEntity>(binding)
 }
 
+/**
+ * 文章列表适配接口
+ * > 提供 [onArticleItemClick]、[onArticleCollectClick] 两个点击事件
+ */
 interface ArticleListViewModel {
 
     /** 文章列表条目点击 */

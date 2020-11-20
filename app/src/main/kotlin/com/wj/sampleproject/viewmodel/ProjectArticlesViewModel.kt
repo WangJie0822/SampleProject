@@ -82,9 +82,7 @@ class ProjectArticlesViewModel(
         }
     }
 
-    /**
-     * 获取公众号文章列表
-     */
+    /** 获取公众号文章列表 */
     private fun getBjnewsArticles() {
         viewModelScope.launch {
             try {

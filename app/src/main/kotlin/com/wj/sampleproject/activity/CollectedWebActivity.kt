@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
 import cn.wj.android.base.ext.startTargetActivity
-import cn.wj.android.base.utils.AppManager
 import cn.wj.android.recyclerview.adapter.simple.SimpleRvListAdapter
 import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
@@ -15,11 +14,13 @@ import com.wj.sampleproject.constants.EVENT_COLLECTION_REFRESH_COLLECTED_WEB
 import com.wj.sampleproject.databinding.AppActivityCollectedWebBinding
 import com.wj.sampleproject.dialog.EditCollectedWebDialog
 import com.wj.sampleproject.entity.CollectedWebEntity
+import com.wj.sampleproject.helper.ProgressDialogHelper
 import com.wj.sampleproject.viewmodel.CollectedWebViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 收藏网站界面
+ * > 用户收藏的三方网站列表，可以新增、修改、删除
  *
  * - 创建时间：2019/10/16
  *
@@ -51,6 +52,14 @@ class CollectedWebActivity
     }
 
     override fun initObserve() {
+        // 进度弹窗
+        viewModel.progressData.observe(this, { progress ->
+            if (null == progress) {
+                ProgressDialogHelper.dismiss()
+            } else {
+                ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
+            }
+        })
         // 收藏列表
         viewModel.websListData.observe(this, {
             mAdapter.submitList(it)
@@ -81,12 +90,9 @@ class CollectedWebActivity
     }
 
     companion object {
-        /**
-         * 界面入口
-         *
-         * @param context Context 对象
-         */
-        fun actionStart(context: Context = AppManager.getContext()) {
+
+        /** 使用 [context] 打开 [CollectedWebActivity] 界面 */
+        fun actionStart(context: Context) {
             context.startTargetActivity(CollectedWebActivity::class.java)
         }
     }

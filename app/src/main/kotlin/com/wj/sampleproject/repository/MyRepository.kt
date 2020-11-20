@@ -14,31 +14,17 @@ class MyRepository : KoinComponent {
     /** 网络请求服务 */
     private val mWebService: WebService by inject()
 
-    /**
-     * 用户登录
-     *
-     * @param username 用户名
-     * @param password 密码
-     */
+    /** 通过用户名[username]、密码[password]登录并返回用户信息 */
     suspend fun login(username: String, password: String) = withContext(Dispatchers.IO) {
         mWebService.login(username, password)
     }
 
-
-    /**
-     * 用户注册
-     *
-     * @param username 用户名
-     * @param password 密码
-     * @param repassword 重复密码
-     */
-    suspend fun register(username: String, password: String, repassword: String) = withContext(Dispatchers.IO) {
-        mWebService.register(username, password, repassword)
+    /** 通过用户名[username]、密码[password]注册用户并返回用户信息 */
+    suspend fun register(username: String, password: String) = withContext(Dispatchers.IO) {
+        mWebService.register(username, password)
     }
 
-    /**
-     * 用户退出登录
-     */
+    /** 用户退出登录 */
     suspend fun logout() = withContext(Dispatchers.IO) {
         mWebService.logout()
     }

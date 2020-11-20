@@ -1,5 +1,6 @@
 package com.wj.sampleproject.net
 
+import cn.wj.android.base.utils.AppManager
 import com.wj.sampleproject.activity.LoginActivity
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_LOGIN_FAILED
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_SUCCESS
@@ -17,20 +18,19 @@ data class NetResult<T>(
         val errorMsg: String? = "",
         val data: T? = null
 ) {
-    
+
     /**
-     * 检查返回结果
-     *
-     * @return 请求是否成功
+     * 检查返回数据并返回接口是否请求成功
+     * > [errorCode] 为 [NET_RESPONSE_CODE_LOGIN_FAILED] 时跳转登录页
      */
     fun success(): Boolean {
         if (errorCode == NET_RESPONSE_CODE_LOGIN_FAILED) {
             // 登录失败，需要重新登录
-            LoginActivity.actionStart(fromNet = true)
+            LoginActivity.actionStart(AppManager.getContext(), fromNet = true)
         }
         return errorCode == NET_RESPONSE_CODE_SUCCESS
     }
-    
+
     fun toError(): SnackbarModel {
         return SnackbarModel(errorMsg.orEmpty())
     }

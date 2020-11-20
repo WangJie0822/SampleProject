@@ -3,7 +3,7 @@ package com.wj.sampleproject.viewmodel
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 
 /**
- * 欢迎界面 ViewModel
+ * 空白 ViewModel
  */
-class SplashViewModel
+class BlankViewModel
     : BaseViewModel()

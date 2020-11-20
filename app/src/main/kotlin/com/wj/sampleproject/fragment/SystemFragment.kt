@@ -38,11 +38,7 @@ class SystemFragment
 
     companion object {
 
-        /**
-         * 创建 Fragment
-         *
-         * @return 体系 Fragment
-         */
+        /** 创建 [SystemFragment] 并返回 */
         fun actionCreate(): SystemFragment {
             return SystemFragment()
         }

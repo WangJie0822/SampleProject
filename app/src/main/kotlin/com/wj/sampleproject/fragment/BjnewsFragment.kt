@@ -1,7 +1,6 @@
 package com.wj.sampleproject.fragment
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import cn.wj.android.base.adapter.FragVpAdapter
 import cn.wj.android.base.adapter.creator
 import com.wj.sampleproject.R
@@ -32,7 +31,7 @@ class BjnewsFragment
 
     override fun initObserve() {
         // 公众号列表
-        viewModel.bjnewsData.observe(this, Observer {
+        viewModel.bjnewsData.observe(this, {
             // 配置 ViewPager
             mBinding.vpBjnews.adapter = FragVpAdapter.newBuilder()
                     .manager(childFragmentManager)
@@ -50,11 +49,7 @@ class BjnewsFragment
 
     companion object {
 
-        /**
-         * 创建 Fragment
-         *
-         * @return 公众号 Fragment
-         */
+        /** 创建 [BjnewsFragment] 并返回 */
         fun actionCreate(): BjnewsFragment {
             return BjnewsFragment()
         }

@@ -4,8 +4,6 @@ package com.wj.sampleproject.dialog
 
 import android.view.Gravity
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import cn.wj.android.base.ext.string
 import com.wj.sampleproject.R
@@ -17,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * 通用弹窗
  *
- * * 创建时间：2019/9/28
+ * - 创建时间：2019/9/28
  *
  * @author 王杰
  */
@@ -39,8 +37,7 @@ class GeneralDialog
     /** Builder 对象  */
     var builder: Builder? = null
 
-    // 提高可见范围，对外暴露
-    public override val viewModel: GeneralViewModel by viewModel()
+    override val viewModel: GeneralViewModel by viewModel()
 
     override val layoutResId = R.layout.app_dialog_general
 
@@ -109,68 +106,37 @@ class GeneralDialog
         })
     }
 
-    /**
-     * 消极按钮点击事件
-     *
-     * @param onNegativeClick 点击回调
-     */
+    /** 设置消极按钮点击事件 [onNegativeClick] */
     private fun setOnNegativeClick(onNegativeClick: OnDialogClickListener?) {
         this.onNegativeClick = onNegativeClick
     }
 
-    /**
-     * 积极按钮点击事件
-     *
-     * @param onPositiveClick 点击回调
-     */
+    /** 设置积极按钮点击事件 [onPositiveClick] */
     private fun setOnPositiveClick(onPositiveClick: OnDialogClickListener?) {
         this.onPositiveClick = onPositiveClick
     }
 
     /**
-     * 消极按钮点击事件
-     *
-     *
-     * 按钮点击后自动隐藏弹窗
-     *
-     * @param onNegativeAction 点击回调
+     * 设置消极按钮点击事件 [onNegativeAction]
+     * > 按钮点击后自动隐藏弹窗
      */
     private fun setOnNegativeAction(onNegativeAction: OnDialogActionListener?) {
         this.onNegativeAction = onNegativeAction
     }
 
     /**
-     * 积极按钮点击事件
-     *
-     *
-     * 按钮点击后自动隐藏弹窗
-     *
-     * @param onPositiveAction 点击回调
+     * 设置积极按钮点击事件 [onPositiveAction]
+     * > 按钮点击后自动隐藏弹窗
      */
     private fun setOnPositiveAction(onPositiveAction: OnDialogActionListener?) {
         this.onPositiveAction = onPositiveAction
     }
 
-    fun show(activity: FragmentActivity) {
-        show(activity.supportFragmentManager, "GeneralDialog")
-    }
-
-    fun show(fragment: Fragment) {
-        show(fragment.childFragmentManager, "GeneralDialog")
-    }
-
     /**
      * [GeneralDialog] 通用弹窗建造者对象
+     * > [builder] 可选参数，可空
      */
-    class Builder
-    /**
-     * 私有化构造
-     *
-     *
-     * 请使用 [GeneralDialog.newBuilder] or [GeneralDialog.newBuilder]
-     *
-     * @param builder [Builder] 对象
-     */(builder: Builder?) {
+    class Builder(builder: Builder?) {
 
         /** 标记 - 能否取消  */
         private var cancelable = false
@@ -222,6 +188,7 @@ class GeneralDialog
 
         init {
             if (null != builder) {
+                // 已有 builder 不为空，复制属性
                 cancelable = builder.cancelable
                 showTitle = builder.showTitle
                 titleStr = builder.titleStr
@@ -241,183 +208,96 @@ class GeneralDialog
             }
         }
 
-        /**
-         * 设置能否取消
-         *
-         * @param cancelable 能否取消
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 能否被取消 [cancelable] 并返回 [Builder] 对象 */
         fun setCancelable(cancelable: Boolean): Builder {
             this.cancelable = cancelable
             return this
         }
 
-        /**
-         * 设置是否显示标题
-         *
-         * @param showTitle 是否显示标题
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 是否显示标题 [showTitle] 并返回 [Builder] 对象 */
         fun showTitle(showTitle: Boolean): Builder {
             this.showTitle = showTitle
             return this
         }
 
-        /**
-         * 设置标题文本
-         *
-         * @param titleStr 标题文本
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 标题文本 [titleStr] 并返回 [Builder] 对象 */
         fun titleStr(titleStr: String): Builder {
             this.titleStr = titleStr
             return this
         }
 
-        /**
-         * 设置内容文本
-         *
-         * @param contentStr 内容文本
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 内容文本 并返回 [Builder] 对象 */
         fun contentStr(contentStr: String): Builder {
             this.contentStr = contentStr
             return this
         }
 
         /**
-         * 设置内容文本重心
-         *
-         * @param gravity 重心 [Gravity]
-         *
-         * @return Builder 对象
+         * 设置 [GeneralDialog] 内容文本重心 [gravity] 并返回 [Builder] 对象
+         * > [gravity] 参见 [Gravity]
          */
         fun contentGravity(gravity: Int): Builder {
             this.contentGravity = gravity
             return this
         }
 
-        /**
-         * 设置是否显示选择器
-         *
-         * @param showSelect 是否显示选择器
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 是否显示选择器 [showSelect] 并返回 [Builder] 对象 */
         fun showSelect(showSelect: Boolean): Builder {
             this.showSelect = showSelect
             return this
         }
 
-        /**
-         * 设置选择器默认选择状态
-         *
-         * @param selected 默认选择状态
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 选择器默认选择状态 [selected] 并返回 [Builder] 对象 */
         fun defaultSelected(selected: Boolean): Builder {
             this.selected = selected
             return this
         }
 
-        /**
-         * 设置选择器提示文本
-         *
-         * @param selectStr 选择器提示文本
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 选择器提示文本 [selectStr] 并返回 [Builder] 对象 */
         fun selectTipsStr(selectStr: String): Builder {
             this.selectStr = selectStr
             return this
         }
 
-        /**
-         * 设置是否显示消极按钮
-         *
-         * @param showNegativeButton 是否显示消极按钮
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 是否显示消极按钮 [showNegativeButton] 并返回 [Builder] 对象 */
         fun showNegativeButton(showNegativeButton: Boolean): Builder {
             this.showNegativeButton = showNegativeButton
             return this
         }
 
-        /**
-         * 设置消极按钮显示文本
-         *
-         * @param negativeButtonStr 消极按钮显示文本
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 消极按钮显示文本 [negativeButtonStr] 并返回 [Builder] 对象 */
         fun negativeButtonStr(negativeButtonStr: String): Builder {
             this.negativeButtonStr = negativeButtonStr
             return this
         }
 
-        /**
-         * 设置是否显示积极按钮
-         *
-         * @param showPositiveButton 是否显示积极按钮
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 是否显示积极按钮 [showPositiveButton]  并返回 [Builder] 对象 */
         fun showPositiveButton(showPositiveButton: Boolean): Builder {
             this.showPositiveButton = showPositiveButton
             return this
         }
 
-        /**
-         * 积极按钮显示文本
-         *
-         * @param positiveButtonStr 积极按钮显示文本
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 积极按钮显示文本 [positiveButtonStr] 并返回 [Builder] 对象 */
         fun positiveButtonStr(positiveButtonStr: String): Builder {
             this.positiveButtonStr = positiveButtonStr
             return this
         }
 
-        /**
-         * 消极按钮点击事件
-         *
-         * @param onNegativeClick 点击回调
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 消极按钮点击事件 [onNegativeClick] 并返回 [Builder] 对象 */
         fun setOnNegativeClick(onNegativeClick: OnDialogClickListener): Builder {
             this.onNegativeClick = onNegativeClick
             return this
         }
 
-        /**
-         * 积极按钮点击事件
-         *
-         * @param onPositiveClick 点击回调
-         *
-         * @return Builder 对象
-         */
+        /** 设置 [GeneralDialog] 积极按钮点击事件 [onPositiveClick] 并返回 [Builder] 对象 */
         fun setOnPositiveClick(onPositiveClick: OnDialogClickListener): Builder {
             this.onPositiveClick = onPositiveClick
             return this
         }
 
         /**
-         * 消极按钮点击事件
-         *
-         *
-         * 按钮点击后自动隐藏弹窗
-         *
-         * @param onNegativeAction 点击回调
-         *
-         * @return Builder 对象
+         * 设置 [GeneralDialog] 消极按钮点击事件 [onNegativeAction] 并返回 [Builder] 对象
+         * > 按钮点击后自动隐藏弹窗
          */
         fun setOnNegativeAction(onNegativeAction: OnDialogActionListener): Builder {
             this.onNegativeAction = onNegativeAction
@@ -425,14 +305,8 @@ class GeneralDialog
         }
 
         /**
-         * 积极按钮点击事件
-         *
-         *
-         * 按钮点击后自动隐藏弹窗
-         *
-         * @param onPositiveAction 点击回调
-         *
-         * @return Builder 对象
+         * 设置 [GeneralDialog] 积极按钮点击事件 [onPositiveAction] 并返回 [Builder] 对象
+         * > 按钮点击后自动隐藏弹窗
          */
         fun setOnPositiveAction(onPositiveAction: OnDialogActionListener): Builder {
             this.onPositiveAction = onPositiveAction
@@ -440,12 +314,8 @@ class GeneralDialog
         }
 
         /**
-         * 消极按钮点击事件
-         *
-         * @param negativeButtonStr 消极按钮文本
-         * @param onNegativeClick   点击回调
-         *
-         * @return Builder 对象
+         * 设置 [GeneralDialog] 消极按钮文本 [negativeButtonStr] 以及消极按钮点击事件 [onNegativeClick]
+         * 并返回 [Builder] 对象
          */
         fun setNegativeButton(negativeButtonStr: String, onNegativeClick: OnDialogClickListener): Builder {
             this.negativeButtonStr = negativeButtonStr
@@ -454,12 +324,8 @@ class GeneralDialog
         }
 
         /**
-         * 设置积极按钮
-         *
-         * @param positiveButtonStr 消极按钮文本
-         * @param onPositiveClick   点击回调
-         *
-         * @return Builder 对象
+         * 设置 [GeneralDialog] 设置积极按钮文本 [positiveButtonStr] 以及积极按钮点击事件 [onPositiveClick]
+         * 并返回 [Builder] 对象
          */
         fun setPositiveButton(positiveButtonStr: String, onPositiveClick: OnDialogClickListener): Builder {
             this.positiveButtonStr = positiveButtonStr
@@ -468,15 +334,9 @@ class GeneralDialog
         }
 
         /**
-         * 消极按钮点击事件
-         *
-         *
-         * 按钮点击后自动隐藏弹窗
-         *
-         * @param negativeButtonStr 消极按钮文本
-         * @param onNegativeAction  点击回调
-         *
-         * @return Builder 对象
+         * 设置 [GeneralDialog] 消极按钮文本 [negativeButtonStr] 以及消极按钮点击事件 [onNegativeAction]
+         * 并返回 [Builder] 对象
+         * > 按钮点击后自动隐藏弹窗
          */
         fun setNegativeAction(negativeButtonStr: String, onNegativeAction: OnDialogActionListener): Builder {
             this.negativeButtonStr = negativeButtonStr
@@ -485,15 +345,9 @@ class GeneralDialog
         }
 
         /**
-         * 设置积极按钮
-         *
-         *
-         * 按钮点击后自动隐藏弹窗
-         *
-         * @param positiveButtonStr 消极按钮文本
-         * @param onPositiveAction  点击回调
-         *
-         * @return Builder 对象
+         * 设置 [GeneralDialog] 设置积极按钮文本 [positiveButtonStr] 以及积极按钮点击事件 [onPositiveAction]
+         * 并返回 [Builder] 对象
+         * > 按钮点击后自动隐藏弹窗
          */
         fun setPositiveAction(positiveButtonStr: String, onPositiveAction: OnDialogActionListener): Builder {
             this.positiveButtonStr = positiveButtonStr
@@ -501,11 +355,7 @@ class GeneralDialog
             return this
         }
 
-        /**
-         * 建造 [GeneralDialog] 对象
-         *
-         * @return [GeneralDialog] 对象
-         */
+        /** 建造并返回 [GeneralDialog] 对象 */
         fun build(): GeneralDialog {
             return GeneralDialog().apply {
                 isCancelable = cancelable
@@ -566,22 +416,12 @@ class GeneralDialog
         /** 参数 Key - 积极按钮文本  */
         private const val ACTION_POSITIVE_BUTTON_STR = "action_positive_button_str"
 
-        /**
-         * 新建 [Builder] 建造者对象
-         *
-         * @return [Builder] 建造者对象
-         */
+        /** 创建并返回 [Builder] 建造者对象 */
         fun newBuilder(): Builder {
             return Builder(null)
         }
 
-        /**
-         * 从已有 [Builder] 建造者对象 新建 [Builder] 建造者对象
-         *
-         * @param builder 已有 [Builder] 建造者对象
-         *
-         * @return [Builder] 建造者对象
-         */
+        /** 在 [builder] 的基础上创建并返回 [Builder] 建造者对象 */
         fun newBuilder(builder: Builder): Builder {
             return Builder(builder)
         }
@@ -590,12 +430,14 @@ class GeneralDialog
 
 /**
  * Dialog 按钮点击回调接口
+ * > 入参为([GeneralDialog], [Boolean])，无返回类型
  */
 typealias OnDialogClickListener = (GeneralDialog, Boolean) -> Unit
 
 /**
  * Dialog 按钮点击回调接口
+ * > 按钮点击后自动隐藏弹窗
  *
- * 按钮点击后自动隐藏弹窗
+ * > 入参为([Boolean])，无返回类型
  */
 typealias OnDialogActionListener = (Boolean) -> Unit

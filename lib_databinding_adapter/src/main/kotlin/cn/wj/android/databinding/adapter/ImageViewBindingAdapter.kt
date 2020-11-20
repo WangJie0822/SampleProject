@@ -27,7 +27,7 @@ fun src(iv: ImageView, @DrawableRes resId: Int?) {
  * 根据 id 字符串加载图片
  *
  * @param iv [ImageView] 对象
- * @param res 资源字符串 drawable-anydpi-resource:resId 或 mipmap-resource:resId
+ * @param res 资源字符串 drawable-resource:resId 或 mipmap-resource:resId
  */
 @BindingAdapter("android:bind_src")
 fun setImageResource(iv: ImageView, res: String?) {

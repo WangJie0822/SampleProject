@@ -7,7 +7,6 @@ import cn.wj.android.base.ext.string
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
-import com.wj.sampleproject.dialog.GeneralDialog
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.model.ProgressModel
@@ -23,6 +22,12 @@ import kotlinx.coroutines.launch
 class MyViewModel(
         private val repository: MyRepository
 ) : BaseViewModel() {
+
+    /** 控制进度条弹窗显示  */
+    val progressData = MutableLiveData<ProgressModel>()
+
+    /** 显示退出登录弹窗数据 */
+    val showLogoutDialogData = MutableLiveData<Int>()
 
     /** 跳转登录 */
     val jumpLoginData = MutableLiveData<Int>()
@@ -46,12 +51,7 @@ class MyViewModel(
             jumpLoginData.value = 0
         } else {
             // 已登录，提示是否退出登录
-            showDialogData.value = GeneralDialog.newBuilder()
-                    .contentStr(R.string.app_are_you_sure_to_logout.string)
-                    .setOnPositiveAction {
-                        // 退出登录
-                        logout()
-                    }
+            showLogoutDialogData.value = 0
         }
     }
 
@@ -77,10 +77,8 @@ class MyViewModel(
         }
     }
 
-    /**
-     * 用户退出登录
-     */
-    private fun logout() {
+    /** 用户退出登录 */
+    fun logout() {
         viewModelScope.launch {
             try {
                 // 显示弹窗

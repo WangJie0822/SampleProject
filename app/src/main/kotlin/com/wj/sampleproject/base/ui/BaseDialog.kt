@@ -2,14 +2,16 @@ package com.wj.sampleproject.base.ui
 
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.wj.android.ui.dialog.BaseBindingLibDialog
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
-import com.wj.sampleproject.helper.ProgressDialogHelper
 
 /**
  * Dialog 基类
+ * > 指定 ViewModel 类型 [VM] & 指定 DataBinding 类型 [DB]
  *
  * @author 王杰
  */
@@ -19,18 +21,15 @@ abstract class BaseDialog<VM : BaseViewModel, DB : ViewDataBinding>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 添加观察者
         observeData()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        ProgressDialogHelper.dismiss()
     }
 
     /**
      * 添加观察者
      */
     private fun observeData() {
+        // snackbar 提示
         viewModel.snackbarData.observe(this, Observer {
             if (it.content.isNullOrBlank()) {
                 return@Observer
@@ -47,20 +46,21 @@ abstract class BaseDialog<VM : BaseViewModel, DB : ViewDataBinding>
             }
             snackBar.show()
         })
-        viewModel.progressData.observe(this, { progress ->
-            if (null == progress) {
-                ProgressDialogHelper.dismiss()
-            } else {
-                ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
-            }
-        })
+        // UI 关闭
         viewModel.uiCloseData.observe(this, { close ->
             close?.let {
                 dismiss()
             }
         })
-        viewModel.showDialogData.observe(this, { builder ->
-            builder.build().show(mContext)
-        })
+    }
+
+    /** 使用 [activity] 显示弹窗 */
+    fun show(activity: FragmentActivity) {
+        show(activity.supportFragmentManager, javaClass.simpleName)
+    }
+
+    /** 使用 [fragment] 显示弹窗 */
+    fun show(fragment: Fragment) {
+        show(fragment.childFragmentManager, javaClass.simpleName)
     }
 }

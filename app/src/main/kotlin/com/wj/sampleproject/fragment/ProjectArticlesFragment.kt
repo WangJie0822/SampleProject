@@ -1,6 +1,6 @@
 package com.wj.sampleproject.fragment
 
-import android.os.Bundle
+import androidx.core.os.bundleOf
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
@@ -8,7 +8,7 @@ import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.ACTION_CATEGORY
-import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCLED
+import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCELLED
 import com.wj.sampleproject.databinding.AppFragmentProjectArticlesBinding
 import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.viewmodel.ProjectArticlesViewModel
@@ -64,7 +64,7 @@ class ProjectArticlesFragment
             WebViewActivity.actionStart(mContext, it)
         })
         // 取消收藏事件
-        LiveEventBus.get(EVENT_COLLECTION_CANCLED, String::class.java)
+        LiveEventBus.get(EVENT_COLLECTION_CANCELLED, String::class.java)
                 .observe(this, { id ->
                     val item = mArticlesAdapter.mDiffer.currentList.firstOrNull { it.id == id }
                     item?.collected?.set(false)
@@ -73,16 +73,12 @@ class ProjectArticlesFragment
 
     companion object {
 
-        /**
-         * 创建 Fragment
-         *
-         * @return 公众号文章列表 Fragment
-         */
+        /** 创建 [ProjectArticlesFragment] 并返回，传递参数目录信息[bjnews] */
         fun actionCreate(bjnews: CategoryEntity): ProjectArticlesFragment {
             return ProjectArticlesFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(ACTION_CATEGORY, bjnews)
-                }
+                arguments = bundleOf(
+                        ACTION_CATEGORY to bjnews
+                )
             }
         }
     }

@@ -2,6 +2,7 @@ package com.wj.sampleproject.viewmodel
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.string
 import cn.wj.android.common.ext.condition
@@ -26,13 +27,16 @@ import kotlinx.coroutines.launch
  *
  * @param repository 我的相关数据仓库
  *
- * * 创建时间：2019/10/14
+ * - 创建时间：2019/10/14
  *
  * @author 王杰
  */
 class LoginViewModel(
         private val repository: MyRepository
 ) : BaseViewModel() {
+
+    /** 控制进度条弹窗显示  */
+    val progressData = MutableLiveData<ProgressModel>()
 
     /** 标记 - 是否是注册 */
     val register: ObservableBoolean = ObservableBoolean(true)
@@ -129,15 +133,13 @@ class LoginViewModel(
         }
     }
 
-    /**
-     * 注册
-     */
+    /** 注册 */
     private fun register() {
         viewModelScope.launch {
             try {
                 // 显示进度条弹窗
                 progressData.value = ProgressModel(cancelable = false)
-                val result = repository.register(userName.get().orEmpty(), password.get().orEmpty(), passwordAgain.get().orEmpty())
+                val result = repository.register(userName.get().orEmpty(), password.get().orEmpty())
                 if (result.success()) {
                     // 注册成功，保存用户信息
                     UserHelper.userInfo = result.data
@@ -160,9 +162,7 @@ class LoginViewModel(
         }
     }
 
-    /**
-     * 登录
-     */
+    /** 登录 */
     private fun login() {
         viewModelScope.launch {
             try {
@@ -193,9 +193,7 @@ class LoginViewModel(
         }
     }
 
-    /**
-     * 检查并设置按钮是否允许点击
-     */
+    /** 检查并设置按钮是否允许点击 */
     private fun checkBtnEnable() {
         buttonEnable.set(if (register.get().condition) {
             // 注册，两次输入密码长度一致且长度大于最小密码长度

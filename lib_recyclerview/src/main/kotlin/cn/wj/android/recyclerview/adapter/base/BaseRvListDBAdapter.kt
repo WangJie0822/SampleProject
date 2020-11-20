@@ -18,7 +18,7 @@ import cn.wj.android.recyclerview.holder.BaseRvViewHolder
  *
  * @param VH ViewHolder 类型，继承 [BaseRvDBViewHolder]
  * @param DB  DataBinding 类型，与 VH 一致 继承 [ViewDataBinding]
- * @param VM  事件处理类型 Model
+ * @param VM  事件处理类型 ViewModel
  * @param E  数据类型
  *
  * @author 王杰
@@ -60,9 +60,7 @@ abstract class BaseRvListDBAdapter<out VH : BaseRvDBViewHolder<DB, E>, DB : View
                 layoutResID, parent, false
         )
         // 绑定事件处理
-        viewModel?.let {
-            binding.setVariable(BR.viewModel, viewModel)
-        }
+        binding.setVariable(BR.viewModel, viewModel)
         // 创建 ViewHolder
         return createViewHolder(binding)
     }

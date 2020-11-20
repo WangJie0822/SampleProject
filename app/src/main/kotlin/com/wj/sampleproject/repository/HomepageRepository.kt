@@ -20,17 +20,14 @@ class HomepageRepository : KoinComponent {
     /** 网络请求对象 */
     private val mWebService: WebService by inject()
 
-    /**
-     * 获取首页 Banner 列表
-     */
+    /** 获取首页 Banner 列表 */
     suspend fun getHomepageBannerList() = withContext(Dispatchers.IO) {
         mWebService.getHomepageBannerList()
     }
 
     /**
-     * 获取首页文章列表
-     *
-     * @param pageNum 页码
+     * 根据页码[pageNum]获取首页文章列表
+     * > [pageNum] 为 [NET_PAGE_START] 时，将同时获取置顶数据合并返回
      */
     suspend fun getHomepageArticleList(pageNum: Int) = withContext(Dispatchers.IO) {
         // 获取文章列表

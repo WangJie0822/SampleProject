@@ -1,10 +1,9 @@
 package com.wj.sampleproject.activity
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import cn.wj.android.base.utils.AppManager
+import androidx.core.os.bundleOf
+import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
@@ -65,21 +64,12 @@ class SystemArticlesActivity : BaseActivity<SystemArticlesViewModel, AppActivity
 
     companion object {
 
-        /**
-         * 界面入口
-         *
-         * @param context Context 对象
-         * @param title 标题
-         * @param cid 体系目录 id
-         */
-        fun actionStart(context: Context = AppManager.getContext(), title: String, cid: String) {
-            context.startActivity(Intent(context, SystemArticlesActivity::class.java).apply {
-                putExtra(ACTION_TITLE, title)
-                putExtra(ACTION_SYSTEM_ID, cid)
-                if (context !is Activity) {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            })
+        /** 使用 [context] 打开 [SystemArticlesActivity] 界面，传递参数 标题[title]&体系目录id[cid] */
+        fun actionStart(context: Context, title: String, cid: String) {
+            context.startTargetActivity(SystemArticlesActivity::class.java, bundleOf(
+                    ACTION_TITLE to title,
+                    ACTION_SYSTEM_ID to cid
+            ))
         }
 
     }

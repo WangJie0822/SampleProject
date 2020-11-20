@@ -22,9 +22,7 @@ class ProjectViewModel(
     /** 项目分类数据 */
     val listData = MutableLiveData<ArrayList<CategoryEntity>>()
 
-    /**
-     * 获取新项目分类列表
-     */
+    /** 获取新项目分类列表 */
     fun getProjectCategory() {
         viewModelScope.launch {
             try {

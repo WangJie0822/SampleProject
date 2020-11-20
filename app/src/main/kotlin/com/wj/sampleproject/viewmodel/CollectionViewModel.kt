@@ -11,7 +11,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
-import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCLED
+import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCELLED
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.ext.showMsg
@@ -84,9 +84,7 @@ class CollectionViewModel(
         }
     }
 
-    /**
-     * 获取收藏列表
-     */
+    /** 获取收藏列表 */
     private fun getCollectionList() {
         viewModelScope.launch {
             try {
@@ -109,11 +107,7 @@ class CollectionViewModel(
         }
     }
 
-    /**
-     * 取消收藏
-     *
-     * @param item 文章对象
-     */
+    /** 取消收藏文章[item] */
     private fun unCollect(item: ArticleEntity) {
         viewModelScope.launch {
             try {
@@ -126,7 +120,7 @@ class CollectionViewModel(
                     ls.remove(item)
                     articleListData.value = (ls)
                     // 发送取消收藏通知
-                    LiveEventBus.get(EVENT_COLLECTION_CANCLED, String::class.java)
+                    LiveEventBus.get(EVENT_COLLECTION_CANCELLED, String::class.java)
                             .post(item.originId.orEmpty())
                 } else {
                     // 取消收藏失败，提示、回滚收藏状态

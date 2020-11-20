@@ -33,9 +33,7 @@ class NavigationViewModel(
         jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
     }
 
-    /**
-     * 获取导航列表
-     */
+    /** 获取导航列表 */
     fun getNavigationList() {
         viewModelScope.launch {
             try {

@@ -1,15 +1,16 @@
 package com.wj.sampleproject.activity
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import androidx.core.os.bundleOf
+import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.utils.AppManager
 import cn.wj.android.common.ext.orFalse
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.ACTION_NET_TO_LOGIN
 import com.wj.sampleproject.databinding.AppActivityLoginBinding
+import com.wj.sampleproject.helper.ProgressDialogHelper
 import com.wj.sampleproject.helper.UserHelper
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.viewmodel.LoginViewModel
@@ -42,25 +43,31 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
         }
     }
 
+    override fun initObserve() {
+        // 进度弹窗
+        viewModel.progressData.observe(this, { progress ->
+            if (null == progress) {
+                ProgressDialogHelper.dismiss()
+            } else {
+                ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
+            }
+        })
+    }
+
     companion object {
+
         /**
-         * 界面入口
-         *
-         * @param context [Context] 对象
-         * @param fromNet 是否是从网络拦截跳转 默认 false
+         * 使用 [context] 打开 [LoginActivity] 界面，传递参数 [fromNet] 标记是否从网络拦截跳转，默认为 `false`
+         * > 栈堆已有登录页时不会重复打开
          */
-        fun actionStart(context: Context = AppManager.getContext(), fromNet: Boolean = false) {
+        fun actionStart(context: Context, fromNet: Boolean = false) {
             if (AppManager.contains(LoginActivity::class.java)) {
                 // 堆栈中已有登录页，返回
                 return
             }
-            val intent = Intent(context, LoginActivity::class.java).apply {
-                putExtra(ACTION_NET_TO_LOGIN, fromNet)
-                if (context !is Activity) {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            }
-            context.startActivity(intent)
+            context.startTargetActivity(LoginActivity::class.java, bundleOf(
+                    ACTION_NET_TO_LOGIN to fromNet
+            ))
         }
     }
 }

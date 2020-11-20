@@ -126,9 +126,7 @@ class SearchViewModel(
         }
     }
 
-    /**
-     * 获取热搜数据
-     */
+    /** 获取热搜数据 */
     fun getHotSearch() {
         viewModelScope.launch {
             try {
@@ -149,9 +147,7 @@ class SearchViewModel(
         }
     }
 
-    /**
-     * 获取搜索列表
-     */
+    /** 获取搜索列表 */
     private fun getSearchList() {
         viewModelScope.launch {
             try {
@@ -178,11 +174,7 @@ class SearchViewModel(
         }
     }
 
-    /**
-     * 收藏
-     *
-     * @param item 文章对象
-     */
+    /** 收藏文章[item] */
     private fun collect(item: ArticleEntity) {
         viewModelScope.launch {
             try {
@@ -202,11 +194,7 @@ class SearchViewModel(
         }
     }
 
-    /**
-     * 取消收藏
-     *
-     * @param item 文章对象
-     */
+    /** 取消收藏文章[item] */
     private fun unCollect(item: ArticleEntity) {
         viewModelScope.launch {
             try {

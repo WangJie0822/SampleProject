@@ -97,9 +97,7 @@ class SystemArticlesViewModel(
         }
     }
     
-    /**
-     * 获取文章列表
-     */
+    /** 获取文章列表 */
     private fun getArticleList() {
         viewModelScope.launch {
             try {
@@ -121,12 +119,8 @@ class SystemArticlesViewModel(
             }
         }
     }
-    
-    /**
-     * 收藏
-     *
-     * @param item 文章对象
-     */
+
+    /** 收藏文章[item] */
     private fun collect(item: ArticleEntity) {
         viewModelScope.launch {
             try {
@@ -145,12 +139,8 @@ class SystemArticlesViewModel(
             }
         }
     }
-    
-    /**
-     * 取消收藏
-     *
-     * @param item 文章对象
-     */
+
+    /** 取消收藏文章[item] */
     private fun unCollect(item: ArticleEntity) {
         viewModelScope.launch {
             try {

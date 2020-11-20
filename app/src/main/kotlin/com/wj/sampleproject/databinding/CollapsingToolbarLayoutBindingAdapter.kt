@@ -13,7 +13,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
  */
 
 /**
- * 为 [ctl] 设置折叠时标题文本颜色 [color]
+ * 为 [ctl] 设置折叠时标题文本颜色 [color]，[Int]类型颜色值
+ * > 可使用资源类型 android:bind_params="@{@color/app_white}"
  */
 @BindingAdapter("android:bind_ctl_collapsedTitleTextColor")
 fun setCollapsedTitleTextColor(ctl: CollapsingToolbarLayout, @ColorInt color: Int?) {
@@ -24,7 +25,8 @@ fun setCollapsedTitleTextColor(ctl: CollapsingToolbarLayout, @ColorInt color: In
 }
 
 /**
- * 为 [ctl] 设置展开时标题文本颜色 [color]
+ * 为 [ctl] 设置展开时标题文本颜色 [color]，[Int]类型颜色值
+ * > 可使用资源类型 android:bind_params="@{@color/app_white}"
  */
 @BindingAdapter("android:bind_ctl_expandedTitleColor")
 fun setExpandedTitleColor(ctl: CollapsingToolbarLayout, @ColorInt color: Int?) {

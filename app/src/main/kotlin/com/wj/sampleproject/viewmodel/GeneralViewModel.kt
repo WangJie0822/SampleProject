@@ -14,7 +14,7 @@ import com.wj.sampleproject.model.UiCloseModel
 /**
  * 通用弹窗 ViewModel
  *
- * * 创建时间：2019/9/28
+ * - 创建时间：2019/9/28
  *
  * @author 王杰
  */
