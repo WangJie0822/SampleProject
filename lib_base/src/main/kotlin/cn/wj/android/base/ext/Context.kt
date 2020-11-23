@@ -33,42 +33,44 @@ val Context.curProcessName: String?
 val Context.isMainProcess: Boolean
     get() = packageName == curProcessName
 
-/** 屏幕宽度 */
+/** 屏幕宽度[Int] */
 val Context.screenWidth: Int
     get() = getDeviceScreenWidth(this)
 
-/** 屏幕高度 */
+/** 屏幕高度[Int] */
 val Context.screenHeight: Int
     get() = getDeviceScreenHeight(this)
 
-/** 状态栏高度 */
+/** 状态栏高度[Int] */
 val Context.statusBarHeight: Int
     get() = getStatusBarHeight(this)
 
 /**
- * 通过 [Context] 对象，打开类型为 [target] 的 [Activity] 界面，并携带 [bundles] 中的数据
- * - [bundles] 默认没有数据
- * - [Context] 对象若不是 [Activity]，则会调用 [Intent.addFlags] ([Intent.FLAG_ACTIVITY_NEW_TASK])
+ * 通过 [Context] 对象，打开类型为 [A] 的 [Activity] 界面，并执行 [bundles] 方法块
+ * > [bundles] 默认空实现
+ *
+ * > [Context] 对象若不是 [Activity]，则会调用 [Intent.addFlags] ([Intent.FLAG_ACTIVITY_NEW_TASK])
  * 在新的栈中打开
  */
 @JvmOverloads
-fun Context.startTargetActivity(target: Class<out Activity>, bundles: (Intent.() -> Unit)? = null) {
-    val intent = Intent(this, target)
+inline fun <reified A : Activity> Context.startTargetActivity(bundles: (Intent.() -> Unit) = {}) {
+    val intent = Intent(this, A::class.java)
     if (this !is Activity) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
-    bundles?.invoke(intent)
+    bundles.invoke(intent)
     this.startActivity(intent)
 }
 
 /**
- * 通过 [Context] 对象，打开类型为 [target] 的 [Activity] 界面，并携带 [bundle] 中的数据
- * - [bundle] [Bundle] 对象，其中的数据会被添加到 [Intent] 中
- * - [Context] 对象若不是 [Activity]，则会调用 [Intent.addFlags] ([Intent.FLAG_ACTIVITY_NEW_TASK])
+ * 通过 [Context] 对象，打开类型为 [A] 的 [Activity] 界面，并携带 [bundle] 中的数据
+ * > [bundle] [Bundle] 对象，其中的数据会被添加到 [Intent] 中
+ *
+ * > [Context] 对象若不是 [Activity]，则会调用 [Intent.addFlags] ([Intent.FLAG_ACTIVITY_NEW_TASK])
  * 在新的栈中打开
  */
-fun Context.startTargetActivity(target: Class<out Activity>, bundle: Bundle) {
-    val intent = Intent(this, target)
+inline fun <reified A : Activity> Context.startTargetActivity(bundle: Bundle) {
+    val intent = Intent(this, A::class.java)
     if (this !is Activity) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }

@@ -12,14 +12,10 @@ import cn.wj.android.base.R
 import cn.wj.android.base.constants.DEFAULT_CLICK_THROTTLE_MS
 import cn.wj.android.base.tools.getStatusBarHeight
 
-/**
- * 当前 View 是否被覆盖
- */
+/** 判断并返回当前 [View] 是否被覆盖 */
 fun View.isViewCovered(): Boolean {
 
-    /**
-     * 获取 View 在父布局中的位置
-     */
+    /** 获取 View 在父布局中的位置 */
     fun indexOfViewInParent(view: View, parent: ViewGroup): Int {
         var index = 0
         while (index < parent.childCount) {
@@ -66,9 +62,7 @@ fun View.isViewCovered(): Boolean {
     return false
 }
 
-/**
- * 隐藏软键盘
- */
+/** 隐藏软键盘 */
 fun View?.hideSoftKeyboard() {
     if (this == null) {
         return
@@ -79,13 +73,10 @@ fun View?.hideSoftKeyboard() {
 }
 
 /**
- * 快速点击处理
- * - 这里的 View 只用于快速点击判断
+ * 根据间隔时间[interval]处理点击事件[onClick]
+ * > [interval] 默认值 [DEFAULT_CLICK_THROTTLE_MS]
  *
- * @param onClick 点击回调
- * @param interval 点击间隔时间，单位：ms
- *
- * @see DEFAULT_CLICK_THROTTLE_MS
+ * > 这里的 View 只用于快速点击判断，只有两次点击间隔超过[interval]，[onClick]事件才会响应
  */
 @JvmOverloads
 inline fun View.disposeThrottleClick(onClick: () -> Unit, interval: Long = DEFAULT_CLICK_THROTTLE_MS) {
@@ -103,12 +94,9 @@ inline fun View.disposeThrottleClick(onClick: () -> Unit, interval: Long = DEFAU
 
 /**
  * 设置点击事件
- * - 在间隔时间内点击事件拦截
+ * > 在间隔时间内重复点击事件将被过滤
  *
- * @param onClick 点击回调
- * @param interval 点击间隔时间，单位：ms
- *
- * @see DEFAULT_CLICK_THROTTLE_MS
+ * > [interval] 间隔事件，默认[DEFAULT_CLICK_THROTTLE_MS]
  */
 @JvmOverloads
 inline fun View.setOnThrottleClickListener(crossinline onClick: () -> Unit, interval: Long = DEFAULT_CLICK_THROTTLE_MS) {
@@ -120,7 +108,9 @@ inline fun View.setOnThrottleClickListener(crossinline onClick: () -> Unit, inte
 }
 
 /**
- * 通过给 [View] 增加 *paddingTop* 以及状态栏高度，来适应延伸到状态栏底部的布局
+ * 通过给 [View] 增加 **状态栏高度** 的高度并增加相同高度的 [View.getPaddingTop]，
+ * 来适应延伸到状态栏底部的布局
+ * > [getStatusBarHeight] 获取状态栏高度
  */
 fun View.fitsStatusBar() {
     post {

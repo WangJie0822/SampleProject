@@ -6,16 +6,11 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 
-/**
+/*
  * ImageView DataBinding 适配器
  */
 
-/**
- * 根据资源 id 加载图片
- *
- * @param iv    [ImageView] 对象
- * @param resId 图片资源 id
- */
+/** 根据资源id [resId] 给 [iv] 加载图片 */
 @BindingAdapter("android:bind_src")
 fun src(iv: ImageView, @DrawableRes resId: Int?) {
     if (null != resId && 0 != resId) {
@@ -24,10 +19,8 @@ fun src(iv: ImageView, @DrawableRes resId: Int?) {
 }
 
 /**
- * 根据 id 字符串加载图片
- *
- * @param iv [ImageView] 对象
- * @param res 资源字符串 drawable-resource:resId 或 mipmap-resource:resId
+ * 根据资源字符串 [res] 给 [iv] 加载图片
+ * > [res]: [IMG_DRAWABLE_MARK]:resId or [IMG_MIPMAP_MARK]:resId
  */
 @BindingAdapter("android:bind_src")
 fun setImageResource(iv: ImageView, res: String?) {

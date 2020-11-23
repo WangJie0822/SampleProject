@@ -26,14 +26,11 @@ const val ALGORITHM_SHA1 = "SHA1"
 const val ALGORITHM_SHA256 = "SHA256"
 
 /**
- * 获取应用的签名数据
+ * 根据[context]对象、签名算法[algorithm]、应用包名[packageName] 获取应用的签名数据
  *
- * @param context [Context] 对象
- * @param algorithm 签名算法
+ * > [algorithm] 参见 [ALGORITHM_MD5] & [ALGORITHM_SHA1] & [ALGORITHM_SHA256]
  *
- *  @see ALGORITHM_MD5
- *  @see ALGORITHM_SHA1
- *  @see ALGORITHM_SHA256
+ * > [packageName] 默认 `null` 获取当前应用
  */
 @JvmOverloads
 fun getSignature(context: Context, algorithm: String, packageName: String? = null): String {

@@ -5,21 +5,16 @@ package cn.wj.android.databinding.adapter
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import cn.wj.android.common.ext.condition
 
-/**
+/*
  * ViewPager DataBinding 适配器
  */
 
 /**
- * 设置 ViewPager 页面切换监听
- *
- * @param vp [ViewPager] 对象
- * @param scrolled onPageScrolled 回调
- * @param selected onPageSelected 回调
- * @param changed onPageScrollStateChanged 回调
+ * 给 [vp] 添加页码切换监听 [scrolled] & [selected] & [changed]
+ * > [listener] 为属性变化监听，`DataBinding` 自动实现
  */
 @BindingAdapter(
         "android:bind_vp_change_scrolled",
@@ -51,12 +46,7 @@ fun setViewPagerPageChangeListener(
     })
 }
 
-/**
- * 设置 ViewPager 预加载页数
- *
- * @param vp [ViewPager] 对象
- * @param offscreenPageLimit 预加载页数
- */
+/** 将 [vp] 预加载页数设置为 [offscreenPageLimit] */
 @BindingAdapter("android:bind_vp_offscreenPageLimit")
 fun setViewPagerOffscreenPageLimit(vp: ViewPager, offscreenPageLimit: Int?) {
     if (null == offscreenPageLimit) {
@@ -65,13 +55,7 @@ fun setViewPagerOffscreenPageLimit(vp: ViewPager, offscreenPageLimit: Int?) {
     vp.offscreenPageLimit = offscreenPageLimit
 }
 
-/**
- * 设置 ViewPager 位置
- *
- * @param vp [ViewPager] 对象
- * @param currentItem 位置
- * @param smoothScroll 是否平滑滚动
- */
+/** 根据是否平滑滚动 [smoothScroll] 将 [vp] 切换到指定页 [currentItem] */
 @BindingAdapter("android:bind_vp_currentItem", "android:bind_vp_smoothScroll", requireAll = false)
 fun setViewPagerCurrentItem(vp: ViewPager, currentItem: Int?, smoothScroll: Boolean?) {
     if (null == currentItem) {
@@ -80,18 +64,8 @@ fun setViewPagerCurrentItem(vp: ViewPager, currentItem: Int?, smoothScroll: Bool
     vp.setCurrentItem(currentItem, smoothScroll.condition)
 }
 
+/** 获取 [vp] 当前位置 */
 @InverseBindingAdapter(attribute = "android:bind_vp_currentItem")
 fun getViewPagerCurrentItem(vp: ViewPager): Int {
     return vp.currentItem
-}
-
-/**
- * 设置 ViewPager 适配器
- *
- * @param vp [ViewPager] 对象
- * @param adapter 适配器
- */
-@BindingAdapter("android:bind_vp_adapter")
-fun setViewPagerAdapter(vp: ViewPager, adapter: PagerAdapter?) {
-    vp.adapter = adapter
 }

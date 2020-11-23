@@ -3,22 +3,16 @@
 
 package cn.wj.android.common.ext
 
-/**
- * 如果为 null 则为 false
- */
+/** [Boolean]为`null`则默认`false` */
 fun Boolean?.orFalse(): Boolean {
     return this ?: false
 }
 
-/**
- * 如果为 null 则为 true
- */
+/** [Boolean]为`null`则默认`true` */
 fun Boolean?.orTrue(): Boolean {
     return this ?: true
 }
 
-/**
- * 判断条件节点
- */
+/** 仅为`true`时为`true` */
 val Boolean?.condition: Boolean
     get() = this == true

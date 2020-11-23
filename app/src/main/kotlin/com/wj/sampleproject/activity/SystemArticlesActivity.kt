@@ -66,7 +66,7 @@ class SystemArticlesActivity : BaseActivity<SystemArticlesViewModel, AppActivity
 
         /** 使用 [context] 打开 [SystemArticlesActivity] 界面，传递参数 标题[title]&体系目录id[cid] */
         fun actionStart(context: Context, title: String, cid: String) {
-            context.startTargetActivity(SystemArticlesActivity::class.java, bundleOf(
+            context.startTargetActivity<SystemArticlesActivity>(bundleOf(
                     ACTION_TITLE to title,
                     ACTION_SYSTEM_ID to cid
             ))

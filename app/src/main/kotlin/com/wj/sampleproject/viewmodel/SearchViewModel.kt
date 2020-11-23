@@ -8,9 +8,9 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.condition
+import cn.wj.android.common.ext.copy
 import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.ext.orEmpty
-import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
@@ -155,7 +155,7 @@ class SearchViewModel(
                 val result = searchRepository.search(pageNum, keywords.get().orEmpty())
                 if (result.success()) {
                     // 请求成功
-                    val newList = articleListData.value.toNewList(result.data?.datas, refreshing.get())
+                    val newList = articleListData.value.copy(result.data?.datas, refreshing.get())
                     if (newList.isNotEmpty()) {
                         showHotSearch.set(false)
                     }

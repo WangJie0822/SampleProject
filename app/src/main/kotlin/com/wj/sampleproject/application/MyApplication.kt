@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
 import cn.wj.android.base.log.InternalLog
+import cn.wj.android.base.log.Printer
 import cn.wj.android.logger.AndroidLogAdapter
 import cn.wj.android.logger.Logger
 import cn.wj.android.logger.PrettyFormatStrategy
@@ -57,6 +58,11 @@ class MyApplication : Application() {
         })
 
         // base库输出日志
+        InternalLog.printer(object : Printer {
+            override fun log(priority: Int, tag: String?, message: String?, throwable: Throwable?) {
+                Logger.t("BASE").log(priority, tag, message, throwable)
+            }
+        })
         InternalLog.logEnable(BuildConfig.DEBUG)
     }
 }

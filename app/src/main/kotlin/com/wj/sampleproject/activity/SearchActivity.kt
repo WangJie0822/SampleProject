@@ -74,7 +74,7 @@ class SearchActivity
 
         /** 使用 [context] 对象打开 [SearchActivity] 界面 */
         fun actionStart(context: Context) {
-            context.startTargetActivity(SearchActivity::class.java)
+            context.startTargetActivity<SearchActivity>()
         }
     }
 }

@@ -60,7 +60,7 @@ class CollectionActivity : BaseActivity<CollectionViewModel, AppActivityCollecti
 
         /** 使用 [context] 打开 [CollectionActivity] 界面 */
         fun actionStart(context: Context) {
-            context.startTargetActivity(CollectionActivity::class.java)
+            context.startTargetActivity<CollectionActivity>()
         }
     }
 }

@@ -4,9 +4,7 @@ package cn.wj.android.base.tools
 
 import org.json.JSONObject
 
-/**
- * 新建 [JSONObject]
- */
+/** 根据[pairs] 创建 [JSONObject] */
 fun jsonObjectOf(vararg pairs: Pair<String, Any?>) = JSONObject().apply {
     for ((key, value) in pairs) {
         when (value) {

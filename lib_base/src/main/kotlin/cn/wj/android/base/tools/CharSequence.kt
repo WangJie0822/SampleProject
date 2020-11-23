@@ -14,11 +14,10 @@ import java.util.*
 /* ----------------------------------------------------------------------------------------- */
 
 /**
- * 复制到剪切板
+ * 将文本[text]复制到剪切板
+ * > [context] 可选，默认[AppManager.getContext]
  *
- * @param text 要复制的文本
- * @param context [Context] 对象
- * @param label 标签
+ * > [label] 可选，默认 `"Label`
  */
 @JvmOverloads
 fun copyToClipboard(text: String, context: Context = AppManager.getContext(), label: CharSequence = "Label") {
@@ -26,13 +25,7 @@ fun copyToClipboard(text: String, context: Context = AppManager.getContext(), la
     manager.setPrimaryClip(ClipData.newPlainText(label, text))
 }
 
-/**
- * 将 [ByteArray] 转换为 16 进制 [String]
- *
- * @param bytes [Byte] 数组
- *
- * @return 转换后的 16 进制 [String]
- */
+/** 将 [bytes] 转换为 16 进制 [String] */
 fun bytesToHexString(bytes: ByteArray?): String {
     val stringBuilder = StringBuilder("")
     if (bytes == null || bytes.isEmpty()) {
@@ -49,13 +42,7 @@ fun bytesToHexString(bytes: ByteArray?): String {
     return stringBuilder.toString()
 }
 
-/**
- * 将 16 进制 [String] 转换为 [ByteArray]
- *
- * @param str 16 进制 [String]
- *
- * @return 转换后的 [Byte] 数组
- */
+/** 将 16 进制 [str] 转换为 [ByteArray] */
 fun hexStringToBytes(str: String?): ByteArray? {
     if (str == null || str == "") {
         return null

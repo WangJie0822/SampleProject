@@ -15,18 +15,11 @@ import cn.wj.android.base.tools.parseColorFromString
 import cn.wj.android.base.tools.parseHtmlFromString
 import cn.wj.android.common.ext.condition
 
-/**
+/*
  * TextView DataBinding 适配器
  */
 
-/**
- * 设置 TextView 文本变化监听
- *
- * @param tv     [TextView] 对象
- * @param before beforeTextChanged 回调
- * @param on onTextChanged 回调
- * @param after afterTextChanged 回调
- */
+/** 给 [tv] 设置文本变化监听 [before] & [on] & [after] */
 @BindingAdapter(
         "android:bind_tv_textChange_before",
         "android:bind_tv_textChange_on",
@@ -54,12 +47,7 @@ fun addTextChangedListener(
     })
 }
 
-/**
- * 设置 TextView 文本颜色
- *
- * @param tv     [TextView] 对象
- * @param color 颜色值
- */
+/** 根据颜色值 [color] 给 [tv] 设置文本颜色，颜色值 `0x000000` */
 @BindingAdapter("android:bind_tv_textColor")
 fun setTextColor(tv: TextView, @ColorInt color: Int?) {
     if (null == color) {
@@ -68,12 +56,7 @@ fun setTextColor(tv: TextView, @ColorInt color: Int?) {
     tv.setTextColor(color)
 }
 
-/**
- * 设置 TextView 文本颜色
- *
- * @param tv     [TextView] 对象
- * @param colorStr 颜色值
- */
+/** 根据颜色字符串 [colorStr] 给 [tv] 设置文本颜色，颜色值 `"#FFFFFF"` */
 @BindingAdapter("android:bind_tv_textColor")
 fun setTextColor(tv: TextView, colorStr: String?) {
     if (colorStr.isNullOrBlank()) {
@@ -83,12 +66,7 @@ fun setTextColor(tv: TextView, colorStr: String?) {
     tv.setTextColor(color)
 }
 
-/**
- * 设置 TextView 文本
- *
- * @param tv     [TextView] 对象
- * @param resId 文本资源 id
- */
+/** 根据资源id [resId] 为 [tv] 设置文本 */
 @BindingAdapter("android:bind_tv_text")
 fun setText(tv: TextView, @StringRes resId: Int?) {
     if (null != resId || resId == 0) {
@@ -97,42 +75,26 @@ fun setText(tv: TextView, @StringRes resId: Int?) {
     tv.text = resId
 }
 
-/**
- * 设置 TextView 文本
- *
- * @param tv     [TextView] 对象
- * @param cs CharSequence 对象
- * @param textSpan 设置 TextSpan 方法块
- */
+/** 将 [tv] 文本设置为 [cs] 并执行 [textSpan] 方法块设置富文本 */
 @BindingAdapter("android:bind_tv_text", "android:bind_tv_text_span", requireAll = false)
-fun setText(tv: TextView, cs: CharSequence?, textSpan: ((SpannableString) -> Unit)?) {
+fun setText(tv: TextView, cs: CharSequence?, textSpan: (SpannableString.() -> Unit)?) {
     if (null != cs && null != textSpan) {
         tv.movementMethod = LinkMovementMethod.getInstance()
         val ss = SpannableString(cs)
-        textSpan.invoke(ss)
+        ss.textSpan()
         tv.text = ss
     } else {
         tv.text = cs
     }
 }
 
-/**
- * 设置 TextView 文本显示
- *
- * @param tv     [TextView] 对象
- * @param html html 文本
- */
+/** 将 [html] 解析为 **Html** 格式并设置 [tv] 显示 */
 @BindingAdapter("android:bind_tv_html")
 fun setText(tv: TextView, html: String?) {
     tv.text = parseHtmlFromString(html.orEmpty())
 }
 
-/**
- * 设置 TextView 最大行数
- *
- * @param tv     [TextView] 对象
- * @param maxLines 最大行数
- */
+/** 将 [tv] 的最大行数设置为 [maxLines] */
 @BindingAdapter("android:bind_tv_maxLines")
 fun setMaxLines(tv: TextView, maxLines: Int?) {
     if (null == maxLines) {
@@ -141,9 +103,7 @@ fun setMaxLines(tv: TextView, maxLines: Int?) {
     tv.maxLines = maxLines
 }
 
-/**
- * 设置重心
- */
+/** 将 [tv] 文本重心设置为 [gravity] */
 @BindingAdapter("android:bind_tv_gravity")
 fun setGravity(tv: TextView, gravity: Int?) {
     if (null == gravity) {
@@ -152,10 +112,8 @@ fun setGravity(tv: TextView, gravity: Int?) {
     tv.gravity = gravity
 }
 
-/**
- * 设置是否显示中划线
- */
-@BindingAdapter("android:bind_tv_show_strikethru")
+/** 设置 [tv] 是否显示中划线 [show] */
+@BindingAdapter("android:bind_tv_show_strike_thru")
 fun showStrikeThru(tv: TextView, show: Boolean?) {
     if (show.condition) {
         tv.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG

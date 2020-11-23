@@ -78,7 +78,7 @@ class MainActivity
 
         /** 使用 [context] 打开 [MainActivity] 界面 */
         fun actionStart(context: Context) {
-            context.startTargetActivity(MainActivity::class.java)
+            context.startTargetActivity<MainActivity>()
         }
     }
 }

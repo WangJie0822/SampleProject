@@ -69,7 +69,7 @@ class WebViewActivity
          * 使用 [context] 打开 [WebViewActivity] 界面，传递参数网页数据[webData]
          */
         fun actionStart(context: Context, webData: ActionModel?) {
-            context.startTargetActivity(WebViewActivity::class.java, bundleOf(
+            context.startTargetActivity<WebViewActivity>(bundleOf(
                     ACTION_PARCELABLE to webData
             ))
         }

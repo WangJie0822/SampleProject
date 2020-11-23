@@ -21,7 +21,8 @@ import kotlin.math.roundToInt
 /* ----------------------------------------------------------------------------------------- */
 
 /**
- * 通过 [context] 对象，获取并返回状态栏高度
+ * 通过 [context] 对象，获取并返回状态栏高度[Int]
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun getStatusBarHeight(context: Context = AppManager.getContext()): Int {
@@ -32,13 +33,13 @@ fun getStatusBarHeight(context: Context = AppManager.getContext()): Int {
         if (resourceId > 0) {
             val size1 = context.resources.getDimensionPixelSize(resourceId)
             val size2 = resources.getDimensionPixelSize(resourceId)
-            if (size2 >= size1) {
-                result = size2
+            result = if (size2 >= size1) {
+                size2
             } else {
                 val density1 = context.resources.displayMetrics.density
                 val density2 = resources.displayMetrics.density
                 val f = size1 * density2 / density1
-                result = (if (f >= 0) f + 0.5f else f - 0.5f).roundToInt()
+                (if (f >= 0) f + 0.5f else f - 0.5f).roundToInt()
             }
         }
     } catch (throwable: Throwable) {

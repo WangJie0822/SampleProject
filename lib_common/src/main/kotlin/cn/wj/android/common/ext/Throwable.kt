@@ -6,9 +6,7 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.net.UnknownHostException
 
-/**
- * 获取堆栈跟踪字符串
- */
+/** 获取堆栈跟踪字符串 */
 fun Throwable?.getStackTraceString(): String {
     if (this == null) {
         return ""

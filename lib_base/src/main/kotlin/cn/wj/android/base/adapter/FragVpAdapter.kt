@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 import androidx.viewpager.widget.ViewPager
 
 /**
- * [Fragment] [ViewPager] 适配器类
+ * [Fragment] [ViewPager] 适配器类，继承 [FragmentStatePagerAdapter]
  *
  * @param fm [FragmentManager] 对象
- * @param behavior [Fragment] 生命周期行为
+ * @param behavior [Fragment] 生命周期行为，默认[BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT]
  *
  * @author 王杰
  */
@@ -23,11 +24,7 @@ class FragVpAdapter private constructor(
 
     companion object {
 
-        /**
-         * 新建建造者对象
-         *
-         * @return [Builder] 对象
-         */
+        /** 创建并返回 [Builder] 建造者对象 */
         @JvmStatic
         fun newBuilder(): Builder {
             return Builder()
@@ -83,68 +80,35 @@ class FragVpAdapter private constructor(
         /** 动态创建接口 */
         private var creator: Creator? = null
 
-        /**
-         * 设置动态创建接口
-         *
-         * @param creator 动态创建接口对象
-         *
-         * @return [Builder] 对象
-         *
-         * @see Creator
-         */
+        /** 给 [FragVpAdapter] 设置动态创建接口 [creator] 并返回 [Builder] 对象 */
         fun creator(creator: Creator): Builder {
             this.creator = creator
             return this
         }
 
-        /**
-         * 绑定 [Fragment] 管理器
-         *
-         * @param fm [Fragment] 管理器 [FragmentManager]
-         *
-         * @return [Builder] 对象
-         *
-         * @see FragmentManager
-         */
+        /** 给 [FragVpAdapter] 设置 [FragmentManager]#[fm] 并返回 [Builder] 对象 */
         fun manager(fm: FragmentManager): Builder {
             this.fm = fm
             return this
         }
 
         /**
-         * 设置 [Fragment] 生命周期行为
-         *
-         * @param behavior 行为参数
-         *
-         * @return [Builder] 对象
-         *
-         * @see FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
-         * @see FragmentStatePagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT
+         * 给 [FragVpAdapter] 设置生命周期行为 [behavior] 并返回 [Builder] 对象
+         * > [behavior] 取值参见 [FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT]
+         * > & [FragmentStatePagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT]
          */
         fun behavior(behavior: Int): Builder {
             this.behavior = behavior
             return this
         }
 
-        /**
-         * 设置获取标题回调
-         *
-         * @param listener 获取标题回调
-         *
-         * @return [Builder] 对象
-         *
-         * @see OnPageTitleListener
-         */
+        /** 给 [FragVpAdapter] 设置获取 [Fragment] 标题回调 [listener] 并返回 [Builder] 对象 */
         fun pageTitle(listener: OnPageTitleListener): Builder {
             this.pageTitleListener = listener
             return this
         }
 
-        /**
-         * 生成 [FragVpAdapter] 对象
-         *
-         * @return [FragVpAdapter] 对象
-         */
+        /** 创建并返回 [FragVpAdapter] 对象 */
         fun build(): FragVpAdapter {
             val adapter = FragVpAdapter(fm, behavior)
             adapter.mCreator = creator
@@ -162,13 +126,7 @@ class FragVpAdapter private constructor(
         /** [Fragment] 总数 */
         val count: Int
 
-        /**
-         * 创建 [Fragment] 对象
-         *
-         * @param position 下标
-         *
-         * @return [Fragment] 对象
-         */
+        /** 根据位置[position]创建并返回[Fragment]对象 */
         fun createFragment(position: Int): Fragment
     }
 }
@@ -191,19 +149,14 @@ open class SimpleCreator : FragVpAdapter.Creator {
         return createFragment.invoke(position)
     }
 
-    /**
-     * 设置 [Fragment] 数量
-     *
-     * @param count [Fragment] 数量
-     */
+    /** 设置 [Fragment] 数量[count] */
     fun count(count: Int) {
         mCount = count
     }
 
     /**
-     * 设置创建 [Fragment] 方法块
-     *
-     * @param createFragment 创建 [Fragment] 方法块
+     * 设置创建 [Fragment] 方法块[createFragment]
+     * > [createFragment] 一个入参[Int]位置，返回[Fragment]对象
      */
     fun createFragment(createFragment: (Int) -> Fragment) {
         this.createFragment = createFragment
@@ -225,6 +178,6 @@ inline fun FragVpAdapter.Builder.creator(init: SimpleCreator.() -> Unit): FragVp
 
 /**
  * 类型别名 - 获取 Fragment 标题
- * - （Fragment对象，Fragment位置）
+ * > 两个入参([Fragment], 位置[Int])，返回标题文本[String]
  */
 typealias OnPageTitleListener = (Fragment, Int) -> String?

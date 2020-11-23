@@ -17,10 +17,7 @@ import cn.wj.android.base.utils.AppManager
 
 /**
  * 通知权限是否打开
- *
- * @param context [Context] 对象
- *
- * @return 是否开启通知权限
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun isNotificationEnable(context: Context = AppManager.getContext()): Boolean {

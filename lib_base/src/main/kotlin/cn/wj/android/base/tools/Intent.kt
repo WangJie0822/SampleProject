@@ -14,9 +14,9 @@ import cn.wj.android.base.utils.AppManager
 
 /**
  * 跳转拨号盘
+ * > [phoneNumber] 电话号码，可选，默认 `null`
  *
- * @param phoneNumber 手机号
- * @param context [Context] 对象
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun jumpToDial(phoneNumber: String? = null, context: Context = AppManager.getContext()) {
@@ -34,8 +34,7 @@ fun jumpToDial(phoneNumber: String? = null, context: Context = AppManager.getCon
 
 /**
  * 跳转通知设置界面
- *
- * @param context [Context] 对象
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun jumpToNotificationSetting(context: Context = AppManager.getContext()) {
@@ -72,8 +71,7 @@ fun jumpToNotificationSetting(context: Context = AppManager.getContext()) {
 
 /**
  * 跳转应用详情界面
- *
- * @param context [Context] 对象
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun jumpToAppDetails(context: Context = AppManager.getContext()) {
@@ -87,10 +85,8 @@ fun jumpToAppDetails(context: Context = AppManager.getContext()) {
 }
 
 /**
- * 跳转手机浏览器
- *
- * @param url 网页地址
- * @param context [Context] 对象
+ * 跳转手机浏览器打开网址[url]
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun jumpToBrowser(url: String, context: Context = AppManager.getContext()) {
@@ -100,8 +96,7 @@ fun jumpToBrowser(url: String, context: Context = AppManager.getContext()) {
 
 /**
  * 跳转开发者设置
- *
- * @param context [Context] 对象
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun jumpToDevelopment(context: Context = AppManager.getContext()) {

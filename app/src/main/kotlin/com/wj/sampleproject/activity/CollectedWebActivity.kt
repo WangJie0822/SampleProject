@@ -93,7 +93,7 @@ class CollectedWebActivity
 
         /** 使用 [context] 打开 [CollectedWebActivity] 界面 */
         fun actionStart(context: Context) {
-            context.startTargetActivity(CollectedWebActivity::class.java)
+            context.startTargetActivity<CollectedWebActivity>()
         }
     }
 }

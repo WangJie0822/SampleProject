@@ -2,13 +2,11 @@
 
 package cn.wj.android.databinding.adapter
 
-import android.animation.AnimatorInflater
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -17,341 +15,297 @@ import cn.wj.android.base.constants.DEFAULT_CLICK_THROTTLE_MS
 import cn.wj.android.base.ext.fitsStatusBar
 import cn.wj.android.base.ext.setOnThrottleClickListener
 import cn.wj.android.common.ext.condition
+import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.tools.toIntOrZero
 
-/**
+/*
  * View DataBinding 适配器
  */
 
-/**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- * @param throttle 点击筛选时间，单位 ms
- */
+/** 给 [v] 设置点击事件 [click]，传递数据 [item]，并设置重复点击拦截间隔时间 [throttle]，[throttle] 默认 [DEFAULT_CLICK_THROTTLE_MS] */
+@BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
+fun <T> setViewOnClick(v: View, click: ViewItemClickListener<T>?, item: T, throttle: Long?) {
+    if (null == click) {
+        v.setOnClickListener(null)
+        return
+    }
+    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
+    v.setOnThrottleClickListener({ click.onItemClick(item) }, interval)
+}
+
+/** 给 [v] 设置点击事件 [listener] 并设置重复点击拦截间隔时间 [throttle]，[throttle] 默认 [DEFAULT_CLICK_THROTTLE_MS] */
+@BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
+fun setViewOnClick(v: View, listener: ViewClickListener?, throttle: Long?) {
+    if (null == listener) {
+        v.setOnClickListener(null)
+        return
+    }
+    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
+    v.setOnThrottleClickListener({ listener.onClick() }, interval)
+}
+
+/** View 点击事件 */
+interface ViewClickListener {
+
+    /** 点击回调 */
+    fun onClick()
+}
+
+/** View 点击事件，传递参数 [T] */
+interface ViewItemClickListener<T> {
+
+    /** 点击回调，传递参数 [item] */
+    fun onItemClick(item: T)
+}
+
+/** 给 [v] 设置点击事件 [click] 并设置重复点击拦截间隔时间 [throttle]，[throttle] 默认 [DEFAULT_CLICK_THROTTLE_MS] */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
 fun setViewOnClick(v: View, click: ((View) -> Unit)?, throttle: Long?) {
+    if (null == click) {
+        v.setOnClickListener(null)
+        return
+    }
     val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
-    v.setOnThrottleClickListener({ click?.invoke(v) }, interval)
+    v.setOnThrottleClickListener({ click.invoke(v) }, interval)
 }
 
-/**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
+/** 给 [v] 设置点击事件 [click] 并设置重复点击拦截间隔时间 [throttle]，[throttle] 默认 [DEFAULT_CLICK_THROTTLE_MS] */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
 fun setViewOnClick(v: View, click: (() -> Unit)?, throttle: Long?) {
+    if (null == click) {
+        v.setOnClickListener(null)
+        return
+    }
     val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
-    v.setOnThrottleClickListener({ click?.invoke() }, interval)
+    v.setOnThrottleClickListener(click, interval)
 }
 
-/**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
+/** 给 [v] 设置点击事件 [click]，传递数据 [item]，并设置重复点击拦截间隔时间 [throttle]，[throttle] 默认 [DEFAULT_CLICK_THROTTLE_MS] */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
 fun <T> setViewOnClick(v: View, click: ((View, T) -> Unit)?, item: T, throttle: Long?) {
+    if (null == click) {
+        v.setOnClickListener(null)
+        return
+    }
     val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
-    v.setOnThrottleClickListener({ click?.invoke(v, item) }, interval)
+    v.setOnThrottleClickListener({ click.invoke(v, item) }, interval)
 }
 
-/**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
+/** 给 [v] 设置点击事件 [click]，传递数据 [item]，并设置重复点击拦截间隔时间 [throttle]，[throttle] 默认 [DEFAULT_CLICK_THROTTLE_MS] */
 @BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
 fun <T> setViewOnClick(v: View, click: ((T) -> Unit)?, item: T, throttle: Long?) {
+    if (null == click) {
+        v.setOnClickListener(null)
+        return
+    }
     val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
-    v.setOnThrottleClickListener({ click?.invoke(item) }, interval)
+    v.setOnThrottleClickListener({ click.invoke(item) }, interval)
 }
 
-/**
- * 设置长点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
+/** 给 [v] 设置长点击事件 [click] */
 @BindingAdapter("android:bind_onLongClick")
 fun setViewOnLongClick(v: View, click: ((View) -> Boolean)?) {
     v.setOnLongClickListener(click)
 }
 
-/**
- * 设置长点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
+/** 给 [v] 设置长点击事件 [click] */
 @BindingAdapter("android:bind_onLongClick")
 fun setViewOnLongClick(v: View, click: (() -> Boolean)?) {
-    v.setOnLongClickListener { click?.invoke() ?: false }
+    if (null == click) {
+        v.setOnLongClickListener(null)
+        return
+    }
+    v.setOnLongClickListener { click.invoke() }
 }
 
-/**
- * 设置长点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
+/** 给 [v] 设置长点击事件 [click] 并传递数据 [item] */
 @BindingAdapter("android:bind_onLongClick", "android:bind_onLongClick_item")
 fun <T> setViewOnLongClick(v: View, click: ((View, T) -> Boolean)?, item: T) {
-    v.setOnLongClickListener { click?.invoke(it, item) ?: false }
+    if (null == click) {
+        v.setOnLongClickListener(null)
+        return
+    }
+    v.setOnLongClickListener { click.invoke(it, item) }
 }
 
-/**
- * 设置长点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
+/** 给 [v] 设置长点击事件 [click] 并传递数据 [item] */
 @BindingAdapter("android:bind_onLongClick", "android:bind_onLongClick_item")
 fun <T> setViewOnLongClick(v: View, click: ((T) -> Boolean)?, item: T) {
-    v.setOnLongClickListener { click?.invoke(item) ?: false }
+    if (null == click) {
+        v.setOnLongClickListener(null)
+        return
+    }
+    v.setOnLongClickListener { click.invoke(item) }
 }
 
-/**
- * 设置 View 显示
- *
- * @param v [View] 对象
- * @param visibility 显示状态
- */
+/** 设置 [v] 显示状态 [visibility] */
 @BindingAdapter("android:bind_visibility")
 fun setViewVisibility(v: View, visibility: Int?) {
     if (null == visibility) {
         return
     }
+    if (v.visibility == visibility) {
+        return
+    }
     v.visibility = visibility
 }
 
-/**
- * 设置 View 显示
- *
- * @param v [View] 对象
- * @param show 是否显示
- */
+/** 根据是否显示 [show]，是否移除 [gone] 设置 [v] 的显示状态 */
 @BindingAdapter("android:bind_visibility", "android:bind_visibility_gone", requireAll = false)
 fun setViewVisibility(v: View, show: Boolean?, gone: Boolean? = true) {
-    v.visibility = if (show.condition) View.VISIBLE else if (gone != false) View.GONE else View.INVISIBLE
+    val visibility = if (show.condition) View.VISIBLE else if (gone != false) View.GONE else View.INVISIBLE
+    if (v.visibility == visibility) {
+        return
+    }
+    v.visibility = visibility
 }
 
-/**
- * 设置 View 选中
- *
- * @param v [View] 对象
- * @param selected 是否选中
- */
+/** 设置 [v] 的选中状态为 [selected] */
 @BindingAdapter("android:bind_selected")
 fun setViewSelected(v: View, selected: Boolean?) {
+    if (v.isSelected == selected) {
+        return
+    }
     v.isSelected = selected.condition
 }
 
-/**
- * 设置 View 是否允许点击
- *
- * @param v [View] 对象
- * @param enable 是否允许点击
- */
+/** 设置 [v] 的启用状态为 [enable] */
 @BindingAdapter("android:bind_enable")
 fun setViewEnable(v: View, enable: Boolean?) {
     v.isEnabled = enable.condition
 }
 
 /**
- * 设置 View 是否获取焦点
- *
- * @param v [View] 对象
- * @param focusable 是否获取焦点
+ * 设置 [v] 能否获取焦点 [focusable]
+ * > [listener] 为属性变化监听，`DataBinding` 自动实现
  */
 @BindingAdapter("android:bind_focusable", "android:bind_focusableAttrChanged", requireAll = false)
 fun setViewFocusable(v: View, focusable: Boolean?, listener: InverseBindingListener?) {
+    if (v.isFocusable == focusable) {
+        return
+    }
     v.isFocusable = focusable.condition
     listener?.onChange()
 }
 
-/**
- * 获取焦点状态
- *
- * @param v [View] 对象
- *
- * @return 焦点状态
- */
+/** 获取 [v] 能否获取焦点 */
 @InverseBindingAdapter(attribute = "android:bind_focusable")
 fun getViewFocusable(v: View): Boolean {
     return v.isFocusable
 }
 
 /**
- * 设置 View 焦点变化监听
- *
- * @param v [View] 对象
- * @param change 监听回调
+ * 给 [v] 设置焦点变化监听 [onChange]
+ * > [listener] 为属性变化监听，`DataBinding` 自动实现
  */
 @BindingAdapter("android:bind_focus_change", "android:bind_focusableAttrChanged", requireAll = false)
-fun setViewFocusableListener(v: View, change: ((Boolean) -> Unit)?, listener: InverseBindingListener?) {
+fun setViewFocusableListener(v: View, onChange: ((Boolean) -> Unit)?, listener: InverseBindingListener?) {
+    if (null == onChange) {
+        v.onFocusChangeListener = null
+        return
+    }
     v.setOnFocusChangeListener { _, hasFocus ->
-        change?.invoke(hasFocus)
+        onChange.invoke(hasFocus)
         listener?.onChange()
     }
 }
 
 /**
- * 设置 View 焦点变化监听
- *
- * @param v [View] 对象
- * @param change 监听回调
+ * 给 [v] 设置焦点变化监听 [onChange]
+ * > [listener] 为属性变化监听，`DataBinding` 自动实现
  */
 @BindingAdapter("android:bind_focus_change", "android:bind_focusableAttrChanged", requireAll = false)
-fun setViewFocusableListener(v: View, change: ((View, Boolean) -> Unit)?, listener: InverseBindingListener?) {
+fun setViewFocusableListener(v: View, onChange: ((View, Boolean) -> Unit)?, listener: InverseBindingListener?) {
+    if (null == onChange) {
+        v.onFocusChangeListener = null
+        return
+    }
     v.setOnFocusChangeListener { _, hasFocus ->
-        change?.invoke(v, hasFocus)
+        onChange.invoke(v, hasFocus)
         listener?.onChange()
     }
 }
 
-/**
- * 设置 View 布局监听
- *
- * @param v [View] 对象
- * @param onGlobal 回调
- * @param single 是否只执行一次
- */
-@BindingAdapter("android:bind_onGlobal", "android:bind_onGlobal_single", requireAll = false)
-fun setViewOnGlobal(v: View, onGlobal: ((View) -> Unit)?, single: Boolean?) {
-    v.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            onGlobal?.invoke(v)
-            if (single.condition) {
-                v.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        }
-    })
-}
-
-/**
- * 设置 View 布局监听
- *
- * @param v [View] 对象
- * @param onGlobal 回调
- */
-@BindingAdapter("android:bind_onGlobal", "android:bind_onGlobal_single", requireAll = false)
-fun setViewOnGlobal(v: View, onGlobal: (() -> Unit)?, single: Boolean?) {
-    v.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            onGlobal?.invoke()
-            if (single.condition) {
-                v.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        }
-    })
-}
-
-/**
- * 设置 View 触摸监听
- *
- * @param v [View] 对象
- * @param onTouch 回调
- */
-@SuppressLint("ClickableViewAccessibility")
-@BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
-fun <T> setViewOnTouch(v: View, onTouch: ((View, MotionEvent, T) -> Boolean)?, item: T) {
-    v.setOnTouchListener { _, event ->
-        onTouch?.invoke(v, event, item).condition
-    }
-}
-
-/**
- * 设置 View 触摸监听
- *
- * @param v [View] 对象
- * @param onTouch 回调
- */
+/** 给 [v] 设置触摸事件监听 */
 @BindingAdapter("android:bind_onTouch")
 fun setViewOnTouch(v: View, onTouch: ((View, MotionEvent) -> Boolean)?) {
     v.setOnTouchListener(onTouch)
 }
 
-/**
- * 设置 View 触摸监听
- *
- * @param v [View] 对象
- * @param onTouch 回调
- */
+/** 给 [v] 设置触摸事件监听 */
 @SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch")
 fun setViewOnTouch(v: View, onTouch: ((MotionEvent) -> Boolean)?) {
+    if (null == onTouch) {
+        v.setOnTouchListener(null)
+        return
+    }
     v.setOnTouchListener { _, ev ->
-        onTouch?.invoke(ev).condition
+        onTouch.invoke(ev)
     }
 }
 
-/**
- * 设置 View 触摸监听
- *
- * @param v [View] 对象
- * @param onTouch 回调
- */
+/** 给 [v] 设置触摸事件监听 */
 @SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch")
 fun setViewOnTouch(v: View, onTouch: (() -> Boolean)?) {
+    if (null == onTouch) {
+        v.setOnTouchListener(null)
+        return
+    }
     v.setOnTouchListener { _, _ ->
-        onTouch?.invoke().condition
+        onTouch.invoke()
     }
 }
 
-/**
- * 设置 View 触摸监听
- *
- * @param v [View] 对象
- * @param onTouch 回调
- */
+/** 给 [v] 设置触摸事件监听，并传递数据 [item] */
+@SuppressLint("ClickableViewAccessibility")
+@BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
+fun <T> setViewOnTouch(v: View, onTouch: ((View, MotionEvent, T) -> Boolean)?, item: T) {
+    if (null == onTouch) {
+        v.setOnTouchListener(null)
+        return
+    }
+    v.setOnTouchListener { _, event ->
+        onTouch.invoke(v, event, item)
+    }
+}
+
+/** 给 [v] 设置触摸事件监听，并传递数据 [item] */
 @SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
 fun <T> setViewOnTouch(v: View, onTouch: ((MotionEvent, T) -> Boolean)?, item: T) {
+    if (null == onTouch) {
+        v.setOnTouchListener(null)
+        return
+    }
     v.setOnTouchListener { _, ev ->
-        onTouch?.invoke(ev, item).condition
+        onTouch.invoke(ev, item)
     }
 }
 
-/**
- * 设置 View 触摸监听
- *
- * @param v [View] 对象
- * @param onTouch 回调
- */
+/** 给 [v] 设置触摸事件监听，并传递数据 [item] */
 @SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("android:bind_onTouch", "android:bind_onTouch_item")
 fun <T> setViewOnTouch(v: View, onTouch: ((T) -> Boolean)?, item: T) {
+    if (null == onTouch) {
+        v.setOnTouchListener(null)
+        return
+    }
     v.setOnTouchListener { _, _ ->
-        onTouch?.invoke(item).condition
+        onTouch.invoke(item)
     }
 }
 
-/**
- * 根据字符串颜色值设置背景色
- *
- * @param v [View] 对象
- * @param color 颜色值，如：**#FFFFFF**
- */
+/** 根据颜色字符串 [color] 设置 [v] 的背景，颜色字符串 `"#FFFFFF"` */
 @BindingAdapter("android:bind_background")
 fun setBackground(v: View, color: String?) {
-    if (!color.isNullOrEmpty()) {
+    if (color.isNotNullAndBlank()) {
         v.setBackgroundColor(Color.parseColor(color))
     }
 }
 
-/**
- * 根据资源 id 设置背景
- *
- * @param v [View] 对象
- * @param resId 背景资源 id
- */
+/** 根据资源id [resId] 设置 [v] 的背景 */
 @BindingAdapter("android:bind_background")
 fun setBackgroundRes(v: View, resId: Int?) {
     if (null == resId || 0 == resId) {
@@ -362,10 +316,8 @@ fun setBackgroundRes(v: View, resId: Int?) {
 }
 
 /**
- * 设置 View 海拔高度
- * - 仅 API >= LOLLIPOP 有效
- *
- * @param elevation 高度 单位:dp
+ * 给 [v] 设置 z 轴高度 [elevation]
+ * > 仅 API >= [Build.VERSION_CODES.LOLLIPOP] 有效
  */
 @BindingAdapter("android:bind_elevation")
 fun setElevation(v: View, elevation: Float?) {
@@ -375,25 +327,7 @@ fun setElevation(v: View, elevation: Float?) {
     ViewCompat.setElevation(v, elevation)
 }
 
-/**
- * 设置 View 动画列表
- * - 仅 API >= LOLLIPOP 有效
- *
- * @param animatorId 动画列表 id
- */
-@BindingAdapter("android:bind_stateListAnimator")
-fun setStateListAnimator(v: View, animatorId: Int?) {
-    if (null == animatorId) {
-        return
-    }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        v.stateListAnimator = AnimatorInflater.loadStateListAnimator(v.context, animatorId)
-    }
-}
-
-/**
- * 设置 View 透明度
- */
+/** 将 [v] 的透明度设置为 [alpha] */
 @BindingAdapter("android:bind_alpha")
 fun setAlpha(v: View, alpha: Float?) {
     if (null == alpha) {
@@ -403,47 +337,8 @@ fun setAlpha(v: View, alpha: Float?) {
 }
 
 /**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param click 点击回调
- */
-@BindingAdapter("android:bind_onClick", "android:bind_onClick_item", "android:bind_onClick_throttle", requireAll = false)
-fun <T> setViewOnClick(v: View, click: ViewItemClickListener<T>?, item: T, throttle: Long?) {
-    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
-    v.setOnThrottleClickListener({ click?.onItemClick(item) }, interval)
-}
-
-/**
- * View 点击事件
- */
-interface ViewItemClickListener<T> {
-
-    fun onItemClick(item: T)
-}
-
-/**
- * 设置点击事件
- *
- * @param v [View] 对象
- * @param listener 点击回调
- */
-@BindingAdapter("android:bind_onClick", "android:bind_onClick_throttle", requireAll = false)
-fun setViewOnClick(v: View, listener: ViewClickListener?, throttle: Long?) {
-    val interval = throttle ?: DEFAULT_CLICK_THROTTLE_MS
-    v.setOnThrottleClickListener({ listener?.onClick() }, interval)
-}
-
-/** View 点击事件 */
-interface ViewClickListener {
-
-    /** 点击回调 */
-    fun onClick()
-}
-
-/**
- * 给 [v] 设置比例约束 [ratio] eg: `h,2:1` or `w,2:1`
- * - [ratio]  `约束对象,宽:高`
+ * 给 [v] 设置比例约束 [ratio] eg: `"h,2:1"` or `"w,2:1"`
+ * > [ratio]  `"约束对象,宽:高"`
  */
 @BindingAdapter("android:bind_ratio")
 fun setViewDimensionRatio(v: View, ratio: String?) {
@@ -488,6 +383,11 @@ fun setViewDimensionRatio(v: View, ratio: String?) {
     }
 }
 
+/**
+ * 设置 [v] 是否适应状态栏
+ * > [v] 为布局中最上面的 [View] 且布局延伸到状态栏下方时，添加状态栏高度，并添加状态栏高度的 paddingTop，
+ * 以适应沉浸式体验
+ */
 @BindingAdapter("android:bind_fits_status_bar")
 fun fitsStatusBar(v: View, fits: Boolean?) {
     if (!fits.condition) {

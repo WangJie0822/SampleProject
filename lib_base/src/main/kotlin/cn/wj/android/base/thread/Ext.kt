@@ -6,23 +6,15 @@ package cn.wj.android.base.thread
 import android.os.Looper
 
 /**
- * 在主线程执行
- *
- * @param runnable 在主线程执行的代码
- * @param delay 延时时间：ms
- *
- * @see MainThreadManager
+ * 将事件[runnable]延时[delay]ms之后在主线程执行
+ * > [delay] 默认 `0L`
  */
 @JvmOverloads
 fun runOnMainThread(runnable: Runnable, delay: Long = 0) {
     MainThreadManager.postToMainThread(runnable, delay)
 }
 
-/**
- * 是否是主线程
- *
- * @return 是否是主线程
- */
+/** 判断当前线程是否时主线程 */
 fun isMainThread(): Boolean {
     return Looper.getMainLooper() == Looper.myLooper()
 }

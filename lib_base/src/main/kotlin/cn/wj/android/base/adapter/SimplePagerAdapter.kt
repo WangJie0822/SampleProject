@@ -50,6 +50,7 @@ class SimplePagerAdapter<E>(private val layoutResId: Int)
         container.removeView(`object` as View?)
     }
 
+    /** 刷新列表至 [ls] 数据 */
     fun refresh(ls: Collection<E>?) {
         mData.clear()
         mData.addAll(ls ?: listOf())

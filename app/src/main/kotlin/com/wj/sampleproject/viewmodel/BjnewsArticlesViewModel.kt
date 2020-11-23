@@ -4,8 +4,8 @@ import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.condition
+import cn.wj.android.common.ext.copy
 import cn.wj.android.common.ext.orEmpty
-import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
@@ -91,7 +91,7 @@ class BjnewsArticlesViewModel(
                 val result = bjnewsRepository.getBjnewsArticles(bjnewsId, pageNum)
                 if (result.success()) {
                     // 请求成功
-                    articleListData.value = articleListData.value.toNewList(result.data?.datas, refreshing.get())
+                    articleListData.value = articleListData.value.copy(result.data?.datas, refreshing.get())
                     noMore.set(result.data?.over?.toBoolean().condition)
                 } else {
                     snackbarData.value = SnackbarModel(result.errorMsg)

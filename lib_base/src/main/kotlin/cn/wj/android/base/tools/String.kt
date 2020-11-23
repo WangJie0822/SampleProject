@@ -12,25 +12,13 @@ import cn.wj.android.base.log.InternalLog
 /* |                                      字符串相关                                        | */
 /* ----------------------------------------------------------------------------------------- */
 
-/**
- * 解析 [Html]
- *
- * @param str [Html] 文本
- *
- * @return 从 [Html] 解析出的 [Spanned] 对象
- */
+/** 从字符串[str]中解析[Html]返回[Spanned]对象 */
 fun parseHtmlFromString(str: String): Spanned? {
     @Suppress("DEPRECATION")
     return Html.fromHtml(str)
 }
 
-/**
- * 解析颜色
- *
- * @param str 颜色 文本
- *
- * @return 颜色值
- */
+/** 从字符串[str]中解析并返回颜色值[Int] */
 fun parseColorFromString(str: String): Int? {
     return try {
         Color.parseColor(str)

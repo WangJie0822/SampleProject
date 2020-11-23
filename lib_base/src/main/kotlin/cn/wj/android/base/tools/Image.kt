@@ -17,16 +17,8 @@ import java.io.File
 /* ----------------------------------------------------------------------------------------- */
 
 /**
- * 将 Bitmap 转换成 ByteArray
- *
- * @param bitmap [Bitmap] 对象
- * @param format [Bitmap] 格式
- *
- * @return [ByteArray]
- *
- * @see Bitmap.CompressFormat.JPEG
- * @see Bitmap.CompressFormat.PNG
- * @see Bitmap.CompressFormat.WEBP
+ * 将位图[bitmap] 根据格式[format] 转换成 [ByteArray]
+ * > [format] 参见 [Bitmap.CompressFormat]
  */
 fun bitmapToBytes(bitmap: Bitmap, format: Bitmap.CompressFormat): ByteArray {
     val baos = ByteArrayOutputStream()
@@ -34,24 +26,12 @@ fun bitmapToBytes(bitmap: Bitmap, format: Bitmap.CompressFormat): ByteArray {
     return baos.toByteArray()
 }
 
-/**
- * 将 [ByteArray] 转换成 [Bitmap]
- *
- * @param bytes [Byte] 数组
- *
- * @return [Bitmap]
- */
+/** 将Byte数组[bytes] 转换成 [Bitmap] */
 fun bytesToBitmap(bytes: ByteArray): Bitmap {
     return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 }
 
-/**
- * 将 [Drawable] 转换成 [Bitmap]
- *
- * @param drawable [Drawable] 对象
- *
- * @return [Bitmap]
- */
+/** 将 [Drawable] 转换成 [Bitmap] */
 fun drawableToBitmap(drawable: Drawable): Bitmap {
     if (drawable is BitmapDrawable) {
         if (drawable.bitmap != null) {
@@ -82,27 +62,15 @@ fun drawableToBitmap(drawable: Drawable): Bitmap {
     return bitmap
 }
 
-/**
- * 将 [Bitmap] 转换成 [Drawable]
- *
- * @param bitmap [Bitmap] 对象
- * @param context [Context] 对象
- *
- * @return [Drawable]
- */
+/** 将位图[bitmap] 转换成 [Drawable] */
 @JvmOverloads
 fun bitmapToDrawable(bitmap: Bitmap, context: Context = AppManager.getContext()): Drawable {
     return BitmapDrawable(context.resources, bitmap)
 }
 
 /**
- * 从 [View] 中获取 [Bitmap] 对象
- *
- * @param view [View] 对象
- * @param w 截取宽度 为 -1 时使用 View 宽度
- * @param h 截取高度 为 -1 时使用 View 高度
- *
- * @return [Bitmap]
+ * 从控件[view] 中根据宽度[w]、高度[h] 获取 [Bitmap]
+ * > [w] 截取宽度 为 -1 时使用 View 宽度 & [h] 截取高度 为 -1 时使用 View 高度
  */
 @JvmOverloads
 fun getBitmapFromView(view: View, w: Int = -1, h: Int = -1): Bitmap {
@@ -128,24 +96,12 @@ fun getBitmapFromView(view: View, w: Int = -1, h: Int = -1): Bitmap {
     return ret
 }
 
-/**
- * 通过 [File] 对象获取 [Bitmap] 对象
- *
- * @param file [File] 对象
- *
- * @return [Bitmap]
- */
+/** 通过文件[file] 对象获取 [Bitmap] 对象 */
 fun getBitmapFromFile(file: File): Bitmap {
     return getBitmapFromPath(file.absolutePath)
 }
 
-/**
- * 通过文件路径获取 [Bitmap] 对象
- *
- * @param path 文件路径
- *
- * @return [Bitmap]
- */
+/** 通过文件路径[path] 获取 [Bitmap] 对象 */
 fun getBitmapFromPath(path: String): Bitmap {
     return BitmapFactory.decodeFile(path)
 }

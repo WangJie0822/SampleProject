@@ -14,22 +14,24 @@ import androidx.fragment.app.Fragment
 /* ----------------------------------------------------------------------------------------- */
 
 /**
- * 通过 [Fragment] 对象，打开类型为 [target] 的 [Activity] 界面，并携带 [bundles] 中的数据
- * - [bundles] 默认没有数据
- * - [Fragment] 中的 [Context] 对象若不是 [Activity]，则会调用 [Intent.addFlags] ([Intent.FLAG_ACTIVITY_NEW_TASK])
+ * 通过 [Fragment] 对象，打开类型为 [A] 的 [Activity] 界面，并执行 [bundles] 方法块
+ * > [bundles] 默认空实现
+ *
+ * > [Fragment] 中的 [Context] 对象若不是 [Activity]，则会调用 [Intent.addFlags] ([Intent.FLAG_ACTIVITY_NEW_TASK])
  * 在新的栈中打开
  */
 @JvmOverloads
-fun Fragment.startTargetActivity(target: Class<out Activity>, bundles: (Intent.() -> Unit)? = null) {
-    this.activity?.startTargetActivity(target, bundles)
+inline fun <reified A : Activity> Fragment.startTargetActivity(bundles: (Intent.() -> Unit) = { }) {
+    this.activity?.startTargetActivity<A>(bundles)
 }
 
 /**
- * 通过 [Fragment] 对象，打开类型为 [target] 的 [Activity] 界面，并携带 [bundle] 中的数据
+ * 通过 [Fragment] 对象，打开类型为 [A] 的 [Activity] 界面，并携带 [bundle] 中的数据
  * - [bundle] [Bundle] 对象，其中的数据会被添加到 [Intent] 中
+ *
  * - [Fragment] 中的 [Context] 对象若不是 [Activity]，则会调用 [Intent.addFlags] ([Intent.FLAG_ACTIVITY_NEW_TASK])
  * 在新的栈中打开
  */
-fun Fragment.startTargetActivity(target: Class<out Activity>, bundle: Bundle) {
-    context?.startTargetActivity(target, bundle)
+inline fun <reified A : Activity> Fragment.startTargetActivity(bundle: Bundle) {
+    context?.startTargetActivity<A>(bundle)
 }

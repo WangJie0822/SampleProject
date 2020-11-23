@@ -6,8 +6,8 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import cn.wj.android.common.ext.copy
 import cn.wj.android.common.ext.orEmpty
-import cn.wj.android.common.ext.toNewList
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
@@ -121,7 +121,7 @@ class CollectedWebViewModel(
                 val result = collectRepository.deleteCollectedWeb(item.id.orEmpty())
                 if (result.success()) {
                     // 删除成功，从列表移除
-                    val ls = websListData.value.toNewList()
+                    val ls = websListData.value.copy()
                     ls.remove(item)
                     websListData.value = ls
                 } else {

@@ -21,12 +21,8 @@ import java.util.*
 /* ----------------------------------------------------------------------------------------- */
 
 /**
- * 根据资源 id 获取颜色值
- *
- * @param colorResId 颜色资源 id
- * @param context [Context] 对象
- *
- * @return 颜色值
+ * 根据资源id[colorResId] 获取颜色值[Int]
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @ColorInt
 @JvmOverloads
@@ -35,12 +31,8 @@ fun getColorById(@ColorRes colorResId: Int, context: Context = AppManager.getCon
 }
 
 /**
- * 根据资源 id 获取字符串
- *
- * @param resId 字符串资源 id
- * @param context [Context] 对象
- *
- * @return 字符串
+ * 根据资源id[resId] 获取字符串[String]
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun getStringById(@StringRes resId: Int, context: Context = AppManager.getContext()): String {
@@ -48,12 +40,8 @@ fun getStringById(@StringRes resId: Int, context: Context = AppManager.getContex
 }
 
 /**
- * 根据资源 id 获取 Drawable
- *
- * @param resId Drawable 资源 id
- * @param context [Context] 对象
- *
- * @return [Drawable] 对象 可能为空
+ * 根据资源id[resId] 获取 [Drawable]
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun getDrawableById(@DrawableRes resId: Int, context: Context = AppManager.getContext()): Drawable? {
@@ -61,12 +49,8 @@ fun getDrawableById(@DrawableRes resId: Int, context: Context = AppManager.getCo
 }
 
 /**
- * 根据资源 id 获取 尺寸
- *
- * @param resId 尺寸资源 id
- * @param context [Context] 对象
- *
- * @return 长度 px
+ * 根据资源id[resId] 获取 尺寸数值[Float]，单位**px**
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun getFloatDimensionById(@DimenRes resId: Int, context: Context = AppManager.getContext()): Float {
@@ -74,12 +58,8 @@ fun getFloatDimensionById(@DimenRes resId: Int, context: Context = AppManager.ge
 }
 
 /**
- * 根据资源 id 获取 尺寸
- *
- * @param resId 尺寸资源 id
- * @param context [Context] 对象
- *
- * @return 长度 px
+ * 根据资源id[resId] 获取 尺寸数值[Int]，单位**px**
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun getIntDimensionById(@DimenRes resId: Int, context: Context = AppManager.getContext()): Int {
@@ -87,13 +67,8 @@ fun getIntDimensionById(@DimenRes resId: Int, context: Context = AppManager.getC
 }
 
 /**
- * 根据资源 id 字符串，获取资源 id
- *
- * @param idStr 资源 id 字符串
- * @param defType 资源类型：资源所在文件夹名称
- * @param context [Context] 对象
- *
- * @return 资源 id
+ * 根据资源id字符串[idStr]、资源文件夹名称[defType]，获取资源id[Int]
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun getIdByString(idStr: String, defType: String, context: Context = AppManager.getContext()): Int {
@@ -154,12 +129,8 @@ fun getAssetsStreamByName(fileName: String, context: Context = AppManager.getCon
 }
 
 /**
- * 从 Assets 读取字符串
- *
- * @param fileName 文件名
- * @param context [Context] 对象
- *
- * @return 文件内容文本
+ * 根据文件名[fileName] 从 Assets 读取字符串
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun getAssetsStringByName(fileName: String, context: Context = AppManager.getContext()): String? {
@@ -182,12 +153,8 @@ fun getAssetsStringByName(fileName: String, context: Context = AppManager.getCon
 }
 
 /**
- * 读取 Raw 流
- *
- * @param rawResId Raw 资源 id
- * @param context [Context] 对象，默认[AppManager.getContext]
- *
- * @return 流对象
+ * 根据Raw资源id[rawResId]读取 Raw 流
+ * > [context] 可选，默认[AppManager.getContext]
  */
 @JvmOverloads
 fun getRawStreamById(@RawRes rawResId: Int, context: Context = AppManager.getContext()): InputStream? {
@@ -200,14 +167,10 @@ fun getRawStreamById(@RawRes rawResId: Int, context: Context = AppManager.getCon
 }
 
 /**
- * 读取 Raw 流
+ * 根据Raw资源id[rawResId]、关键字[key]读取 Raw资源中的文本
+ * > [context] 可选，默认[AppManager.getContext]
  *
- * @param rawResId Raw 资源 id
- * @param key 关键字
- * @param context [Context] 对象，默认[AppManager.getContext]
- * @param defaultValue 默认值
- *
- * @return 流对象
+ * > [defaultValue] 获取失败的默认值 默认`""`
  */
 @JvmOverloads
 fun getRawValue(@RawRes rawResId: Int, key: String, context: Context = AppManager.getContext(), defaultValue: String = ""): String {

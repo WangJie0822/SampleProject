@@ -10,9 +10,7 @@ import android.widget.EditText
 import cn.wj.android.base.log.InternalLog
 import cn.wj.android.common.ext.orEmpty
 
-/**
- * 显示软键盘
- */
+/** 显示软键盘 */
 fun EditText.showSoftKeyboard() {
     this.isFocusable = true
     this.isFocusableInTouchMode = true
@@ -23,11 +21,7 @@ fun EditText.showSoftKeyboard() {
     )
 }
 
-/**
- * 设置获取焦点是否弹起软键盘
- *
- * @param show 是否弹起
- */
+/** 设置[EditText]在获取焦点时是否弹起软键盘[show] */
 fun EditText.showSoftInputOnFocus(show: Boolean) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         this.showSoftInputOnFocus = show

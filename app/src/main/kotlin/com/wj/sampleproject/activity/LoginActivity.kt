@@ -65,7 +65,7 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
                 // 堆栈中已有登录页，返回
                 return
             }
-            context.startTargetActivity(LoginActivity::class.java, bundleOf(
+            context.startTargetActivity<LoginActivity>(bundleOf(
                     ACTION_NET_TO_LOGIN to fromNet
             ))
         }

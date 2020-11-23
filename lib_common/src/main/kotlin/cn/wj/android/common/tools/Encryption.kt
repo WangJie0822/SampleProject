@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException
  * @author 王杰
  */
 
-/** 字符串对应的 MD5 值 */
+/** 字符串对应的 **MD5** 值 */
 val String.md5: String
     get() = try {
         MessageDigest.getInstance("MD5").digest(this.toByteArray()).toHex()
@@ -26,7 +26,7 @@ val String.md5: String
         ""
     }
 
-/** 文件对应的 MD5 值 */
+/** 文件对应的 **MD5** 值 */
 val File.md5: String
     get() {
         var bi: BigInteger? = null
@@ -49,9 +49,7 @@ val File.md5: String
         return if (bi != null) bi.toString(16) else ""
     }
 
-/**
- * 将 [ByteArray] 转为 16 进制字符串
- */
+/** 将 [ByteArray] 转为 16 进制字符串 */
 fun ByteArray.toHex(): String {
     //转成16进制后是32字节
     return with(StringBuilder()) {

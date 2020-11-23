@@ -14,11 +14,7 @@ import java.util.*
 /** 默认时间格式化 */
 const val DATE_FORMAT_DEFAULT = "yyyy-MM-dd"
 
-/**
- * 格式化日期、时间
- *
- * @param format 日期时间格式
- */
+/** 根据[format]格式化时间，[format]默认[DATE_FORMAT_DEFAULT] */
 @JvmOverloads
 fun <N : Number> N.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
     return try {
@@ -28,11 +24,7 @@ fun <N : Number> N.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
     }
 }
 
-/**
- * 格式化日期、时间
- *
- * @param format 日期时间格式
- */
+/** 根据[format]格式化时间，[format]默认[DATE_FORMAT_DEFAULT] */
 @JvmOverloads
 fun Date.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
     return try {
@@ -42,9 +34,7 @@ fun Date.dateFormat(format: String = DATE_FORMAT_DEFAULT): String {
     }
 }
 
-/**
- * 将时间字符串格式化为指定类型
- */
+/** 根据[format]格式化时间，[format]默认[DATE_FORMAT_DEFAULT] */
 @JvmOverloads
 fun String.paresDate(format: String = DATE_FORMAT_DEFAULT): Date {
     return try {
@@ -54,9 +44,7 @@ fun String.paresDate(format: String = DATE_FORMAT_DEFAULT): Date {
     }
 }
 
-/**
- * 将字符串时间转换为 Long 类型时间
- */
+/** 将字符串时间转换为 [Long] 类型时间 */
 @JvmOverloads
 fun String?.toLongTime(format: String = DATE_FORMAT_DEFAULT): Long {
     return if (this.isNullOrEmpty()) {

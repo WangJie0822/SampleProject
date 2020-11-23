@@ -14,7 +14,7 @@ import kotlin.system.exitProcess
 /**
  * 应用程序 [Activity] 管理类
  * - 用于 [Activity] 管理和应用程序退出
- * - [Application] 启动会自动注册
+ * - [Application] 启动会自动注册 参见 [cn.wj.android.base.provider.InitContentProvider]
  *
  * @author 王杰
  */
@@ -24,12 +24,12 @@ object AppManager {
     /** [Application] 对象 */
     private var mApplication: Application? = null
 
-    /** 保存 [Activity] 对象的堆栈 */
+    /** 保存 [Activity] 对象的堆 */
     private val activityStack: Stack<WeakReference<Activity>> = Stack()
 
     /**
      * 忽略列表
-     * - 列表中的 [Activity] 对象不会被纳入管理
+     * > 列表中的 [Activity] 对象不会被纳入管理
      */
     private val ignoreActivities = arrayListOf<Class<out Activity>>()
 
@@ -83,21 +83,13 @@ object AppManager {
         }
     }
 
-    /**
-     * 获取前台界面数量
-     *
-     * @return 前台 [Activity] 数量
-     */
+    /** 获取前台界面数量 */
     @JvmStatic
     fun getForegroundCount(): Int {
         return foregroundCount
     }
 
-    /**
-     * 应用是否在前台
-     *
-     * @return 应用是否在前台
-     */
+    /** 判断应用是否在前台 */
     @JvmStatic
     fun isForeground(): Boolean {
         val activityManager = getContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -114,10 +106,8 @@ object AppManager {
     }
 
     /**
-     * 注册 [Application]
-     * * 应用启动后自动调用
-     *
-     * @param application 应用 [Application] 对象
+     * 将 [AppManager] 注册到 [application]
+     * > 应用启动后自动调用
      */
     internal fun register(application: Application) {
         mApplication = application
@@ -126,10 +116,8 @@ object AppManager {
     }
 
     /**
-     * 设置 App 前后台状态切换监听
-     *
-     * @param onChange 切换回调
-     * - true：回到前台 or false：退到后台
+     * 设置 App 前后台状态切换监听[onChange]
+     * > [onChange] 入参[Boolean] `true`回到前台 & `false`进入后台
      */
     @JvmStatic
     fun setOnAppForegroundStatusChangeListener(onChange: (Boolean) -> Unit) {
@@ -138,8 +126,11 @@ object AppManager {
 
     /**
      * 获取可用的 [Application] 对象
+     * > [AppManager]已初始化，返回[mApplication]，否则通过反射[getApplicationByReflect]
+     * > 获取当前[Application]对象，若获取失败，抛出异常[NullPointerException]
      */
     @JvmStatic
+    @Throws(NullPointerException::class)
     fun getApplication(): Application {
         if (mApplication == null) {
             register(getApplicationByReflect())
@@ -152,9 +143,7 @@ object AppManager {
 
     /**
      * 获取 [Context] 对象
-     * - 优先获取栈顶的 [Activity] 对象，若没有，则返回 [Application] 对象
-     *
-     * @return [Context] 对象
+     * > 优先获取栈顶的 [Activity] 对象，若没有，则返回 [Application] 对象
      */
     @JvmStatic
     fun getContext(): Context {
@@ -163,10 +152,7 @@ object AppManager {
 
     /**
      * 通过反射获取当前 [Application] 对象
-     *
-     * @return 当前 [Application] 对象
-     *
-     * @throws NullPointerException 获取失败抛出异常
+     * > 获取失败时抛出[NullPointerException]
      */
     @Throws(NullPointerException::class)
     private fun getApplicationByReflect(): Application {
@@ -184,20 +170,15 @@ object AppManager {
     }
 
     /**
-     * 将 [Activity] 类对象添加到忽略列表
-     *
-     * @param classArray [Activity] 类对象，可变参数
+     * 将[Activity]类对象列表[classArray]添加到忽略列表[ignoreActivities]
+     * > 忽略列表[ignoreActivities]中的[Activity]类不会被[AppManager]管理
      */
     @JvmStatic
     fun addToIgnore(vararg classArray: Class<out Activity>) {
         ignoreActivities.addAll(classArray)
     }
 
-    /**
-     * [Activity.onCreate] 回调
-     * - 添加 [Activity] 到栈堆
-     * @param activity [Activity] 对象
-     */
+    /** [Activity.onCreate] 时回调，将不在忽略列表[ignoreActivities]中的[activity]添加到管理堆[activityStack] */
     @JvmStatic
     private fun onCreate(activity: Activity?) {
         if (activity != null && ignoreActivities.contains(activity.javaClass)) {
@@ -207,34 +188,19 @@ object AppManager {
         add(activity)
     }
 
-    /**
-     * [Activity.onDestroy] 回调
-     * - 从栈堆移除 [Activity] 对象
-     *
-     * @param activity [Activity] 对象
-     */
+    /** [Activity.onDestroy] 时回调，将[activity]从管理堆[activityStack]中移除 */
     @JvmStatic
     private fun onDestroy(activity: Activity?) {
         remove(activity)
     }
 
-    /**
-     * 判断当前堆栈中是否存在对应 [Activity]
-     *
-     * @param clazz [Activity] 类对象
-     *
-     * @return 是否存在
-     */
+    /** 判断当前堆[activityStack]中是否存在[clazz]对应的[Activity] */
     @JvmStatic
     fun contains(clazz: Class<out Activity>): Boolean {
         return activityStack.count { it.get()?.javaClass == clazz } > 0
     }
 
-    /**
-     * 将 [Activity] 加入堆栈
-     *
-     * @param activity [Activity] 对象
-     */
+    /** 将[activity]添加到[activityStack] */
     @JvmStatic
     fun add(activity: Activity?) {
         if (activity == null) {
@@ -243,11 +209,7 @@ object AppManager {
         activityStack.add(WeakReference(activity))
     }
 
-    /**
-     * 将 [Activity] 从堆栈移除
-     *
-     * @param activity [Activity] 对象
-     */
+    /** 将[activity]从[activityStack]中移除 */
     @JvmStatic
     fun remove(activity: Activity?) {
         if (activity == null) {
@@ -261,11 +223,7 @@ object AppManager {
         }
     }
 
-    /**
-     * 结束指定 [Activity] 之外的其他 [Activity]
-     *
-     * @param activities 指定不关闭的 [Activity]，可变参数
-     */
+    /** 关闭[activityStack]中，除了[activities]以外的[Activity] */
     @JvmStatic
     fun finishAllWithout(vararg activities: Activity?) {
         if (activities.isEmpty()) {
@@ -280,11 +238,7 @@ object AppManager {
         }
     }
 
-    /**
-     * 结束指定 [Activity] 之外的其他 [Activity]
-     *
-     * @param classArray 指定不关闭的 [Activity] 类对象，可变参数
-     */
+    /** 关闭[activityStack]中，除了类型在[classArray]以外的[Activity] */
     @JvmStatic
     fun finishAllWithout(vararg classArray: Class<out Activity>) {
         if (classArray.isEmpty()) {
@@ -292,13 +246,8 @@ object AppManager {
         }
         val ls = arrayListOf<Activity>()
         classArray.forEach {
-            val element = getActivity(it)
-            if (null != element) {
-                ls.add(element)
-            }
-        }
-        if (ls.isEmpty()) {
-            return
+            val elements = getActivities(it)
+            ls.addAll(elements)
         }
         ls.forEach {
             remove(it)
@@ -309,22 +258,20 @@ object AppManager {
         }
     }
 
-    /**
-     * 结束指定 [Activity]
-     *
-     * @param clazz [Activity] 类对象
-     */
+    /** 关闭类对象为[clazz]的[Activity] */
     @JvmStatic
     fun finishActivity(clazz: Class<out Activity>) {
-        val del: Activity? = activityStack.lastOrNull { it.get()?.javaClass == clazz }?.get()
-        del?.finish()
+        getActivities(clazz).forEach { activity ->
+            activity.finish()
+        }
     }
 
-    /**
-     * 结束指定 [Activity]
-     *
-     * @param classArray [Activity] 类对象，可变参数
-     */
+    /** 关闭类型为[A]的[Activity] */
+    inline fun <reified A : Activity> finishActivity() {
+        finishActivity(A::class.java)
+    }
+
+    /** 关闭类型在[classArray]的[Activity] */
     @JvmStatic
     fun finishActivities(vararg classArray: Class<out Activity>) {
         for (clazz in classArray) {
@@ -332,11 +279,7 @@ object AppManager {
         }
     }
 
-    /**
-     * 获取栈顶的 [Activity]
-     *
-     * @return 栈顶的 [Activity] 对象
-     */
+    /** 获取[activityStack]堆顶的[Activity] */
     @JvmStatic
     fun peekActivity(): Activity? {
         return if (activityStack.isEmpty()) {
@@ -346,56 +289,38 @@ object AppManager {
         }
     }
 
-    /**
-     * 根据类，获取 [Activity] 对象
-     *
-     * @param clazz  [Activity] 类
-     * @param A      [Activity] 类型
-     *
-     * @return       [Activity] 对象
-     */
+    /** 获取类对象为[clazz]的[Activity]列表[List] */
     @JvmStatic
-    fun <A : Activity> getActivity(clazz: Class<A>): A? {
-        @Suppress("UNCHECKED_CAST")
-        return activityStack.firstOrNull { it.get()?.javaClass == clazz }?.get() as? A?
+    fun <A : Activity> getActivities(clazz: Class<out A>): List<A> {
+        return activityStack.filter {
+            it.get()?.javaClass == clazz
+        }.mapNotNull {
+            @Suppress("UNCHECKED_CAST")
+            it.get() as? A
+        }
     }
 
-    /**
-     * 根据下标，获取 [Activity] 对象
-     *
-     * @param index  [Activity] 下标
-     *
-     * @return       [Activity] 对象
-     */
-    @JvmStatic
-    fun getActivity(index: Int): Activity? {
-        return activityStack[index]?.get()
+    /** 获取类型为[A]的[Activity]列表[List] */
+    inline fun <reified A : Activity> getActivities(): List<A> {
+        return getActivities(A::class.java)
     }
 
-    /**
-     * 获取堆栈中 [Activity] 数量
-     *
-     * @return [Activity] 数量
-     */
+    /** 获取堆[activityStack]中[Activity]的数量 */
     @JvmStatic
     fun getStackSize(): Int {
         return activityStack.size
     }
 
-    /**
-     * 结束所有 [Activity]
-     */
+    /** 关闭[activityStack]中的所有[Activity] */
     @JvmStatic
-    private fun finishAllActivity() {
+    fun finishAllActivity() {
         activityStack.forEach {
             it.get()?.finish()
         }
         activityStack.clear()
     }
 
-    /**
-     * 退出应用程序
-     */
+    /** 退出应用程序 */
     @JvmStatic
     fun appExit() {
         try {

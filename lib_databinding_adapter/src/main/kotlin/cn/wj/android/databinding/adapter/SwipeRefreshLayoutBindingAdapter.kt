@@ -9,16 +9,11 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-/**
+/*
  * SwipeRefreshLayout DataBinding 适配器
  */
 
-/**
- * 设置刷新进度条颜色
- *
- * @param srl [SwipeRefreshLayout] 对象
- * @param color 颜色值
- */
+/** 为 [srl] 设置进度条颜色 [color] */
 @BindingAdapter("android:bind_srl_schemeColors")
 fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, @ColorInt color: Int?) {
     if (null == color) {
@@ -28,10 +23,8 @@ fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, @ColorInt color: 
 }
 
 /**
- * 设置刷新进度条颜色
- *
- * @param srl [SwipeRefreshLayout] 对象
- * @param colorStr 颜色 id 字符串或颜色值，"," 分隔
+ * 为 [srl] 设置进度条颜色 [colorStr]
+ * > [colorStr] 多个使用 `,` 分隔，可使用颜色id `"app_color_white"` 或色值 `"#FFFFFF"`
  */
 @BindingAdapter("android:bind_srl_schemeColors")
 fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, colorStr: String?) {
@@ -57,35 +50,23 @@ fun setSwipeRefreshLayoutSchemeColors(srl: SwipeRefreshLayout, colorStr: String?
     srl.setColorSchemeColors(*colorLs.toIntArray())
 }
 
-/**
- * 设置刷新状态
- *
- * @param srl [SwipeRefreshLayout] 对象
- * @param refreshing 是否刷新
- */
+/** 给 [srl] 设置刷新状态 [refreshing] */
 @BindingAdapter("android:bind_srl_refreshing")
 fun setSwipeRefreshLayoutRefreshing(srl: SwipeRefreshLayout, refreshing: Boolean) {
     srl.isRefreshing = refreshing
 }
 
-/**
- * 获取刷新状态
- *
- * @param srl [SwipeRefreshLayout] 对象
- *
- * @return 刷新状态
- */
+/** 获取 [srl] 的刷新状态 */
 @InverseBindingAdapter(attribute = "android:bind_srl_refreshing")
 fun getSwipeRefreshLayoutRefreshing(srl: SwipeRefreshLayout): Boolean {
     return srl.isRefreshing
 }
 
 /**
- * 设置刷新事件
+ * 给 [srl] 设置刷新事件 [refresh]
+ * > [refresh]: () -> [Unit]
  *
- * @param srl [SwipeRefreshLayout] 对象
- * @param refresh 刷新事件
- * @param listener 刷新状态监听
+ * > [listener] 为属性变化监听，`DataBinding` 自动实现，无需传递
  */
 @BindingAdapter("android:bind_srl_onRefresh", "android:bind_srl_refreshingAttrChanged", requireAll = false)
 fun setSwipeRefreshLayoutRefreshListener(

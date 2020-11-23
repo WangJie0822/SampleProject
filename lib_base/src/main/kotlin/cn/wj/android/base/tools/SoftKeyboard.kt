@@ -6,12 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 
-/**
- * 判断是否需要隐藏软键盘
- *
- * @param v 对比 View 对象
- * @param ev 触摸事件
- */
+/** 根据当前焦点控件[v]、触摸事件[ev]判断是否需要隐藏软键盘 */
 fun shouldHideInput(v: View?, ev: MotionEvent): Boolean {
     if (v is EditText) {
         // 是输入框
