@@ -11,8 +11,15 @@ const val MAIN_BACK_PRESS_INTERVAL_MS = 2000L
 /** 首页 Banner 变换间隔 */
 const val MAIN_BANNER_TRANSFORM_INTERVAL_MS = 3000L
 
+/** 网络请求响应码 - 失败 */
+const val NET_RESPONSE_CODE_FAILED = -1
+
 /** 网络请求响应码 - 成功 */
 const val NET_RESPONSE_CODE_SUCCESS = 0
+
+/** 网络请求响应码 - 异常 */
+const val NET_RESPONSE_CODE_ERROR = -2
+
 /** 网络请求响应码 - 登录失败 */
 const val NET_RESPONSE_CODE_LOGIN_FAILED = -1001
 

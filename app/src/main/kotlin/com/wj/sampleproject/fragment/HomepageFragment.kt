@@ -10,6 +10,7 @@ import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCELLED
 import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
+import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.BannerEntity
 import com.wj.sampleproject.viewmodel.HomepageViewModel
 import org.koin.android.ext.android.inject
@@ -38,7 +39,7 @@ class HomepageFragment
             // 获取 Banner 数据
             viewModel.getHomepageBannerList()
             // 刷新文章列表
-            viewModel.refreshing.set(true)
+            viewModel.refreshing.value = SmartRefreshState(true)
         }
     }
 
@@ -64,7 +65,7 @@ class HomepageFragment
         mBinding.rvArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
             rv.adapter = mArticlesAdapter.also {
-                it.viewModel = viewModel
+                it.viewModel = viewModel.articleListViewModel
                 it.setEmptyView(R.layout.app_layout_placeholder)
                 it.showHeaderWhenEmpty(true)
             }

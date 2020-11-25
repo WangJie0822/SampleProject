@@ -2,12 +2,11 @@ package com.wj.sampleproject.viewmodel
 
 import android.view.MenuItem
 import android.view.MotionEvent
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.copy
+import cn.wj.android.common.ext.orElse
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.R
@@ -16,10 +15,13 @@ import com.wj.sampleproject.adapter.ArticleListViewModel
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.MAIN_BANNER_TRANSFORM_INTERVAL_MS
 import com.wj.sampleproject.constants.NET_PAGE_START
+import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.ArticleEntity
+import com.wj.sampleproject.entity.ArticleListEntity
 import com.wj.sampleproject.entity.BannerEntity
 import com.wj.sampleproject.ext.showMsg
 import com.wj.sampleproject.model.SnackbarModel
+import com.wj.sampleproject.net.NetResult
 import com.wj.sampleproject.repository.CollectRepository
 import com.wj.sampleproject.repository.HomepageRepository
 import kotlinx.coroutines.*
@@ -33,23 +35,29 @@ import kotlinx.coroutines.*
 class HomepageViewModel(
         private val homepageRepository: HomepageRepository,
         private val collectRepository: CollectRepository
-) : BaseViewModel(),
-        ArticleListViewModel {
+) : BaseViewModel() {
 
     /** 页码 */
-    private var pageNum = NET_PAGE_START
+    private val pageNumber: MutableLiveData<Int> = MutableLiveData()
 
     /** Banner 列表数据 */
-    val bannerData = MutableLiveData<ArrayList<BannerEntity>>()
-
-    /** 文章列表数据 */
-    val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
+    val bannerData: MutableLiveData<ArrayList<BannerEntity>> = MutableLiveData()
 
     /** 跳转 WebView 数据 */
-    val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
+    val jumpWebViewData: MutableLiveData<WebViewActivity.ActionModel> = MutableLiveData()
 
     /** 跳转搜索数据 */
-    val jumpSearchData = MutableLiveData<Int>()
+    val jumpSearchData: MutableLiveData<Int> = MutableLiveData()
+
+    /** 文章列表请求返回数据 */
+    private val articleListResultData: LiveData<NetResult<ArticleListEntity>> = pageNumber.switchMap { pageNum ->
+        getArticleList(pageNum)
+    }
+
+    /** 文章列表数据 */
+    val articleListData: LiveData<ArrayList<ArticleEntity>> = articleListResultData.map { result ->
+        disposeArticleListResult(result)
+    }
 
     /** Banner 轮播 job */
     private var carouselJob: Job? = null
@@ -99,44 +107,42 @@ class HomepageViewModel(
         jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.url.orEmpty())
     }
 
-    /** 标记 - 是否正在刷新 */
-    val refreshing: ObservableBoolean = ObservableBoolean(false)
+    /** 刷新状态 */
+    val refreshing: MutableLiveData<SmartRefreshState> = MutableLiveData()
 
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
-        pageNum = NET_PAGE_START
-        noMore.set(false)
-        getHomepageArticleList()
+        pageNumber.value = NET_PAGE_START
     }
 
-    /** 标记 - 是否正在加载更多 */
-    val loadMore: ObservableBoolean = ObservableBoolean(false)
+    /** 加载更多状态 */
+    val loadMore: MutableLiveData<SmartRefreshState> = MutableLiveData()
 
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
-        pageNum++
-        getHomepageArticleList()
+        pageNumber.value = pageNumber.value.orElse(NET_PAGE_START) + 1
     }
 
-    /** 标记 - 是否没有更多 */
-    val noMore: ObservableBoolean = ObservableBoolean(false)
+    /** 文章列表的 `viewModel` 对象 */
+    val articleListViewModel: ArticleListViewModel = object : ArticleListViewModel {
 
-    /** 文章列表条目点击 */
-    override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
-        // 跳转 WebView 打开
-        jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
-    }
+        /** 文章列表条目点击 */
+        override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
+            // 跳转 WebView 打开
+            jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
+        }
 
-    /** 文章收藏点击 */
-    override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
-        if (item.collected.get().condition) {
-            // 已收藏，取消收藏
-            item.collected.set(false)
-            unCollect(item)
-        } else {
-            // 未收藏，收藏
-            item.collected.set(true)
-            collect(item)
+        /** 文章收藏点击 */
+        override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
+            if (item.collected.get().condition) {
+                // 已收藏，取消收藏
+                item.collected.set(false)
+                unCollect(item)
+            } else {
+                // 未收藏，收藏
+                item.collected.set(true)
+                collect(item)
+            }
         }
     }
 
@@ -189,26 +195,33 @@ class HomepageViewModel(
         }
     }
 
-    /** 获取首页文章列表 */
-    private fun getHomepageArticleList() {
+    /** 根据页码 [pageNum] 获取文章列表数据，返回 [LiveData] 数据 */
+    private fun getArticleList(pageNum: Int): LiveData<NetResult<ArticleListEntity>> {
+        val result = MutableLiveData<NetResult<ArticleListEntity>>()
         viewModelScope.launch {
             try {
-                // 获取文章列表数据
-                val result = homepageRepository.getHomepageArticleList(pageNum)
-                if (result.success()) {
-                    // 请求成功
-                    articleListData.value = articleListData.value.copy(result.data?.datas, refreshing.get())
-                    noMore.set(result.data?.over?.toBoolean().condition)
-                } else {
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                result.value = homepageRepository.getHomepageArticleList(pageNum)
             } catch (throwable: Throwable) {
-                Logger.t("NET").e(throwable, "getHomepageArticleList")
-                snackbarData.value = SnackbarModel(throwable.showMsg)
-            } finally {
-                refreshing.set(false)
-                loadMore.set(false)
+                result.value = NetResult.fromThrowable(throwable)
             }
+        }
+        return result
+    }
+
+    /** 处理文章列表返回数据 [result]，并返回文章列表 */
+    private fun disposeArticleListResult(result: NetResult<ArticleListEntity>): ArrayList<ArticleEntity> {
+        val refresh = pageNumber.value == NET_PAGE_START
+        val smartControl = if (refresh) {
+            refreshing
+        } else {
+            loadMore
+        }
+        return if (result.success()) {
+            smartControl.value = SmartRefreshState(loading = false, success = true, noMore = result.data?.over.toBoolean())
+            articleListData.value.copy(result.data?.datas, refresh)
+        } else {
+            smartControl.value = SmartRefreshState(loading = false, success = false)
+            articleListData.value.orEmpty()
         }
     }
 

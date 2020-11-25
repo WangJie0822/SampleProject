@@ -73,11 +73,10 @@
             <com.scwang.smart.refresh.layout.SmartRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:bind_smart_loadMore="@={viewModel.loadMore}"
-                android:bind_smart_noMore="@{viewModel.noMore}"
+                android:bind_smart_loadMoreState="@={viewModel.loadMore}"
                 android:bind_smart_onLoadMore="@{viewModel.onLoadMore}"
                 android:bind_smart_onRefresh="@{viewModel.onRefresh}"
-                android:bind_smart_refreshing="@={viewModel.refreshing}"
+                android:bind_smart_refreshState="@={viewModel.refreshing}"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <com.scwang.smart.refresh.header.ClassicsHeader
