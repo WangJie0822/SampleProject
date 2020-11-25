@@ -80,7 +80,7 @@ object Versions {
     const val fragment_version = "1.2.5"
 
     /** koin 版本 */
-    const val koin_version = "2.1.6"
+    const val koin_version = "2.2.1"
 
     /** glide 版本 */
     const val glide_version = "4.11.0"

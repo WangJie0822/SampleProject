@@ -80,13 +80,13 @@ val netModule: Module = module {
 
 /** 数据仓库 Module */
 val repositoryModule: Module = module {
-    factory { HomepageRepository() }
-    factory { SystemRepository() }
-    factory { BjnewsRepository() }
-    factory { ProjectRepository() }
-    factory { MyRepository() }
-    factory { CollectRepository() }
-    factory { SearchRepository() }
+    factory { HomepageRepository(get()) }
+    factory { SystemRepository(get()) }
+    factory { BjnewsRepository(get()) }
+    factory { ProjectRepository(get()) }
+    factory { MyRepository(get()) }
+    factory { CollectRepository(get()) }
+    factory { SearchRepository(get()) }
 }
 
 /** 适配器 Module */

@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.wj.android.ui.viewmodel.BaseLibViewModel
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
-import org.koin.core.KoinComponent
 
 /**
  * ViewModel 基类
@@ -13,8 +12,7 @@ import org.koin.core.KoinComponent
  * > 提供了 **Snackbar 提示** [snackbarData] 以及 **UI 关闭** [uiCloseData] 数据对象
  */
 abstract class BaseViewModel
-    : BaseLibViewModel(),
-        KoinComponent {
+    : BaseLibViewModel() {
 
     /** Snackbar 控制 */
     val snackbarData = MutableLiveData<SnackbarModel>()

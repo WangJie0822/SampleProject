@@ -4,16 +4,11 @@ import cn.wj.android.common.ext.orFalse
 import com.wj.sampleproject.net.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 /**
  * 公众号相关数据仓库
  */
-class BjnewsRepository : KoinComponent {
-
-    /** 网络请求服务 */
-    private val mWebService: WebService by inject()
+class BjnewsRepository(private val mWebService: WebService) {
 
     /** 获取公众号列表 */
     suspend fun getBjnewsList() = withContext(Dispatchers.IO) {

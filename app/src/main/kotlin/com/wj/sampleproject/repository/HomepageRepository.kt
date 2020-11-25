@@ -9,16 +9,13 @@ import com.wj.sampleproject.net.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 /**
  * 首页相关数据仓库
+ *
+ * @param mWebService 网络请求对象
  */
-class HomepageRepository : KoinComponent {
-
-    /** 网络请求对象 */
-    private val mWebService: WebService by inject()
+class HomepageRepository(private val mWebService: WebService) {
 
     /** 获取首页 Banner 列表 */
     suspend fun getHomepageBannerList() = withContext(Dispatchers.IO) {

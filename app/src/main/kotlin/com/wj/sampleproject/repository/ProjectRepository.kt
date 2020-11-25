@@ -4,16 +4,11 @@ import cn.wj.android.common.ext.orFalse
 import com.wj.sampleproject.net.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 /**
  * 项目相关数据仓库
  */
-class ProjectRepository : KoinComponent {
-
-    /** 网络请求服务 */
-    private val mWebService: WebService by inject()
+class ProjectRepository(private val mWebService: WebService) {
 
     /** 获取新项目分类列表 */
     suspend fun getProjectCategory() = withContext(Dispatchers.IO) {

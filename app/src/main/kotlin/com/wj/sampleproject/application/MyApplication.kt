@@ -36,7 +36,7 @@ class MyApplication : Application() {
 
         // 初始化 Koin
         startKoin {
-            androidLogger(Level.ERROR)
+            androidLogger(Level.DEBUG)
             androidContext(this@MyApplication)
             modules(listOf(netModule, viewModelModule, repositoryModule, adapterModule))
         }
