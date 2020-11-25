@@ -1,19 +1,21 @@
 package com.wj.sampleproject.viewmodel
 
-import androidx.databinding.ObservableBoolean
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.copy
+import cn.wj.android.common.ext.orElse
 import cn.wj.android.common.ext.orEmpty
 import cn.wj.android.logger.Logger
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.NET_PAGE_START
+import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.ArticleEntity
+import com.wj.sampleproject.entity.ArticleListEntity
 import com.wj.sampleproject.ext.showMsg
 import com.wj.sampleproject.model.SnackbarModel
+import com.wj.sampleproject.net.NetResult
 import com.wj.sampleproject.repository.BjnewsRepository
 import com.wj.sampleproject.repository.CollectRepository
 import kotlinx.coroutines.launch
@@ -34,35 +36,36 @@ class BjnewsArticlesViewModel(
     var bjnewsId = ""
 
     /** 页码 */
-    private var pageNum = NET_PAGE_START
+    private var pageNumber: MutableLiveData<Int> = MutableLiveData()
+
+    /** 文章列表返回数据 */
+    private val articleListResultData: LiveData<NetResult<ArticleListEntity>> = pageNumber.switchMap { pageNum ->
+        getBjnewsArticles(pageNum)
+    }
 
     /** 文章列表数据 */
-    val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
+    val articleListData: LiveData<ArrayList<ArticleEntity>> = articleListResultData.map { result ->
+        disposeArticleListResult(result)
+    }
 
     /** 跳转 WebView 数据 */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
 
-    /** 标记 - 是否正在刷新 */
-    val refreshing: ObservableBoolean = ObservableBoolean(false)
+    /** 刷新状态 */
+    val refreshing: MutableLiveData<SmartRefreshState> = MutableLiveData()
 
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
-        pageNum = NET_PAGE_START
-        noMore.set(false)
-        getBjnewsArticles()
+        pageNumber.value = NET_PAGE_START
     }
 
-    /** 标记 - 是否正在加载更多 */
-    val loadMore: ObservableBoolean = ObservableBoolean(false)
+    /** 加载更多状态 */
+    val loadMore: MutableLiveData<SmartRefreshState> = MutableLiveData()
 
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
-        pageNum++
-        getBjnewsArticles()
+        pageNumber.value = pageNumber.value.orElse(NET_PAGE_START) + 1
     }
-
-    /** 标记 - 是否没有更多 */
-    val noMore: ObservableBoolean = ObservableBoolean(false)
 
     /** 文章 item 点击 */
     override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
@@ -84,25 +87,30 @@ class BjnewsArticlesViewModel(
     }
 
     /** 获取公众号文章列表 */
-    private fun getBjnewsArticles() {
+    private fun getBjnewsArticles(pageNum: Int): LiveData<NetResult<ArticleListEntity>> {
+        val result = MutableLiveData<NetResult<ArticleListEntity>>()
         viewModelScope.launch {
             try {
                 // 获取文章列表数据
-                val result = bjnewsRepository.getBjnewsArticles(bjnewsId, pageNum)
-                if (result.success()) {
-                    // 请求成功
-                    articleListData.value = articleListData.value.copy(result.data?.datas, refreshing.get())
-                    noMore.set(result.data?.over?.toBoolean().condition)
-                } else {
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                result.value = bjnewsRepository.getBjnewsArticles(bjnewsId, pageNum)
             } catch (throwable: Throwable) {
-                Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.value = SnackbarModel(throwable.showMsg)
-            } finally {
-                refreshing.set(false)
-                loadMore.set(false)
+                Logger.t("NET").e(throwable, "getBjnewsArticles")
+                result.value = NetResult.fromThrowable(throwable)
             }
+        }
+        return result
+    }
+
+    /** 处理文章列表返回数据 [result]，并返回文章列表 */
+    private fun disposeArticleListResult(result: NetResult<ArticleListEntity>): ArrayList<ArticleEntity> {
+        val refresh = pageNumber.value == NET_PAGE_START
+        val smartControl = if (refresh) refreshing else loadMore
+        return if (result.success()) {
+            smartControl.value = SmartRefreshState(loading = false, success = true, noMore = result.data?.over.toBoolean())
+            articleListData.value.copy(result.data?.datas, refresh)
+        } else {
+            smartControl.value = SmartRefreshState(loading = false, success = false)
+            articleListData.value.orEmpty()
         }
     }
 

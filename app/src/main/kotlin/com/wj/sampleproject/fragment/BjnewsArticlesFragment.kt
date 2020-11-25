@@ -10,6 +10,7 @@ import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.ACTION_CATEGORY
 import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCELLED
 import com.wj.sampleproject.databinding.AppFragmentBjnewsArticlesBinding
+import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.viewmodel.BjnewsArticlesViewModel
 import org.koin.android.ext.android.inject
@@ -33,7 +34,7 @@ class BjnewsArticlesFragment
 
         if (firstLoad) {
             // 刷新数据
-            viewModel.refreshing.set(true)
+            viewModel.refreshing.value = SmartRefreshState(true)
         }
     }
 

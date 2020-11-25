@@ -202,6 +202,7 @@ class HomepageViewModel(
             try {
                 result.value = homepageRepository.getHomepageArticleList(pageNum)
             } catch (throwable: Throwable) {
+                Logger.t("NET").e(throwable, "getArticleList")
                 result.value = NetResult.fromThrowable(throwable)
             }
         }
@@ -211,11 +212,7 @@ class HomepageViewModel(
     /** 处理文章列表返回数据 [result]，并返回文章列表 */
     private fun disposeArticleListResult(result: NetResult<ArticleListEntity>): ArrayList<ArticleEntity> {
         val refresh = pageNumber.value == NET_PAGE_START
-        val smartControl = if (refresh) {
-            refreshing
-        } else {
-            loadMore
-        }
+        val smartControl = if (refresh) refreshing else loadMore
         return if (result.success()) {
             smartControl.value = SmartRefreshState(loading = false, success = true, noMore = result.data?.over.toBoolean())
             articleListData.value.copy(result.data?.datas, refresh)
