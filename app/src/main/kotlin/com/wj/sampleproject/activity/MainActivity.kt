@@ -2,18 +2,16 @@ package com.wj.sampleproject.activity
 
 import android.content.Context
 import android.os.Bundle
-import cn.wj.android.base.adapter.FragVpAdapter
-import cn.wj.android.base.adapter.creator
 import cn.wj.android.base.ext.startTargetActivity
-import cn.wj.android.base.ext.string
 import com.gyf.immersionbar.ktx.immersionBar
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.*
 import com.wj.sampleproject.databinding.AppActivityMainBinding
-import com.wj.sampleproject.ext.toSnackbarMsg
 import com.wj.sampleproject.fragment.*
+import com.wj.sampleproject.model.SnackbarModel
+import com.wj.sampleproject.simple.setFragmentAdapter
 import com.wj.sampleproject.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.absoluteValue
@@ -43,21 +41,18 @@ class MainActivity
         }
 
         // 配置适配器
-        mBinding.cvpMain.adapter = FragVpAdapter.newBuilder()
-                .manager(supportFragmentManager)
-                .creator {
-                    count(5)
-                    createFragment { position ->
-                        when (position) {
-                            TAB_MAIN_BOTTOM_HOMEPAGE -> HomepageFragment.actionCreate()
-                            TAB_MAIN_BOTTOM_SYSTEM -> SystemFragment.actionCreate()
-                            TAB_MAIN_BOTTOM_BJNEWS -> BjnewsFragment.actionCreate()
-                            TAB_MAIN_BOTTOM_PROJECT -> ProjectFragment.actionCreate()
-                            else -> MyFragment.actionCreate()
-                        }
-                    }
+        mBinding.vpMain.setFragmentAdapter(this) {
+            count(5)
+            createFragment { position ->
+                when (position) {
+                    TAB_MAIN_BOTTOM_HOMEPAGE -> HomepageFragment.actionCreate()
+                    TAB_MAIN_BOTTOM_SYSTEM -> SystemFragment.actionCreate()
+                    TAB_MAIN_BOTTOM_BJNEWS -> BjnewsFragment.actionCreate()
+                    TAB_MAIN_BOTTOM_PROJECT -> ProjectFragment.actionCreate()
+                    else -> MyFragment.actionCreate()
                 }
-                .build()
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -65,7 +60,7 @@ class MainActivity
         val currentBackPressMs = System.currentTimeMillis()
         if ((currentBackPressMs - lastBackPressMs).absoluteValue > MAIN_BACK_PRESS_INTERVAL_MS) {
             // 间隔时间外，提示
-            viewModel.snackbarData.value = R.string.app_press_again_to_exit.string.toSnackbarMsg()
+            viewModel.snackbarData.value = SnackbarModel(resId = R.string.app_press_again_to_exit, targetId = R.id.cl_target)
             // 保存时间
             lastBackPressMs = currentBackPressMs
         } else {

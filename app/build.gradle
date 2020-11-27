@@ -194,6 +194,12 @@ dependencies {
     // 协程
     implementation Dependencies.kotlin_coroutines
 
+    // viewpager2
+    implementation Dependencies.androidx_viewpager2
+
+    // Logger
+    implementation Dependencies.logger
+
     // Koin
     implementation Dependencies.koin_scope
     implementation Dependencies.koin_viewmodel
@@ -230,7 +236,6 @@ dependencies {
     // 依赖 base 库
     implementation project(":lib_ui")
     implementation project(":lib_databinding_adapter")
-    implementation project(":lib_logger")
     implementation project(':lib_okhttp_interceptor')
     implementation project(":lib_recyclerview")
     implementation project(":lib_views_custom")

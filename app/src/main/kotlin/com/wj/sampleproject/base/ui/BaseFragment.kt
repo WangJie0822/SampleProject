@@ -43,7 +43,12 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
             if (it.content.isNullOrBlank()) {
                 return@Observer
             }
-            val snackBar = Snackbar.make(mBinding.root, it.content.orEmpty(), it.duration)
+            val view = if (it.targetId == 0) {
+                mBinding.root
+            } else {
+                mBinding.root.findViewById(it.targetId)
+            }
+            val snackBar = Snackbar.make(view, it.content.orEmpty(), it.duration)
             snackBar.setTextColor(it.contentColor)
             snackBar.setBackgroundTint(it.contentBgColor)
             if (it.actionText != null && it.onAction != null) {

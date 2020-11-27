@@ -5,10 +5,10 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import cn.wj.android.base.log.InternalLog
 import cn.wj.android.base.log.Printer
-import cn.wj.android.logger.AndroidLogAdapter
-import cn.wj.android.logger.Logger
-import cn.wj.android.logger.PrettyFormatStrategy
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.di.adapterModule
 import com.wj.sampleproject.di.netModule

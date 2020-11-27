@@ -4,8 +4,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.isNotUrl
-import cn.wj.android.logger.Logger
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.EVENT_COLLECTION_REFRESH_COLLECTED_WEB

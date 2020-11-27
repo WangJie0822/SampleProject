@@ -8,7 +8,7 @@ import cn.wj.android.base.ext.string
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.ext.orElse
-import cn.wj.android.logger.Logger
+import com.orhanobut.logger.Logger
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel

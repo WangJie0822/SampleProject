@@ -32,7 +32,7 @@ object AppConfigs {
     const val compile_sdk_version = 29
 
     /** 编译工具版本 */
-    const val build_tools_version = "29.0.2"
+    const val build_tools_version = "29.0.3"
 
     /** 最小支持版本 */
     const val min_sdk_version = 19
@@ -65,7 +65,8 @@ object Versions {
     const val room_version = "2.2.5"
 
     /** paging 版本 */
-    const val paging_version = "2.1.2"
+    const val paging_version = "3.0.0-alpha09"
+//    const val paging_version = "2.1.2"
 
     /** navigation 版本 */
     const val navigation_version = "2.3.1"
@@ -131,6 +132,9 @@ object Dependencies {
     /** androidx recyclerview */
     const val androidx_recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
 
+    /** androidx viewpager2 */
+    const val androidx_viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
+
     /** androidx 约束性布局 */
     const val androidx_constraint = "androidx.constraintlayout:constraintlayout:2.0.4"
 
@@ -179,6 +183,12 @@ object Dependencies {
     const val androidx_navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:${Versions.navigation_version}"
     const val androidx_navigation_runtime_ktx = "androidx.navigation:navigation-runtime-ktx:${Versions.navigation_version}"
     const val androidx_navigation_common_ktx = "androidx.navigation:navigation-common-ktx:${Versions.navigation_version}"
+
+    /**
+     * Logger 日志打印
+     * - Github: [https://github.com/orhanobut/logger]
+     */
+    const val logger = "com.orhanobut:logger:2.2.0"
 
     /**
      * kotlin 协程

@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.copy
 import cn.wj.android.common.ext.orEmpty
-import cn.wj.android.logger.Logger
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.orhanobut.logger.Logger
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
 import com.wj.sampleproject.base.viewmodel.BaseViewModel

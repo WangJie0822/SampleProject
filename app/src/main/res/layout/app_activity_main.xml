@@ -16,15 +16,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <cn.wj.android.views.custom.CustomViewPager
-            android:id="@+id/cvp_main"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/cl_target"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:bind_vp_currentItem="@{viewModel.currentItem}"
-            android:bind_vp_offscreenPageLimit="@{10}"
-            android:bind_vp_smoothScroll="@{false}"
-            app:scrollable="false" />
+            android:layout_weight="1">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:bind_vp2_currentItem="@{viewModel.currentItem}"
+                android:bind_vp2_offscreenPageLimit="@{10}"
+                android:bind_vp2_smoothScroll="@{false}"
+                android:bind_vp2_userInputEnabled="@{false}" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <View
             android:id="@+id/v_dividing"

@@ -8,7 +8,7 @@ import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.copy
 import cn.wj.android.common.ext.orElse
 import cn.wj.android.common.ext.orEmpty
-import cn.wj.android.logger.Logger
+import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
@@ -68,6 +68,16 @@ class HomepageViewModel(
             jumpSearchData.value = 0
         }
         false
+    }
+
+    /** 标题折叠监听 */
+    val onOffsetChanged: (Int, Int) -> Unit = { offset, _ ->
+        if (offset == 0) {
+            // 完全展开
+            startCarousel()
+        } else {
+            stopCarousel()
+        }
     }
 
     /** Banner 下标 */

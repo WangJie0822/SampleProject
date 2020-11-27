@@ -20,18 +20,17 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/abl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:bind_ratio="@{`2:1`}"
                 tools:layout_height="210dp">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:id="@+id/ctl"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:bind_ctl_collapsedTitleTextColor="@{@color/app_white}"
                     android:bind_ctl_expandedTitleColor="@{@color/app_transparent}"
+                    android:bind_ctl_onOffsetChanged="@{viewModel.onOffsetChanged}"
                     app:contentScrim="@color/app_colorPrimary"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -40,14 +39,14 @@
                         android:layout_height="wrap_content"
                         app:layout_collapseMode="parallax">
 
-                        <androidx.viewpager.widget.ViewPager
+                        <androidx.viewpager2.widget.ViewPager2
                             android:id="@+id/vp_banner"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:bind_onTouch="@{viewModel.onBannerTouch}"
-                            android:bind_vp_currentItem="@={viewModel.bannerCurrent}"
-                            android:bind_vp_offscreenPageLimit="@{viewModel.bannerLimit}"
-                            android:bind_vp_smoothScroll="@{true}"
+                            android:bind_vp2_currentItem="@={viewModel.bannerCurrent}"
+                            android:bind_vp2_offscreenPageLimit="@{viewModel.bannerLimit}"
+                            android:bind_vp2_onTouch="@{viewModel.onBannerTouch}"
+                            android:bind_vp2_smoothScroll="@{true}"
                             app:layout_constraintDimensionRatio="2:1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

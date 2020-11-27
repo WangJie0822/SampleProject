@@ -1,7 +1,7 @@
 package com.wj.sampleproject.di
 
 import cn.wj.android.common.ext.orEmpty
-import cn.wj.android.logger.Logger
+import com.orhanobut.logger.Logger
 import com.tencent.mmkv.MMKV
 import com.wj.android.okhttp.InterceptorLogger
 import com.wj.android.okhttp.LoggerInterceptor
@@ -69,7 +69,7 @@ val netModule: Module = module {
         Retrofit.Builder()
                 .baseUrl(UrlDefinition.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(get<OkHttpClient>())
+                .client(get())
                 .build()
     }
 

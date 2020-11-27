@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="?selectableItemBackground"
         android:bind_onClick="@{viewModel.onBannerItemClick}"
         android:bind_onClick_item="@{item}">
@@ -25,13 +25,15 @@
             android:id="@+id/iv_img"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:bind_iv_img_default="@{@drawable/app_vector_broken_image_24dp}"
             android:bind_iv_img_url="@{item.imagePath}"
             android:contentDescription="@null"
             android:scaleType="fitXY"
             app:layout_constraintDimensionRatio="2:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/app_vector_image_24dp" />
 
         <TextView
             android:layout_width="0dp"

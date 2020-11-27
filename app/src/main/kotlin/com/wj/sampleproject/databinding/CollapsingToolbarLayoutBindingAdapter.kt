@@ -2,6 +2,7 @@ package com.wj.sampleproject.databinding
 
 import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
 /**
@@ -34,4 +35,17 @@ fun setExpandedTitleColor(ctl: CollapsingToolbarLayout, @ColorInt color: Int?) {
         return
     }
     ctl.setExpandedTitleColor(color)
+}
+
+@BindingAdapter("android:bind_ctl_onOffsetChanged")
+fun addOnOffsetChangedListener(ctl: CollapsingToolbarLayout, onChanged: ((Int, Int) -> Unit)?) {
+    if (null == onChanged) {
+        return
+    }
+    val parent = ctl.parent
+    if (parent is AppBarLayout) {
+        parent.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            onChanged.invoke(verticalOffset, parent.totalScrollRange)
+        })
+    }
 }

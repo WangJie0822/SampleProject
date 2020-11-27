@@ -2,9 +2,9 @@
 
 package com.wj.sampleproject.ext
 
-import cn.wj.android.logger.Logger
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.orhanobut.logger.Logger
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody

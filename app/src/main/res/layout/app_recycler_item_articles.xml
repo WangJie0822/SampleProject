@@ -130,6 +130,8 @@
             android:id="@+id/iv_envelope"
             android:layout_width="160dp"
             android:layout_height="0dp"
+            android:bind_iv_img_default="@{@drawable/app_vector_broken_image_24dp}"
+            android:bind_iv_img_placeholder="@{@drawable/app_vector_image_24dp}"
             android:bind_iv_img_url="@{item.envelopePic}"
             android:bind_visibility="@{item.showEnvelope}"
             android:contentDescription="@null"
@@ -137,7 +139,7 @@
             app:layout_constraintDimensionRatio="2:1"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/barrier_top"
-            tools:background="#C0FAE7" />
+            tools:src="@drawable/app_vector_image_24dp" />
 
         <TextView
             android:id="@+id/tv_article_title"

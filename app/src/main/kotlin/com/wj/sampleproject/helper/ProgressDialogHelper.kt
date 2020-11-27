@@ -4,7 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import cn.wj.android.base.ext.isMainProcess
 import cn.wj.android.base.thread.runOnMainThread
 import cn.wj.android.base.utils.AppManager
-import cn.wj.android.logger.Logger
+import com.orhanobut.logger.Logger
 import com.wj.sampleproject.dialog.ProgressDialog
 
 /**

@@ -1,6 +1,6 @@
 package com.wj.sampleproject.fragment
 
-import cn.wj.android.base.adapter.SimplePagerAdapter
+import cn.wj.android.recyclerview.adapter.simple.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
@@ -27,7 +27,7 @@ class HomepageFragment
     override val layoutResId: Int = R.layout.app_fragment_homepage
 
     /** Banner 列表适配器 */
-    private val mBannerAdapter = SimplePagerAdapter<BannerEntity>(R.layout.app_viewpager_item_banner)
+    private val mBannerAdapter = SimpleRvAdapter<BannerEntity>(R.layout.app_viewpager_item_banner)
 
     /** 文章列表适配器 */
     private val mArticlesAdapter: ArticleListRvAdapter by inject()
