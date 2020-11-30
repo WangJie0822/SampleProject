@@ -7,8 +7,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import cn.wj.android.databinding.adapter.IMG_RESOURCE_MARK
 import cn.wj.android.databinding.adapter.setImageResource
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import coil.load
 import java.io.File
 
 /**
@@ -35,13 +34,7 @@ fun setImageViewUrl(
         placeholder: Drawable?,
         default: Drawable?
 ) {
-    if (imgUrl.isNullOrBlank()) {
-        if (null != default) {
-            iv.setImageDrawable(default)
-        }
-        return
-    }
-    val options = RequestOptions().apply {
+    iv.load(imgUrl) {
         if (null != placeholder) {
             placeholder(placeholder)
         }
@@ -49,10 +42,6 @@ fun setImageViewUrl(
             error(default)
         }
     }
-    Glide.with(iv.context)
-            .load(imgUrl)
-            .apply(options)
-            .into(iv)
 }
 
 /**
@@ -73,13 +62,14 @@ fun setImageViewPath(
         placeholder: Drawable?,
         default: Drawable?
 ) {
+
     if (path.isNullOrBlank()) {
         if (null != default) {
             iv.setImageDrawable(default)
         }
         return
     }
-    val options = RequestOptions().apply {
+    iv.load(File(path)) {
         if (null != placeholder) {
             placeholder(placeholder)
         }
@@ -87,10 +77,6 @@ fun setImageViewPath(
             error(default)
         }
     }
-    Glide.with(iv.context)
-            .load(File(path))
-            .apply(options)
-            .into(iv)
 }
 
 /**

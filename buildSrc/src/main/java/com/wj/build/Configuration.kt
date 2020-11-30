@@ -100,6 +100,9 @@ object Versions {
 
     /** doraemon kit 版本 */
     const val doraemon_kit_version = "3.1.8"
+
+    /** coil 版本 */
+    const val coil_version = "1.1.0"
 }
 
 /**
@@ -280,4 +283,14 @@ object Dependencies {
      * - Github: [https://github.com/H07000223/FlycoTabLayout]
      */
     const val tablayout = "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar"
+
+    /**
+     * Coil 图片加载
+     * - Github: [https://github.com/coil-kt/coil]
+     */
+    const val coil = "io.coil-kt:coil:${Versions.coil_version}"
+    const val coil_base = "io.coil-kt:coil-base:${Versions.coil_version}"
+    const val coil_gif = "io.coil-kt:coil-gif:${Versions.coil_version}"
+    const val coil_svg = "io.coil-kt:coil-svg:${Versions.coil_version}"
+    const val coil_video = "io.coil-kt:coil-video:${Versions.coil_version}"
 }

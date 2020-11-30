@@ -216,7 +216,7 @@ dependencies {
     implementation Dependencies.retrofit_gson
 
     // Glide
-    implementation Dependencies.glide
+    implementation Dependencies.coil
 
     // MMKV 数据存储
     implementation Dependencies.tencent_mmkv
