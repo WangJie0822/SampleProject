@@ -41,3 +41,20 @@ fun setEditTextInputType(et: EditText, inputType: TransformationMethod?) {
 fun setOnEditorAction(et: EditText, action: ((TextView, Int, KeyEvent?) -> Boolean)?) {
     et.setOnEditorActionListener(action)
 }
+
+/**
+ * 给 [EditText] 设置软键盘事件监听 [action]
+ * > [action]: (`actionId`: [Int]) -> [Boolean]
+ *
+ * > `actionId`: 动作标记
+ */
+@BindingAdapter("android:bind_et_onEditorAction")
+fun setOnEditorAction(et: EditText, action: ((Int) -> Boolean)?) {
+    if (null == action) {
+        et.setOnEditorActionListener(null)
+        return
+    }
+    et.setOnEditorActionListener { _, actionId, _ ->
+        action.invoke(actionId)
+    }
+}

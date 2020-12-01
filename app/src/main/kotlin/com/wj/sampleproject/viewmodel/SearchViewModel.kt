@@ -1,27 +1,24 @@
 package com.wj.sampleproject.viewmodel
 
-import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import cn.wj.android.common.ext.condition
-import cn.wj.android.common.ext.copy
-import cn.wj.android.common.ext.isNotNullAndBlank
-import cn.wj.android.common.ext.orEmpty
+import androidx.lifecycle.*
+import cn.wj.android.common.ext.*
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListViewModel
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.NET_PAGE_START
+import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.ArticleEntity
+import com.wj.sampleproject.entity.ArticleListEntity
 import com.wj.sampleproject.entity.HotSearchEntity
 import com.wj.sampleproject.ext.showMsg
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
+import com.wj.sampleproject.net.NetResult
 import com.wj.sampleproject.repository.CollectRepository
 import com.wj.sampleproject.repository.SearchRepository
 import kotlinx.coroutines.launch
@@ -39,13 +36,20 @@ class SearchViewModel(
         ArticleListViewModel {
 
     /** 页码 */
-    private var pageNum = NET_PAGE_START
+    private val pageNumber: MutableLiveData<Int> = MutableLiveData()
+
+    /** 搜索返回数据 */
+    private val searchResultData: LiveData<NetResult<ArticleListEntity>> = pageNumber.switchMap { pageNum ->
+        getSearchList(pageNum)
+    }
+
+    /** 文章列表数据 */
+    val articleListData: LiveData<ArrayList<ArticleEntity>> = searchResultData.map { result ->
+        disposeArticleListResult(result)
+    }
 
     /** 热搜数据 */
     val hotSearchData = MutableLiveData<ArrayList<HotSearchEntity>>()
-
-    /** 文章列表数据 */
-    val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
 
     /** 跳转 WebView 数据 */
     val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
@@ -61,38 +65,36 @@ class SearchViewModel(
     }
 
     /** 软键盘搜索 */
-    val onSearchAction: (TextView, Int, KeyEvent?) -> Boolean = { _, actionId, _ ->
+    val onSearchAction: (Int) -> Boolean = { actionId ->
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             // 搜索
             if (keywords.get().isNullOrBlank()) {
                 snackbarData.value = SnackbarModel(R.string.app_please_enter_keywords)
+                true
             } else {
-                onRefresh.invoke()
+                refreshing.value = SmartRefreshState(true)
+                false
             }
+        } else {
+            false
         }
-        false
     }
 
-    /** 标记 - 是否正在刷新 */
-    val refreshing: ObservableBoolean = ObservableBoolean(false)
+    /** 刷新状态 */
+    val refreshing: MutableLiveData<SmartRefreshState> = MutableLiveData()
 
     /** 刷新回调 */
     val onRefresh: () -> Unit = {
-        pageNum = NET_PAGE_START
-        getSearchList()
+        pageNumber.value = NET_PAGE_START
     }
 
-    /** 标记 - 是否正在加载更多 */
-    val loadMore: ObservableBoolean = ObservableBoolean(false)
+    /** 加载更多状态 */
+    val loadMore: MutableLiveData<SmartRefreshState> = MutableLiveData()
 
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
-        pageNum++
-        getSearchList()
+        pageNumber.value = pageNumber.value.orElse(NET_PAGE_START) + 1
     }
-
-    /** 标记 - 是否没有更多 */
-    val noMore: ObservableBoolean = ObservableBoolean(true)
 
     /** 返回点击 */
     val onBackClick = {
@@ -147,30 +149,30 @@ class SearchViewModel(
         }
     }
 
-    /** 获取搜索列表 */
-    private fun getSearchList() {
+    /** 根据页码 [pageNum] 获取对应关键字 [keywords] 的搜索结果 */
+    private fun getSearchList(pageNum: Int): LiveData<NetResult<ArticleListEntity>> {
+        val result = MutableLiveData<NetResult<ArticleListEntity>>()
         viewModelScope.launch {
             try {
-                // 获取文章列表数据
-                val result = searchRepository.search(pageNum, keywords.get().orEmpty())
-                if (result.success()) {
-                    // 请求成功
-                    val newList = articleListData.value.copy(result.data?.datas, refreshing.get())
-                    if (newList.isNotEmpty()) {
-                        showHotSearch.set(false)
-                    }
-                    articleListData.value = newList
-                    noMore.set(result.data?.over?.toBoolean().condition)
-                } else {
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                result.value = searchRepository.search(pageNum, keywords.get().orEmpty())
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getSearchList")
-                snackbarData.value = SnackbarModel(throwable.showMsg)
-            } finally {
-                refreshing.set(false)
-                loadMore.set(false)
+                result.value = NetResult.fromThrowable(throwable)
             }
+        }
+        return result
+    }
+
+    /** 处理文章列表返回数据 [result]，并返回文章列表 */
+    private fun disposeArticleListResult(result: NetResult<ArticleListEntity>): ArrayList<ArticleEntity> {
+        val refresh = pageNumber.value == NET_PAGE_START
+        val smartControl = if (refresh) refreshing else loadMore
+        return if (result.success()) {
+            smartControl.value = SmartRefreshState(loading = false, success = true, noMore = result.data?.over.toBoolean())
+            articleListData.value.copy(result.data?.datas, refresh)
+        } else {
+            smartControl.value = SmartRefreshState(loading = false, success = false)
+            articleListData.value.orEmpty()
         }
     }
 
