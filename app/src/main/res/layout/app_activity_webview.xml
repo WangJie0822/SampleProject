@@ -26,7 +26,7 @@
             android:bind_toolbar_title="@{viewModel.title}"
             android:theme="@style/app_toolbar"
             app:menu="@menu/app_menu_webview"
-            app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
+            app:navigationIcon="@drawable/app_vector_arrow_back"
             tools:title="@sample/article_list.json/data/datas/title" />
 
         <View style="@style/app_dividing.horizontal" />

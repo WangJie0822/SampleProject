@@ -164,6 +164,9 @@ dependencies {
     // Kotlin jdk
     implementation Dependencies.kotlin_jdk
 
+    // Dex 分包
+    implementation Dependencies.androidx_multidex
+
     // v4
     implementation Dependencies.androidx_legacy
     // v7
@@ -229,6 +232,13 @@ dependencies {
     // 状态栏工具
     implementation Dependencies.immersion_bar
     implementation Dependencies.immersion_bar_ktx
+
+    // 换肤
+    implementation Dependencies.skin_support
+    implementation Dependencies.skin_support_appcompat
+    implementation Dependencies.skin_support_material
+    implementation Dependencies.skin_support_cardview
+    implementation Dependencies.skin_support_constraint
 
     // Tablayout
     implementation Dependencies.tablayout

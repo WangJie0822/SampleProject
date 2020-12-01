@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@{viewModel.hintStr}"
-            android:textColor="@color/app_text_color_white"
+            android:textColor="@color/app_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/pb_progress"

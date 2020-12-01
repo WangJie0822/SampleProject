@@ -18,6 +18,11 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
+import skin.support.SkinCompatManager
+import skin.support.app.SkinAppCompatViewInflater
+import skin.support.app.SkinCardViewInflater
+import skin.support.constraint.app.SkinConstraintViewInflater
+import skin.support.design.app.SkinMaterialViewInflater
 
 /**
  * 应用全局类
@@ -33,6 +38,14 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // 初始化换肤框架
+        SkinCompatManager.withoutActivity(this)
+                .addInflater(SkinAppCompatViewInflater())
+                .addInflater(SkinMaterialViewInflater())
+                .addInflater(SkinConstraintViewInflater())
+                .addInflater(SkinCardViewInflater())
+                .loadSkin()
 
         // 初始化 Koin
         startKoin {

@@ -4,8 +4,9 @@
 
     <item
         android:id="@+id/menu_add"
-        android:icon="@drawable/app_vector_add_white_24dp"
+        android:icon="@drawable/app_vector_add"
         android:title="@string/app_add"
+        app:iconTint="@color/app_tintPrimary"
         app:showAsAction="always" />
 
 </menu>

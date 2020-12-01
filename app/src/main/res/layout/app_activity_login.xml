@@ -21,7 +21,7 @@
             android:bind_onClick="@{viewModel.onCloseClick}"
             android:contentDescription="@null"
             android:padding="12dp"
-            android:src="@drawable/app_vector_close_black_24dp"
+            android:src="@drawable/app_vector_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +32,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="100dp"
             android:text="@string/app_welcome_tips"
-            android:textColor="@color/app_text_color_black"
+            android:textColor="@color/app_textPrimaryDark"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
             app:layout_constraintStart_toEndOf="@id/tv_register"
             app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
 
-        <cn.wj.android.views.custom.DrawableEditText
+        <cn.wj.android.views.custom.FixedEditText
             android:id="@+id/det_phone_number"
             android:layout_width="0dp"
             android:layout_height="35dp"
@@ -87,15 +87,16 @@
             android:maxLength="13"
             android:singleLine="true"
             android:text="@={viewModel.userName}"
-            android:textColor="@color/app_text_color_black"
-            android:textColorHint="@color/app_text_color_gray_light"
+            android:textColor="@color/app_textPrimaryDark"
+            android:textColorHint="@color/app_textPrimaryLight"
             android:textSize="16sp"
-            app:det_drawableStart="@drawable/app_vector_phone_gray_24dp"
-            app:det_drawableStartHeight="24dp"
-            app:det_drawableStartWidth="24dp"
+            app:fet_drawableStart="@drawable/app_vector_phone"
+            app:fet_drawableStartHeight="24dp"
+            app:fet_drawableStartWidth="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_login" />
+            app:layout_constraintTop_toBottomOf="@id/tv_login"
+            tools:text="用户名" />
 
         <ImageView
             android:layout_width="32dp"
@@ -118,30 +119,30 @@
             android:layout_height="1dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:background="@color/app_dividing_bg"
+            android:background="@color/app_colorDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/det_phone_number" />
 
-        <cn.wj.android.views.custom.DrawableEditText
+        <cn.wj.android.views.custom.FixedEditText
             android:id="@+id/det_password"
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="40dp"
-            android:drawableStart="@drawable/app_vector_password_gray_24dp"
+            android:drawableStart="@drawable/app_vector_password"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:hint="@string/app_please_enter_password"
             android:inputType="textPassword"
             android:singleLine="true"
             android:text="@={viewModel.password}"
-            android:textColor="@color/app_text_color_black"
-            android:textColorHint="@color/app_text_color_gray_light"
+            android:textColor="@color/app_textPrimaryDark"
+            android:textColorHint="@color/app_textPrimaryLight"
             android:textSize="16sp"
-            app:det_drawableStartHeight="25dp"
-            app:det_drawableStartWidth="25dp"
+            app:fet_drawableStartHeight="25dp"
+            app:fet_drawableStartWidth="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/v_phone_number" />
@@ -152,12 +153,12 @@
             android:layout_height="1dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:background="@color/app_dividing_bg"
+            android:background="@color/app_colorDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/det_password" />
 
-        <cn.wj.android.views.custom.DrawableEditText
+        <cn.wj.android.views.custom.FixedEditText
             android:id="@+id/det_password_again"
             android:layout_width="0dp"
             android:layout_height="35dp"
@@ -165,18 +166,18 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="40dp"
             android:bind_visibility="@{viewModel.register}"
-            android:drawableStart="@drawable/app_vector_password_gray_24dp"
+            android:drawableStart="@drawable/app_vector_password"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:hint="@string/app_please_enter_password_again"
             android:inputType="textPassword"
             android:singleLine="true"
             android:text="@={viewModel.passwordAgain}"
-            android:textColor="@color/app_text_color_black"
-            android:textColorHint="@color/app_text_color_gray_light"
+            android:textColor="@color/app_textPrimaryDark"
+            android:textColorHint="@color/app_textPrimaryLight"
             android:textSize="16sp"
-            app:det_drawableStartHeight="25dp"
-            app:det_drawableStartWidth="25dp"
+            app:fet_drawableStartHeight="25dp"
+            app:fet_drawableStartWidth="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/v_password" />
@@ -187,7 +188,7 @@
             android:layout_height="1dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:background="@color/app_dividing_bg"
+            android:background="@color/app_colorDivider"
             android:bind_visibility="@{viewModel.register}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +205,7 @@
             android:bind_onClick="@{viewModel.onButtonClick}"
             android:gravity="center"
             android:text="@{viewModel.buttonStr}"
-            android:textColor="@color/app_text_color_white"
+            android:textColor="@color/app_text"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

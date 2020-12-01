@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{item.name}"
-            android:textColor="#333333"
+            android:textColor="@color/app_textPrimaryDark"
             android:textSize="16sp"
             tools:text="@sample/system_category.json/data/name" />
 

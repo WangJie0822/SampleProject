@@ -6,17 +6,6 @@
         <attr name="fixHeight" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="CircleImageView">
-        <attr name="citv_border_width" format="dimension" />
-        <attr name="citv_border_color" format="color" />
-        <attr name="citv_border_overlay" format="boolean" />
-        <attr name="citv_fill_color" format="color" />
-        <attr name="citv_text_text" format="string" />
-        <attr name="citv_text_color" format="color" />
-        <attr name="citv_text_size" format="dimension" />
-        <attr name="citv_text_padding" format="dimension" />
-    </declare-styleable>
-
     <declare-styleable name="EasyPickerView">
         <attr name="epvTextSize" format="dimension" />
         <attr name="epvTextColor" format="color" />
@@ -25,31 +14,6 @@
         <attr name="epvTextMinAlpha" format="float" />
         <attr name="epvRecycleMode" format="boolean" />
         <attr name="epvMaxShowNum" format="integer" />
-    </declare-styleable>
-
-    <declare-styleable name="SwitchButton">
-        <attr name="sb_shadow_radius" format="reference|dimension" />
-        <attr name="sb_shadow_offset" format="reference|dimension" />
-        <attr name="sb_shadow_color" format="reference|color" />
-        <attr name="sb_uncheck_color" format="reference|color" />
-        <attr name="sb_checked_color" format="reference|color" />
-
-        <attr name="sb_enable" format="boolean" />
-
-        <attr name="sb_border_width" format="reference|dimension" />
-        <attr name="sb_checkline_color" format="reference|color" />
-        <attr name="sb_checkline_width" format="reference|dimension" />
-        <attr name="sb_uncheckcircle_color" format="reference|color" />
-        <attr name="sb_uncheckcircle_width" format="reference|dimension" />
-        <attr name="sb_uncheckcircle_radius" format="reference|dimension" />
-
-        <attr name="sb_checked" format="reference|boolean" />
-        <attr name="sb_shadow_effect" format="reference|boolean" />
-        <attr name="sb_effect_duration" format="reference|integer" />
-        <attr name="sb_button_color" format="reference|color" />
-        <attr name="sb_show_indicator" format="reference|boolean" />
-        <attr name="sb_background" format="reference|color" />
-        <attr name="sb_enable_effect" format="reference|boolean" />
     </declare-styleable>
 
     <!-- 虚线 -->
@@ -74,14 +38,6 @@
         <attr name="sbv_text_color_press" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="MaxHeightScrollView">
-        <attr name="mhsv_maxHeight" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="MaxHeightNestedScrollView">
-        <attr name="mhnsv_maxHeight" format="dimension" />
-    </declare-styleable>
-
     <declare-styleable name="FixedTextView">
         <attr name="ftv_drawableStart" format="reference" />
         <attr name="ftv_drawableStartWidth" format="dimension|reference" />
@@ -100,24 +56,24 @@
         <attr name="ftv_drawableBottomHeight" format="dimension|reference" />
     </declare-styleable>
 
-    <declare-styleable name="DrawableEditText">
-        <attr name="det_drawableStart" format="reference" />
-        <attr name="det_drawableStartWidth" format="dimension|reference" />
-        <attr name="det_drawableStartHeight" format="dimension|reference" />
+    <declare-styleable name="FixedEditText">
+        <attr name="fet_drawableStart" format="reference" />
+        <attr name="fet_drawableStartWidth" format="dimension|reference" />
+        <attr name="fet_drawableStartHeight" format="dimension|reference" />
 
-        <attr name="det_drawableEnd" format="reference" />
-        <attr name="det_drawableEndWidth" format="dimension|reference" />
-        <attr name="det_drawableEndHeight" format="dimension|reference" />
+        <attr name="fet_drawableEnd" format="reference" />
+        <attr name="fet_drawableEndWidth" format="dimension|reference" />
+        <attr name="fet_drawableEndHeight" format="dimension|reference" />
 
-        <attr name="det_drawableTop" format="reference" />
-        <attr name="det_drawableTopWidth" format="dimension|reference" />
-        <attr name="det_drawableTopHeight" format="dimension|reference" />
+        <attr name="fet_drawableTop" format="reference" />
+        <attr name="fet_drawableTopWidth" format="dimension|reference" />
+        <attr name="fet_drawableTopHeight" format="dimension|reference" />
 
-        <attr name="det_drawableBottom" format="reference" />
-        <attr name="det_drawableBottomWidth" format="dimension|reference" />
-        <attr name="det_drawableBottomHeight" format="dimension|reference" />
+        <attr name="fet_drawableBottom" format="reference" />
+        <attr name="fet_drawableBottomWidth" format="dimension|reference" />
+        <attr name="fet_drawableBottomHeight" format="dimension|reference" />
 
-        <attr name="det_phoneFormat" format="boolean" />
+        <attr name="fet_phoneFormat" format="boolean" />
     </declare-styleable>
 
 </resources>

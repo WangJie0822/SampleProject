@@ -56,7 +56,7 @@ class LoginViewModel(
 
     /** 按钮文本 */
     val buttonStr: ObservableField<String> = object : ObservableField<String>(register) {
-        override fun get(): String? {
+        override fun get(): String {
             return if (register.get()) {
                 // 注册
                 R.string.app_register

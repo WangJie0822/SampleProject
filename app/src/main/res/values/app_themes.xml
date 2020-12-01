@@ -10,7 +10,7 @@
         <item name="colorAccent">@color/app_colorAccent</item>
 
         <!-- 窗口背景 -->
-        <item name="android:windowBackground">@color/app_window_bg</item>
+        <item name="android:windowBackground">@color/app_backgroundPrimary</item>
     </style>
 
     <!-- 全屏主题 -->

@@ -6,9 +6,9 @@
         <!-- 字体大小 -->
         <item name="android:textSize">14sp</item>
         <!--ToolBar 字体颜色 -->
-        <item name="titleTextColor">@color/app_text_color_white</item>
+        <item name="titleTextColor">@color/app_text</item>
         <!-- 溢出菜单图标颜色 -->
-        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlNormal">@color/app_text</item>
         <!-- 右侧溢出菜单图标自定义 -->
         <!--        <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow</item>-->
         <!-- 是否覆盖锚点，默认为true，即盖住 Toolbar -->
@@ -16,7 +16,7 @@
         <!-- 弹出层背景颜色 -->
         <item name="android:colorBackground">@color/app_white</item>
         <!-- 设置弹出菜单文字颜色 -->
-        <item name="android:textColor">@color/app_text_color_black</item>
+        <item name="android:textColor">@color/app_textPrimaryDark</item>
         <!-- 弹出层垂直方向上的偏移，即在竖直方向上距离Toolbar的距离，值为负则会盖住Toolbar -->
         <item name="android:dropDownVerticalOffset">0dp</item>
         <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
@@ -25,7 +25,7 @@
 
     <!-- 分隔线样式 -->
     <style name="app_dividing">
-        <item name="android:background">@color/app_dividing_bg</item>
+        <item name="android:background">@color/app_colorDivider</item>
     </style>
 
     <style name="app_dividing.vertical">
@@ -43,7 +43,7 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/app_transparentDark</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowContentOverlay">@null</item>

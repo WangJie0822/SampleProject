@@ -13,7 +13,7 @@
         <!-- 状态栏颜色 -->
         <item name="android:statusBarColor">@color/app_colorPrimaryDark</item>
         <!-- 窗口背景 -->
-        <item name="android:windowBackground">@color/app_window_bg</item>
+        <item name="android:windowBackground">@color/app_backgroundPrimary</item>
     </style>
 
     <!-- 欢迎界面主题 -->
@@ -23,7 +23,7 @@
         <!-- 半透明状态栏且布局延伸到状态栏下面 -->
         <item name="android:windowTranslucentStatus">true</item>
         <!-- 状态栏颜色 -->
-        <item name="android:statusBarColor">@color/app_transparent</item>
+        <item name="android:statusBarColor">@color/app_transparentDark</item>
         <!-- 窗口背景 -->
         <item name="android:windowBackground">@drawable/app_layer_list_splash_bg</item>
     </style>

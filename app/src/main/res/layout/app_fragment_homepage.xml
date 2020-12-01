@@ -28,8 +28,8 @@
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:bind_ctl_collapsedTitleTextColor="@{@color/app_white}"
-                    android:bind_ctl_expandedTitleColor="@{@color/app_transparent}"
+                    android:bind_ctl_collapsedTitleTextColor="@{@color/app_text}"
+                    android:bind_ctl_expandedTitleColor="@{@color/app_transparentLight}"
                     android:bind_ctl_onOffsetChanged="@{viewModel.onOffsetChanged}"
                     app:contentScrim="@color/app_colorPrimary"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">

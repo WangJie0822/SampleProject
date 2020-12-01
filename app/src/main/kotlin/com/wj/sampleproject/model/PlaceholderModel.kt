@@ -18,7 +18,7 @@ import com.wj.sampleproject.R
  */
 data class PlaceholderModel(
         var show: Boolean = true,
-        @DrawableRes var imgResId: Int = R.drawable.app_vector_no_data_gray,
+        @DrawableRes var imgResId: Int = R.drawable.app_vector_no_data,
         var tips: String = R.string.app_no_data_try_refresh.string,
         var onClick: PlaceholderClick? = null
 )

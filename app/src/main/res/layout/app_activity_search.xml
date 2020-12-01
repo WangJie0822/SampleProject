@@ -23,9 +23,9 @@
             android:background="@color/app_colorPrimary"
             android:bind_toolbar_navigationClick="@{viewModel.onBackClick}"
             android:theme="@style/app_toolbar"
-            app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp">
+            app:navigationIcon="@drawable/app_vector_arrow_back">
 
-            <cn.wj.android.views.custom.DrawableEditText
+            <cn.wj.android.views.custom.FixedEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -44,12 +44,13 @@
                 android:paddingBottom="4dp"
                 android:singleLine="true"
                 android:text="@={viewModel.keywords}"
-                android:textColor="@color/app_text_color_black"
-                android:textColorHint="@color/app_text_color_gray"
+                android:textColor="@color/app_textPrimaryDark"
+                android:textColorHint="@color/app_textPrimaryLight"
                 android:textSize="14sp"
-                app:det_drawableStart="@drawable/app_vector_search_primary_24dp"
-                app:det_drawableStartHeight="24dp"
-                app:det_drawableStartWidth="24dp" />
+                app:drawableTint="@color/app_tintPrimary"
+                app:fet_drawableStart="@drawable/app_vector_search"
+                app:fet_drawableStartHeight="24dp"
+                app:fet_drawableStartWidth="24dp" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -70,7 +71,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="14dp"
-                    android:text="@string/app_hot_search" />
+                    android:text="@string/app_hot_search"
+                    android:textColor="@color/app_textPrimary"
+                    android:textSize="14sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_hot_search"
@@ -78,7 +81,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12sp"
+                    android:layout_marginEnd="12dp"
                     tools:layoutManager="cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager"
                     tools:listitem="@layout/app_recycler_item_hot_search" />
 
@@ -87,7 +90,7 @@
             <com.scwang.smart.refresh.layout.SmartRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/app_window_bg"
+                android:background="@color/app_backgroundPrimary"
                 android:bind_smart_loadMoreState="@={viewModel.loadMore}"
                 android:bind_smart_onLoadMore="@{viewModel.onLoadMore}"
                 android:bind_smart_onRefresh="@{viewModel.onRefresh}"

@@ -13,7 +13,7 @@ import kotlin.math.roundToInt
  *
  * @author 王杰
  */
-class DrawableEditText @JvmOverloads constructor(
+class FixedEditText @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = android.R.attr.textViewStyle
@@ -21,37 +21,37 @@ class DrawableEditText @JvmOverloads constructor(
 
     init {
         if (attrs != null) {
-            val a = context.obtainStyledAttributes(attrs, R.styleable.DrawableEditText)
+            val a = context.obtainStyledAttributes(attrs, R.styleable.FixedEditText)
 
-            val dStart = a.getDrawable(R.styleable.DrawableEditText_det_drawableStart)
+            val dStart = a.getDrawable(R.styleable.FixedEditText_fet_drawableStart)
             if (dStart != null) {
-                val wStart = a.getDimension(R.styleable.DrawableEditText_det_drawableStartWidth, dStart.intrinsicWidth.toFloat())
-                val hStart = a.getDimension(R.styleable.DrawableEditText_det_drawableStartHeight, dStart.intrinsicHeight.toFloat())
+                val wStart = a.getDimension(R.styleable.FixedEditText_fet_drawableStartWidth, dStart.intrinsicWidth.toFloat())
+                val hStart = a.getDimension(R.styleable.FixedEditText_fet_drawableStartHeight, dStart.intrinsicHeight.toFloat())
                 setTextViewDrawableStart(dStart, wStart, hStart)
             }
 
-            val dEnd = a.getDrawable(R.styleable.DrawableEditText_det_drawableEnd)
+            val dEnd = a.getDrawable(R.styleable.FixedEditText_fet_drawableEnd)
             if (dEnd != null) {
-                val wEnd = a.getDimension(R.styleable.DrawableEditText_det_drawableEndWidth, dEnd.intrinsicWidth.toFloat())
-                val hEnd = a.getDimension(R.styleable.DrawableEditText_det_drawableEndHeight, dEnd.intrinsicHeight.toFloat())
+                val wEnd = a.getDimension(R.styleable.FixedEditText_fet_drawableEndWidth, dEnd.intrinsicWidth.toFloat())
+                val hEnd = a.getDimension(R.styleable.FixedEditText_fet_drawableEndHeight, dEnd.intrinsicHeight.toFloat())
                 setTextViewDrawableEnd(dEnd, wEnd, hEnd)
             }
 
-            val dTop = a.getDrawable(R.styleable.DrawableEditText_det_drawableTop)
+            val dTop = a.getDrawable(R.styleable.FixedEditText_fet_drawableTop)
             if (dTop != null) {
-                val wTop = a.getDimension(R.styleable.DrawableEditText_det_drawableTopWidth, dTop.intrinsicWidth.toFloat())
-                val hTop = a.getDimension(R.styleable.DrawableEditText_det_drawableTopHeight, dTop.intrinsicHeight.toFloat())
+                val wTop = a.getDimension(R.styleable.FixedEditText_fet_drawableTopWidth, dTop.intrinsicWidth.toFloat())
+                val hTop = a.getDimension(R.styleable.FixedEditText_fet_drawableTopHeight, dTop.intrinsicHeight.toFloat())
                 setTextViewDrawableTop(dTop, wTop, hTop)
             }
 
-            val dBottom = a.getDrawable(R.styleable.DrawableEditText_det_drawableBottom)
+            val dBottom = a.getDrawable(R.styleable.FixedEditText_fet_drawableBottom)
             if (dBottom != null) {
-                val wBottom = a.getDimension(R.styleable.DrawableEditText_det_drawableBottomWidth, dBottom.intrinsicWidth.toFloat())
-                val hBottom = a.getDimension(R.styleable.DrawableEditText_det_drawableBottomHeight, dBottom.intrinsicHeight.toFloat())
+                val wBottom = a.getDimension(R.styleable.FixedEditText_fet_drawableBottomWidth, dBottom.intrinsicWidth.toFloat())
+                val hBottom = a.getDimension(R.styleable.FixedEditText_fet_drawableBottomHeight, dBottom.intrinsicHeight.toFloat())
                 setTextViewDrawableBottom(dBottom, wBottom, hBottom)
             }
 
-            if (a.getBoolean(R.styleable.DrawableEditText_det_phoneFormat, false)) {
+            if (a.getBoolean(R.styleable.FixedEditText_fet_phoneFormat, false)) {
                 // 格式化手机号
                 addTextChangedListener(object : TextWatcher {
 

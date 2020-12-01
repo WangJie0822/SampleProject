@@ -3,6 +3,8 @@ package com.wj.sampleproject.base.ui
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.MotionEvent
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.SkinAppCompatDelegateImpl
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import cn.wj.android.base.tools.fixFontScaleResources
@@ -44,6 +46,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     override fun getResources(): Resources? {
         // 修复 app 字体大小跟随系统字体大小调节
         return fixFontScaleResources(super.getResources(), this)
+    }
+
+    override fun getDelegate(): AppCompatDelegate {
+        return SkinAppCompatDelegateImpl.get(this, this)
     }
 
     override fun startAnim() {

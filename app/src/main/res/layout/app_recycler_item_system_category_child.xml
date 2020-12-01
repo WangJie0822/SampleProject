@@ -30,6 +30,8 @@
             android:paddingEnd="8dp"
             android:paddingBottom="4dp"
             android:text="@{item.name}"
+            android:textColor="@color/app_text"
+            android:textSize="14sp"
             tools:text="@sample/system_category.json/data/children/name" />
 
     </FrameLayout>

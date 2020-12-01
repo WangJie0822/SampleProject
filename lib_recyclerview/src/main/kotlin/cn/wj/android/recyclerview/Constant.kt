@@ -18,7 +18,7 @@ const val VIEW_TYPE_EMPTY = 0x0101554
 fun <E> defaultDiffCallback(): DiffUtil.ItemCallback<E> {
     return object : DiffUtil.ItemCallback<E>() {
         override fun areItemsTheSame(oldItem: E, newItem: E): Boolean {
-            return oldItem == newItem
+            return oldItem === newItem
         }
 
         override fun areContentsTheSame(oldItem: E, newItem: E): Boolean {

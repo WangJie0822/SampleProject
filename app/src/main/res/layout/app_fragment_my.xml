@@ -29,12 +29,12 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
-                app:shapeAppearanceOverlay="@style/app_image_circle"
-                android:bind_iv_img_default="@{@drawable/app_vector_avatar_circle_gray_24dp}"
-                android:bind_iv_img_placeholder="@{@drawable/app_vector_avatar_circle_gray_24dp}"
+                android:bind_iv_img_default="@{@drawable/app_vector_avatar_circle}"
+                android:bind_iv_img_placeholder="@{@drawable/app_vector_avatar_circle}"
                 android:bind_iv_img_url="@{viewModel.avatarUrl}"
                 android:contentDescription="@null"
-                tools:src="@drawable/app_vector_avatar_circle_gray_24dp" />
+                app:shapeAppearanceOverlay="@style/app_image_circle"
+                tools:src="@drawable/app_vector_account_box" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -43,7 +43,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="@{viewModel.userName}"
-                android:textColor="@color/app_text_color_white"
+                android:textColor="@color/app_text"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="用户名" />
@@ -60,12 +60,13 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:text="@string/app_my_collection"
-            android:textColor="@color/app_text_color_black"
+            android:textColor="@color/app_textPrimaryDark"
             android:textSize="16sp"
-            app:ftv_drawableEnd="@drawable/app_vector_arrow_right_gray_24dp"
+            app:drawableTint="@color/app_colorPrimary"
+            app:ftv_drawableEnd="@drawable/app_vector_arrow_right"
             app:ftv_drawableEndHeight="24dp"
             app:ftv_drawableEndWidth="24dp"
-            app:ftv_drawableStart="@drawable/app_vector_favorite_border_primary_24dp"
+            app:ftv_drawableStart="@drawable/app_vector_favorite_border"
             app:ftv_drawableStartHeight="24dp"
             app:ftv_drawableStartWidth="24dp" />
 
@@ -79,15 +80,15 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:text="@string/app_collected_web"
-            android:textColor="@color/app_text_color_black"
+            android:textColor="@color/app_textPrimaryDark"
             android:textSize="16sp"
-            app:ftv_drawableEnd="@drawable/app_vector_arrow_right_gray_24dp"
+            app:drawableTint="@color/app_colorPrimary"
+            app:ftv_drawableEnd="@drawable/app_vector_arrow_right"
             app:ftv_drawableEndHeight="24dp"
             app:ftv_drawableEndWidth="24dp"
-            app:ftv_drawableStart="@drawable/app_vector_web_asset_primary_24dp"
+            app:ftv_drawableStart="@drawable/app_vector_web_asset"
             app:ftv_drawableStartHeight="24dp"
             app:ftv_drawableStartWidth="24dp" />
-
 
     </LinearLayout>
 

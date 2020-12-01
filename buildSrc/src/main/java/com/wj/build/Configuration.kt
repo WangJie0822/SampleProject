@@ -35,7 +35,7 @@ object AppConfigs {
     const val build_tools_version = "29.0.3"
 
     /** 最小支持版本 */
-    const val min_sdk_version = 19
+    const val min_sdk_version = 21
 
     /** 目标支持版本 */
     const val target_sdk_version = 29
@@ -103,6 +103,9 @@ object Versions {
 
     /** coil 版本 */
     const val coil_version = "1.1.0"
+
+    /** 换肤支持版本 */
+    const val skin_support_version = "4.0.5"
 }
 
 /**
@@ -293,4 +296,14 @@ object Dependencies {
     const val coil_gif = "io.coil-kt:coil-gif:${Versions.coil_version}"
     const val coil_svg = "io.coil-kt:coil-svg:${Versions.coil_version}"
     const val coil_video = "io.coil-kt:coil-video:${Versions.coil_version}"
+
+    /**
+     * 换肤支持
+     * - GitHub: [https://github.com/ximsfei/Android-skin-support]
+     */
+    const val skin_support = "skin.support:skin-support:4.0.5"
+    const val skin_support_appcompat = "skin.support:skin-support-appcompat:4.0.5"
+    const val skin_support_material = "skin.support:skin-support-design:4.0.5"
+    const val skin_support_cardview = "skin.support:skin-support-cardview:4.0.5"
+    const val skin_support_constraint = "skin.support:skin-support-constraint-layout:4.0.5"
 }

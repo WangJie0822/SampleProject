@@ -25,7 +25,7 @@
             android:id="@+id/iv_img"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:bind_iv_img_default="@{@drawable/app_vector_broken_image_24dp}"
+            android:bind_iv_img_default="@{@drawable/app_vector_broken_image}"
             android:bind_iv_img_url="@{item.imagePath}"
             android:contentDescription="@null"
             android:scaleType="fitXY"
@@ -33,18 +33,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/app_vector_image_24dp" />
+            tools:src="@drawable/app_vector_image" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:background="#6B000000"
+            android:background="@color/app_translucentDark"
             android:gravity="center_vertical"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:singleLine="true"
             android:text="@{item.title}"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_text"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

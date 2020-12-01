@@ -23,7 +23,7 @@
             android:background="@color/app_colorPrimary"
             android:bind_toolbar_navigationClick="@{viewModel.onBackClick}"
             android:theme="@style/app_toolbar"
-            app:navigationIcon="@drawable/app_vector_arrow_back_white_24dp"
+            app:navigationIcon="@drawable/app_vector_arrow_back"
             app:title="@string/app_my_collection" />
 
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
