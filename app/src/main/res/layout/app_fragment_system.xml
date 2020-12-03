@@ -38,7 +38,8 @@
                     android:padding="4dp"
                     android:text="@string/app_system"
                     android:textColor="@color/app_selector_system_title_text"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    tools:enabled="false" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -39,10 +39,9 @@
             android:name=".activity.SplashActivity"
             android:configChanges="screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen.Splash">
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -50,7 +49,6 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="screenSize"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <!-- 搜索界面 -->
         <activity
@@ -66,8 +64,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WhiteStatusBar" />
+            android:screenOrientation="portrait" />
         <!-- 收藏界面 -->
         <activity
             android:name=".activity.CollectionActivity"

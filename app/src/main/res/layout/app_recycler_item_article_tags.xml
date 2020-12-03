@@ -22,7 +22,7 @@
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:text="@{item.name}"
-        android:textColor="@color/app_colorPrimary"
+        android:textColor="@color/app_textTheme"
         android:textSize="12sp"
         tools:text="@sample/article_list.json/data/datas/tags/name" />
 

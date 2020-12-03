@@ -29,7 +29,7 @@ data class NetResult<T>(
     fun success(): Boolean {
         if (errorCode == NET_RESPONSE_CODE_LOGIN_FAILED) {
             // 登录失败，需要重新登录
-            LoginActivity.actionStart(AppManager.getContext(), fromNet = true)
+            LoginActivity.actionStart(AppManager.getContext())
         }
         return errorCode == NET_RESPONSE_CODE_SUCCESS
     }

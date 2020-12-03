@@ -9,7 +9,7 @@ import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentMyBinding
 import com.wj.sampleproject.dialog.GeneralDialog
 import com.wj.sampleproject.helper.ProgressDialogHelper
-import com.wj.sampleproject.helper.UserHelper
+import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.viewmodel.MyViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,22 +23,20 @@ class MyFragment
 
     override val layoutResId: Int = R.layout.app_fragment_my
 
-    override fun onResume() {
-        super.onResume()
-
-        if (null == UserHelper.userInfo) {
-            viewModel.userName.set(R.string.app_un_login.string)
-            viewModel.avatarUrl.set("")
-        } else {
-            viewModel.userName.set(UserHelper.userInfo?.username)
-            viewModel.avatarUrl.set(UserHelper.userInfo?.icon)
-        }
-    }
-
     override fun initView() {
     }
 
     override fun initObserve() {
+        // 用户信息
+        UserInfoData.observe(this, { userInfo ->
+            if (null == userInfo) {
+                viewModel.userName.set(R.string.app_un_login.string)
+                viewModel.avatarUrl.set("")
+            } else {
+                viewModel.userName.set(userInfo.username)
+                viewModel.avatarUrl.set(userInfo.icon)
+            }
+        })
         // 进度弹窗
         viewModel.progressData.observe(this, { progress ->
             if (null == progress) {
@@ -47,6 +45,7 @@ class MyFragment
                 ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
             }
         })
+        // 显示退出登录弹窗
         viewModel.showLogoutDialogData.observe(this, {
             GeneralDialog.newBuilder()
                     .contentStr(R.string.app_are_you_sure_to_logout.string)

@@ -28,7 +28,7 @@
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:bind_ctl_collapsedTitleTextColor="@{@color/app_text}"
+                    android:bind_ctl_collapsedTitleTextColor="@{@color/app_textPrimary}"
                     android:bind_ctl_expandedTitleColor="@{@color/app_transparentLight}"
                     android:bind_ctl_onOffsetChanged="@{viewModel.onOffsetChanged}"
                     app:contentScrim="@color/app_colorPrimary"
@@ -54,7 +54,7 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.Toolbar
+                    <com.google.android.material.appbar.MaterialToolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?android:attr/actionBarSize"

@@ -11,6 +11,8 @@ import cn.wj.android.base.tools.fixFontScaleResources
 import cn.wj.android.swipeback.helper.SwipeBackHelper
 import cn.wj.android.swipeback.helper.dispatchTouchEvent
 import com.google.android.material.snackbar.Snackbar
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.wj.android.ui.activity.BaseBindingLibActivity
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
@@ -32,6 +34,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
         // 初始化侧滑返回帮助类
         mSwipeBackHelper = SwipeBackHelper(this)
+        // 初始化状态栏工具
+        initImmersionbar()
         // 添加观察者
         observeData()
     }
@@ -58,6 +62,21 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     override fun finishAnim() {
         overridePendingTransition(R.anim.app_anim_alpha_in, R.anim.app_anim_right_out)
+    }
+
+    /** 初始化状态栏相关配置 */
+    protected open fun initImmersionbar(immersionBar: ImmersionBar) {
+    }
+
+    /** 初始化状态栏相关配置 */
+    private fun initImmersionbar() {
+        immersionBar {
+            statusBarColor(R.color.app_colorPrimary)
+            statusBarDarkFont(false)
+            fitsSystemWindows(true)
+            initImmersionbar(this)
+            addTag(javaClass.simpleName)
+        }
     }
 
     /** 添加观察者 */

@@ -4,7 +4,7 @@ package com.wj.sampleproject.constants
 const val PASSWORD_MIN_LENGTH = 6
 
 /** 欢迎界面延时时间 */
-const val SPLASH_DELAY_MS = 200L
+const val SPLASH_DELAY_MS = 1000L
 
 /** 首页返回点击间隔 */
 const val MAIN_BACK_PRESS_INTERVAL_MS = 2000L

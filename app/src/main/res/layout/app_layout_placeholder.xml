@@ -37,7 +37,7 @@
             android:layout_marginTop="15dp"
             android:bind_tv_text="@{model.tips}"
             android:text="@string/app_no_data_try_refresh"
-            android:textColor="@color/app_textPrimaryLight"
+            android:textColor="@color/app_textHint"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

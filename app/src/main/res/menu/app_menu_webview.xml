@@ -6,7 +6,6 @@
         android:id="@+id/menu_browser"
         android:icon="@drawable/app_vector_public"
         android:title="@string/app_open_in_browser"
-        app:iconTint="@color/app_tintPrimary"
         app:showAsAction="collapseActionView" />
 
 </menu>

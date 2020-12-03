@@ -3,7 +3,7 @@ package com.wj.sampleproject.activity
 import android.content.Context
 import android.os.Bundle
 import cn.wj.android.base.ext.startTargetActivity
-import com.gyf.immersionbar.ktx.immersionBar
+import com.gyf.immersionbar.ImmersionBar
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
@@ -34,12 +34,6 @@ class MainActivity
         // 初始化 MMKV
         MMKV.initialize(mContext)
 
-        // 配置状态栏
-        immersionBar {
-            transparentStatusBar()
-            fitsSystemWindows(false)
-        }
-
         // 配置适配器
         mBinding.vpMain.setFragmentAdapter(this) {
             count(5)
@@ -66,6 +60,13 @@ class MainActivity
         } else {
             // 间隔时间内，退到后台
             moveTaskToBack(true)
+        }
+    }
+
+    override fun initImmersionbar(immersionBar: ImmersionBar) {
+        immersionBar.run {
+            transparentStatusBar()
+            fitsSystemWindows(false)
         }
     }
 

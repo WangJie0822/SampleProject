@@ -1,36 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 基本主题 -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- 应用主色调，ActionBar、Toolbar 等默认颜色 -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!-- 应用主色调，ActionBar 等默认颜色 -->
         <item name="colorPrimary">@color/app_colorPrimary</item>
         <!-- 应用主要暗色调，StatusBar 默认颜色 -->
         <item name="colorPrimaryDark">@color/app_colorPrimaryDark</item>
         <!-- 应用中控件选中默认色调 -->
         <item name="colorAccent">@color/app_colorAccent</item>
-
         <!-- 窗口背景 -->
         <item name="android:windowBackground">@color/app_backgroundPrimary</item>
     </style>
 
-    <!-- 全屏主题 -->
-    <style name="AppTheme.FullScreen">
-        <!-- 全屏显示 -->
-        <item name="android:windowFullscreen">true</item>
-    </style>
-
     <!-- 欢迎界面主题 -->
-    <style name="AppTheme.FullScreen.Splash">
-        <!-- 半透明虚拟导航栏且布局延伸到导航栏下面 -->
-        <item name="android:windowTranslucentNavigation">true</item>
-        <!-- 半透明状态栏且布局延伸到状态栏下面 -->
-        <item name="android:windowTranslucentStatus">true</item>
+    <style name="AppTheme.Splash">
         <!-- 窗口背景 -->
         <item name="android:windowBackground">@drawable/app_layer_list_splash_bg</item>
-    </style>
-
-    <!-- 白色状态栏主题 -->
-    <style name="AppTheme.WhiteStatusBar">
-        <item name="colorPrimaryDark">@color/app_white</item>
     </style>
 </resources>

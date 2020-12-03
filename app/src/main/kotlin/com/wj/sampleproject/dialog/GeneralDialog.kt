@@ -372,10 +372,10 @@ class GeneralDialog
                         ACTION_SHOW_POSITIVE_BUTTON to showPositiveButton,
                         ACTION_POSITIVE_BUTTON_STR to positiveButtonStr
                 )
-                setOnNegativeClick(onNegativeClick)
-                setOnNegativeAction(onNegativeAction)
-                setOnPositiveClick(onPositiveClick)
-                setOnPositiveAction(onPositiveAction)
+                setOnNegativeClick(this@Builder.onNegativeClick)
+                setOnNegativeAction(this@Builder.onNegativeAction)
+                setOnPositiveClick(this@Builder.onPositiveClick)
+                setOnPositiveAction(this@Builder.onPositiveAction)
                 builder = this@Builder
             }
         }

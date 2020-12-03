@@ -2,17 +2,14 @@ package com.wj.sampleproject.activity
 
 import android.content.Context
 import android.os.Bundle
-import androidx.core.os.bundleOf
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.utils.AppManager
-import cn.wj.android.common.ext.orFalse
+import com.gyf.immersionbar.ImmersionBar
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
-import com.wj.sampleproject.constants.ACTION_NET_TO_LOGIN
 import com.wj.sampleproject.databinding.AppActivityLoginBinding
 import com.wj.sampleproject.helper.ProgressDialogHelper
-import com.wj.sampleproject.helper.UserHelper
-import com.wj.sampleproject.model.SnackbarModel
+import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,11 +32,13 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
         AppManager.finishAllWithout(LoginActivity::class.java, MainActivity::class.java)
 
         // 清除登录信息
-        UserHelper.userInfo = null
+        UserInfoData.value = null
+    }
 
-        if (intent.getBooleanExtra(ACTION_NET_TO_LOGIN, false).orFalse()) {
-            // 从网络拦截跳转，提示
-            viewModel.snackbarData.value = SnackbarModel(R.string.app_please_login_first)
+    override fun initImmersionbar(immersionBar: ImmersionBar) {
+        immersionBar.run {
+            statusBarColor(R.color.app_white)
+            statusBarDarkFont(true)
         }
     }
 
@@ -57,17 +56,15 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
     companion object {
 
         /**
-         * 使用 [context] 打开 [LoginActivity] 界面，传递参数 [fromNet] 标记是否从网络拦截跳转，默认为 `false`
+         * 使用 [context] 打开 [LoginActivity] 界面
          * > 栈堆已有登录页时不会重复打开
          */
-        fun actionStart(context: Context, fromNet: Boolean = false) {
+        fun actionStart(context: Context) {
             if (AppManager.contains(LoginActivity::class.java)) {
                 // 堆栈中已有登录页，返回
                 return
             }
-            context.startTargetActivity<LoginActivity>(bundleOf(
-                    ACTION_NET_TO_LOGIN to fromNet
-            ))
+            context.startTargetActivity<LoginActivity>()
         }
     }
 }

@@ -33,18 +33,13 @@
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <View
-            android:id="@+id/v_dividing"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/app_colorDivider" />
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_main"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/app_backgroundPrimary"
             android:bind_bnv_onItemSelected="@{viewModel.onItemSelected}"
+            android:elevation="8dp"
             android:textSize="14sp"
             app:itemIconTint="@color/app_selector_main_bottom_tint"
             app:itemTextColor="@color/app_selector_main_bottom_tint"

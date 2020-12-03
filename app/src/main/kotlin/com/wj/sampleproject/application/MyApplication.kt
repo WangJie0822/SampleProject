@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
 import cn.wj.android.base.log.InternalLog
-import cn.wj.android.base.log.Printer
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -27,6 +26,7 @@ import skin.support.design.app.SkinMaterialViewInflater
 /**
  * 应用全局类
  */
+@Suppress("unused")
 class MyApplication : Application() {
 
     override fun attachBaseContext(base: Context?) {
@@ -71,11 +71,6 @@ class MyApplication : Application() {
         })
 
         // base库输出日志
-        InternalLog.printer(object : Printer {
-            override fun log(priority: Int, tag: String?, message: String?, throwable: Throwable?) {
-                Logger.t("BASE").log(priority, tag, message, throwable)
-            }
-        })
         InternalLog.logEnable(BuildConfig.DEBUG)
     }
 }

@@ -15,7 +15,7 @@ import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.PASSWORD_MIN_LENGTH
 import com.wj.sampleproject.constants.SP_KEY_USER_NAME
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.helper.UserHelper
+import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
@@ -142,7 +142,7 @@ class LoginViewModel(
                 val result = repository.register(userName.get().orEmpty(), password.get().orEmpty())
                 if (result.success()) {
                     // 注册成功，保存用户信息
-                    UserHelper.userInfo = result.data
+                    UserInfoData.value = result.data
                     // 保存用户账号
                     MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
                     // 关闭当前界面
@@ -171,7 +171,7 @@ class LoginViewModel(
                 val result = repository.login(userName.get().orEmpty(), password.get().orEmpty())
                 if (result.success()) {
                     // 登录成功，保存用户信息
-                    UserHelper.userInfo = result.data
+                    UserInfoData.value = result.data
                     // 保存用户账号
                     MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
                     // 关闭当前界面

@@ -8,7 +8,7 @@ import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.helper.UserHelper
+import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.repository.MyRepository
@@ -46,7 +46,7 @@ class MyViewModel(
 
     /** 头部点击 */
     val onTopClick: () -> Unit = {
-        if (null == UserHelper.userInfo) {
+        if (null == UserInfoData.value) {
             // 未登录，跳转登录
             jumpLoginData.value = 0
         } else {
@@ -57,7 +57,7 @@ class MyViewModel(
 
     /** 我的收藏点击 */
     val onMyCollectionClick: () -> Unit = {
-        if (null == UserHelper.userInfo) {
+        if (null == UserInfoData.value) {
             // 未登录，跳转登录
             jumpLoginData.value = 0
         } else {
@@ -68,7 +68,7 @@ class MyViewModel(
 
     /** 收藏网站点击 */
     val onCollectedWebClick: () -> Unit = {
-        if (null == UserHelper.userInfo) {
+        if (null == UserInfoData.value) {
             // 未登录，跳转登录
             jumpLoginData.value = 0
         } else {
@@ -86,10 +86,8 @@ class MyViewModel(
                 // 请求接口
                 val result = repository.logout()
                 if (result.success()) {
-                    // 退出成功，更新UI显示，清空用户信息
-                    userName.set(R.string.app_un_login.string)
-                    avatarUrl.set("")
-                    UserHelper.userInfo = null
+                    // 退出成功，清空用户信息
+                    UserInfoData.value = null
                 } else {
                     // 退出失败，提示
                     snackbarData.value = SnackbarModel(result.errorMsg)

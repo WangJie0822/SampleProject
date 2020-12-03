@@ -31,8 +31,8 @@
 
         <View style="@style/app_dividing.horizontal" />
 
-        <FrameLayout
-            android:id="@+id/fl_fragment"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

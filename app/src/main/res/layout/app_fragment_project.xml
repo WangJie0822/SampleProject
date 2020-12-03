@@ -23,8 +23,8 @@
             app:tl_indicator_margin_top="16dp"
             app:tl_indicator_width="20dp"
             app:tl_tab_space_equal="false"
-            app:tl_textSelectColor="@color/app_text"
-            app:tl_textUnselectColor="@color/app_textPrimaryLight"
+            app:tl_textSelectColor="@color/app_textPrimary"
+            app:tl_textUnselectColor="@color/app_textHint"
             app:tl_textsize="14sp" />
 
         <cn.wj.android.views.custom.CustomViewPager

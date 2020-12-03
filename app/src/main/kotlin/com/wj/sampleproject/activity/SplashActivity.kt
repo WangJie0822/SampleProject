@@ -2,7 +2,8 @@ package com.wj.sampleproject.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.gyf.immersionbar.ktx.immersionBar
+import com.gyf.immersionbar.BarHide
+import com.gyf.immersionbar.ImmersionBar
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.SPLASH_DELAY_MS
@@ -24,19 +25,19 @@ class SplashActivity
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity_splash)
 
-        // 设置沉浸式
-        immersionBar {
-            transparentStatusBar()
-            fitsSystemWindows(false)
-        }
-
         lifecycleScope.launch {
-            // 延时 2000ms
+            // 延时 1000ms
             delay(SPLASH_DELAY_MS)
             // 跳转主界面
             MainActivity.actionStart(mContext)
             // 结束当前界面
             finish()
+        }
+    }
+
+    override fun initImmersionbar(immersionBar: ImmersionBar) {
+        immersionBar.run {
+            hideBar(BarHide.FLAG_HIDE_BAR)
         }
     }
 }

@@ -12,6 +12,7 @@ import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCELLED
 import com.wj.sampleproject.databinding.AppFragmentHomepageBinding
 import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.BannerEntity
+import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.viewmodel.HomepageViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -73,6 +74,23 @@ class HomepageFragment
     }
 
     override fun initObserve() {
+        // 用户信息
+        UserInfoData.observe(this, { userInfo ->
+            if (null == userInfo) {
+                // 用户未登录，清空收藏状态
+                mArticlesAdapter.mDiffer.currentList.forEach {
+                    it.collected.set(false)
+                }
+            } else {
+                // 已登录
+                if (mArticlesAdapter.mDiffer.currentList.isEmpty()) {
+                    // 列表为空，第一次回调，不处理
+                    return@observe
+                }
+                // 刷新列表
+                viewModel.refreshing.value = SmartRefreshState(true)
+            }
+        })
         // Banner 列表
         viewModel.bannerData.observe(this, { list ->
             // 更新 Banner 列表
@@ -96,7 +114,9 @@ class HomepageFragment
         // 取消收藏事件
         LiveEventBus.get(EVENT_COLLECTION_CANCELLED, String::class.java)
                 .observe(this, { id ->
-                    val item = mArticlesAdapter.mDiffer.currentList.firstOrNull { it.id == id }
+                    val item = mArticlesAdapter.mDiffer.currentList.firstOrNull {
+                        it.id == id
+                    }
                     item?.collected?.set(false)
                 })
     }

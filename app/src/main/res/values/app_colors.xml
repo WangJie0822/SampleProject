@@ -3,7 +3,7 @@
     <!-- 应用主色调 -->
     <color name="app_colorPrimary">#03A9F4</color>
     <!-- 应用主要暗色调 -->
-    <color name="app_colorPrimaryDark">#0288D1</color>
+    <color name="app_colorPrimaryDark">#03A9F4</color>
     <!-- 应用主要亮色调 -->
     <color name="app_colorPrimaryLight">#B3E5FC</color>
     <!-- 控件选中默认颜色 -->
@@ -15,23 +15,30 @@
     <!-- 应用次要背景色 -->
     <color name="app_backgroundSecondary">#EBEBEB</color>
 
-    <!-- 文本颜色 -->
-    <color name="app_text">#FFFFFF</color>
+    <!-- 标题文本颜色 -->
+    <color name="app_textPrimary">@color/app_white</color>
     <!-- 文本主色调 -->
-    <color name="app_textPrimaryDark">#212121</color>
-    <color name="app_textPrimary">#757575</color>
-    <color name="app_textPrimaryLight">#CCCCCC</color>
+    <color name="app_textNormal">#212121</color>
+    <!-- 文本次要色调 -->
+    <color name="app_textSecondary">#999999</color>
+    <!-- 提示文本色调 -->
+    <color name="app_textHint">#CCCCCC</color>
+    <!-- 文本主色调 -->
+    <color name="app_textTheme">@color/app_colorPrimary</color>
+    <!-- 文本重点颜色 -->
+    <color name="app_textAccent">@color/app_colorAccent</color>
 
-    <!-- 着色主色调 -->
-    <color name="app_tintPrimary">#FFFFFF</color>
-    <!-- 着色次要色调 -->
-    <color name="app_tintSecondaryDark">#000000</color>
-    <color name="app_tintSecondary">#DFDFDF</color>
-    <!-- 着色选中色调 -->
-    <color name="app_tintAccent">#FF4081</color>
+    <!-- 主要着色 -->
+    <color name="app_tintPrimary">@color/app_white</color>
+    <!-- 重点着色 -->
+    <color name="app_tintAccent">@color/app_colorAccent</color>
+    <!-- 非重点着色 -->
+    <color name="app_tintSecondary">#F1F1F1</color>
+    <!-- 主题着色 -->
+    <color name="app_tintTheme">@color/app_colorPrimary</color>
 
     <color name="app_white">#FFFFFF</color>
-    <color name="app_gray">#999999</color>
+    <color name="app_black">#000000</color>
     <color name="app_transparentDark">#00000000</color>
     <color name="app_transparentLight">#00FFFFFF</color>
     <color name="app_translucentDark">#60000000</color>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.tools.jumpToBrowser
 import com.wj.sampleproject.R
@@ -38,14 +39,16 @@ class WebViewActivity
         }
 
         // 加载 Fragment
-        supportFragmentManager.beginTransaction().replace(R.id.fl_fragment, webViewFragment).commit()
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fcv, webViewFragment)
+        }
     }
 
     override fun initObserve() {
         // 浏览器打开
         viewModel.jumpBrowser.observe(this, {
             jumpToBrowser(webViewFragment.currentUrl, mContext)
-            onBackPressed()
         })
     }
 
