@@ -14,6 +14,10 @@
 
     <!-- 欢迎界面主题 -->
     <style name="AppTheme.Splash">
+        <!-- 应用主色调，ActionBar 等默认颜色 -->
+        <item name="colorPrimary">@color/app_white</item>
+        <!-- 应用主要暗色调，StatusBar 默认颜色 -->
+        <item name="colorPrimaryDark">@color/app_white</item>
         <!-- 窗口背景 -->
         <item name="android:windowBackground">@drawable/app_layer_list_splash_bg</item>
     </style>

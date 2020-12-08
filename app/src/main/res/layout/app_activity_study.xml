@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.WebViewActivity">
+    tools:context=".activity.StudyActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.viewmodel.WebViewViewModel" />
+            type="com.wj.sampleproject.viewmodel.StudyViewModel" />
     </data>
 
     <LinearLayout
@@ -21,20 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/app_colorPrimary"
-            android:bind_toolbar_itemClick="@{viewModel.onMenuItemClick}"
-            android:bind_toolbar_navigationClick="@{viewModel.onNavigationClick}"
-            android:bind_toolbar_title="@{viewModel.title}"
-            app:theme="@style/app_toolbar"
-            app:menu="@menu/app_menu_webview"
+            android:bind_toolbar_navigationClick="@{viewModel.onBackClick}"
             app:navigationIcon="@drawable/app_vector_arrow_back"
-            tools:title="@sample/article_list.json/data/datas/title" />
-
-        <View style="@style/app_dividing.horizontal" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fcv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            app:theme="@style/app_toolbar"
+            app:title="@string/app_learning_route" />
 
     </LinearLayout>
 

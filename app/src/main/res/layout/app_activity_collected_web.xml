@@ -23,7 +23,7 @@
             android:background="@color/app_colorPrimary"
             android:bind_toolbar_itemClick="@{viewModel.onMenuItemClick}"
             android:bind_toolbar_navigationClick="@{viewModel.onBackClick}"
-            android:theme="@style/app_toolbar"
+            app:theme="@style/app_toolbar"
             app:menu="@menu/app_menu_collected_web"
             app:navigationIcon="@drawable/app_vector_arrow_back"
             app:title="@string/app_collected_web" />

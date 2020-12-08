@@ -38,6 +38,9 @@ class MyViewModel(
     /** 跳转收藏网站 */
     val jumpCollectedWebData = MutableLiveData<Int>()
 
+    /** 跳转学习数据 */
+    val jumpToStudyData = MutableLiveData<Int>()
+
     /** 用户头像地址 */
     val avatarUrl: ObservableField<String> = ObservableField()
 
@@ -75,6 +78,11 @@ class MyViewModel(
             // 已登录，跳转收藏网站列表
             jumpCollectedWebData.value = 0
         }
+    }
+
+    /** 学习入口点击 */
+    val onStudyClick: () -> Unit = {
+        jumpToStudyData.value = 0
     }
 
     /** 用户退出登录 */

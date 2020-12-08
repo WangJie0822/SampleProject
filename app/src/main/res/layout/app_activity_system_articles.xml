@@ -22,7 +22,7 @@
             android:background="@color/app_colorPrimary"
             android:bind_toolbar_navigationClick="@{viewModel.onBackClick}"
             android:bind_toolbar_title="@{viewModel.titleStr}"
-            android:theme="@style/app_toolbar"
+            app:theme="@style/app_toolbar"
             app:navigationIcon="@drawable/app_vector_arrow_back"
             tools:title="@sample/article_list.json/data/datas/title" />
 

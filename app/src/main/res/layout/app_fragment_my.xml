@@ -88,6 +88,26 @@
             app:ftv_drawableStartHeight="24dp"
             app:ftv_drawableStartWidth="24dp" />
 
+        <cn.wj.android.views.custom.FixedTextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="?selectableItemBackground"
+            android:bind_onClick="@{viewModel.onStudyClick}"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/app_study_entrance"
+            android:textColor="@color/app_textNormal"
+            android:textSize="16sp"
+            app:ftv_drawableEnd="@drawable/app_vector_arrow_right"
+            app:ftv_drawableEndHeight="24dp"
+            app:ftv_drawableEndWidth="24dp"
+            app:ftv_drawableStart="@drawable/app_vector_code"
+            app:ftv_drawableStartHeight="24dp"
+            app:ftv_drawableStartWidth="24dp" />
+
     </LinearLayout>
 
 </layout>

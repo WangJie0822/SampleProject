@@ -5,6 +5,7 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.CollectedWebActivity
 import com.wj.sampleproject.activity.CollectionActivity
 import com.wj.sampleproject.activity.LoginActivity
+import com.wj.sampleproject.activity.StudyActivity
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentMyBinding
 import com.wj.sampleproject.dialog.GeneralDialog
@@ -67,6 +68,10 @@ class MyFragment
         // 跳转网站收藏
         viewModel.jumpCollectedWebData.observe(this, {
             CollectedWebActivity.actionStart(mContext)
+        })
+        // 跳转学习相关界面
+        viewModel.jumpToStudyData.observe(this, {
+            StudyActivity.actionStart(mContext)
         })
     }
 

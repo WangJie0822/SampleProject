@@ -81,6 +81,11 @@
             android:name=".activity.SystemArticlesActivity"
             android:configChanges="screenSize"
             android:screenOrientation="portrait" />
+        <!-- 学习相关界面 -->
+        <activity
+            android:name=".activity.StudyActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

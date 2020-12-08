@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Toolbar 样式 -->
-    <style name="app_toolbar" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="app_toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="actionMenuTextColor">@color/app_colorAccent</item>
         <!-- 字体大小 -->
         <item name="android:textSize">14sp</item>

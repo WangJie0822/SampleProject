@@ -60,7 +60,7 @@
                         android:layout_height="?android:attr/actionBarSize"
                         android:bind_fits_status_bar="@{true}"
                         android:bind_toolbar_itemClick="@{viewModel.onMenuItemClick}"
-                        android:theme="@style/app_toolbar"
+                        app:theme="@style/app_toolbar"
                         app:layout_collapseMode="pin"
                         app:menu="@menu/app_menu_search"
                         app:title="@string/app_homepage" />
