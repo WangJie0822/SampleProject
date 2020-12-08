@@ -1,4 +1,4 @@
-import com.wj.build.Versions
+import cn.wj.build.Versions
 
 buildscript {
     repositories {

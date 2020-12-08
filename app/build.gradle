@@ -1,8 +1,8 @@
-import com.wj.build.*
+import cn.wj.build.*
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -155,11 +155,6 @@ android {
 }
 
 dependencies {
-    // 测试
-    testImplementation Dependencies.test_junit
-    androidTestImplementation Dependencies.androidx_test_runner
-    androidTestImplementation Dependencies.androidx_test_espresso_core
-    androidTestImplementation Dependencies.androidx_test_ext_junit
 
     // Kotlin jdk
     implementation Dependencies.kotlin_jdk
@@ -250,4 +245,10 @@ dependencies {
     implementation project(":lib_recyclerview")
     implementation project(":lib_views_custom")
     implementation project(":lib_swipe_back")
+
+    // 测试
+    testImplementation Dependencies.test_junit
+    androidTestImplementation Dependencies.androidx_test_runner
+    androidTestImplementation Dependencies.androidx_test_espresso_core
+    androidTestImplementation Dependencies.androidx_test_ext_junit
 }

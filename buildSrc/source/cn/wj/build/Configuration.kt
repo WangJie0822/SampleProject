@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.wj.build
+package cn.wj.build
 
 /**
  * 签名配置
@@ -56,7 +56,7 @@ object Versions {
     const val test_mokito_version = "3.3.3"
 
     /** Kotlin 版本 */
-    const val kotlin_version = "1.4.10"
+    const val kotlin_version = "1.4.20"
 
     /** core 版本 */
     const val core_version = "1.3.2"

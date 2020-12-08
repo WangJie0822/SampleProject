@@ -82,6 +82,10 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
             // 加载显示图片
             SwipeBackConfig.content = ContextCompat.getDrawable(getContext(), R.drawable.swipe_vector_keyboard_arrow_left_gray)
         }
+
+        if (isInEditMode) {
+            mProgress = 1f
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

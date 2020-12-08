@@ -1,4 +1,4 @@
-import com.wj.build.Dependencies
+import cn.wj.build.Dependencies
 
 apply plugin: 'java-library'
 apply plugin: 'kotlin'

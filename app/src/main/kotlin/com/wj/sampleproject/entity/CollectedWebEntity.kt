@@ -1,7 +1,7 @@
 package com.wj.sampleproject.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * 收藏网站数据实体类

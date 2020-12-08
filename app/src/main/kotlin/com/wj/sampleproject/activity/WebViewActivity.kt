@@ -13,7 +13,7 @@ import com.wj.sampleproject.constants.ACTION_PARCELABLE
 import com.wj.sampleproject.databinding.AppActivityWebviewBinding
 import com.wj.sampleproject.fragment.WebViewFragment
 import com.wj.sampleproject.viewmodel.WebViewViewModel
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
