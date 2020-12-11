@@ -39,7 +39,7 @@
             android:layout_height="48dp"
             android:background="@color/app_backgroundPrimary"
             android:bind_bnv_onItemSelected="@{viewModel.onItemSelected}"
-            android:elevation="8dp"
+            android:elevation="4dp"
             android:textSize="14sp"
             app:itemIconTint="@color/app_selector_main_bottom_tint"
             app:itemTextColor="@color/app_selector_main_bottom_tint"

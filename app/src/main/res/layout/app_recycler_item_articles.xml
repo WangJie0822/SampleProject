@@ -14,215 +14,192 @@
             type="com.wj.sampleproject.adapter.ArticleListViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/app_selector_default_ripple"
-        android:bind_onClick="@{viewModel.onArticleItemClick}"
-        android:bind_onClick_item="@{item}">
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_start"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="16dp" />
-
-        <TextView
-            android:id="@+id/tv_istop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:bind_visibility="@{item.isTop}"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:text="@string/app_istop"
-            android:textColor="@color/app_textAccent"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
-
-        <View
-            android:id="@+id/v_istop"
-            android:layout_width="4dp"
-            android:layout_height="0dp"
-            android:bind_visibility="@{item.isTop}"
-            app:layout_constraintStart_toEndOf="@id/tv_istop"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:bind_visibility="@{item.isNew}"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:text="@string/app_new"
-            android:textColor="@color/app_textAccent"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/v_istop"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
-
-        <View
-            android:id="@+id/v_new"
-            android:layout_width="4dp"
-            android:layout_height="0dp"
-            android:bind_visibility="@{item.isNew}"
-            app:layout_constraintStart_toEndOf="@id/tv_new"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_articles_tags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:bind_rv_isNestedScrollingEnabled="@{false}"
-            android:bind_visibility="@{item.showTags}"
-            app:layout_constraintStart_toEndOf="@id/v_new"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:itemCount="2"
-            tools:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/app_recycler_item_article_tags"
-            tools:orientation="horizontal" />
-
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@{item.author}"
-            android:textColor="@color/app_textNormal"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/rv_articles_tags"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@sample/article_list.json/data/datas/author" />
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@{item.niceDate}"
-            android:textColor="@color/app_textHint"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@id/guideline_end"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@sample/article_list.json/data/datas/niceDate" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="tv_istop,tv_new,tv_author,tv_time,rv_articles_tags" />
-
-        <ImageView
-            android:id="@+id/iv_envelope"
-            android:layout_width="160dp"
-            android:layout_height="0dp"
-            android:bind_iv_img_default="@{@drawable/app_vector_broken_image}"
-            android:bind_iv_img_placeholder="@{@drawable/app_vector_image}"
-            android:bind_iv_img_url="@{item.envelopePic}"
-            android:bind_visibility="@{item.showEnvelope}"
-            android:contentDescription="@null"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="2:1"
-            app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/barrier_top"
-            tools:src="@drawable/app_vector_image" />
-
-        <TextView
-            android:id="@+id/tv_article_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:text="@{item.title}"
-            android:textColor="@color/app_textNormal"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@id/guideline_end"
-            app:layout_constraintStart_toEndOf="@id/iv_envelope"
-            app:layout_constraintTop_toBottomOf="@id/barrier_top"
-            app:layout_goneMarginEnd="16dp"
-            app:layout_goneMarginStart="0dp"
-            tools:text="@sample/article_list.json/data/datas/title" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="iv_envelope,tv_article_title" />
-
-        <TextView
-            android:id="@+id/tv_super_chapter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="4dp"
-            android:background="?selectableItemBackground"
-            android:paddingStart="4dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="4dp"
-            android:paddingBottom="2dp"
-            android:text="@{item.superChapterName}"
-            android:textColor="@color/app_textNormal"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrier_bottom"
-            tools:text="@sample/article_list.json/data/datas/superChapterName" />
-
-        <TextView
-            android:id="@+id/tv_chapter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="?selectableItemBackground"
-            android:paddingStart="4dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="4dp"
-            android:paddingBottom="2dp"
-            android:text="@{item.chapterName}"
-            android:textColor="@color/app_textNormal"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/tv_super_chapter"
-            app:layout_constraintTop_toBottomOf="@id/barrier_bottom"
-            tools:text="@sample/article_list.json/data/datas/chapterName" />
-
-        <ImageButton
-            android:id="@+id/ib_favorite"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:bind_onClick="@{viewModel.onArticleCollectClick}"
+            android:background="@drawable/app_selector_default_ripple"
+            android:bind_onClick="@{viewModel.onArticleItemClick}"
             android:bind_onClick_item="@{item}"
-            android:bind_selected="@{item.collected}"
-            android:contentDescription="@null"
-            android:src="@drawable/app_vector_favorite"
-            android:tint="@color/app_selector_article_favorite_tint"
-            app:layout_constraintEnd_toStartOf="@id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@id/barrier_bottom" />
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:background="#F1F0F0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ib_favorite" />
+            <LinearLayout
+                android:id="@+id/ll_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_istop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:bind_visibility="@{item.isTop}"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/app_istop"
+                    android:textColor="@color/app_textAccent"
+                    android:textSize="12sp"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:bind_visibility="@{item.isNew}"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/app_new"
+                    android:textColor="@color/app_textAccent"
+                    android:textSize="12sp"
+                    tools:visibility="visible" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_articles_tags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:bind_rv_isNestedScrollingEnabled="@{false}"
+                    android:bind_visibility="@{item.showTags}"
+                    tools:itemCount="2"
+                    tools:layoutManager="LinearLayoutManager"
+                    tools:listitem="@layout/app_recycler_item_article_tags"
+                    tools:orientation="horizontal"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.author}"
+                    android:textColor="@color/app_textNormal"
+                    android:textSize="12sp"
+                    tools:text="@sample/article_list.json/data/datas/author" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.niceDate}"
+                android:textColor="@color/app_textHint"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@sample/article_list.json/data/datas/niceDate" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="ll_top,tv_time" />
+
+            <ImageView
+                android:id="@+id/iv_envelope"
+                android:layout_width="160dp"
+                android:layout_height="0dp"
+                android:bind_iv_img_default="@{@drawable/app_vector_broken_image}"
+                android:bind_iv_img_placeholder="@{@drawable/app_vector_image}"
+                android:bind_iv_img_url="@{item.envelopePic}"
+                android:bind_visibility="@{item.showEnvelope}"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                app:layout_constraintDimensionRatio="@string/app_golden_ratio_horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier_top"
+                tools:background="#F00"
+                tools:src="@drawable/app_vector_image" />
+
+            <TextView
+                android:id="@+id/tv_article_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{item.title}"
+                android:textColor="@color/app_textNormal"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_envelope"
+                app:layout_constraintTop_toBottomOf="@id/barrier_top"
+                app:layout_goneMarginEnd="16dp"
+                app:layout_goneMarginStart="0dp"
+                tools:text="@sample/article_list.json/data/datas/title" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="iv_envelope,tv_article_title" />
+
+            <TextView
+                android:id="@+id/tv_super_chapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="?selectableItemBackground"
+                android:paddingStart="4dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="2dp"
+                android:text="@{item.superChapterName}"
+                android:textColor="@color/app_textNormal"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier_bottom"
+                tools:text="@sample/article_list.json/data/datas/superChapterName" />
+
+            <TextView
+                android:id="@+id/tv_chapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="?selectableItemBackground"
+                android:paddingStart="4dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="2dp"
+                android:text="@{item.chapterName}"
+                android:textColor="@color/app_textNormal"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/tv_super_chapter"
+                app:layout_constraintTop_toBottomOf="@id/barrier_bottom"
+                tools:text="@sample/article_list.json/data/datas/chapterName" />
+
+            <ImageButton
+                android:id="@+id/ib_favorite"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:bind_onClick="@{viewModel.onArticleCollectClick}"
+                android:bind_onClick_item="@{item}"
+                android:bind_selected="@{item.collected}"
+                android:contentDescription="@null"
+                android:src="@drawable/app_vector_favorite"
+                android:tint="@color/app_selector_article_favorite_tint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier_bottom" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

@@ -83,6 +83,8 @@ android {
         // 正式线上版本
         online {
             dimension 'version'
+            // 版本名后缀
+            versionNameSuffix "_online"
             // 是否使用线上环境
             buildConfigField "boolean", "IS_ONLINE_ENV", "true"
         }
@@ -92,6 +94,8 @@ android {
             dimension 'version'
             // 应用包名后缀
             applicationIdSuffix ".offline"
+            // 版本名后缀
+            versionNameSuffix "_offline"
             // 是否使用线上环境
             buildConfigField "boolean", "IS_ONLINE_ENV", "false"
         }
@@ -101,6 +105,8 @@ android {
             dimension 'version'
             // 应用包名后缀
             applicationIdSuffix ".dev"
+            // 版本名后缀
+            versionNameSuffix "_dev"
             // 是否使用线上环境
             buildConfigField "boolean", "IS_ONLINE_ENV", "false"
         }
@@ -248,6 +254,7 @@ dependencies {
 
     // 测试
     testImplementation Dependencies.test_junit
+    testImplementation "org.json:json:20201115"
     androidTestImplementation Dependencies.androidx_test_runner
     androidTestImplementation Dependencies.androidx_test_espresso_core
     androidTestImplementation Dependencies.androidx_test_ext_junit

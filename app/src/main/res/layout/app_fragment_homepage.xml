@@ -22,8 +22,8 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:bind_ratio="@{`2:1`}"
-                tools:layout_height="210dp">
+                android:bind_ratio="@{@string/app_golden_ratio_horizontal}"
+                tools:layout_height="260dp">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                             android:bind_vp2_offscreenPageLimit="@{viewModel.bannerLimit}"
                             android:bind_vp2_onTouch="@{viewModel.onBannerTouch}"
                             android:bind_vp2_smoothScroll="@{true}"
-                            app:layout_constraintDimensionRatio="2:1"
+                            app:layout_constraintDimensionRatio="@string/app_golden_ratio_horizontal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -60,9 +60,9 @@
                         android:layout_height="?android:attr/actionBarSize"
                         android:bind_fits_status_bar="@{true}"
                         android:bind_toolbar_itemClick="@{viewModel.onMenuItemClick}"
-                        app:theme="@style/app_toolbar"
                         app:layout_collapseMode="pin"
                         app:menu="@menu/app_menu_search"
+                        app:theme="@style/app_toolbar"
                         app:title="@string/app_homepage" />
 
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
