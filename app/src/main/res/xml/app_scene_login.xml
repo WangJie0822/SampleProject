@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@id/register_hide"
+        app:constraintSetStart="@id/register_show">
+
+    </Transition>
+
+    <ConstraintSet android:id="@+id/register_show">
+        <Constraint
+            android:id="@+id/til_repassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:alpha="1"
+            android:hint="@string/app_please_enter_password_again"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_password" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/register_hide">
+        <Constraint
+            android:id="@+id/til_repassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:alpha="0"
+            android:hint="@string/app_please_enter_password_again"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_password" />
+    </ConstraintSet>
+
+</MotionScene>

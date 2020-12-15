@@ -10,11 +10,13 @@
             type="com.wj.sampleproject.viewmodel.LoginViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/app_scene_login">
 
         <ImageView
+            android:id="@+id/iv_close"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?selectableItemBackground"
@@ -169,6 +171,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login_register"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="40dp"
@@ -185,6 +188,6 @@
             app:layout_constraintTop_toBottomOf="@id/til_repassword"
             tools:text="注册" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </layout>

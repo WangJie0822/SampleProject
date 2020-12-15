@@ -2,6 +2,7 @@ package com.wj.sampleproject.activity
 
 import android.content.Context
 import android.os.Bundle
+import androidx.constraintlayout.motion.widget.MotionLayout
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.utils.AppManager
 import com.gyf.immersionbar.ImmersionBar
@@ -43,6 +44,16 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
     }
 
     override fun initObserve() {
+        // 是否是注册
+        viewModel.register.observe(this, { register ->
+            (mBinding.root as MotionLayout).run {
+                if (register) {
+                    transitionToStart()
+                } else {
+                    transitionToEnd()
+                }
+            }
+        })
         // 进度弹窗
         viewModel.progressData.observe(this, { progress ->
             if (null == progress) {

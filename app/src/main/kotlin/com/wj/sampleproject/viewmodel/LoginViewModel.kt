@@ -1,8 +1,9 @@
 package com.wj.sampleproject.viewmodel
 
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.string
 import cn.wj.android.common.ext.condition
@@ -37,7 +38,7 @@ class LoginViewModel(
     val progressData = MutableLiveData<ProgressModel>()
 
     /** 标记 - 是否是注册 */
-    val register: ObservableBoolean = ObservableBoolean(true)
+    val register: MutableLiveData<Boolean> = MutableLiveData(true)
 
     /** 用户名 */
     val userName: ObservableField<String> = ObservableField(MMKV.defaultMMKV().decodeString(SP_KEY_USER_NAME, ""))
@@ -74,16 +75,14 @@ class LoginViewModel(
     }
 
     /** 按钮文本 */
-    val buttonStr: ObservableField<String> = object : ObservableField<String>(register) {
-        override fun get(): String {
-            return if (register.get()) {
-                // 注册
-                R.string.app_register
-            } else {
-                // 登录
-                R.string.app_login
-            }.string
-        }
+    val buttonStr: LiveData<String> = register.map { isRegister ->
+        if (isRegister) {
+            // 注册
+            R.string.app_register
+        } else {
+            // 登录
+            R.string.app_login
+        }.string
     }
 
     /** 关闭点击 */
@@ -93,7 +92,7 @@ class LoginViewModel(
 
     /** 注册、登录点击 */
     val onTabClick: (Boolean) -> Unit = { registerClick ->
-        register.set(registerClick)
+        register.value = registerClick
     }
 
     /** 按钮点击 */
@@ -113,7 +112,7 @@ class LoginViewModel(
             passwordError.set(R.string.app_password_length_must_larger_than_six.string)
             return
         }
-        if (register.get()) {
+        if (register.value.condition) {
             // 注册
             if (repassword.get().isNullOrBlank()) {
                 // 密码为空
@@ -131,7 +130,7 @@ class LoginViewModel(
                 return
             }
         }
-        if (register.get().condition) {
+        if (register.value.condition) {
             // 注册
             register()
         } else {
