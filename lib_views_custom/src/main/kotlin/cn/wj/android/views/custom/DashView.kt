@@ -8,16 +8,23 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import cn.wj.android.views.dip2px
+import cn.wj.android.views.textview.R
 
 /**
  * 虚线控件
  *
  * @author 王杰
  */
-class DashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
-    : View(context, attrs) {
+class DashView
+@JvmOverloads
+constructor(
+        context: Context,
+        attrs: AttributeSet? = null
+) : View(context, attrs) {
 
     companion object {
+
         private const val TAG = "DashView"
         private const val DEFAULT_DASH_WIDTH = 100
         private const val DEFAULT_LINE_WIDTH = 100
@@ -26,6 +33,7 @@ class DashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
 
         /** 虚线方向 - 水平方向 */
         private const val HORIZONTAL = LinearLayout.HORIZONTAL
+
         /** 虚线方向 - 垂直方向 */
         private const val VERTICAL = LinearLayout.VERTICAL
 
@@ -35,10 +43,13 @@ class DashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
 
     /** 间距宽度 */
     private var dashWidth = 3.dip2px(context)
+
     /** 线段高度 */
     private var lineHeight = 1.dip2px(context)
+
     /** 线段宽度 */
     private var lineWidth = 3.dip2px(context)
+
     /** 线段颜色 */
     private var lineColor = Color.parseColor("#cccccc")
 

@@ -73,143 +73,116 @@
             app:layout_constraintStart_toEndOf="@id/tv_register"
             app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
 
-        <cn.wj.android.views.custom.FixedEditText
-            android:id="@+id/det_phone_number"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_user_name"
             android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
+            android:bind_til_error="@{viewModel.userNameError}"
             android:hint="@string/app_please_enter_user_name"
-            android:inputType="text"
-            android:maxLength="13"
-            android:singleLine="true"
-            android:text="@={viewModel.userName}"
-            android:textColor="@color/app_textNormal"
-            android:textColorHint="@color/app_textHint"
-            android:textSize="16sp"
-            app:fet_drawableStart="@drawable/app_vector_phone"
-            app:fet_drawableStartHeight="24dp"
-            app:fet_drawableStartWidth="24dp"
+            app:endIconMode="clear_text"
+            app:errorIconTint="@color/app_tintError"
+            app:errorTextColor="@color/app_textError"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_login"
-            tools:text="用户名" />
+            app:startIconDrawable="@drawable/app_vector_phone"
+            app:startIconTint="@color/app_tintTheme">
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="?selectableItemBackground"
-            android:bind_onClick="@{viewModel.onUserNameClearClick}"
-            android:bind_visibility="@{viewModel.showUserNameClear}"
-            android:contentDescription="@null"
-            android:padding="8dp"
-            android:src="@drawable/app_selector_clear_circle"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/det_phone_number"
-            app:layout_constraintEnd_toEndOf="@id/det_phone_number"
-            app:layout_constraintTop_toTopOf="@id/det_phone_number"
-            tools:visibility="visible" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:inputType="text"
+                android:maxLength="13"
+                android:singleLine="true"
+                android:text="@={viewModel.userName}"
+                android:textColor="@color/app_textNormal"
+                android:textSize="16sp"
+                tools:text="王五" />
 
-        <View
-            android:id="@+id/v_phone_number"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:background="@color/app_colorDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/det_phone_number" />
-
-        <cn.wj.android.views.custom.FixedEditText
-            android:id="@+id/det_password"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="40dp"
-            android:drawableStart="@drawable/app_vector_password"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
+            android:bind_til_error="@{viewModel.passwordError}"
             android:hint="@string/app_please_enter_password"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:text="@={viewModel.password}"
-            android:textColor="@color/app_textNormal"
-            android:textColorHint="@color/app_textHint"
-            android:textSize="16sp"
-            app:fet_drawableStartHeight="25dp"
-            app:fet_drawableStartWidth="25dp"
+            app:endIconMode="password_toggle"
+            app:errorIconTint="@color/app_tintError"
+            app:errorTextColor="@color/app_textError"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_phone_number" />
+            app:layout_constraintTop_toBottomOf="@id/til_user_name"
+            app:startIconDrawable="@drawable/app_vector_password"
+            app:startIconTint="@color/app_tintTheme">
 
-        <View
-            android:id="@+id/v_password"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:text="@={viewModel.password}"
+                android:textColor="@color/app_textNormal"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_repassword"
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:background="@color/app_colorDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/det_password" />
-
-        <cn.wj.android.views.custom.FixedEditText
-            android:id="@+id/det_password_again"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="40dp"
+            android:bind_til_error="@{viewModel.repasswordError}"
             android:bind_visibility="@{viewModel.register}"
-            android:drawableStart="@drawable/app_vector_password"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
             android:hint="@string/app_please_enter_password_again"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:text="@={viewModel.passwordAgain}"
-            android:textColor="@color/app_textNormal"
-            android:textColorHint="@color/app_textHint"
-            android:textSize="16sp"
-            app:fet_drawableStartHeight="25dp"
-            app:fet_drawableStartWidth="25dp"
+            app:endIconMode="password_toggle"
+            app:errorIconTint="@color/app_tintError"
+            app:errorTextColor="@color/app_textError"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_password" />
+            app:layout_constraintTop_toBottomOf="@id/til_password"
+            app:startIconDrawable="@drawable/app_vector_password"
+            app:startIconTint="@color/app_tintTheme">
 
-        <View
-            android:id="@+id/v_password_again"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/app_colorDivider"
-            android:bind_visibility="@{viewModel.register}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/det_password_again" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_repassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:text="@={viewModel.repassword}"
+                android:textColor="@color/app_textNormal"
+                android:textSize="16sp" />
 
-        <TextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="60dp"
             android:layout_marginEnd="40dp"
-            android:background="@drawable/app_selector_button_bg_positive"
-            android:bind_enable="@{viewModel.buttonEnable}"
             android:bind_onClick="@{viewModel.onButtonClick}"
-            android:gravity="center"
             android:text="@{viewModel.buttonStr}"
             android:textColor="@color/app_textPrimary"
             android:textSize="16sp"
+            app:backgroundTint="@color/app_tintTheme"
+            app:cornerRadius="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_password_again"
+            app:layout_constraintTop_toBottomOf="@id/til_repassword"
             tools:text="注册" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

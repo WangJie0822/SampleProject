@@ -50,7 +50,7 @@
 
         </LinearLayout>
 
-        <cn.wj.android.views.custom.FixedTextView
+        <cn.wj.android.views.textview.FixedTextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="?selectableItemBackground"
@@ -69,7 +69,7 @@
             app:ftv_drawableStartHeight="24dp"
             app:ftv_drawableStartWidth="24dp" />
 
-        <cn.wj.android.views.custom.FixedTextView
+        <cn.wj.android.views.textview.FixedTextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="?selectableItemBackground"
@@ -88,7 +88,7 @@
             app:ftv_drawableStartHeight="24dp"
             app:ftv_drawableStartWidth="24dp" />
 
-        <cn.wj.android.views.custom.FixedTextView
+        <cn.wj.android.views.textview.FixedTextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="?selectableItemBackground"
@@ -107,6 +107,10 @@
             app:ftv_drawableStart="@drawable/app_vector_code"
             app:ftv_drawableStartHeight="24dp"
             app:ftv_drawableStartWidth="24dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

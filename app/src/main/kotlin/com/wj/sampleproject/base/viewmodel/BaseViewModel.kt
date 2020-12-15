@@ -7,7 +7,6 @@ import com.wj.sampleproject.model.UiCloseModel
 
 /**
  * ViewModel 基类
- * > 实现 [KoinComponent] 接口，支持 **koin** 依赖注入
  *
  * > 提供了 **Snackbar 提示** [snackbarData] 以及 **UI 关闭** [uiCloseData] 数据对象
  */

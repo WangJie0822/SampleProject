@@ -1,4 +1,4 @@
-package cn.wj.android.views.custom
+package cn.wj.android.views
 
 import android.content.Context
 

@@ -57,7 +57,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <cn.wj.android.views.custom.CustomViewPager
+        <cn.wj.android.views.viewpager.CustomViewPager
             android:id="@+id/vp_system"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

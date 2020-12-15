@@ -1,18 +1,23 @@
-package cn.wj.android.views.custom
+package cn.wj.android.views.viewpager
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.viewpager.widget.ViewPager
+import cn.wj.android.views.textview.R
 
 /**
  * 自定义 ViewPager，可配置能否滑动
  *
  * @author 王杰
  */
-class CustomViewPager @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
-    : ViewPager(context, attrs) {
+class CustomViewPager
+@JvmOverloads
+constructor(
+        context: Context, attrs:
+        AttributeSet? = null
+) : ViewPager(context, attrs) {
 
     /** 是否允许滑动 */
     private var mScrollable = true

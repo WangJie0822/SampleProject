@@ -25,7 +25,7 @@
             app:theme="@style/app_toolbar"
             app:navigationIcon="@drawable/app_vector_arrow_back">
 
-            <cn.wj.android.views.custom.FixedEditText
+            <cn.wj.android.views.textview.FixedEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

@@ -49,95 +49,96 @@ const val GUIDE_GRAVITY_RIGHT_BOTTOM = 7
  *
  * @author 王杰
  */
-class MaskingView private constructor(context: Context)
+class MaskingView
+private constructor(context: Context)
     : RelativeLayout(context) {
-    
+
     private lateinit var agency: MaskingAgency
-    
+
     /** 屏幕宽度 单位：px */
     internal val screenWidth: Int = context.resources.displayMetrics.widthPixels
-    
+
     /** 屏幕高度 单位：px */
     internal val screenHeight: Int = context.resources.displayMetrics.heightPixels
-    
+
     init {
         setOnClickListener {
             agency.clickListener?.invoke(this)
         }
     }
-    
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        
+
         agency.onDraw(canvas)
     }
-    
+
     /**
      * 显示蒙版
      */
     fun show() {
         agency.show(this)
     }
-    
+
     /**
      * 隐藏蒙版
      */
     fun hide() {
         agency.hide(this)
     }
-    
+
     /**
      * 重置状态
      */
     fun restoreState() {
         agency.restoreState()
     }
-    
+
     class Builder(val activity: Activity) {
-        
+
         private val agency: MaskingAgency = MaskingAgency()
-        
+
         fun setBgColor(@ColorInt bgColor: Int): Builder {
             agency.bgColor = bgColor
             return this
         }
-        
+
         fun setShape(shape: Int): Builder {
             agency.shape = shape
             return this
         }
-        
+
         fun setRadius(radius: Int): Builder {
             agency.radius = radius
             return this
         }
-        
+
         fun setOffset(offsetX: Int, offsetY: Int): Builder {
             agency.offsetX = offsetX
             agency.offsetY = offsetY
             return this
         }
-        
+
         fun setGravity(gravity: Int): Builder {
             agency.gravity = gravity
             return this
         }
-        
+
         fun setTargetView(target: View): Builder {
             agency.targetView = target
             return this
         }
-        
+
         fun setGuideView(guide: View): Builder {
             agency.guideView = guide
             return this
         }
-        
+
         fun setOnMaskingClickListener(listener: OnMaskingClickListener): Builder {
             agency.clickListener = listener
             return this
         }
-        
+
         fun build(): MaskingView {
             return MaskingView(activity).apply {
                 this.agency = this@Builder.agency
@@ -145,9 +146,9 @@ class MaskingView private constructor(context: Context)
             }
         }
     }
-    
+
     companion object {
-        
+
         fun newBuilder(activity: Activity): Builder {
             return Builder(activity)
         }
@@ -159,31 +160,31 @@ class MaskingView private constructor(context: Context)
  */
 class MaskingAgency
     : ViewTreeObserver.OnGlobalLayoutListener {
-    
+
     /** 蒙版 View */
     internal lateinit var view: MaskingView
-    
+
     /** 目标 View */
     internal var targetView: View? = null
-    
+
     /** 目标 View 宽度 */
     internal var targetViewWidth: Int = 0
-    
+
     /** 目标 View 高度 */
     internal var targetViewHeight: Int = 0
-    
+
     /** 标记 - 是否已测量 */
     internal var measured = false
-    
+
     /** 蒙版背景 Bitmap */
     internal var bgBitmap: Bitmap? = null
-    
+
     /** 蒙版背景颜色 */
     internal var bgColor: Int = Color.parseColor("#C0000000")
-    
+
     /** 背景画笔 */
     internal val bgPaint: Paint = Paint()
-    
+
     /** 目标区域画笔 */
     internal val targetPaint: Paint = Paint().apply {
         //透明效果
@@ -191,32 +192,32 @@ class MaskingAgency
         xfermode = porterDuffXfermode
         isAntiAlias = true
     }
-    
+
     /** 蒙版形状 默认圆形*/
     internal var shape: Int = MASKING_SHAPE_RECTANGULAR
-    
+
     /** 目标 View 半径 */
     internal var radius: Int = 0
-    
+
     /** 中心点坐标 */
     internal var center: IntArray? = null
-    
+
     /** 右上角坐标 */
     internal var location: IntArray? = null
-    
+
     /** 引导 View */
     internal var guideView: View? = null
-    
+
     /** 偏移量 */
     internal var offsetX: Int = 0
     internal var offsetY: Int = 0
-    
+
     /** 引导 View 重心 */
     internal var gravity: Int = GUIDE_GRAVITY_BOTTOM
-    
+
     /** 点击事件 */
     internal var clickListener: OnMaskingClickListener? = null
-    
+
     override fun onGlobalLayout() {
         if (measured) {
             return
@@ -240,21 +241,21 @@ class MaskingAgency
         if (radius == 0) {
             radius = getTargetViewRadius()
         }
-        
+
         // 显示引导 View
         showGuideView()
     }
-    
+
     fun onDraw(canvas: Canvas) {
         if (null == targetView || !measured) {
             // 未设置目标 View 或未测量
             return
         }
-        
+
         // 绘制背景
         drawBackground(canvas)
     }
-    
+
     /**
      * 绘制蒙版背景
      */
@@ -269,20 +270,20 @@ class MaskingAgency
         if (null == bgBitmap) {
             return
         }
-        
+
         // 创建缓存画布
         val tempCanvas = Canvas(bgBitmap!!)
-        
+
         // 背景画笔
         bgPaint.color = bgColor
-        
+
         // 绘制屏幕背景
         tempCanvas.drawRect(0f, 0f, tempCanvas.width.toFloat(), tempCanvas.height.toFloat(), bgPaint)
-        
+
         if (null == center || null == location) {
             return
         }
-        
+
         if (shape == MASKING_SHAPE_CIRCLE) {
             // 圆形
             tempCanvas.drawCircle(center!![0].toFloat(), center!![1].toFloat(), radius.toFloat(), targetPaint)
@@ -295,12 +296,12 @@ class MaskingAgency
             rect.bottom = center!![1] + targetViewHeight / 2 - 1.toFloat()
             tempCanvas.drawRoundRect(rect, radius.toFloat(), radius.toFloat(), targetPaint)
         }
-        
+
         // 绘制到屏幕
         canvas.drawBitmap(bgBitmap!!, 0f, 0f, bgPaint)
         bgBitmap!!.recycle()
     }
-    
+
     /**
      * 获得targetView 的半径
      */
@@ -313,7 +314,7 @@ class MaskingAgency
         }
         return -1
     }
-    
+
     /**
      * 获得targetView 的宽高
      */
@@ -325,7 +326,7 @@ class MaskingAgency
         }
         return location
     }
-    
+
     /**
      * 显示引导 View
      */
@@ -333,7 +334,7 @@ class MaskingAgency
         if (null == guideView) {
             return
         }
-        
+
         var layoutParams = guideView!!.layoutParams
         if (null == layoutParams || layoutParams !is RelativeLayout.LayoutParams) {
             layoutParams = RelativeLayout.LayoutParams(
@@ -384,19 +385,19 @@ class MaskingAgency
         view.removeAllViews()
         view.addView(guideView, layoutParams)
     }
-    
+
     /**
      * 显示蒙版
      */
     fun show(masking: MaskingView) {
         targetView?.viewTreeObserver?.addOnGlobalLayoutListener(this)
-        
+
         masking.setBackgroundColor(Color.TRANSPARENT)
         masking.bringToFront() //设置在最上层
-        
+
         ((masking.context as? Activity)?.window?.decorView as? FrameLayout)?.addView(masking)
     }
-    
+
     /**
      * 隐藏蒙版
      */
@@ -406,7 +407,7 @@ class MaskingAgency
         ((masking.context as? Activity)?.window?.decorView as? FrameLayout)?.removeView(masking)
         restoreState()
     }
-    
+
     /**
      * 重置状态
      */

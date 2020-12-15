@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.string
 import cn.wj.android.common.ext.condition
-import cn.wj.android.common.ext.isNotNullAndBlank
-import cn.wj.android.common.ext.orElse
 import com.orhanobut.logger.Logger
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
@@ -44,15 +42,36 @@ class LoginViewModel(
     /** 用户名 */
     val userName: ObservableField<String> = ObservableField(MMKV.defaultMMKV().decodeString(SP_KEY_USER_NAME, ""))
 
-    /** 标记 - 是否显示清空用户名 */
-    val showUserNameClear: ObservableBoolean = object : ObservableBoolean(userName) {
-        override fun get(): Boolean {
-            return userName.get().isNotNullAndBlank()
+    /** 用户名错误文本 */
+    val userNameError: ObservableField<String> = ObservableField<String>()
+
+    /** 密码 */
+    val password: ObservableField<String> = ObservableField<String>()
+
+    /** 密码错误文本 */
+    val passwordError: ObservableField<String> = object : ObservableField<String>(password) {
+        override fun get(): String? {
+            val get = password.get()
+            if (!get.isNullOrBlank() && get.length >= PASSWORD_MIN_LENGTH) {
+                return ""
+            }
+            return super.get()
         }
     }
 
-    /** 是否允许按钮点击 */
-    val buttonEnable: ObservableBoolean = ObservableBoolean(false)
+    /** 再次输入密码 */
+    val repassword: ObservableField<String> = ObservableField<String>()
+
+    /** 密码错误文本 */
+    val repasswordError: ObservableField<String> = object : ObservableField<String>(repassword) {
+        override fun get(): String? {
+            val get = repassword.get()
+            if (!get.isNullOrBlank() && get.length >= PASSWORD_MIN_LENGTH && get == password.get()) {
+                return ""
+            }
+            return super.get()
+        }
+    }
 
     /** 按钮文本 */
     val buttonStr: ObservableField<String> = object : ObservableField<String>(register) {
@@ -67,22 +86,6 @@ class LoginViewModel(
         }
     }
 
-    /** 密码 */
-    val password: ObservableField<String> = object : ObservableField<String>("") {
-        override fun set(value: String?) {
-            super.set(value)
-            checkBtnEnable()
-        }
-    }
-
-    /** 再次输入密码 */
-    val passwordAgain: ObservableField<String> = object : ObservableField<String>("") {
-        override fun set(value: String?) {
-            super.set(value)
-            checkBtnEnable()
-        }
-    }
-
     /** 关闭点击 */
     val onCloseClick: () -> Unit = {
         uiCloseData.value = UiCloseModel()
@@ -93,36 +96,40 @@ class LoginViewModel(
         register.set(registerClick)
     }
 
-    /** 清空用户名点击 */
-    val onUserNameClearClick: () -> Unit = {
-        userName.set("")
-    }
-
     /** 按钮点击 */
     val onButtonClick: () -> Unit = fun() {
-        if (!buttonEnable.get().condition) {
-            // 按钮不允许点击
-            return
-        }
         if (userName.get().isNullOrBlank()) {
             // 用户名为空
-            snackbarData.value = SnackbarModel(R.string.app_please_enter_user_name)
+            userNameError.set(R.string.app_please_enter_user_name.string)
             return
         }
         if (password.get().isNullOrBlank()) {
             // 密码为空
-            snackbarData.value = SnackbarModel(R.string.app_please_enter_password)
+            passwordError.set(R.string.app_password_must_not_be_empty.string)
             return
         }
         if (password.get().orEmpty().length < PASSWORD_MIN_LENGTH) {
             // 密码长度小于最低长度
-            snackbarData.value = SnackbarModel(R.string.app_password_length_must_larger_than_six)
+            passwordError.set(R.string.app_password_length_must_larger_than_six.string)
             return
         }
-        if (register.get().condition && password.get() != passwordAgain.get()) {
-            // 注册且密码不匹配
-            snackbarData.value = SnackbarModel(R.string.app_re_set_password_not_match)
-            return
+        if (register.get()) {
+            // 注册
+            if (repassword.get().isNullOrBlank()) {
+                // 密码为空
+                repasswordError.set(R.string.app_password_must_not_be_empty.string)
+                return
+            }
+            if (repassword.get().orEmpty().length < PASSWORD_MIN_LENGTH) {
+                // 密码长度小于最低长度
+                repasswordError.set(R.string.app_password_length_must_larger_than_six.string)
+                return
+            }
+            if (repassword.get() != password.get()) {
+                // 密码不匹配
+                repasswordError.set(R.string.app_re_set_password_not_match.string)
+                return
+            }
         }
         if (register.get().condition) {
             // 注册
@@ -187,21 +194,7 @@ class LoginViewModel(
             } finally {
                 // 隐藏进度条弹窗
                 progressData.value = null
-                // 重置按钮状态
-                checkBtnEnable()
             }
         }
-    }
-
-    /** 检查并设置按钮是否允许点击 */
-    private fun checkBtnEnable() {
-        buttonEnable.set(if (register.get().condition) {
-            // 注册，两次输入密码长度一致且长度大于最小密码长度
-            password.get()?.length == passwordAgain.get()?.length
-                    && passwordAgain.get()?.length.orElse(0) >= PASSWORD_MIN_LENGTH
-        } else {
-            // 登录，密码长度大于最小密码长度
-            password.get()?.length.orElse(0) >= PASSWORD_MIN_LENGTH
-        })
     }
 }

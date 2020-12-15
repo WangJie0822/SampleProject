@@ -41,6 +41,8 @@ dependencies {
     implementation Dependencies.androidx_legacy
     // v7
     implementation Dependencies.androidx_appcompat
+    // material
+    implementation Dependencies.androidx_material
 
     // Base 库
 //    api 'com.github.WangJie0822.SampleProject:lib_base:1.0.1'

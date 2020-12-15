@@ -85,7 +85,7 @@
                 app:layout_goneMarginTop="36dp"
                 tools:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容" />
 
-            <cn.wj.android.views.custom.FixedTextView
+            <cn.wj.android.views.textview.FixedTextView
                 android:id="@+id/tv_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -27,7 +27,7 @@
             app:tl_textUnselectColor="@color/app_textHint"
             app:tl_textsize="14sp" />
 
-        <cn.wj.android.views.custom.CustomViewPager
+        <cn.wj.android.views.viewpager.CustomViewPager
             android:id="@+id/vp_project"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

@@ -15,6 +15,7 @@ import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewConfiguration
 import android.widget.Scroller
+import cn.wj.android.views.textview.R
 import java.util.*
 import kotlin.math.abs
 
@@ -31,16 +32,22 @@ class EasyPickerView<T> @JvmOverloads constructor(
 
     // 文字大小
     private val textSize: Int
+
     // 颜色，默认Color.BLACK
     private val textColor: Int
+
     // 文字之间的间隔，默认10dp
     private val textPadding: Int
+
     // 文字最大放大比例，默认2.0f
     private val textMaxScale: Float
+
     // 文字最小alpha值，范围0.0f~1.0f，默认0.4f
     private val textMinAlpha: Float
+
     // 是否循环模式，默认是
     private val isRecycleMode: Boolean
+
     // 正常状态下最多显示几个文字，默认3（偶数时，边缘的文字会截断）
     private val maxShowNum: Int
 
@@ -55,31 +62,41 @@ class EasyPickerView<T> @JvmOverloads constructor(
 
     // 数据
     private val dataList = ArrayList<T>()
+
     // 中间x坐标
     private var cx: Int = 0
+
     // 中间y坐标
     private var cy: Int = 0
+
     // 文字最大宽度
     private var maxTextWidth: Float = 0.toFloat()
+
     // 文字高度
     private val textHeight: Int
+
     // 实际内容宽度
     private var contentWidth: Int = 0
+
     // 实际内容高度
     private var contentHeight: Int = 0
 
     // 按下时的y坐标
     private var downY: Float = 0.toFloat()
+
     // 本次滑动的y坐标偏移值
     private var offsetY: Float = 0.toFloat()
+
     // 在fling之前的offsetY
     private var oldOffsetY: Float = 0.toFloat()
+
     // 当前选中项
     private var curIndex: Int = 0
     private var offsetIndex: Int = 0
 
     // 回弹距离
     private var bounceDistance: Float = 0.toFloat()
+
     // 是否正处于滑动状态
     private var isSliding = false
 
@@ -443,6 +460,7 @@ class EasyPickerView<T> @JvmOverloads constructor(
      * 滚动发生变化时的回调接口
      */
     interface OnScrollChangedListener {
+
         fun onScrollChanged(curIndex: Int)
 
         fun onScrollFinished(curIndex: Int)
@@ -451,7 +469,7 @@ class EasyPickerView<T> @JvmOverloads constructor(
     fun setOnScrollChangedListener(onScrollChangedListener: OnScrollChangedListener) {
         this.onScrollChangedListener = onScrollChangedListener
     }
-    
+
     fun getCurrentData(): T {
         return dataList[getCurIndex()]
     }

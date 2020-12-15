@@ -1,23 +1,29 @@
-package cn.wj.android.views.custom
+package cn.wj.android.views.textview
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import kotlin.math.roundToInt
 
 /**
- * 可设置 Drawable 尺寸的 EditText
+ * 优化的 [AppCompatEditText]
+ *
+ * - 可设置 [setCompoundDrawables] 尺寸
+ * - 支持手机号格式化
  *
  * @author 王杰
  */
-class FixedEditText @JvmOverloads constructor(
+class FixedEditText
+@JvmOverloads
+constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = android.R.attr.textViewStyle
-) : AppCompatEditText(context, attrs, defStyleAttr) {
+) : AppCompatEditText(context, attrs, defStyleAttr),
+        ITextView {
+
+    override val wrapper = TextViewWrapper(this)
 
     init {
         if (attrs != null) {
@@ -103,61 +109,5 @@ class FixedEditText @JvmOverloads constructor(
         // 自动获取焦点
         isFocusableInTouchMode = true
         isFocusable = true
-    }
-
-    /**
-     * 设置 TextView 右侧图片
-     *
-     * @param drawable 图片
-     * @param width 图片宽度
-     * @param height 图片高度
-     */
-    private fun setTextViewDrawableEnd(drawable: Drawable, width: Float, height: Float) {
-        if (width > 0f && height > 0f) {
-            drawable.setBounds(0, 0, width.roundToInt(), height.roundToInt())
-        }
-        setCompoundDrawables(compoundDrawables[0], compoundDrawables[1], drawable, compoundDrawables[3])
-    }
-
-    /**
-     * 设置 TextView 左侧图片
-     *
-     * @param drawable 图片
-     * @param width 图片宽度
-     * @param height 图片高度
-     */
-    private fun setTextViewDrawableStart(drawable: Drawable, width: Float, height: Float) {
-        if (width > 0f && height > 0f) {
-            drawable.setBounds(0, 0, width.roundToInt(), height.roundToInt())
-        }
-        setCompoundDrawables(drawable, compoundDrawables[1], compoundDrawables[2], compoundDrawables[3])
-    }
-
-    /**
-     * 设置 TextView 顶部图片
-     *
-     * @param drawable 图片
-     * @param width 图片宽度
-     * @param height 图片高度
-     */
-    private fun setTextViewDrawableTop(drawable: Drawable, width: Float, height: Float) {
-        if (width > 0f && height > 0f) {
-            drawable.setBounds(0, 0, width.roundToInt(), height.roundToInt())
-        }
-        setCompoundDrawables(compoundDrawables[0], drawable, compoundDrawables[2], compoundDrawables[3])
-    }
-
-    /**
-     * 设置 TextView 下方图片
-     *
-     * @param drawable 图片
-     * @param width 图片宽度
-     * @param height 图片高度
-     */
-    private fun setTextViewDrawableBottom(drawable: Drawable, width: Float, height: Float) {
-        if (width > 0f && height > 0f) {
-            drawable.setBounds(0, 0, width.roundToInt(), height.roundToInt())
-        }
-        setCompoundDrawables(compoundDrawables[0], compoundDrawables[1], compoundDrawables[2], drawable)
     }
 }

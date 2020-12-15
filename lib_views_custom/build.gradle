@@ -33,6 +33,6 @@ android {
 dependencies {
     implementation Dependencies.kotlin_jdk
 
-    // v7
     implementation Dependencies.androidx_appcompat
+    implementation Dependencies.androidx_material
 }

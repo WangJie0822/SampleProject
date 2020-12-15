@@ -10,6 +10,9 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import cn.wj.android.views.dip2px
+import cn.wj.android.views.sp2px
+import cn.wj.android.views.textview.R
 import kotlin.math.max
 import kotlin.math.min
 
@@ -18,13 +21,16 @@ import kotlin.math.min
  *
  * @author 王杰
  */
-class SideBarView @JvmOverloads constructor(
+class SideBarView
+@JvmOverloads
+constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
     companion object {
+
         /** 默认字符列表 */
         private const val DEFAULT_LETTER = "#,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z"
     }
@@ -208,6 +214,7 @@ class SideBarView @JvmOverloads constructor(
     }
 
     interface LetterSelectListener {
+
         fun onLetterSelected(letter: String)
 
         fun onLetterChanged(letter: String)
