@@ -56,4 +56,5 @@
     <string name="app_open_in_browser">浏览器打开</string>
     <string name="app_study_entrance">学习入口</string>
     <string name="app_learning_route">学习路线</string>
+    <string name="app_close">关闭</string>
 </resources>

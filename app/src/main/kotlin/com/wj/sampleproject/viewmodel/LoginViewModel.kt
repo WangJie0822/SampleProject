@@ -1,5 +1,6 @@
 package com.wj.sampleproject.viewmodel
 
+import android.view.MenuItem
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -86,8 +87,12 @@ class LoginViewModel(
     }
 
     /** 关闭点击 */
-    val onCloseClick: () -> Unit = {
-        uiCloseData.value = UiCloseModel()
+    val onCloseClick: (MenuItem) -> Boolean = {
+        if (it.itemId == R.id.menu_close) {
+            // 关闭
+            uiCloseData.value = UiCloseModel()
+        }
+        false
     }
 
     /** 注册、登录点击 */

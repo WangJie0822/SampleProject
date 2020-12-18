@@ -56,16 +56,13 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         return SkinAppCompatDelegateImpl.get(this, this)
     }
 
-    override fun startAnim() {
-        overridePendingTransition(R.anim.app_anim_right_in, R.anim.app_anim_alpha_out)
-    }
-
-    override fun finishAnim() {
-        overridePendingTransition(R.anim.app_anim_alpha_in, R.anim.app_anim_right_out)
-    }
-
     /** 初始化状态栏相关配置 */
     protected open fun initImmersionbar(immersionBar: ImmersionBar) {
+    }
+
+    /** 关闭当前 Activity */
+    protected open fun finishActivity() {
+        finish()
     }
 
     /** 初始化状态栏相关配置 */
@@ -107,7 +104,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         viewModel.uiCloseData.observe(this, { close ->
             close?.let { model ->
                 setResult(model.resultCode, model.result)
-                finish()
+                finishActivity()
             }
         })
     }

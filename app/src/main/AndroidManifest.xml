@@ -38,7 +38,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,43 +49,43 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <!-- 搜索界面 -->
         <activity
             android:name=".activity.SearchActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <!-- WebView 界面 -->
         <activity
             android:name=".activity.WebViewActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <!-- 注册界面 -->
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <!-- 收藏界面 -->
         <activity
             android:name=".activity.CollectionActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <!-- 收藏网站界面 -->
         <activity
             android:name=".activity.CollectedWebActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <!-- 体系文章列表界面 -->
         <activity
             android:name=".activity.SystemArticlesActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <!-- 学习相关界面 -->
         <activity
             android:name=".activity.StudyActivity"
             android:configChanges="screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>

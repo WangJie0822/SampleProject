@@ -2,7 +2,10 @@ package com.wj.sampleproject.activity
 
 import android.content.Context
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.utils.AppManager
 import com.gyf.immersionbar.ImmersionBar
@@ -62,6 +65,11 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
                 ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
             }
         })
+    }
+
+    override fun finishActivity() {
+        TransitionManager.beginDelayedTransition(mBinding.root as ViewGroup, AutoTransition())
+        finishAfterTransition()
     }
 
     companion object {

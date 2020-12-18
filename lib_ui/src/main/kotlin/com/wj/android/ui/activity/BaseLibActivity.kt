@@ -1,6 +1,5 @@
 package com.wj.android.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.EditText
@@ -12,7 +11,6 @@ import cn.wj.android.base.tools.shouldHideInput
  * Activity 基类
  * - 维护 [mContext]，当前界面的 Context 对象
  * - 维护 [touchToHideInput]，是否在点击 [EditText] 以外的地方隐藏软键盘
- * - 添加 [startAnim]、[finishAnim] 方法，统一处理界面跳转的动画效果
  *
  * @author 王杰
  */
@@ -38,18 +36,6 @@ abstract class BaseLibActivity
         currentFocus?.clearFocus()
     }
 
-    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
-        super.startActivityForResult(intent, requestCode, options)
-        // 设置动画
-        startAnim()
-    }
-
-    override fun finish() {
-        super.finish()
-        // 设置动画
-        finishAnim()
-    }
-
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (touchToHideInput) {
             if (ev.action == MotionEvent.ACTION_DOWN) {
@@ -66,17 +52,5 @@ abstract class BaseLibActivity
         } else {
             return super.dispatchTouchEvent(ev)
         }
-    }
-
-    /**
-     * 开始动画，可按需求重写
-     */
-    protected open fun startAnim() {
-    }
-
-    /**
-     * 结束动画，可按需求重写
-     */
-    protected open fun finishAnim() {
     }
 }

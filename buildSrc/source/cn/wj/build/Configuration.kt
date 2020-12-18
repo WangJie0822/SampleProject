@@ -56,7 +56,7 @@ object Versions {
     const val test_mokito_version = "3.3.3"
 
     /** Kotlin 版本 */
-    const val kotlin_version = "1.4.20"
+    const val kotlin_version = "1.4.21"
 
     /** core 版本 */
     const val core_version = "1.3.2"

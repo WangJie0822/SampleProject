@@ -3,10 +3,8 @@
 
 package cn.wj.android.base.ext
 
-import cn.wj.android.base.tools.dip2px
-import cn.wj.android.base.tools.getColorById
-import cn.wj.android.base.tools.getStringById
-import cn.wj.android.base.tools.sp2px
+import android.graphics.drawable.Drawable
+import cn.wj.android.base.tools.*
 import kotlin.math.roundToInt
 
 /**
@@ -36,3 +34,7 @@ val Int.string: String
 /** 颜色值 */
 val Int.color: Int
     get() = getColorById(this)
+
+/** 图片资源 */
+val Int.drawable: Drawable?
+    get() = getDrawableById(this)

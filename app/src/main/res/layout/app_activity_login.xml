@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.LoginActivity">
 
     <data>
 
@@ -15,17 +16,17 @@
         android:layout_height="match_parent"
         app:layoutDescription="@xml/app_scene_login">
 
-        <ImageView
-            android:id="@+id/iv_close"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?selectableItemBackground"
-            android:bind_onClick="@{viewModel.onCloseClick}"
-            android:contentDescription="@null"
-            android:padding="12dp"
-            android:src="@drawable/app_vector_close"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:bind_toolbar_itemClick="@{viewModel.onCloseClick}"
+            android:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/app_menu_login"
+            app:theme="@style/app_toolbar" />
 
         <TextView
             android:id="@+id/tv_welcome"
@@ -42,13 +43,14 @@
 
         <TextView
             android:id="@+id/tv_register"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="?selectableItemBackground"
             android:bind_onClick="@{viewModel.onTabClick}"
             android:bind_onClick_item="@{true}"
             android:bind_selected="@{viewModel.register}"
+            android:gravity="center"
             android:padding="10dp"
             android:text="@string/app_register"
             android:textColor="@color/app_selector_login_register_text"
@@ -60,13 +62,14 @@
 
         <TextView
             android:id="@+id/tv_login"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="?selectableItemBackground"
             android:bind_onClick="@{viewModel.onTabClick}"
             android:bind_onClick_item="@{false}"
             android:bind_selected="@{!viewModel.register}"
+            android:gravity="center"
             android:padding="10dp"
             android:text="@string/app_login"
             android:textColor="@color/app_selector_login_register_text"
@@ -74,6 +77,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_register"
             app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
+
+        <View
+            android:id="@+id/v_underline"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/app_tintTheme"
+            app:layout_constraintEnd_toEndOf="@id/tv_register"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_register" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_user_name"

@@ -31,6 +31,7 @@
                     android:bind_ctl_collapsedTitleTextColor="@{@color/app_textPrimary}"
                     android:bind_ctl_expandedTitleColor="@{@color/app_transparentLight}"
                     android:bind_ctl_onOffsetChanged="@{viewModel.onOffsetChanged}"
+                    android:elevation="4dp"
                     app:contentScrim="@color/app_colorPrimary"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -60,6 +61,7 @@
                         android:layout_height="?android:attr/actionBarSize"
                         android:bind_fits_status_bar="@{true}"
                         android:bind_toolbar_itemClick="@{viewModel.onMenuItemClick}"
+                        android:elevation="0dp"
                         app:layout_collapseMode="pin"
                         app:menu="@menu/app_menu_search"
                         app:theme="@style/app_toolbar"
