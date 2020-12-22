@@ -7,27 +7,24 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import com.wj.sampleproject.R
-import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.ui.BaseFragment
-import com.wj.sampleproject.constants.ACTION_PARCELABLE
 import com.wj.sampleproject.databinding.AppFragmentWebViewBinding
-import com.wj.sampleproject.viewmodel.BlankViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.wj.sampleproject.viewmodel.WebViewViewModel
 
 /**
  * WebView 页面
  */
 class WebViewFragment
-    : BaseFragment<BlankViewModel, AppFragmentWebViewBinding>() {
+    : BaseFragment<WebViewViewModel, AppFragmentWebViewBinding>() {
 
-    override val viewModel: BlankViewModel by viewModel()
+    override val viewModel: WebViewViewModel by activityViewModels()
 
     override val layoutResId: Int = R.layout.app_fragment_web_view
 
     private val mUrl: String by lazy {
-        arguments?.getParcelable<WebViewActivity.ActionModel>(ACTION_PARCELABLE)?.url.orEmpty()
+        viewModel.webData.value?.url.orEmpty()
     }
 
     /** 当前 url */
@@ -100,13 +97,9 @@ class WebViewFragment
 
     companion object {
 
-        /** 创建并返回 [WebViewFragment]，传递网页数据[webData] */
-        fun actionCreate(webData: WebViewActivity.ActionModel?): WebViewFragment {
-            return WebViewFragment().apply {
-                arguments = bundleOf(
-                        ACTION_PARCELABLE to webData
-                )
-            }
+        /** 创建并返回 [WebViewFragment] */
+        fun actionCreate(): WebViewFragment {
+            return WebViewFragment()
         }
     }
 }

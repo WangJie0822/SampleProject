@@ -33,15 +33,14 @@ import kotlinx.coroutines.launch
 class SystemArticlesViewModel(
         private val systemRepository: SystemRepository,
         private val collectRepository: CollectRepository
-) : BaseViewModel(),
-        ArticleListViewModel {
-    
+) : BaseViewModel() {
+
     /** 页码 */
     private var pageNum = NET_PAGE_START
-    
+
     /** 体系目录 id */
     var cid = ""
-    
+
     /** 文章列表数据 */
     val articleListData = MutableLiveData<ArrayList<ArticleEntity>>()
     
@@ -66,37 +65,41 @@ class SystemArticlesViewModel(
         noMore.set(false)
         getArticleList()
     }
-    
+
     /** 加载更多回调 */
     val onLoadMore: () -> Unit = {
         pageNum++
         getArticleList()
     }
-    
+
     /** 返回点击 */
     val onBackClick: () -> Unit = {
         uiCloseData.value = UiCloseModel()
     }
-    
-    /** 文章 item 点击 */
-    override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
-        // 跳转 WebView 打开
-        jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
-    }
-    
-    /** 文章收藏点击 */
-    override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
-        if (item.collected.get().condition) {
-            // 已收藏，取消收藏
-            item.collected.set(false)
-            unCollect(item)
-        } else {
-            // 未收藏，收藏
-            item.collected.set(true)
-            collect(item)
+
+    /** 文章列表的 `viewModel` 对象 */
+    val articleListViewModel: ArticleListViewModel = object : ArticleListViewModel {
+
+        /** 文章列表条目点击 */
+        override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
+            // 跳转 WebView 打开
+            jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
+        }
+
+        /** 文章收藏点击 */
+        override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
+            if (item.collected.get().condition) {
+                // 已收藏，取消收藏
+                item.collected.set(false)
+                unCollect(item)
+            } else {
+                // 未收藏，收藏
+                item.collected.set(true)
+                collect(item)
+            }
         }
     }
-    
+
     /** 获取文章列表 */
     private fun getArticleList() {
         viewModelScope.launch {

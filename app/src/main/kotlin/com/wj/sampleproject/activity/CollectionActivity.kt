@@ -35,7 +35,7 @@ class CollectionActivity : BaseActivity<CollectionViewModel, AppActivityCollecti
         mBinding.rvArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
             rv.adapter = mArticlesAdapter.also {
-                it.viewModel = viewModel
+                it.viewModel = viewModel.articleListViewModel
                 it.setEmptyView(R.layout.app_layout_placeholder)
             }
         }

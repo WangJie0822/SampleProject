@@ -41,7 +41,7 @@ class SystemArticlesActivity : BaseActivity<SystemArticlesViewModel, AppActivity
         mBinding.rvSystemArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
             rv.adapter = mArticlesAdapter.also {
-                it.viewModel = viewModel
+                it.viewModel = viewModel.articleListViewModel
                 it.setEmptyView(R.layout.app_layout_placeholder)
             }
         }

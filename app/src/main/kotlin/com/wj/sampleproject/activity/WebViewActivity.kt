@@ -26,7 +26,7 @@ class WebViewActivity
 
     /** WebView Fragment 对象 */
     private val webViewFragment: WebViewFragment by lazy {
-        WebViewFragment.actionCreate(viewModel.webData.value)
+        WebViewFragment.actionCreate()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,9 +68,7 @@ class WebViewActivity
 
     companion object {
 
-        /**
-         * 使用 [context] 打开 [WebViewActivity] 界面，传递参数网页数据[webData]
-         */
+        /** 使用 [context] 打开 [WebViewActivity] 界面，传递参数网页数据[webData] */
         fun actionStart(context: Context, webData: ActionModel?) {
             context.startTargetActivity<WebViewActivity>(bundleOf(
                     ACTION_PARCELABLE to webData

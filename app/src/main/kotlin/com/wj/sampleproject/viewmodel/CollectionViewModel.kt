@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
  */
 class CollectionViewModel(
         private val collectRepository: CollectRepository
-) : BaseViewModel(), ArticleListViewModel {
+) : BaseViewModel() {
 
     /** 页码 */
     private var pageNum = NET_PAGE_START
@@ -69,18 +69,22 @@ class CollectionViewModel(
     /** 标记 - 是否没有更多 */
     val noMore: ObservableBoolean = ObservableBoolean(false)
 
-    /** 文章列表条目点击 */
-    override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
-        // 跳转 WebView 打开
-        jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
-    }
+    /** 文章列表的 `viewModel` 对象 */
+    val articleListViewModel: ArticleListViewModel = object : ArticleListViewModel {
 
-    /** 文章收藏点击 */
-    override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
-        if (item.collected.get().condition) {
-            // 已收藏，取消收藏
-            item.collected.set(false)
-            unCollect(item)
+        /** 文章列表条目点击 */
+        override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
+            // 跳转 WebView 打开
+            jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
+        }
+
+        /** 文章收藏点击 */
+        override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
+            if (item.collected.get().condition) {
+                // 已收藏，取消收藏
+                item.collected.set(false)
+                unCollect(item)
+            }
         }
     }
 

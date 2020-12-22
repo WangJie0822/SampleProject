@@ -27,8 +27,7 @@ import kotlinx.coroutines.launch
 class ProjectArticlesViewModel(
         private val projectRepository: ProjectRepository,
         private val collectRepository: CollectRepository
-) : BaseViewModel(),
-        ArticleListViewModel {
+) : BaseViewModel() {
 
     /** 项目分类 id */
     var categoryId = ""
@@ -63,22 +62,26 @@ class ProjectArticlesViewModel(
     /** 标记 - 是否没有更多 */
     val noMore: ObservableBoolean = ObservableBoolean(true)
 
-    /** 文章 item 点击 */
-    override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
-        // 跳转 WebView 打开
-        jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
-    }
+    /** 文章列表的 `viewModel` 对象 */
+    val articleListViewModel: ArticleListViewModel = object : ArticleListViewModel {
 
-    /** 文章收藏点击 */
-    override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
-        if (item.collected.get().condition) {
-            // 已收藏，取消收藏
-            item.collected.set(false)
-            unCollect(item)
-        } else {
-            // 未收藏，收藏
-            item.collected.set(true)
-            collect(item)
+        /** 文章列表条目点击 */
+        override val onArticleItemClick: (ArticleEntity) -> Unit = { item ->
+            // 跳转 WebView 打开
+            jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.link.orEmpty())
+        }
+
+        /** 文章收藏点击 */
+        override val onArticleCollectClick: (ArticleEntity) -> Unit = { item ->
+            if (item.collected.get().condition) {
+                // 已收藏，取消收藏
+                item.collected.set(false)
+                unCollect(item)
+            } else {
+                // 未收藏，收藏
+                item.collected.set(true)
+                collect(item)
+            }
         }
     }
 
