@@ -45,6 +45,12 @@ class WebViewActivity
         }
     }
 
+    override fun onBackPressed() {
+        if (!webViewFragment.canGoBack()) {
+            super.onBackPressed()
+        }
+    }
+
     override fun initObserve() {
         // 浏览器打开
         viewModel.jumpBrowser.observe(this, {

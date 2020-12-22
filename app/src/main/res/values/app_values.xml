@@ -3,4 +3,7 @@
     <!-- 黄金比例 -->
     <string name="app_golden_ratio_horizontal">1:0.618</string>
     <string name="app_golden_ratio_vertical">0.618:1</string>
+
+    <!-- 动画排除子控件名称 -->
+    <string name="app_exclude_name">exclude_name</string>
 </resources>

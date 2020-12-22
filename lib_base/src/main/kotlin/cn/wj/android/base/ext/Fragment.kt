@@ -7,7 +7,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 
 /* ----------------------------------------------------------------------------------------- */
@@ -25,9 +24,9 @@ import androidx.fragment.app.Fragment
  */
 inline fun <reified A : Activity> Fragment.startTargetActivity(
         bundles: (Intent.() -> Unit) = { },
-        options: ActivityOptionsCompat? = null
+        options: Bundle? = getDefaultOptions.invoke(requireContext())
 ) {
-    this.activity?.startTargetActivity<A>(bundles, options)
+    requireContext().startTargetActivity<A>(bundles, options)
 }
 
 /**
@@ -41,7 +40,7 @@ inline fun <reified A : Activity> Fragment.startTargetActivity(
  */
 inline fun <reified A : Activity> Fragment.startTargetActivity(
         bundle: Bundle,
-        options: ActivityOptionsCompat? = null
+        options: Bundle? = getDefaultOptions.invoke(requireContext())
 ) {
-    context?.startTargetActivity<A>(bundle, options)
+    requireContext().startTargetActivity<A>(bundle, options)
 }

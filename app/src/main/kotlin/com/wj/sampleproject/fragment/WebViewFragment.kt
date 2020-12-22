@@ -6,7 +6,6 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseFragment
@@ -32,17 +31,6 @@ class WebViewFragment
         get() = mBinding.wv.url
 
     override fun initView() {
-        // 添加返回事件监听
-        mContext.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (mBinding.wv.canGoBack()) {
-                    mBinding.wv.goBack()
-                } else {
-                    mContext.finish()
-                }
-            }
-        })
-
         // 配置 WebView
         val webSettings = mBinding.wv.settings
         webSettings.domStorageEnabled = true
@@ -93,6 +81,16 @@ class WebViewFragment
         mBinding.wv.clearCache(true)
         mBinding.wv.removeAllViews()
         mBinding.wv.destroy()
+    }
+
+    /** 返回 [WebView] 能否回退上一页 */
+    fun canGoBack(): Boolean {
+        return if (mBinding.wv.canGoBack()) {
+            mBinding.wv.goBack()
+            true
+        } else {
+            false
+        }
     }
 
     companion object {

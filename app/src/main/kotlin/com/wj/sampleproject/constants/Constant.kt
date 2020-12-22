@@ -6,8 +6,15 @@ const val PASSWORD_MIN_LENGTH = 6
 /** 欢迎界面延时时间 */
 const val SPLASH_DELAY_MS = 1000L
 
+/** Activity 界面跳转动画时长 ms */
+const val ACTIVITY_ANIM_DURATION = 230L
+
+/** Dialog 显示动画时长 ms */
+const val DIALOG_ANIM_DURATION = 230L
+
 /** 首页返回点击间隔 */
 const val MAIN_BACK_PRESS_INTERVAL_MS = 2000L
+
 /** 首页 Banner 变换间隔 */
 const val MAIN_BANNER_TRANSFORM_INTERVAL_MS = 3000L
 

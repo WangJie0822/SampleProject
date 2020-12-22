@@ -2,15 +2,14 @@ package com.wj.sampleproject.activity
 
 import android.content.Context
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.utils.AppManager
+import com.google.android.material.transition.platform.MaterialFade
 import com.gyf.immersionbar.ImmersionBar
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
+import com.wj.sampleproject.constants.ACTIVITY_ANIM_DURATION
 import com.wj.sampleproject.databinding.AppActivityLoginBinding
 import com.wj.sampleproject.helper.ProgressDialogHelper
 import com.wj.sampleproject.helper.UserInfoData
@@ -39,6 +38,17 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
         UserInfoData.value = null
     }
 
+    override fun beforeOnCreate() {
+        window.run {
+            enterTransition = MaterialFade().apply {
+                duration = ACTIVITY_ANIM_DURATION
+            }
+            exitTransition = MaterialFade().apply {
+                duration = ACTIVITY_ANIM_DURATION
+            }
+        }
+    }
+
     override fun initImmersionbar(immersionBar: ImmersionBar) {
         immersionBar.run {
             statusBarColor(R.color.app_white)
@@ -65,11 +75,6 @@ class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
                 ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
             }
         })
-    }
-
-    override fun finishActivity() {
-        TransitionManager.beginDelayedTransition(mBinding.root as ViewGroup, AutoTransition())
-        finishAfterTransition()
     }
 
     companion object {

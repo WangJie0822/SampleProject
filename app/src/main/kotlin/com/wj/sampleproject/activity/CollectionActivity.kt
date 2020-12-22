@@ -20,7 +20,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  * @author 王杰
  */
-class CollectionActivity : BaseActivity<CollectionViewModel, AppActivityCollectionBinding>() {
+class CollectionActivity
+    : BaseActivity<CollectionViewModel, AppActivityCollectionBinding>() {
 
     override val viewModel: CollectionViewModel by viewModel()
 

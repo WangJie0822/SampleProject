@@ -12,13 +12,10 @@
         <item name="android:windowBackground">@color/app_backgroundPrimary</item>
 
         <!-- 动画相关 -->
+        <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
-        <!--        <item name="android:windowEnterTransition">@android:transition/explode</item>-->
-        <!--        <item name="android:windowExitTransition">@android:transition/explode</item>-->
-        <!--        <item name="android:windowSharedElementEnterTransition">@transition/app_trans_change_bounds</item>-->
-        <!--        <item name="android:windowSharedElementExitTransition">@transition/app_trans_change_bounds</item>-->
     </style>
 
     <!-- 欢迎界面主题 -->

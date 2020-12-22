@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import cn.wj.android.base.tools.getDeviceScreenHeight
 import cn.wj.android.base.tools.getDeviceScreenWidth
 import cn.wj.android.base.tools.getStatusBarHeight
@@ -47,6 +46,11 @@ val Context.screenHeight: Int
 val Context.statusBarHeight: Int
     get() = getStatusBarHeight(this)
 
+/** 获取默认启动配置 */
+var getDefaultOptions: (Context) -> Bundle? = {
+    null
+}
+
 /**
  * 执行 [bundles] 方法块配置 [Intent] 后，通过 [Context] 对象，打开类型为 [A] 的 [Activity] 界面，并传递 [options]
  * > [bundles] 默认空实现
@@ -58,14 +62,14 @@ val Context.statusBarHeight: Int
  */
 inline fun <reified A : Activity> Context.startTargetActivity(
         bundles: (Intent.() -> Unit) = {},
-        options: ActivityOptionsCompat? = null
+        options: Bundle? = getDefaultOptions.invoke(this)
 ) {
     val intent = Intent(this, A::class.java)
     if (this !is Activity) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
     bundles.invoke(intent)
-    ActivityCompat.startActivity(this, intent, options?.toBundle())
+    ActivityCompat.startActivity(this, intent, options)
 }
 
 /**
@@ -79,12 +83,12 @@ inline fun <reified A : Activity> Context.startTargetActivity(
  */
 inline fun <reified A : Activity> Context.startTargetActivity(
         bundle: Bundle,
-        options: ActivityOptionsCompat? = null
+        options: Bundle? = getDefaultOptions.invoke(this)
 ) {
     val intent = Intent(this, A::class.java)
     if (this !is Activity) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
     intent.putExtras(bundle)
-    ActivityCompat.startActivity(this, intent, options?.toBundle())
+    ActivityCompat.startActivity(this, intent, options)
 }

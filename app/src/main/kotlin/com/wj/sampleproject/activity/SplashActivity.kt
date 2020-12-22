@@ -2,10 +2,12 @@ package com.wj.sampleproject.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.transition.platform.MaterialFadeThrough
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
+import com.wj.sampleproject.constants.ACTIVITY_ANIM_DURATION
 import com.wj.sampleproject.constants.SPLASH_DELAY_MS
 import com.wj.sampleproject.databinding.AppActivitySplashBinding
 import com.wj.sampleproject.viewmodel.BlankViewModel
@@ -32,6 +34,17 @@ class SplashActivity
             MainActivity.actionStart(mContext)
             // 结束当前界面
             finish()
+        }
+    }
+
+    override fun beforeOnCreate() {
+        window.run {
+            enterTransition = MaterialFadeThrough().apply {
+                duration = ACTIVITY_ANIM_DURATION
+            }
+            exitTransition = MaterialFadeThrough().apply {
+                duration = ACTIVITY_ANIM_DURATION
+            }
         }
     }
 

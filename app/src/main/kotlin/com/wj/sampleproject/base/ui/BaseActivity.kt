@@ -11,11 +11,13 @@ import cn.wj.android.base.tools.fixFontScaleResources
 import cn.wj.android.swipeback.helper.SwipeBackHelper
 import cn.wj.android.swipeback.helper.dispatchTouchEvent
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.platform.MaterialSharedAxis
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
 import com.wj.android.ui.activity.BaseBindingLibActivity
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
+import com.wj.sampleproject.constants.ACTIVITY_ANIM_DURATION
 
 /**
  * Activity 基类
@@ -30,6 +32,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     private var mSwipeBackHelper: SwipeBackHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        beforeOnCreate()
         super.onCreate(savedInstanceState)
 
         // 初始化侧滑返回帮助类
@@ -56,13 +59,24 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         return SkinAppCompatDelegateImpl.get(this, this)
     }
 
-    /** 初始化状态栏相关配置 */
-    protected open fun initImmersionbar(immersionBar: ImmersionBar) {
+    override fun onBackPressed() {
+        finishAfterTransition()
     }
 
-    /** 关闭当前 Activity */
-    protected open fun finishActivity() {
-        finish()
+    /** [onCreate] 之前执行，可用于配置动画 */
+    protected open fun beforeOnCreate() {
+        window.run {
+            enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+                duration = ACTIVITY_ANIM_DURATION
+            }
+            exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
+                duration = ACTIVITY_ANIM_DURATION
+            }
+        }
+    }
+
+    /** 初始化状态栏相关配置 */
+    protected open fun initImmersionbar(immersionBar: ImmersionBar) {
     }
 
     /** 初始化状态栏相关配置 */
@@ -104,7 +118,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         viewModel.uiCloseData.observe(this, { close ->
             close?.let { model ->
                 setResult(model.resultCode, model.result)
-                finishActivity()
+                finishAfterTransition()
             }
         })
     }
