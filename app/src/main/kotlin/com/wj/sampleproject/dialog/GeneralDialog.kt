@@ -4,8 +4,12 @@ package com.wj.sampleproject.dialog
 
 import android.view.Gravity
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import cn.wj.android.base.ext.string
+import com.wj.android.ui.dialog.OnDialogDismissListener
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseDialog
 import com.wj.sampleproject.databinding.AppDialogGeneralBinding
@@ -50,7 +54,7 @@ class GeneralDialog
         viewModel.contentStr.set(arguments.getString(ACTION_CONTENT_STR, ""))
         viewModel.contentGravity.set(arguments.getInt(ACTION_CONTENT_GRAVITY, 0))
         viewModel.showSelect.set(arguments.getBoolean(ACTION_SHOW_SELECT, false))
-        viewModel.selected.set(arguments.getBoolean(ACTION_SELECTED, false))
+        viewModel.checked.set(arguments.getBoolean(ACTION_CHECKED, false))
         viewModel.selectStr.set(arguments.getString(ACTION_SELECT_STR, ""))
         viewModel.showNegativeButton.set(arguments.getBoolean(ACTION_SHOW_NEGATIVE_BUTTON, true))
         viewModel.negativeButtonStr.set(arguments.getString(ACTION_NEGATIVE_BUTTON_STR, ""))
@@ -59,14 +63,20 @@ class GeneralDialog
     }
 
     override fun initObserve() {
+        // 背景点击
+        viewModel.bgClickData.observe(this, {
+            if (isCancelable) {
+                dismiss()
+            }
+        })
         // 消极按钮点击
         viewModel.negativeClickData.observe(this, Observer {
             // 选中状态
-            val selected = viewModel.selected.get()
+            val checked = viewModel.checked.get()
 
             if (null != onNegativeAction) {
                 // 优先处理 Action
-                onNegativeAction?.invoke(selected)
+                onNegativeAction?.invoke(checked)
                 // 隐藏弹窗
                 dismiss()
                 return@Observer
@@ -74,7 +84,7 @@ class GeneralDialog
 
             if (null != onNegativeClick) {
                 // 处理 Click
-                onNegativeClick?.invoke(this, selected)
+                onNegativeClick?.invoke(this, checked)
                 return@Observer
             }
 
@@ -85,11 +95,11 @@ class GeneralDialog
         // 积极按钮点击
         viewModel.positiveClickData.observe(this, Observer {
             // 选中状态
-            val selected = viewModel.selected.get()
+            val checked = viewModel.checked.get()
 
             if (null != onPositiveAction) {
                 // 优先处理 Action
-                onPositiveAction?.invoke(selected)
+                onPositiveAction?.invoke(checked)
                 // 隐藏弹窗
                 dismiss()
                 return@Observer
@@ -97,7 +107,7 @@ class GeneralDialog
 
             if (null != onPositiveClick) {
                 // 处理 Click
-                onPositiveClick?.invoke(this, selected)
+                onPositiveClick?.invoke(this, checked)
                 return@Observer
             }
 
@@ -186,6 +196,9 @@ class GeneralDialog
         /** 积极按钮点击  */
         private var onPositiveAction: OnDialogActionListener? = null
 
+        /** 隐藏回调 */
+        private var onDialogDismissListener: OnDialogDismissListener? = null
+
         init {
             if (null != builder) {
                 // 已有 builder 不为空，复制属性
@@ -205,6 +218,7 @@ class GeneralDialog
                 onPositiveClick = builder.onPositiveClick
                 onNegativeAction = builder.onNegativeAction
                 onPositiveAction = builder.onPositiveAction
+                onDialogDismissListener = builder.onDialogDismissListener
             }
         }
 
@@ -355,8 +369,31 @@ class GeneralDialog
             return this
         }
 
+        /** 设置 [GeneralDialog] 弹窗隐藏回调 [listener] */
+        fun setOnDismissListener(listener: OnDialogDismissListener): Builder {
+            this.onDialogDismissListener = listener
+            return this
+        }
+
+        /** 使用 [fm] 创建、显示并返回 [GeneralDialog] */
+        fun show(fm: FragmentManager): GeneralDialog {
+            return build().apply {
+                show(fm, "GeneralDialog")
+            }
+        }
+
+        /** 使用 [fragment] 创建、显示并返回 [GeneralDialog] */
+        fun show(fragment: Fragment): GeneralDialog {
+            return show(fragment.childFragmentManager)
+        }
+
+        /** 使用 [activity] 创建、显示并返回 [GeneralDialog] */
+        fun show(activity: FragmentActivity): GeneralDialog {
+            return show(activity.supportFragmentManager)
+        }
+
         /** 建造并返回 [GeneralDialog] 对象 */
-        fun build(): GeneralDialog {
+        private fun build(): GeneralDialog {
             return GeneralDialog().apply {
                 isCancelable = cancelable
                 arguments = bundleOf(
@@ -365,7 +402,7 @@ class GeneralDialog
                         ACTION_CONTENT_STR to contentStr,
                         ACTION_CONTENT_GRAVITY to contentGravity,
                         ACTION_SHOW_SELECT to showSelect,
-                        ACTION_SELECTED to selected,
+                        ACTION_CHECKED to selected,
                         ACTION_SELECT_STR to selectStr,
                         ACTION_SHOW_NEGATIVE_BUTTON to showNegativeButton,
                         ACTION_NEGATIVE_BUTTON_STR to negativeButtonStr,
@@ -376,6 +413,7 @@ class GeneralDialog
                 setOnNegativeAction(this@Builder.onNegativeAction)
                 setOnPositiveClick(this@Builder.onPositiveClick)
                 setOnPositiveAction(this@Builder.onPositiveAction)
+                setOnDialogDismissListener(this@Builder.onDialogDismissListener)
                 builder = this@Builder
             }
         }
@@ -399,7 +437,7 @@ class GeneralDialog
         private const val ACTION_SHOW_SELECT = "action_show_select"
 
         /** 参数 Key - 选择器是否选中  */
-        private const val ACTION_SELECTED = "action_selected"
+        private const val ACTION_CHECKED = "action_checked"
 
         /** 参数 Key - 选择器文本  */
         private const val ACTION_SELECT_STR = "ACTION_SELECT_STR"

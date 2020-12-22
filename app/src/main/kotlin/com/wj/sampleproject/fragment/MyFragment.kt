@@ -54,7 +54,6 @@ class MyFragment
                         // 退出登录
                         viewModel.logout()
                     }
-                    .build()
                     .show(this)
         })
         // 跳转登录

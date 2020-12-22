@@ -10,11 +10,14 @@
     <color name="app_colorAccent">#FF4081</color>
     <!-- 分隔颜色 -->
     <color name="app_colorDivider">#EBEBEB</color>
+    <!-- 应用错误色 -->
+    <color name="app_colorError">#D50000</color>
     <!-- 应用主要背景色 -->
     <color name="app_backgroundPrimary">@color/app_white</color>
     <!-- 应用次要背景色 -->
     <color name="app_backgroundSecondary">#EBEBEB</color>
-    <color name="app_colorError">#D50000</color>
+    <!-- 弹窗背景色 -->
+    <color name="app_backgroundDialog">@color/app_translucentDark</color>
 
     <!-- 标题文本颜色 -->
     <color name="app_textPrimary">@color/app_white</color>
@@ -28,6 +31,7 @@
     <color name="app_textTheme">@color/app_colorPrimary</color>
     <!-- 文本重点颜色 -->
     <color name="app_textAccent">@color/app_colorAccent</color>
+    <!-- 文本错误颜色 -->
     <color name="app_textError">@color/app_colorError</color>
 
     <!-- 主要着色 -->

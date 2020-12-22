@@ -136,13 +136,13 @@
                 android:text="@string/app_cancel"
                 android:textColor="@color/app_textSecondary"
                 android:textSize="15sp"
-                app:layout_constraintEnd_toStartOf="@id/v_dividing_vertical"
+                app:layout_constraintEnd_toStartOf="@id/space_vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/v_dividing_horizontal"
                 tools:visibility="visible" />
 
             <View
-                android:id="@+id/v_dividing_vertical"
+                android:id="@+id/space_vertical"
                 android:layout_width="1dp"
                 android:layout_height="0dp"
                 android:background="@color/app_colorDivider"
@@ -162,7 +162,7 @@
                 android:textColor="@color/app_textAccent"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/v_dividing_vertical"
+                app:layout_constraintStart_toEndOf="@id/space_vertical"
                 app:layout_constraintTop_toBottomOf="@id/v_dividing_horizontal"
                 tools:visibility="visible" />
 

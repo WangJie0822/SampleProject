@@ -14,162 +14,174 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#60000000">
+        android:background="@color/app_backgroundDialog"
+        android:bind_onClick="@{viewModel.onBgClick}">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/app_shape_general_dialog_bg"
+            app:cardBackgroundColor="@color/app_backgroundPrimary"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="8dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.82">
+            app:layout_constraintWidth_percent="0.85">
 
-            <ImageView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="?selectableItemBackground"
-                android:bind_onClick="@{viewModel.onCloseClick}"
-                android:contentDescription="@null"
-                android:padding="10dp"
-                android:src="@drawable/app_icon_dialog_close"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_top"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="16dp" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:bind_visibility="@{viewModel.showTitle}"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="@{viewModel.titleStr}"
-                android:textColor="@color/app_textNormal"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/guide_top"
-                tools:text="标题标题标题标题标题标题标题标题标题"
-                tools:visibility="visible" />
-
-            <TextView
-                android:id="@+id/tv_content"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:bind_tv_gravity="@{viewModel.contentGravity}"
-                android:ellipsize="end"
-                android:gravity="start|center_vertical"
-                android:lineSpacingExtra="5dp"
-                android:maxLines="5"
-                android:minHeight="40dp"
-                android:text="@{viewModel.contentStr}"
-                android:textColor="@color/app_textNormal"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                app:layout_goneMarginTop="36dp"
-                tools:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容" />
-
-            <cn.wj.android.views.textview.FixedTextView
-                android:id="@+id/tv_select"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="10dp"
-                android:background="?selectableItemBackground"
-                android:bind_onClick="@{viewModel.onSelectClick}"
-                android:bind_selected="@{viewModel.selected}"
-                android:bind_visibility="@{viewModel.showSelect}"
-                android:drawablePadding="10dp"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:text="@{viewModel.selectStr}"
-                android:textColor="@color/app_textSecondary"
-                android:textSize="14sp"
-                app:ftv_drawableStart="@drawable/app_selector_general_dialog_select"
-                app:ftv_drawableStartHeight="20dp"
-                app:ftv_drawableStartWidth="20dp"
-                app:layout_constrainedWidth="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_content"
-                tools:text="不再提示不再提示不再提示不再提示不再提示"
-                tools:visibility="visible" />
-
-            <View
-                android:id="@+id/v_dividing_horizontal"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/app_colorDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_select"
-                app:layout_goneMarginTop="34dp" />
-
-            <TextView
-                android:id="@+id/tv_negative"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:background="?selectableItemBackground"
-                android:bind_onClick="@{viewModel.onNegativeClick}"
-                android:bind_visibility="@{viewModel.showNegativeButton}"
-                android:gravity="center"
-                android:text="@{viewModel.negativeButtonStr}"
-                android:textColor="@color/app_textSecondary"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toStartOf="@id/v_dividing_vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/v_dividing_horizontal"
-                tools:text="取消"
-                tools:visibility="visible" />
-
-            <View
-                android:id="@+id/v_dividing_vertical"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:background="@color/app_colorDivider"
-                android:bind_visibility="@{viewModel.showNegativeButton &amp;&amp; viewModel.showPositiveButton}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_positive"
-                app:layout_constraintStart_toEndOf="@id/tv_negative"
-                app:layout_constraintTop_toTopOf="@id/v_dividing_horizontal"
-                tools:visibility="visible" />
-
-            <TextView
-                android:id="@+id/tv_positive"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:background="?selectableItemBackground"
-                android:bind_onClick="@{viewModel.onPositiveClick}"
-                android:bind_visibility="@{viewModel.showPositiveButton}"
-                android:gravity="center"
-                android:text="@{viewModel.positiveButtonStr}"
-                android:textColor="@color/app_textAccent"
-                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/v_dividing_vertical"
-                app:layout_constraintTop_toBottomOf="@id/v_dividing_horizontal"
-                tools:text="确定"
-                tools:visibility="visible" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.82">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="50dp"
+                    android:bind_visibility="@{viewModel.showTitle}"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@{viewModel.titleStr}"
+                    android:textColor="@color/app_textNormal"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/guide_top"
+                    tools:text="标题标题标题标题标题标题标题标题标题"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:bind_tv_gravity="@{viewModel.contentGravity}"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:lineSpacingExtra="5dp"
+                    android:maxLines="5"
+                    android:minHeight="40dp"
+                    android:text="@{viewModel.contentStr}"
+                    android:textColor="@color/app_textNormal"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    app:layout_goneMarginTop="0dp"
+                    tools:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_selector"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:bind_visibility="@{viewModel.showSelect}"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="mcb,tv_select" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/mcb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:checked="@={viewModel.checked}"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_content"
+                    tools:checked="true" />
+
+                <cn.wj.android.views.textview.FixedTextView
+                    android:id="@+id/tv_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@{viewModel.selectStr}"
+                    android:textColor="@color/app_textSecondary"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="@id/mcb"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toEndOf="@id/mcb"
+                    app:layout_constraintTop_toTopOf="@id/mcb"
+                    tools:text="不再提示不再提示不再提示不再提示不再提示" />
+
+                <Space
+                    android:id="@+id/space_horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_select"
+                    app:layout_goneMarginTop="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_negative"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="?selectableItemBackground"
+                    android:bind_onClick="@{viewModel.onNegativeClick}"
+                    android:bind_visibility="@{viewModel.showNegativeButton}"
+                    android:gravity="center"
+                    android:text="@{viewModel.negativeButtonStr}"
+                    android:textColor="@color/app_textSecondary"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@id/space_vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/space_horizontal"
+                    tools:text="取消"
+                    tools:visibility="visible" />
+
+                <Space
+                    android:id="@+id/space_vertical"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_positive"
+                    app:layout_constraintStart_toEndOf="@id/tv_negative"
+                    app:layout_constraintTop_toTopOf="@id/space_horizontal" />
+
+                <TextView
+                    android:id="@+id/tv_positive"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="?selectableItemBackground"
+                    android:bind_onClick="@{viewModel.onPositiveClick}"
+                    android:bind_visibility="@{viewModel.showPositiveButton}"
+                    android:gravity="center"
+                    android:text="@{viewModel.positiveButtonStr}"
+                    android:textColor="@color/app_textAccent"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/space_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/space_horizontal"
+                    tools:text="确定"
+                    tools:visibility="visible" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

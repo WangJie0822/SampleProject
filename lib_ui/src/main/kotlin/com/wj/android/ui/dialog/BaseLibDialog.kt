@@ -1,5 +1,6 @@
 package com.wj.android.ui.dialog
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.StyleRes
@@ -18,32 +19,37 @@ import cn.wj.android.base.R
  */
 abstract class BaseLibDialog
     : DialogFragment() {
-    
+
+    /** Dialog 隐藏回调 */
+    private var onDialogDismissListener: OnDialogDismissListener? = null
+
     /** Context 对象 */
     protected lateinit var mContext: FragmentActivity
-    
+
     /** 根布局对象 */
     protected lateinit var mRootView: View
-    
+
+    protected open val dialogTheme: Int = R.style.BaseDialogTheme
+
     /** Dialog 宽度 单位：px  */
     open var dialogWidth: Int = WindowManager.LayoutParams.MATCH_PARENT
-    
+
     /** Dialog 高度 单位：px */
     open var dialogHeight: Int = WindowManager.LayoutParams.MATCH_PARENT
-    
+
     /** Dialog 重心 [Gravity] */
     open var gravity: Int = Gravity.CENTER
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         // 设置样式
         setStyle(STYLE_NO_TITLE, dialogTheme)
-        
+
         // 保存 Context 对象
         mContext = activity as FragmentActivity
     }
-    
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -51,19 +57,19 @@ abstract class BaseLibDialog
     ): View? {
         // 取消标题栏
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        
+
         // 加载布局
         mRootView = inflater.inflate(layoutResId, container, false)
-        
+
         // 初始化布局
         initView()
-        
+
         return mRootView
     }
-    
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        
+
         // 配置 Dialog 宽高、重心
         val layoutParams = dialog?.window?.attributes
         layoutParams?.width = dialogWidth
@@ -71,12 +77,17 @@ abstract class BaseLibDialog
         layoutParams?.gravity = gravity
         dialog?.window?.attributes = layoutParams
     }
-    
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDialogDismissListener?.invoke()
+    }
+
     override fun setCancelable(cancelable: Boolean) {
         super.setCancelable(cancelable)
         dialog?.setCanceledOnTouchOutside(cancelable)
     }
-    
+
     /**
      * 设置动画效果
      *
@@ -85,14 +96,14 @@ abstract class BaseLibDialog
     fun setWindowAnimations(@StyleRes resId: Int) {
         dialog?.window?.setWindowAnimations(resId)
     }
-    
+
     /**
      * 设置软键盘弹出效果
      */
     fun setWindowInputMode(mode: Int) {
         dialog?.window?.setSoftInputMode(mode)
     }
-    
+
     /**
      * 显示 Dialog
      *
@@ -107,7 +118,7 @@ abstract class BaseLibDialog
         }
         show(activity.supportFragmentManager, tag)
     }
-    
+
     /**
      * 显示 Dialog
      *
@@ -122,14 +133,20 @@ abstract class BaseLibDialog
         }
         show(fragment.childFragmentManager, tag)
     }
-    
-    protected open val dialogTheme: Int = R.style.BaseDialogTheme
-    
+
+    /** 设置 Dialog 隐藏回调 [listener] */
+    fun setOnDialogDismissListener(listener: OnDialogDismissListener?) {
+        onDialogDismissListener = listener
+    }
+
     /** 界面布局 id */
     abstract val layoutResId: Int
-    
+
     /**
      * 初始化布局
      */
     abstract fun initView()
 }
+
+/** 弹窗隐藏回调 */
+typealias OnDialogDismissListener = () -> Unit
