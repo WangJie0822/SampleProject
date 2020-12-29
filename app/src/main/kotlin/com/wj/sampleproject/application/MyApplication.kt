@@ -1,11 +1,8 @@
 package com.wj.sampleproject.application
 
-import android.app.Activity
-import android.app.ActivityOptions
 import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
-import cn.wj.android.base.ext.getDefaultOptions
 import cn.wj.android.base.log.InternalLog
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.orhanobut.logger.AndroidLogAdapter
@@ -75,14 +72,5 @@ class MyApplication : Application() {
 
         // base库输出日志
         InternalLog.logEnable(BuildConfig.DEBUG)
-
-        // 配置界面跳转默认配置参数
-        getDefaultOptions = { context ->
-            if (context is Activity) {
-                ActivityOptions.makeSceneTransitionAnimation(context).toBundle()
-            } else {
-                null
-            }
-        }
     }
 }

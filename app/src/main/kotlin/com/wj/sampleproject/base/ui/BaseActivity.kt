@@ -59,10 +59,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         return SkinAppCompatDelegateImpl.get(this, this)
     }
 
-    override fun onBackPressed() {
-        finishAfterTransition()
-    }
-
     /** [onCreate] 之前执行，可用于配置动画 */
     protected open fun beforeOnCreate() {
         window.run {
@@ -118,7 +114,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         viewModel.uiCloseData.observe(this, { close ->
             close?.let { model ->
                 setResult(model.resultCode, model.result)
-                finishAfterTransition()
+                finish()
             }
         })
     }
