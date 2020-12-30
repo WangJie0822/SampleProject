@@ -136,10 +136,7 @@ class CollectedWebViewModel(
 }
 
 /**
- * Popup 显示数据 Model
- *
- * @param view 锚点 View
- * @param callback 点击回调
+ * Popup 显示数据 Model，持有锚点 [view] 以及菜单点击回调 [callback]
  */
 data class PopupModel(
         val view: View,

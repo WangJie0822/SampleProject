@@ -8,14 +8,11 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.model.UiCloseModel
-import com.wj.sampleproject.repository.CollectRepository
 
 /**
  * WebView 界面 ViewModel 类
  */
-class WebViewViewModel(
-        private val collectRepository: CollectRepository
-) : BaseViewModel() {
+class WebViewViewModel : BaseViewModel() {
 
     /** 网页相关数据 */
     val webData = MutableLiveData<WebViewActivity.ActionModel>()

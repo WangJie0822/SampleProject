@@ -11,16 +11,14 @@ import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.SnackbarModel
-import com.wj.sampleproject.repository.MyRepository
+import com.wj.sampleproject.repository.UserRepository
 import kotlinx.coroutines.launch
 
 /**
- * 我的 ViewModel
- *
- * @param repository 我的相关数据仓库
+ * 我的 ViewModel，注入 [repository] 获取数据
  */
 class MyViewModel(
-        private val repository: MyRepository
+        private val repository: UserRepository
 ) : BaseViewModel() {
 
     /** 控制进度条弹窗显示  */

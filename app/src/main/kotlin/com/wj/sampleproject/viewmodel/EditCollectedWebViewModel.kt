@@ -13,20 +13,18 @@ import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
-import com.wj.sampleproject.repository.CollectRepository
+import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
 /**
- * 编辑收藏网站 ViewModel
- *
- * @param collectRepository 收藏相关数据仓库
+ * 编辑收藏网站 ViewModel，注入 [repository] 获取数据
  *
  * - 创建时间：2019/10/17
  *
  * @author 王杰
  */
 class EditCollectedWebViewModel(
-        private val collectRepository: CollectRepository
+        private val repository: ArticleRepository
 ) : BaseViewModel() {
 
     /** 网站 id */
@@ -84,7 +82,7 @@ class EditCollectedWebViewModel(
                 // 显示弹窗
                 progressData.value = ProgressModel()
                 // 请求数据
-                val result = collectRepository.collectWeb(webName.get().orEmpty(), webLink.get().orEmpty())
+                val result = repository.collectWeb(webName.get().orEmpty(), webLink.get().orEmpty())
                 if (result.success()) {
                     // 收藏成功，刷新
                     LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB).post(Any())
@@ -112,7 +110,7 @@ class EditCollectedWebViewModel(
                 // 显示弹窗
                 progressData.value = ProgressModel()
                 // 请求数据
-                val result = collectRepository.editCollectedWeb(id, webName.get().orEmpty(), webLink.get().orEmpty())
+                val result = repository.editCollectedWeb(id, webName.get().orEmpty(), webLink.get().orEmpty())
                 if (result.success()) {
                     // 编辑成功，刷新
                     LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB).post(Any())

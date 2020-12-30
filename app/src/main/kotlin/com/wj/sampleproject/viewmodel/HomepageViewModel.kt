@@ -22,7 +22,7 @@ import kotlinx.coroutines.*
 
 /**
  * 主界面 - 首页 ViewModel，注入[repository] 获取相关数据
- * > 文章列表
+ * > 文章列表实现 [ArticleListPagingInterface] 接口，委托给 [ArticleListPagingInterfaceImpl] 实现
  */
 class HomepageViewModel(
         private val repository: ArticleRepository

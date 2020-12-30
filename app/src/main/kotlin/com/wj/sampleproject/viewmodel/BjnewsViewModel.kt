@@ -7,16 +7,14 @@ import com.orhanobut.logger.Logger
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.repository.BjnewsRepository
+import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
 /**
- * 公众号 ViewModel
- *
- * @param repository 公众号相关数据仓库
+ * 公众号 ViewModel，注入 [repository] 获取数据
  */
 class BjnewsViewModel(
-        private val repository: BjnewsRepository
+        private val repository: ArticleRepository
 ) : BaseViewModel() {
 
     /** 公众号数据 */

@@ -19,20 +19,18 @@ import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
-import com.wj.sampleproject.repository.MyRepository
+import com.wj.sampleproject.repository.UserRepository
 import kotlinx.coroutines.launch
 
 /**
- * 登录 ViewModel
- *
- * @param repository 我的相关数据仓库
+ * 登录 ViewModel，注入 [repository] 获取数据
  *
  * - 创建时间：2019/10/14
  *
  * @author 王杰
  */
 class LoginViewModel(
-        private val repository: MyRepository
+        private val repository: UserRepository
 ) : BaseViewModel() {
 
     /** 控制进度条弹窗显示  */

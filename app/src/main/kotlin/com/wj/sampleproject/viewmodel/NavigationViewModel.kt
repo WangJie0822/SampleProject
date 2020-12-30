@@ -9,16 +9,14 @@ import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.NavigationListEntity
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.repository.SystemRepository
+import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
 /**
- * 导航 ViewModel
- *
- * @param repository 体系相关数据仓库
+ * 导航 ViewModel，注入 [repository] 获取数据
  */
 class NavigationViewModel(
-        private val repository: SystemRepository
+        private val repository: ArticleRepository
 ) : BaseViewModel() {
 
     /** 列表数据 */

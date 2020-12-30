@@ -72,11 +72,11 @@ class GeneralViewModel : BaseViewModel() {
 
     /** 消极按钮点击  */
     val onNegativeClick: () -> Unit = {
-        negativeClickData.value = System.currentTimeMillis()
+        negativeClickData.value = 0
     }
 
     /** 积极按钮点击  */
     val onPositiveClick: () -> Unit = {
-        positiveClickData.value = System.currentTimeMillis()
+        positiveClickData.value = 0
     }
 }

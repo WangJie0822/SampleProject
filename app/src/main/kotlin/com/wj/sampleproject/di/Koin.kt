@@ -15,7 +15,8 @@ import com.wj.sampleproject.ext.toJsonString
 import com.wj.sampleproject.ext.toTypeEntity
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
-import com.wj.sampleproject.repository.*
+import com.wj.sampleproject.repository.ArticleRepository
+import com.wj.sampleproject.repository.UserRepository
 import com.wj.sampleproject.viewmodel.*
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -80,13 +81,7 @@ val netModule: Module = module {
 
 /** 数据仓库 Module */
 val repositoryModule: Module = module {
-    factory { HomepageRepository(get()) }
-    factory { SystemRepository(get()) }
-    factory { BjnewsRepository(get()) }
-    factory { ProjectRepository(get()) }
-    factory { MyRepository(get()) }
-    factory { CollectRepository(get()) }
-    factory { SearchRepository(get()) }
+    factory { UserRepository(get()) }
     factory { ArticleRepository(get()) }
 }
 
@@ -111,7 +106,7 @@ val viewModelModule: Module = module {
     viewModel { ProjectArticlesViewModel(get()) }
     viewModel { MyViewModel(get()) }
     viewModel { SearchViewModel(get()) }
-    viewModel { WebViewViewModel(get()) }
+    viewModel { WebViewViewModel() }
     viewModel { LoginViewModel(get()) }
     viewModel { GeneralViewModel() }
     viewModel { CollectionViewModel(get()) }

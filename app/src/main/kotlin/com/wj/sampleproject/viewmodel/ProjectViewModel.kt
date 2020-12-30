@@ -7,16 +7,14 @@ import com.orhanobut.logger.Logger
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.ext.snackbarMsg
-import com.wj.sampleproject.repository.ProjectRepository
+import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
 /**
- * 项目 ViewModel
- *
- * @param repository 项目相关数据仓库
+ * 项目 ViewModel，注入 [repository] 获取数据
  */
 class ProjectViewModel(
-        private val repository: ProjectRepository
+        private val repository: ArticleRepository
 ) : BaseViewModel() {
 
     /** 项目分类数据 */
