@@ -87,6 +87,7 @@ val repositoryModule: Module = module {
     factory { MyRepository(get()) }
     factory { CollectRepository(get()) }
     factory { SearchRepository(get()) }
+    factory { ArticleRepository(get()) }
 }
 
 /** 适配器 Module */
@@ -100,23 +101,23 @@ val adapterModule: Module = module {
 val viewModelModule: Module = module {
     viewModel { BlankViewModel() }
     viewModel { MainViewModel() }
-    viewModel { HomepageViewModel(get(), get()) }
+    viewModel { HomepageViewModel(get()) }
     viewModel { SystemViewModel() }
     viewModel { SystemCategoryViewModel(get()) }
     viewModel { NavigationViewModel(get()) }
     viewModel { BjnewsViewModel(get()) }
-    viewModel { BjnewsArticlesViewModel(get(), get()) }
+    viewModel { BjnewsArticlesViewModel(get()) }
     viewModel { ProjectViewModel(get()) }
-    viewModel { ProjectArticlesViewModel(get(), get()) }
+    viewModel { ProjectArticlesViewModel(get()) }
     viewModel { MyViewModel(get()) }
-    viewModel { SearchViewModel(get(), get()) }
+    viewModel { SearchViewModel(get()) }
     viewModel { WebViewViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { GeneralViewModel() }
     viewModel { CollectionViewModel(get()) }
     viewModel { CollectedWebViewModel(get()) }
     viewModel { EditCollectedWebViewModel(get()) }
-    viewModel { SystemArticlesViewModel(get(), get()) }
+    viewModel { SystemArticlesViewModel(get()) }
     viewModel { ProgressViewModel() }
     viewModel { StudyViewModel() }
 }

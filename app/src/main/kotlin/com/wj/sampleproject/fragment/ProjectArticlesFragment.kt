@@ -10,6 +10,7 @@ import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.constants.ACTION_CATEGORY
 import com.wj.sampleproject.constants.EVENT_COLLECTION_CANCELLED
 import com.wj.sampleproject.databinding.AppFragmentProjectArticlesBinding
+import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.CategoryEntity
 import com.wj.sampleproject.viewmodel.ProjectArticlesViewModel
 import org.koin.android.ext.android.inject
@@ -35,7 +36,7 @@ class ProjectArticlesFragment
 
         if (firstLoad) {
             // 刷新列表
-            viewModel.refreshing.set(true)
+            viewModel.refreshing.value = SmartRefreshState(true)
         }
     }
 
@@ -47,7 +48,7 @@ class ProjectArticlesFragment
         mBinding.rvProjectArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
             rv.adapter = mArticlesAdapter.also {
-                it.viewModel = viewModel.articleListViewModel
+                it.viewModel = viewModel.articleListEventInterface
                 it.setEmptyView(R.layout.app_layout_placeholder)
             }
         }

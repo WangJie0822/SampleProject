@@ -22,8 +22,8 @@
             android:background="@color/app_colorPrimary"
             android:bind_toolbar_navigationClick="@{viewModel.onBackClick}"
             android:bind_toolbar_title="@{viewModel.titleStr}"
-            app:theme="@style/app_toolbar"
             app:navigationIcon="@drawable/app_vector_arrow_back"
+            app:theme="@style/app_toolbar"
             tools:title="@sample/article_list.json/data/datas/title" />
 
         <View style="@style/app_dividing.horizontal" />
@@ -31,11 +31,10 @@
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:bind_smart_loadMore="@={viewModel.loadMore}"
-            android:bind_smart_noMore="@{viewModel.noMore}"
+            android:bind_smart_loadMoreState="@={viewModel.loadMore}"
             android:bind_smart_onLoadMore="@{viewModel.onLoadMore}"
             android:bind_smart_onRefresh="@{viewModel.onRefresh}"
-            android:bind_smart_refreshing="@={viewModel.refreshing}">
+            android:bind_smart_refreshState="@={viewModel.refreshing}">
 
             <com.scwang.smart.refresh.header.ClassicsHeader
                 android:layout_width="match_parent"

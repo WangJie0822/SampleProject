@@ -4,7 +4,7 @@ package com.wj.sampleproject.constants
 const val PASSWORD_MIN_LENGTH = 6
 
 /** 欢迎界面延时时间 */
-const val SPLASH_DELAY_MS = 1000L
+const val SPLASH_DELAY_MS = 1_000L
 
 /** Activity 界面跳转动画时长 ms */
 const val ACTIVITY_ANIM_DURATION = 230L
@@ -13,10 +13,13 @@ const val ACTIVITY_ANIM_DURATION = 230L
 const val DIALOG_ANIM_DURATION = 230L
 
 /** 首页返回点击间隔 */
-const val MAIN_BACK_PRESS_INTERVAL_MS = 2000L
+const val MAIN_BACK_PRESS_INTERVAL_MS = 2_000L
 
 /** 首页 Banner 变换间隔 */
-const val MAIN_BANNER_TRANSFORM_INTERVAL_MS = 3000L
+const val MAIN_BANNER_TRANSFORM_INTERVAL_MS = 3_000L
+
+/** 请求超时时间 */
+const val REQUEST_TIMEOUT = 10_000L
 
 /** 网络请求响应码 - 失败 */
 const val NET_RESPONSE_CODE_FAILED = -1

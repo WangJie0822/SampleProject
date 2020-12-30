@@ -11,6 +11,7 @@ import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.ACTION_SYSTEM_ID
 import com.wj.sampleproject.constants.ACTION_TITLE
 import com.wj.sampleproject.databinding.AppActivitySystemArticlesBinding
+import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.viewmodel.SystemArticlesViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,13 +42,13 @@ class SystemArticlesActivity : BaseActivity<SystemArticlesViewModel, AppActivity
         mBinding.rvSystemArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
             rv.adapter = mArticlesAdapter.also {
-                it.viewModel = viewModel.articleListViewModel
+                it.viewModel = viewModel.articleListEventInterface
                 it.setEmptyView(R.layout.app_layout_placeholder)
             }
         }
 
         // 自动刷新列表
-        viewModel.refreshing.set(true)
+        viewModel.refreshing.value = SmartRefreshState(true)
     }
 
     override fun initObserve() {

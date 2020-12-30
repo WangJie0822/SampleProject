@@ -8,6 +8,7 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.databinding.AppActivityCollectionBinding
+import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.viewmodel.CollectionViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,13 +37,13 @@ class CollectionActivity
         mBinding.rvArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
             rv.adapter = mArticlesAdapter.also {
-                it.viewModel = viewModel.articleListViewModel
+                it.viewModel = viewModel.articleListEventInterface
                 it.setEmptyView(R.layout.app_layout_placeholder)
             }
         }
 
         // 自动加载数据
-        viewModel.refreshing.set(true)
+        viewModel.refreshing.value = SmartRefreshState(true)
     }
 
     override fun initObserve() {

@@ -18,7 +18,7 @@ class ArticleListRvAdapter
     : BaseRvListDBAdapter<
         ArticleListRvAdapter.ViewHolder,
         AppRecyclerItemArticlesBinding,
-        ArticleListViewModel,
+        ArticleListEventInterface,
         ArticleEntity>() {
 
     override val layoutResID: Int = R.layout.app_recycler_item_articles
@@ -42,7 +42,7 @@ class ArticleListRvAdapter
  * 文章列表适配接口
  * > 提供 [onArticleItemClick]、[onArticleCollectClick] 两个点击事件
  */
-interface ArticleListViewModel {
+interface ArticleListEventInterface {
 
     /** 文章列表条目点击 */
     val onArticleItemClick: (ArticleEntity) -> Unit

@@ -46,7 +46,7 @@ class BjnewsArticlesFragment
         mBinding.rvBjnewsArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
             rv.adapter = mArticlesAdapter.also {
-                it.viewModel = viewModel.articleListViewModel
+                it.viewModel = viewModel.articleListEventInterface
                 it.setEmptyView(R.layout.app_layout_placeholder)
             }
         }

@@ -16,20 +16,18 @@ import com.wj.sampleproject.entity.CollectedWebEntity
 import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.UiCloseModel
-import com.wj.sampleproject.repository.CollectRepository
+import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
 /**
- * 收藏网站 ViewModel
- *
- * @param collectRepository 收藏相关数据仓库
+ * 收藏网站 ViewModel，注入 [repository] 获取数据
  *
  * 创建时间：2019/10/16
  *
  * @author 王杰
  */
 class CollectedWebViewModel(
-        private val collectRepository: CollectRepository
+        private val repository: ArticleRepository
 ) : BaseViewModel() {
 
     /** 控制进度条弹窗显示  */
@@ -97,7 +95,7 @@ class CollectedWebViewModel(
     private fun getCollectedWebList() {
         viewModelScope.launch {
             try {
-                val result = collectRepository.getCollectedWebList()
+                val result = repository.getCollectedWebList()
                 if (result.success()) {
                     // 获取成功
                     websListData.value = result.data.orEmpty()
@@ -118,7 +116,7 @@ class CollectedWebViewModel(
         viewModelScope.launch {
             try {
                 progressData.value = ProgressModel()
-                val result = collectRepository.deleteCollectedWeb(item.id.orEmpty())
+                val result = repository.deleteCollectedWeb(item.id.orEmpty())
                 if (result.success()) {
                     // 删除成功，从列表移除
                     val ls = websListData.value.copy()
