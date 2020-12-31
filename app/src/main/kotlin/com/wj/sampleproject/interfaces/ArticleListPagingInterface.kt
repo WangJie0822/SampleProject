@@ -37,6 +37,4 @@ interface ArticleListPagingInterface : ArticleListInterface {
 
     /** 根据页码 [Int] 获取文章列表数据 */
     var getArticleList: suspend (Int) -> NetResult<ArticleListEntity>
-
-
 }

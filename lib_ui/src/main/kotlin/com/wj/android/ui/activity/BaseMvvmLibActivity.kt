@@ -16,7 +16,7 @@ abstract class BaseMvvmLibActivity<VM : BaseLibViewModel>
     : BaseLibActivity() {
 
     /** 当前界面 ViewModel 对象 */
-    protected abstract val viewModel: VM
+    abstract val viewModel: VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

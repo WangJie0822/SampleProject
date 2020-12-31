@@ -13,7 +13,8 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.CollectedWebEntity
-import com.wj.sampleproject.ext.snackbarMsg
+import com.wj.sampleproject.ext.defaultFaildBlock
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.ArticleRepository
@@ -95,16 +96,14 @@ class CollectedWebViewModel(
     private fun getCollectedWebList() {
         viewModelScope.launch {
             try {
-                val result = repository.getCollectedWebList()
-                if (result.success()) {
-                    // 获取成功
-                    websListData.value = result.data.orEmpty()
-                } else {
-                    snackbarData.value = result.toError()
-                }
+                repository.getCollectedWebList()
+                        .judge(onSuccess = {
+                            // 获取成功
+                            websListData.value = data.orEmpty()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getCollectedWebList")
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
             } finally {
                 refreshing.set(false)
             }
@@ -116,18 +115,16 @@ class CollectedWebViewModel(
         viewModelScope.launch {
             try {
                 progressData.value = ProgressModel()
-                val result = repository.deleteCollectedWeb(item.id.orEmpty())
-                if (result.success()) {
-                    // 删除成功，从列表移除
-                    val ls = websListData.value.copy()
-                    ls.remove(item)
-                    websListData.value = ls
-                } else {
-                    snackbarData.value = result.toError()
-                }
+                repository.deleteCollectedWeb(item.id.orEmpty())
+                        .judge(onSuccess = {
+                            // 删除成功，从列表移除
+                            val ls = websListData.value.copy()
+                            ls.remove(item)
+                            websListData.value = ls
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getCollectedWebList")
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
             } finally {
                 progressData.value = null
             }

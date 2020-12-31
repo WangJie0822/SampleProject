@@ -23,6 +23,7 @@ class SystemArticlesViewModel(
     var cid = ""
 
     init {
+        viewModel = this
         getArticleList = { pageNum ->
             repository.getSystemArticleList(pageNum, cid)
         }

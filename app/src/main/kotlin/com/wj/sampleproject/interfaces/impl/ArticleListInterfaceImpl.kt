@@ -5,7 +5,6 @@ import cn.wj.android.common.ext.condition
 import cn.wj.android.common.ext.orEmpty
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListEventInterface
-import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.interfaces.ArticleCollectionInterface
 import com.wj.sampleproject.interfaces.ArticleListInterface
@@ -19,8 +18,7 @@ import com.wj.sampleproject.repository.ArticleRepository
  * @author 王杰
  */
 open class ArticleListInterfaceImpl(private val repository: ArticleRepository)
-    : BaseViewModel(),
-        ArticleCollectionInterface by ArticleCollectionInterfaceImpl(repository),
+    : ArticleCollectionInterface by ArticleCollectionInterfaceImpl(repository),
         ArticleListInterface {
 
     /** 跳转 WebView 数据 */

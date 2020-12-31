@@ -17,6 +17,7 @@ class ProjectArticlesViewModel(
     var categoryId = ""
 
     init {
+        viewModel = this
         getArticleList = { pageNum ->
             repository.getProjectList(categoryId, pageNum)
         }

@@ -6,7 +6,8 @@ import cn.wj.android.common.ext.orEmpty
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.SystemCategoryEntity
-import com.wj.sampleproject.ext.snackbarMsg
+import com.wj.sampleproject.ext.defaultFaildBlock
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
@@ -32,16 +33,14 @@ class SystemCategoryViewModel(
     fun getSystemCategoryList() {
         viewModelScope.launch {
             try {
-                val result = repository.getSystemCategoryList()
-                if (result.success()) {
-                    // 获取成功
-                    listData.value = result.data.orEmpty()
-                } else {
-                    snackbarData.value = result.toError()
-                }
+                repository.getSystemCategoryList()
+                        .judge(onSuccess = {
+                            // 获取成功
+                            listData.value = data.orEmpty()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
             }
         }
     }

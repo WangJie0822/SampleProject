@@ -1,12 +1,14 @@
 package com.wj.sampleproject.net
 
+import cn.wj.android.base.ext.string
 import cn.wj.android.base.utils.AppManager
+import com.google.android.material.snackbar.Snackbar
+import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.LoginActivity
-import com.wj.sampleproject.constants.NET_RESPONSE_CODE_ERROR
+import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_FAILED
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_LOGIN_FAILED
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_SUCCESS
-import com.wj.sampleproject.ext.showMsg
 import com.wj.sampleproject.model.SnackbarModel
 
 /**
@@ -23,26 +25,41 @@ data class NetResult<T>(
 ) {
 
     /**
-     * 检查返回数据并返回接口是否请求成功
-     * > [errorCode] 为 [NET_RESPONSE_CODE_LOGIN_FAILED] 时跳转登录页
+     * 对返回数据进行判断，并处理相应逻辑
+     * > 成功: [onSuccess] or 失败: [onFailed] or 登录失效: [onFailed4Login]
      */
-    fun success(): Boolean {
-        if (errorCode == NET_RESPONSE_CODE_LOGIN_FAILED) {
-            // 登录失败，需要重新登录
-            LoginActivity.actionStart(AppManager.getContext())
-        }
-        return errorCode == NET_RESPONSE_CODE_SUCCESS
-    }
-
-    fun toError(): SnackbarModel {
-        return SnackbarModel(errorMsg.orEmpty())
-    }
-
-    companion object {
-
-        /** 获取 [throwable] 异常对应的返回数据 */
-        fun <E> fromThrowable(throwable: Throwable): NetResult<E> {
-            return NetResult(errorCode = NET_RESPONSE_CODE_ERROR, errorMsg = throwable.showMsg)
+    inline fun judge(
+            crossinline onSuccess: NetResult<T>.() -> Unit = {},
+            crossinline onFailed: NetResult<T>.() -> Unit = {},
+            crossinline onFailed4Login: NetResult<T>.() -> Boolean = { false }
+    ) {
+        when (errorCode) {
+            NET_RESPONSE_CODE_SUCCESS -> {
+                // 请求成功
+                onSuccess.invoke(this)
+            }
+            NET_RESPONSE_CODE_LOGIN_FAILED -> {
+                // 登录失效，需要重新登录
+                if (onFailed4Login.invoke(this)) {
+                    // 已消费事件
+                    return
+                }
+                (AppManager.peekActivity() as? BaseActivity<*, *>)?.run {
+                    viewModel.snackbarData.value = SnackbarModel(
+                            content = errorMsg,
+                            duration = Snackbar.LENGTH_INDEFINITE,
+                            actionText = R.string.app_go_login.string,
+                            onAction = {
+                                // 登录失败，需要重新登录
+                                LoginActivity.actionStart(this)
+                            }
+                    )
+                }
+            }
+            else -> {
+                // 请求失败
+                onFailed.invoke(this)
+            }
         }
     }
 }

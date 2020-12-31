@@ -17,6 +17,7 @@ class BjnewsArticlesViewModel(
     var bjnewsId = ""
 
     init {
+        viewModel = this
         getArticleList = { pageNum ->
             repository.getBjnewsArticles(bjnewsId, pageNum)
         }

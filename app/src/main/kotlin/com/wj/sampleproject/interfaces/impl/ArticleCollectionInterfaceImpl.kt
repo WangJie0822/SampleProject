@@ -5,9 +5,8 @@ import cn.wj.android.common.ext.orEmpty
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.ArticleEntity
-import com.wj.sampleproject.ext.showMsg
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.interfaces.ArticleCollectionInterface
-import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
@@ -19,45 +18,48 @@ import kotlinx.coroutines.launch
  * @author 王杰
  */
 open class ArticleCollectionInterfaceImpl(private val repository: ArticleRepository)
-    : BaseViewModel(),
-        ArticleCollectionInterface {
+    : ArticleCollectionInterface {
+
+    override lateinit var viewModel: BaseViewModel
 
     /** 收藏文章[item] */
     override fun collect(item: ArticleEntity) {
-        viewModelScope.launch {
-            try {
-                // 收藏
-                val result = repository.collectArticleInside(item.id.orEmpty())
-                if (!result.success()) {
+        viewModel.run {
+            viewModelScope.launch {
+                try {
+                    // 收藏
+                    repository.collectArticleInside(item.id.orEmpty()).judge(onFailed = {
+                        // 收藏失败，提示、回滚收藏状态
+                        snackbarData.value = this.toSnackbarModel()
+                        item.collected.set(false)
+                    })
+                } catch (throwable: Throwable) {
+                    Logger.t("NET").e(throwable, "collect")
                     // 收藏失败，提示、回滚收藏状态
-                    snackbarData.value = result.toError()
+                    snackbarData.value = throwable.toSnackbarModel()
                     item.collected.set(false)
                 }
-            } catch (throwable: Throwable) {
-                Logger.t("NET").e(throwable, "collect")
-                // 收藏失败，提示、回滚收藏状态
-                snackbarData.value = SnackbarModel(throwable.showMsg)
-                item.collected.set(false)
             }
         }
     }
 
     /** 取消收藏文章[item] */
     override fun unCollect(item: ArticleEntity) {
-        viewModelScope.launch {
-            try {
-                // 取消收藏
-                val result = repository.unCollectArticleList(item.id.orEmpty())
-                if (!result.success()) {
+        viewModel.run {
+            viewModelScope.launch {
+                try {
+                    // 取消收藏
+                    repository.unCollectArticleList(item.id.orEmpty()).judge(onFailed = {
+                        // 取消收藏失败，提示、回滚收藏状态
+                        snackbarData.value = toSnackbarModel()
+                        item.collected.set(true)
+                    })
+                } catch (throwable: Throwable) {
+                    Logger.t("NET").e(throwable, "unCollect")
                     // 取消收藏失败，提示、回滚收藏状态
-                    snackbarData.value = SnackbarModel(result.errorMsg)
+                    snackbarData.value = throwable.toSnackbarModel()
                     item.collected.set(true)
                 }
-            } catch (throwable: Throwable) {
-                Logger.t("NET").e(throwable, "unCollect")
-                // 取消收藏失败，提示、回滚收藏状态
-                snackbarData.value = SnackbarModel(throwable.showMsg)
-                item.collected.set(true)
             }
         }
     }
