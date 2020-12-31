@@ -3,14 +3,15 @@ package com.wj.sampleproject.activity
 import android.content.Context
 import android.os.Bundle
 import cn.wj.android.base.ext.startTargetActivity
+import cn.wj.android.base.ext.string
 import com.gyf.immersionbar.ImmersionBar
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.*
 import com.wj.sampleproject.databinding.AppActivityMainBinding
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.fragment.*
-import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.simple.setFragmentAdapter
 import com.wj.sampleproject.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,6 +48,11 @@ class MainActivity
                 }
             }
         }
+
+        // 配置 Snackbar 转换
+        snackbarTransform = { snackbarModel ->
+            snackbarModel.copy(targetId = R.id.cl_target)
+        }
     }
 
     override fun onBackPressed() {
@@ -54,7 +60,7 @@ class MainActivity
         val currentBackPressMs = System.currentTimeMillis()
         if ((currentBackPressMs - lastBackPressMs).absoluteValue > MAIN_BACK_PRESS_INTERVAL_MS) {
             // 间隔时间外，提示
-            viewModel.snackbarData.value = SnackbarModel(resId = R.string.app_press_again_to_exit, targetId = R.id.cl_target)
+            viewModel.snackbarData.value = R.string.app_press_again_to_exit.string.toSnackbarModel()
             // 保存时间
             lastBackPressMs = currentBackPressMs
         } else {

@@ -1,5 +1,6 @@
 package com.wj.sampleproject.interfaces
 
+import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.ArticleEntity
 
 /**
@@ -10,6 +11,8 @@ import com.wj.sampleproject.entity.ArticleEntity
  * @author 王杰
  */
 interface ArticleCollectionInterface {
+
+    var viewModel: BaseViewModel
 
     /** 收藏文章[item] */
     fun collect(item: ArticleEntity)

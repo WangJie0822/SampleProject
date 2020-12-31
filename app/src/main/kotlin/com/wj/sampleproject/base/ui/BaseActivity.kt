@@ -18,6 +18,7 @@ import com.wj.android.ui.activity.BaseBindingLibActivity
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.ACTIVITY_ANIM_DURATION
+import com.wj.sampleproject.model.SnackbarModel
 
 /**
  * Activity 基类
@@ -30,6 +31,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     /** 侧滑返回帮助类对象 */
     private var mSwipeBackHelper: SwipeBackHelper? = null
+
+    /** Snackbar 转换接口 */
+    protected var snackbarTransform: ((SnackbarModel) -> SnackbarModel)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         beforeOnCreate()
@@ -93,20 +97,24 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             if (it.content.isNullOrBlank()) {
                 return@Observer
             }
-            val view = if (it.targetId == 0) {
+
+            // 转换处理
+            val model = snackbarTransform?.invoke(it) ?: it
+
+            val view = if (model.targetId == 0) {
                 mBinding.root
             } else {
-                mBinding.root.findViewById(it.targetId)
+                mBinding.root.findViewById(model.targetId)
             }
-            val snackBar = Snackbar.make(view, it.content.orEmpty(), it.duration)
-            snackBar.setTextColor(it.contentColor)
-            snackBar.setBackgroundTint(it.contentBgColor)
-            if (it.actionText != null && it.onAction != null) {
-                snackBar.setAction(it.actionText, it.onAction)
-                snackBar.setActionTextColor(it.actionColor)
+            val snackBar = Snackbar.make(view, model.content.orEmpty(), model.duration)
+            snackBar.setTextColor(model.contentColor)
+            snackBar.setBackgroundTint(model.contentBgColor)
+            if (model.actionText != null && model.onAction != null) {
+                snackBar.setAction(model.actionText, model.onAction)
+                snackBar.setActionTextColor(model.actionColor)
             }
-            if (it.onCallback != null) {
-                snackBar.addCallback(it.onCallback)
+            if (model.onCallback != null) {
+                snackBar.addCallback(model.onCallback)
             }
             snackBar.show()
         })

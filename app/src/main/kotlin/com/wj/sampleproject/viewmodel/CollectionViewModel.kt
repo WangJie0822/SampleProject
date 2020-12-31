@@ -19,6 +19,7 @@ class CollectionViewModel(
         ArticleListPagingInterface by ArticleListPagingInterfaceImpl(repository) {
 
     init {
+        viewModel = this
         getArticleList = { pageNum ->
             repository.getCollectionList(pageNum)
         }

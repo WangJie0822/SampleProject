@@ -15,7 +15,7 @@ import kotlinx.coroutines.withTimeout
  */
 
 /**
- * 在 [Dispatchers.IO] 线程执行 [block]，超时时间为 [REQUEST_TIMEOUT]
+ * 在 [Dispatchers.IO] 线程执行 [block] 进行网络请求，超时时间为 [REQUEST_TIMEOUT]
  */
 suspend fun <T> netRequest(block: suspend CoroutineScope.() -> T): T {
     return withContext(Dispatchers.IO) {

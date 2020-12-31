@@ -8,7 +8,9 @@ import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.NavigationListEntity
-import com.wj.sampleproject.ext.snackbarMsg
+import com.wj.sampleproject.ext.defaultFaildBlock
+import com.wj.sampleproject.ext.judge
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
@@ -35,16 +37,14 @@ class NavigationViewModel(
     fun getNavigationList() {
         viewModelScope.launch {
             try {
-                val result = repository.getNavigationList()
-                if (result.success()) {
-                    // 获取成功
-                    listData.value = result.data.orEmpty()
-                } else {
-                    snackbarData.value = result.toError()
-                }
+                repository.getNavigationList()
+                        .judge(onSuccess = {
+                            // 获取成功
+                            listData.value = data.orEmpty()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
             }
         }
     }

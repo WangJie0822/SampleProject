@@ -14,10 +14,11 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.PASSWORD_MIN_LENGTH
 import com.wj.sampleproject.constants.SP_KEY_USER_NAME
-import com.wj.sampleproject.ext.snackbarMsg
+import com.wj.sampleproject.ext.defaultFaildBlock
+import com.wj.sampleproject.ext.judge
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
-import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.UserRepository
 import kotlinx.coroutines.launch
@@ -148,22 +149,19 @@ class LoginViewModel(
             try {
                 // 显示进度条弹窗
                 progressData.value = ProgressModel(cancelable = false)
-                val result = repository.register(userName.get().orEmpty(), password.get().orEmpty())
-                if (result.success()) {
-                    // 注册成功，保存用户信息
-                    UserInfoData.value = result.data
-                    // 保存用户账号
-                    MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
-                    // 关闭当前界面
-                    uiCloseData.value = UiCloseModel()
-                } else {
-                    // 注册失败，提示错误
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                repository.register(userName.get().orEmpty(), password.get().orEmpty())
+                        .judge(onSuccess = {
+                            // 注册成功，保存用户信息
+                            UserInfoData.value = data
+                            // 保存用户账号
+                            MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
+                            // 关闭当前界面
+                            uiCloseData.value = UiCloseModel()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 // 打印错误日志
                 Logger.t("NET").e(throwable, "register")
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
             } finally {
                 // 隐藏进度条弹窗
                 progressData.value = null
@@ -177,22 +175,19 @@ class LoginViewModel(
             try {
                 // 显示进度条弹窗
                 progressData.value = ProgressModel(cancelable = false)
-                val result = repository.login(userName.get().orEmpty(), password.get().orEmpty())
-                if (result.success()) {
-                    // 登录成功，保存用户信息
-                    UserInfoData.value = result.data
-                    // 保存用户账号
-                    MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
-                    // 关闭当前界面
-                    uiCloseData.value = UiCloseModel()
-                } else {
-                    // 登录失败，提示错误
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                repository.login(userName.get().orEmpty(), password.get().orEmpty())
+                        .judge(onSuccess = {
+                            // 登录成功，保存用户信息
+                            UserInfoData.value = data
+                            // 保存用户账号
+                            MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
+                            // 关闭当前界面
+                            uiCloseData.value = UiCloseModel()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 // 打印错误日志
                 Logger.t("NET").e(throwable, "login")
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
             } finally {
                 // 隐藏进度条弹窗
                 progressData.value = null

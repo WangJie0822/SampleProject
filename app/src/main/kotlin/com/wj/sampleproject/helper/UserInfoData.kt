@@ -2,6 +2,7 @@ package com.wj.sampleproject.helper
 
 import androidx.lifecycle.MutableLiveData
 import com.tencent.mmkv.MMKV
+import com.wj.sampleproject.constants.SP_KEY_COOKIES
 import com.wj.sampleproject.constants.SP_KEY_USER_INFO
 import com.wj.sampleproject.entity.UserInfoEntity
 import com.wj.sampleproject.ext.toJsonString
@@ -29,5 +30,9 @@ object UserInfoData : MutableLiveData<UserInfoEntity>() {
     override fun setValue(value: UserInfoEntity?) {
         super.setValue(value)
         MMKV.defaultMMKV().encode(SP_KEY_USER_INFO, value.toJsonString())
+        if (null == value) {
+            // 退出登录，清空 cookie
+            MMKV.defaultMMKV().encode(SP_KEY_COOKIES, "")
+        }
     }
 }

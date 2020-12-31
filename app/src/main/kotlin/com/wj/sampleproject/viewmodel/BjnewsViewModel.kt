@@ -6,7 +6,9 @@ import cn.wj.android.common.ext.orEmpty
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.CategoryEntity
-import com.wj.sampleproject.ext.snackbarMsg
+import com.wj.sampleproject.ext.defaultFaildBlock
+import com.wj.sampleproject.ext.judge
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
@@ -24,16 +26,14 @@ class BjnewsViewModel(
     fun getBjnewsList() {
         viewModelScope.launch {
             try {
-                val result = repository.getBjnewsList()
-                if (result.success()) {
-                    // 获取成功
-                    bjnewsData.value = result.data.orEmpty()
-                } else {
-                    snackbarData.value = result.toError()
-                }
+                repository.getBjnewsList()
+                        .judge(onSuccess = {
+                            // 获取成功
+                            bjnewsData.value = data.orEmpty()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
             }
         }
     }

@@ -9,7 +9,9 @@ import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.EVENT_COLLECTION_REFRESH_COLLECTED_WEB
-import com.wj.sampleproject.ext.snackbarMsg
+import com.wj.sampleproject.ext.defaultFaildBlock
+import com.wj.sampleproject.ext.judge
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
@@ -82,19 +84,16 @@ class EditCollectedWebViewModel(
                 // 显示弹窗
                 progressData.value = ProgressModel()
                 // 请求数据
-                val result = repository.collectWeb(webName.get().orEmpty(), webLink.get().orEmpty())
-                if (result.success()) {
-                    // 收藏成功，刷新
-                    LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB).post(Any())
-                    // 关闭弹窗
-                    uiCloseData.value = UiCloseModel()
-                } else {
-                    // 收藏失败，提示
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                repository.collectWeb(webName.get().orEmpty(), webLink.get().orEmpty())
+                        .judge(onSuccess = {
+                            // 收藏成功，刷新
+                            LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB).post(Any())
+                            // 关闭弹窗
+                            uiCloseData.value = UiCloseModel()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 // 请求异常，提示
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
                 Logger.t("NET").e(throwable, "collectWeb")
             } finally {
                 // 隐藏弹窗
@@ -110,19 +109,16 @@ class EditCollectedWebViewModel(
                 // 显示弹窗
                 progressData.value = ProgressModel()
                 // 请求数据
-                val result = repository.editCollectedWeb(id, webName.get().orEmpty(), webLink.get().orEmpty())
-                if (result.success()) {
-                    // 编辑成功，刷新
-                    LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB).post(Any())
-                    // 关闭弹窗
-                    uiCloseData.value = UiCloseModel()
-                } else {
-                    // 编辑失败，提示
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                repository.editCollectedWeb(id, webName.get().orEmpty(), webLink.get().orEmpty())
+                        .judge(onSuccess = {
+                            // 编辑成功，刷新
+                            LiveEventBus.get(EVENT_COLLECTION_REFRESH_COLLECTED_WEB).post(Any())
+                            // 关闭弹窗
+                            uiCloseData.value = UiCloseModel()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 // 请求异常，提示
-                snackbarData.value = throwable.snackbarMsg
+                snackbarData.value = throwable.toSnackbarModel()
                 Logger.t("NET").e(throwable, "collectWeb")
             } finally {
                 // 隐藏弹窗

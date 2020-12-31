@@ -12,7 +12,9 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.HotSearchEntity
-import com.wj.sampleproject.ext.showMsg
+import com.wj.sampleproject.ext.defaultFaildBlock
+import com.wj.sampleproject.ext.judge
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.interfaces.ArticleListPagingInterface
 import com.wj.sampleproject.interfaces.impl.ArticleListPagingInterfaceImpl
 import com.wj.sampleproject.model.SnackbarModel
@@ -29,6 +31,7 @@ class SearchViewModel(
         ArticleListPagingInterface by ArticleListPagingInterfaceImpl(repository) {
 
     init {
+        viewModel = this
         getArticleList = { pageNum ->
             repository.search(pageNum, keywords.get().orEmpty())
         }
@@ -81,18 +84,15 @@ class SearchViewModel(
         viewModelScope.launch {
             try {
                 // 获取热搜数据
-                val result = repository.getHotSearch()
-                if (result.success()) {
-                    // 获取成功，刷新列表
-                    hotSearchData.value = result.data.orEmpty()
-                } else {
-                    // 获取失败，提示
-                    snackbarData.value = result.toError()
-                }
+                repository.getHotSearch()
+                        .judge(onSuccess = {
+                            // 获取成功
+                            hotSearchData.value = data.orEmpty()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "getHotSearch")
                 // 获取失败，提示、回滚收藏状态
-                snackbarData.value = SnackbarModel(throwable.showMsg)
+                snackbarData.value = throwable.toSnackbarModel()
             }
         }
     }

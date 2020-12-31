@@ -7,10 +7,8 @@ import cn.wj.android.base.ext.string
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
-import com.wj.sampleproject.ext.snackbarMsg
 import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
-import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.repository.UserRepository
 import kotlinx.coroutines.launch
 
@@ -90,21 +88,15 @@ class MyViewModel(
                 // 显示弹窗
                 progressData.value = ProgressModel()
                 // 请求接口
-                val result = repository.logout()
-                if (result.success()) {
-                    // 退出成功，清空用户信息
-                    UserInfoData.value = null
-                } else {
-                    // 退出失败，提示
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                repository.logout()
             } catch (throwable: Throwable) {
                 // 请求异常
                 Logger.t("NET").e(throwable, "logout")
-                snackbarData.value = throwable.snackbarMsg
             } finally {
                 // 隐藏弹窗
                 progressData.value = null
+                // 清空用户信息
+                UserInfoData.value = null
             }
         }
     }

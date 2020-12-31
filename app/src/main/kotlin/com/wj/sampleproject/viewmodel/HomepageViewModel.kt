@@ -13,10 +13,11 @@ import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.MAIN_BANNER_TRANSFORM_INTERVAL_MS
 import com.wj.sampleproject.entity.BannerEntity
-import com.wj.sampleproject.ext.showMsg
+import com.wj.sampleproject.ext.defaultFaildBlock
+import com.wj.sampleproject.ext.judge
+import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.interfaces.ArticleListPagingInterface
 import com.wj.sampleproject.interfaces.impl.ArticleListPagingInterfaceImpl
-import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.repository.ArticleRepository
 import kotlinx.coroutines.*
 
@@ -30,8 +31,9 @@ class HomepageViewModel(
         ArticleListPagingInterface by ArticleListPagingInterfaceImpl(repository) {
 
     init {
-        getArticleList = { pageNumb ->
-            repository.getHomepageArticleList(pageNumb)
+        viewModel = this
+        getArticleList = { pageNum ->
+            repository.getHomepageArticleList(pageNum)
         }
     }
 
@@ -104,16 +106,14 @@ class HomepageViewModel(
         viewModelScope.launch {
             try {
                 // 获取 Banner 数据
-                val result = repository.getHomepageBannerList()
-                if (result.success()) {
-                    // 请求成功
-                    bannerData.value = result.data.orEmpty()
-                } else {
-                    snackbarData.value = SnackbarModel(result.errorMsg)
-                }
+                repository.getHomepageBannerList()
+                        .judge(onSuccess = {
+                            // 请求成功
+                            bannerData.value = data.orEmpty()
+                        }, onFailed = defaultFaildBlock)
             } catch (throwable: Throwable) {
                 Logger.t("NET").e(throwable, "NET_ERROR")
-                snackbarData.value = SnackbarModel(throwable.showMsg)
+                snackbarData.value = throwable.toSnackbarModel()
             }
         }
     }

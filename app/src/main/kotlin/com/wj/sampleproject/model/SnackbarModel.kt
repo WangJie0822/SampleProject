@@ -22,7 +22,7 @@ import com.wj.sampleproject.R
  * @param onAction 按钮点击事件
  * @param onCallback Snackbar 回调
  */
-class SnackbarModel(
+data class SnackbarModel(
         val content: String? = "",
         @ColorInt val contentBgColor: Int = R.color.app_colorPrimaryDark.color,
         @ColorInt val contentColor: Int = R.color.app_white.color,

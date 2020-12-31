@@ -1,15 +1,19 @@
 package com.wj.sampleproject.interfaces.impl
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import cn.wj.android.common.ext.copy
 import cn.wj.android.common.ext.orElse
 import cn.wj.android.common.ext.orEmpty
 import com.orhanobut.logger.Logger
-import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.ArticleListEntity
+import com.wj.sampleproject.ext.judge
+import com.wj.sampleproject.ext.toNetResult
 import com.wj.sampleproject.interfaces.ArticleListInterface
 import com.wj.sampleproject.interfaces.ArticleListPagingInterface
 import com.wj.sampleproject.net.NetResult
@@ -24,8 +28,7 @@ import kotlinx.coroutines.launch
  * @author 王杰
  */
 class ArticleListPagingInterfaceImpl(repository: ArticleRepository)
-    : BaseViewModel(),
-        ArticleListInterface by ArticleListInterfaceImpl(repository),
+    : ArticleListInterface by ArticleListInterfaceImpl(repository),
         ArticleListPagingInterface {
 
     /** 页码 */
@@ -37,7 +40,7 @@ class ArticleListPagingInterfaceImpl(repository: ArticleRepository)
     }
 
     /** 文章列表 */
-    override val articleListData: LiveData<ArrayList<ArticleEntity>> = articleListResultData.map { result ->
+    override val articleListData: LiveData<ArrayList<ArticleEntity>> = articleListResultData.switchMap { result ->
         disposeArticleListResult(result)
     }
 
@@ -64,27 +67,34 @@ class ArticleListPagingInterfaceImpl(repository: ArticleRepository)
     /** 根据页码 [pageNum] 获取文章列表数据，返回 [LiveData] 数据 */
     private fun getArticleListData(pageNum: Int): LiveData<NetResult<ArticleListEntity>> {
         val result = MutableLiveData<NetResult<ArticleListEntity>>()
-        viewModelScope.launch {
-            try {
-                result.value = getArticleList.invoke(pageNum)
-            } catch (throwable: Throwable) {
-                Logger.t("NET").e(throwable, "getArticleListData")
-                result.value = NetResult.fromThrowable(throwable)
+        viewModel.run {
+            viewModelScope.launch {
+                try {
+                    result.value = getArticleList.invoke(pageNum)
+                } catch (throwable: Throwable) {
+                    Logger.t("NET").e(throwable, "getArticleListData")
+                    result.value = throwable.toNetResult()
+                }
             }
         }
         return result
     }
 
     /** 处理文章列表返回数据 [result]，并返回文章列表 */
-    private fun disposeArticleListResult(result: NetResult<ArticleListEntity>): ArrayList<ArticleEntity> {
+    private fun disposeArticleListResult(result: NetResult<ArticleListEntity>): LiveData<ArrayList<ArticleEntity>> {
+        val liveData = MutableLiveData<ArrayList<ArticleEntity>>()
         val refresh = pageNumber.value == NET_PAGE_START
         val smartControl = if (refresh) refreshing else loadMore
-        return if (result.success()) {
-            smartControl.value = SmartRefreshState(loading = false, success = true, noMore = result.data?.over.toBoolean())
-            articleListData.value.copy(result.data?.datas, refresh)
-        } else {
-            smartControl.value = SmartRefreshState(loading = false, success = false)
-            articleListData.value.orEmpty()
-        }
+        result.judge(
+                onSuccess = {
+                    smartControl.value = SmartRefreshState(loading = false, success = true, noMore = data?.over.toBoolean())
+                    liveData.value = articleListData.value.copy(data?.datas, refresh)
+                },
+                onFailed = {
+                    smartControl.value = SmartRefreshState(loading = false, success = false)
+                    liveData.value = articleListData.value.orEmpty()
+                }
+        )
+        return liveData
     }
 }
