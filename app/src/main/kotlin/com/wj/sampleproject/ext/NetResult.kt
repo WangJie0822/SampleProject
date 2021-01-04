@@ -12,6 +12,7 @@ import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.net.NetResult
 
 /**
+ * NetResult 相关
  *
  * - 创建时间：2021/1/4
  *
