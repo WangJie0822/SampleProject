@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    kotlin("plugin.serialization") version Configuration.Versions.kotlin_version
     id("kotlin-parcelize")
 }
 
@@ -142,9 +143,6 @@ android {
         isAbortOnError = false
     }
 
-    // 使用 httpclient
-    useLibrary("org.apache.http.legacy")
-
     // 配置 APK 输出路径
     applicationVariants.all {
         outputs.all {
@@ -163,6 +161,7 @@ android {
     // kotlin Jvm 版本
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += arrayOf("-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi")
     }
 }
 
@@ -172,6 +171,8 @@ dependencies {
     implementation(Configuration.Dependencies.kotlin_stdlib)
     // 协程
     implementation(Configuration.Dependencies.kotlin_coroutines)
+    // Json 序列化
+    implementation(Configuration.Dependencies.kotlin_serialization)
 
     // Dex 分包
     implementation(Configuration.Dependencies.androidx_multidex)
@@ -222,7 +223,7 @@ dependencies {
 
     // Retrofit
     implementation(Configuration.Dependencies.retrofit)
-    implementation(Configuration.Dependencies.retrofit_gson)
+    implementation(Configuration.Dependencies.retrofit_converter_kt)
 
     // Glide
     implementation(Configuration.Dependencies.coil)

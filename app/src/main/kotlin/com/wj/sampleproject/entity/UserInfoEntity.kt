@@ -1,5 +1,7 @@
 package com.wj.sampleproject.entity
 
+import kotlinx.serialization.Serializable
+
 /**
  * 用户信息数据实体类
  *
@@ -20,10 +22,11 @@ package com.wj.sampleproject.entity
  *
  * @author 王杰
  */
+@Serializable
 data class UserInfoEntity(
         val admin: String? = "",
-        val chapterTops: ArrayList<Any>? = arrayListOf(),
-        val collectIds: ArrayList<Any>? = arrayListOf(),
+//        val chapterTops: ArrayList<Any>? = arrayListOf(),
+//        val collectIds: ArrayList<Any>? = arrayListOf(),
         val email: String? = "",
         val icon: String? = "",
         val id: String? = "",

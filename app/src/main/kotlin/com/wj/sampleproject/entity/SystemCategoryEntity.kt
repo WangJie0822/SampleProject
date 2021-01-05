@@ -1,5 +1,7 @@
 package com.wj.sampleproject.entity
 
+import kotlinx.serialization.Serializable
+
 /**
  * 体系目录数据实体类
  *
@@ -11,6 +13,7 @@ package com.wj.sampleproject.entity
  * @param visible ？
  * @param children 子目录列表
  */
+@Serializable
 data class SystemCategoryEntity(
         val courseId: String? = "",
         val id: String? = "",

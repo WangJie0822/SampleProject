@@ -5,6 +5,8 @@ import cn.wj.android.common.ext.isNotNullAndBlank
 import cn.wj.android.common.ext.isNotNullAndEmpty
 import cn.wj.android.common.ext.orFalse
 import com.wj.sampleproject.constants.STR_TRUE
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * 首页文章列表数据实体类
@@ -17,6 +19,7 @@ import com.wj.sampleproject.constants.STR_TRUE
  * @param over 是否结束
  * @param datas 文章数据W
  */
+@Serializable
 data class ArticleListEntity(
         val curPage: String? = "",
         val offset: String? = "",
@@ -57,6 +60,7 @@ data class ArticleListEntity(
  * @param zan 赞 数量
  * @param top 自设属性 是否置顶
  */
+@Serializable
 data class ArticleEntity(
         val apkLink: String? = "",
         val author: String? = "",
@@ -98,6 +102,7 @@ data class ArticleEntity(
         get() = tags.isNotNullAndEmpty()
     
     /** 标记 - 是否收藏 */
+    @Transient
     val collected: ObservableBoolean = ObservableBoolean(false)
     
     /** 标记 - 是否显示封面 */
@@ -111,6 +116,7 @@ data class ArticleEntity(
  * @param name 标签名
  * @param url 标签地址
  */
+@Serializable
 data class ArticleTagEntity(
         val name: String? = "",
         val url: String? = ""

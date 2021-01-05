@@ -216,6 +216,12 @@ object Configuration {
         const val kotlin_coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0"
 
         /**
+         * kotlin Json 序列化
+         * - Github: [https://github.com/Kotlin/kotlinx.serialization]
+         */
+        const val kotlin_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+
+        /**
          * Gson
          * - Github：[https://github.com/google/gson]
          */
@@ -283,8 +289,9 @@ object Configuration {
          * - Github：[https://github.com/square/retrofit]
          */
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit_version}"
-        const val retrofit_gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit_version}"
-        const val retrofit_moshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit_version}"
+        const val retrofit_converter_gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit_version}"
+        const val retrofit_converter_moshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit_version}"
+        const val retrofit_converter_kt = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 
         /**
          * SmartRefreshLayout

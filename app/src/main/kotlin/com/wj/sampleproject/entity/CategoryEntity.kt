@@ -2,6 +2,7 @@ package com.wj.sampleproject.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 /**
  * 公众号、项目分类数据实体类
@@ -10,6 +11,7 @@ import kotlinx.parcelize.Parcelize
  * @param name 分类名称
  */
 @Parcelize
+@Serializable
 data class CategoryEntity(
         val id: String? = "",
         val name: String? = ""

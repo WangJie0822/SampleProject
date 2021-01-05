@@ -1,5 +1,9 @@
+@file:UseContextualSerialization(forClasses = [Cookie::class])
+
 package com.wj.sampleproject.entity
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseContextualSerialization
 import okhttp3.Cookie
 
 /**
@@ -11,6 +15,7 @@ import okhttp3.Cookie
  *
  * @author 王杰
  */
+@Serializable
 data class CookieEntity(
         val cookies: ArrayList<Cookie>? = arrayListOf()
 )

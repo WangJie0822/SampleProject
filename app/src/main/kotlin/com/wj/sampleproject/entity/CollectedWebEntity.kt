@@ -2,6 +2,7 @@ package com.wj.sampleproject.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 /**
  * 收藏网站数据实体类
@@ -20,6 +21,7 @@ import kotlinx.parcelize.Parcelize
  * @author 王杰
  */
 @Parcelize
+@Serializable
 data class CollectedWebEntity(
         val desc: String? = "",
         val icon: String? = "",

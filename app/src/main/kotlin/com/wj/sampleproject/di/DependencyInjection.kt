@@ -1,6 +1,7 @@
 package com.wj.sampleproject.di
 
 import cn.wj.android.common.ext.orEmpty
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.orhanobut.logger.Logger
 import com.tencent.mmkv.MMKV
 import com.wj.android.okhttp.InterceptorLogger
@@ -11,6 +12,7 @@ import com.wj.sampleproject.adapter.NavigationRvAdapter
 import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
 import com.wj.sampleproject.constants.SP_KEY_COOKIES
 import com.wj.sampleproject.entity.CookieEntity
+import com.wj.sampleproject.ext.jsonDefault
 import com.wj.sampleproject.ext.toJsonString
 import com.wj.sampleproject.ext.toTypeEntity
 import com.wj.sampleproject.net.UrlDefinition
@@ -21,12 +23,12 @@ import com.wj.sampleproject.viewmodel.*
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 /** 网络请求 Module */
 val netModule: Module = module {
@@ -69,7 +71,7 @@ val netModule: Module = module {
     single<Retrofit> {
         Retrofit.Builder()
                 .baseUrl(UrlDefinition.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(jsonDefault.asConverterFactory("application/json; charset=UTF-8".toMediaType()))
                 .client(get())
                 .build()
     }

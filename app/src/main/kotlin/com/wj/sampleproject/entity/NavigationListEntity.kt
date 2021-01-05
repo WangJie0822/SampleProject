@@ -1,5 +1,7 @@
 package com.wj.sampleproject.entity
 
+import kotlinx.serialization.Serializable
+
 /**
  * 导航列表数据实体类
  *
@@ -7,6 +9,7 @@ package com.wj.sampleproject.entity
  * @param name 分类名
  * @param articles 导航列表
  */
+@Serializable
 data class NavigationListEntity(
         val cid: String? = "",
         val name: String? = "",

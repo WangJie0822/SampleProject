@@ -1,5 +1,7 @@
 package com.wj.sampleproject.entity
 
+import kotlinx.serialization.Serializable
+
 /**
  * 首页 Banner 数据实体类
  *
@@ -12,6 +14,7 @@ package com.wj.sampleproject.entity
  * @param type ？
  * @param url 跳转链接
  */
+@Serializable
 data class BannerEntity(
         val desc: String? = "",
         val id: String? = "",
