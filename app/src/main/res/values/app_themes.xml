@@ -9,7 +9,7 @@
         <!-- 应用中控件选中默认色调 -->
         <item name="colorAccent">@color/app_colorAccent</item>
         <!-- 窗口背景 -->
-        <item name="android:windowBackground">@color/app_backgroundPrimary</item>
+        <item name="android:windowBackground">@color/app_backgroundWindow</item>
 
         <!-- 动画相关 -->
         <item name="android:windowActivityTransitions">true</item>

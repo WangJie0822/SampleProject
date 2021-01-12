@@ -6,7 +6,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.viewpager.widget.ViewPager
-import cn.wj.android.common.ext.condition
+import cn.wj.common.ext.condition
 
 /*
  * ViewPager DataBinding 适配器

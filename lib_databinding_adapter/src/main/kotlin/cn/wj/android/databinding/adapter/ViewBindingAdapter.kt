@@ -14,9 +14,9 @@ import androidx.databinding.InverseBindingListener
 import cn.wj.android.base.constants.DEFAULT_CLICK_THROTTLE_MS
 import cn.wj.android.base.ext.fitsStatusBar
 import cn.wj.android.base.ext.setOnThrottleClickListener
-import cn.wj.android.common.ext.condition
-import cn.wj.android.common.ext.isNotNullAndBlank
-import cn.wj.android.common.tools.toIntOrZero
+import cn.wj.common.ext.condition
+import cn.wj.common.ext.isNotNullAndBlank
+import cn.wj.common.tools.toIntOrZero
 
 /*
  * View DataBinding 适配器

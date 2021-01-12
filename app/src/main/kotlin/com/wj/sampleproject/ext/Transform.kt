@@ -5,6 +5,7 @@ package com.wj.sampleproject.ext
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_ERROR
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.net.NetResult
+import com.wj.sampleproject.serializer.AnyKSerializer
 import com.wj.sampleproject.serializer.CookieKSerializer
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerializationStrategy
@@ -51,6 +52,7 @@ val jsonDefault = Json {
     // 指定序列化模块
     serializersModule = SerializersModule {
         contextual(Cookie::class, CookieKSerializer)
+        contextual(Any::class, AnyKSerializer)
     }
 }
 

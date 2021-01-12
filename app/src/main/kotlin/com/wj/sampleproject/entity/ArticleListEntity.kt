@@ -1,9 +1,9 @@
 package com.wj.sampleproject.entity
 
 import androidx.databinding.ObservableBoolean
-import cn.wj.android.common.ext.isNotNullAndBlank
-import cn.wj.android.common.ext.isNotNullAndEmpty
-import cn.wj.android.common.ext.orFalse
+import cn.wj.common.ext.isNotNullAndBlank
+import cn.wj.common.ext.isNotNullAndEmpty
+import cn.wj.common.ext.orFalse
 import com.wj.sampleproject.constants.STR_TRUE
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient

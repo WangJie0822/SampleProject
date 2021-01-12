@@ -7,7 +7,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 读写外部存储 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <!-- 使用指纹 -->
+    <!--suppress DeprecatedClassUsageInspection -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <!-- 使用生物识别 -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
         android:name=".application.MyApplication"
@@ -84,6 +91,11 @@
         <!-- 学习相关界面 -->
         <activity
             android:name=".activity.StudyActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="fullSensor" />
+        <!-- 设置界面 -->
+        <activity
+            android:name=".activity.SettingsActivity"
             android:configChanges="screenSize"
             android:screenOrientation="fullSensor" />
     </application>

@@ -8,7 +8,7 @@ import android.os.Build
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import cn.wj.android.base.log.InternalLog
-import cn.wj.android.common.ext.orEmpty
+import cn.wj.common.ext.orEmpty
 
 /** 显示软键盘 */
 fun EditText.showSoftKeyboard() {

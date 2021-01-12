@@ -35,6 +35,7 @@
     <string name="app_confirm">确定</string>
     <string name="app_cancel">取消</string>
     <string name="app_are_you_sure_to_logout">确定要退出登录吗？</string>
+    <string name="app_logout">退出登录</string>
     <string name="app_please_login_first">请先登录</string>
     <string name="app_no_data_try_refresh">没有数据，刷新试试！</string>
     <string name="app_collected_web">收藏网站</string>
@@ -58,4 +59,11 @@
     <string name="app_learning_route">学习路线</string>
     <string name="app_close">关闭</string>
     <string name="app_go_login">去登陆</string>
+    <string name="app_settings">设置</string>
+    <string name="app_login_by_fingerprint">指纹登录</string>
+    <string name="app_safety_verification">安全验证</string>
+    <string name="app_verification">验证</string>
+    <string name="app_about_us">关于我们</string>
+    <string name="app_clear_cache">清空缓存</string>
+    <string name="app_verify_fingerprint">验证指纹</string>
 </resources>

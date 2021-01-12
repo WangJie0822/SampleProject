@@ -18,6 +18,8 @@
     <color name="app_backgroundSecondary">#EBEBEB</color>
     <!-- 弹窗背景色 -->
     <color name="app_backgroundDialog">@color/app_translucentDark</color>
+    <!-- App 背景色 -->
+    <color name="app_backgroundWindow">#FAF9F9</color>
 
     <!-- 标题文本颜色 -->
     <color name="app_textPrimary">@color/app_white</color>

@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 @file:JvmName("NumberTools")
 
-package cn.wj.android.common.tools
+package cn.wj.common.tools
 
 import java.math.BigDecimal
 import java.text.DecimalFormat

@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import cn.wj.android.common.ext.copy
-import cn.wj.android.common.ext.orElse
-import cn.wj.android.common.ext.orEmpty
+import cn.wj.common.ext.copy
+import cn.wj.common.ext.orElse
+import cn.wj.common.ext.orEmpty
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.databinding.SmartRefreshState

@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 @file:JvmName("BooleanExt")
 
-package cn.wj.android.common.ext
+package cn.wj.common.ext
 
 /** [Boolean]为`null`则默认`false` */
 fun Boolean?.orFalse(): Boolean {

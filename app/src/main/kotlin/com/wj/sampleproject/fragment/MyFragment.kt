@@ -2,14 +2,9 @@ package com.wj.sampleproject.fragment
 
 import cn.wj.android.base.ext.string
 import com.wj.sampleproject.R
-import com.wj.sampleproject.activity.CollectedWebActivity
-import com.wj.sampleproject.activity.CollectionActivity
-import com.wj.sampleproject.activity.LoginActivity
-import com.wj.sampleproject.activity.StudyActivity
+import com.wj.sampleproject.activity.*
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentMyBinding
-import com.wj.sampleproject.dialog.GeneralDialog
-import com.wj.sampleproject.helper.ProgressDialogHelper
 import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.viewmodel.MyViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,40 +33,28 @@ class MyFragment
                 viewModel.avatarUrl.set(userInfo.icon)
             }
         })
-        // 进度弹窗
-        viewModel.progressData.observe(this, { progress ->
-            if (null == progress) {
-                ProgressDialogHelper.dismiss()
-            } else {
-                ProgressDialogHelper.show(mContext, progress.cancelable, progress.hint)
-            }
-        })
-        // 显示退出登录弹窗
-        viewModel.showLogoutDialogData.observe(this, {
-            GeneralDialog.newBuilder()
-                    .contentStr(R.string.app_are_you_sure_to_logout.string)
-                    .setOnPositiveAction {
-                        // 退出登录
-                        viewModel.logout()
-                    }
-                    .show(this)
-        })
-        // 跳转登录
-        viewModel.jumpLoginData.observe(this, {
-            LoginActivity.actionStart(mContext)
-        })
-        // 跳转我的收藏
-        viewModel.jumpCollectionData.observe(this, {
-            CollectionActivity.actionStart(mContext)
-        })
-        // 跳转网站收藏
-        viewModel.jumpCollectedWebData.observe(this, {
-            CollectedWebActivity.actionStart(mContext)
-        })
-        // 跳转学习相关界面
-        viewModel.jumpToStudyData.observe(this, {
-            StudyActivity.actionStart(mContext)
-        })
+        viewModel.run {
+            // 跳转设置
+            jumpToSettingsData.observe(this@MyFragment, {
+                SettingsActivity.actionStart(mContext)
+            })
+            // 跳转登录
+            jumpToLoginData.observe(this@MyFragment, {
+                LoginActivity.actionStart(mContext)
+            })
+            // 跳转我的收藏
+            jumpToCollectionData.observe(this@MyFragment, {
+                CollectionActivity.actionStart(mContext)
+            })
+            // 跳转网站收藏
+            jumpToCollectedWebData.observe(this@MyFragment, {
+                CollectedWebActivity.actionStart(mContext)
+            })
+            // 跳转学习相关界面
+            jumpToStudyData.observe(this@MyFragment, {
+                StudyActivity.actionStart(mContext)
+            })
+        }
     }
 
     companion object {

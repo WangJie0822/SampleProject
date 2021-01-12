@@ -4,7 +4,7 @@ package com.wj.sampleproject.dialog
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
-import cn.wj.android.common.ext.orTrue
+import cn.wj.common.ext.orTrue
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseDialog
 import com.wj.sampleproject.databinding.AppDialogProgressBinding

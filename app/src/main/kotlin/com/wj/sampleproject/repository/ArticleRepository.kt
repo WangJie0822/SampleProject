@@ -1,7 +1,7 @@
 package com.wj.sampleproject.repository
 
-import cn.wj.android.common.ext.orEmpty
-import cn.wj.android.common.ext.orFalse
+import cn.wj.common.ext.orEmpty
+import cn.wj.common.ext.orFalse
 import com.wj.sampleproject.constants.NET_PAGE_START
 import com.wj.sampleproject.constants.STR_TRUE
 import com.wj.sampleproject.entity.ArticleEntity

@@ -6,7 +6,7 @@ import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import cn.wj.android.base.ext.string
-import cn.wj.android.common.ext.isNotNullAndBlank
+import cn.wj.common.ext.isNotNullAndBlank
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 

@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 @file:JvmName("StringExt")
 
-package cn.wj.android.common.ext
+package cn.wj.common.ext
 
 /** 从对象[String]以及候选对象[strArray]中按先后顺序获取非空[String]对象，若全部为空返回`""` */
 fun String?.orEmpty(vararg strArray: String?): String {

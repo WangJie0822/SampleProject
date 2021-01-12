@@ -202,6 +202,25 @@
             app:layout_constraintTop_toBottomOf="@id/til_repassword"
             tools:text="注册" />
 
+        <cn.wj.android.views.textview.FixedTextView
+            android:id="@+id/tv_login_by_fingerprint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="?selectableItemBackground"
+            android:bind_onClick="@{viewModel.onFingerprintClick}"
+            android:drawablePadding="4dp"
+            android:text="@string/app_login_by_fingerprint"
+            android:textColor="@color/app_textAccent"
+            android:textSize="14sp"
+            app:drawableTint="@color/app_tintAccent"
+            app:ftv_drawableTop="@drawable/app_vector_fingerprint"
+            app:ftv_drawableTopHeight="48dp"
+            app:ftv_drawableTopWidth="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </layout>

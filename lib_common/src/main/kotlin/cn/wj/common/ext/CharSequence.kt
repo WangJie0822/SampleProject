@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 @file:JvmName("CharSequenceExt")
 
-package cn.wj.android.common.ext
+package cn.wj.common.ext
 
 /* ----------------------------------------------------------------------------------------- */
 /* |                                      字符序列相关                                      | */

@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 @file:JvmName("CollectionExt")
 
-package cn.wj.android.common.ext
+package cn.wj.common.ext
 
 import java.util.*
 

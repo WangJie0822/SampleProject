@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wj.sampleproject.viewmodel.VerificationViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_backgroundDialog"
+        android:bind_onClick="@{viewModel.onCancelClick}">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/app_backgroundPrimary"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="8dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintWidth_percent="0.85">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.82">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="50dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/app_safety_verification"
+                    android:textColor="@color/app_textNormal"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/guide_top" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:bind_til_error="@{viewModel.passwordError}"
+                    android:hint="@string/app_please_enter_password"
+                    app:endIconMode="password_toggle"
+                    app:errorIconTint="@color/app_tintError"
+                    app:errorTextColor="@color/app_textError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    app:startIconDrawable="@drawable/app_vector_password"
+                    app:startIconTint="@color/app_tintTheme">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiet_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="8dp"
+                        android:inputType="textPassword"
+                        android:singleLine="true"
+                        android:text="@={viewModel.password}"
+                        android:textColor="@color/app_textNormal"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space
+                    android:id="@+id/space_horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_password" />
+
+                <TextView
+                    android:id="@+id/tv_negative"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="?selectableItemBackground"
+                    android:bind_onClick="@{viewModel.onCancelClick}"
+                    android:gravity="center"
+                    android:text="@string/app_cancel"
+                    android:textColor="@color/app_textSecondary"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@id/space_vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/space_horizontal" />
+
+                <Space
+                    android:id="@+id/space_vertical"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_positive"
+                    app:layout_constraintStart_toEndOf="@id/tv_negative"
+                    app:layout_constraintTop_toTopOf="@id/space_horizontal" />
+
+                <TextView
+                    android:id="@+id/tv_positive"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="?selectableItemBackground"
+                    android:bind_onClick="@{viewModel.onVerificationClick}"
+                    android:gravity="center"
+                    android:text="@string/app_verification"
+                    android:textColor="@color/app_textAccent"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/space_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/space_horizontal" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

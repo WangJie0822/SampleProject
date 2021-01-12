@@ -1,7 +1,10 @@
+@file:UseContextualSerialization(forClasses = [Any::class])
+
 package com.wj.sampleproject.net
 
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_FAILED
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseContextualSerialization
 
 /**
  * 网络请求返回数据基本框架

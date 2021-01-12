@@ -5,8 +5,8 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import cn.wj.android.common.ext.isNotNullAndBlank
-import cn.wj.android.common.ext.orEmpty
+import cn.wj.common.ext.isNotNullAndBlank
+import cn.wj.common.ext.orEmpty
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel

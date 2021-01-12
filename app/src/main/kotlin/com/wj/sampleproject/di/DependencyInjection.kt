@@ -1,6 +1,6 @@
 package com.wj.sampleproject.di
 
-import cn.wj.android.common.ext.orEmpty
+import cn.wj.common.ext.orEmpty
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.orhanobut.logger.Logger
 import com.tencent.mmkv.MMKV
@@ -117,4 +117,7 @@ val viewModelModule: Module = module {
     viewModel { SystemArticlesViewModel(get()) }
     viewModel { ProgressViewModel() }
     viewModel { StudyViewModel() }
+    viewModel { SettingsViewModel(get()) }
+    viewModel { VerificationViewModel(get()) }
+    viewModel { BiometricViewModel() }
 }

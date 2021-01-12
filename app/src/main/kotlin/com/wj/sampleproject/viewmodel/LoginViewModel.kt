@@ -1,13 +1,14 @@
 package com.wj.sampleproject.viewmodel
 
 import android.view.MenuItem
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.string
-import cn.wj.android.common.ext.condition
+import cn.wj.common.ext.condition
 import com.orhanobut.logger.Logger
 import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
@@ -36,6 +37,9 @@ class LoginViewModel(
 
     /** 控制进度条弹窗显示  */
     val progressData = MutableLiveData<ProgressModel>()
+
+    /** 指纹登录数据 */
+    val fingerprintData = MutableLiveData<Int>()
 
     /** 标记 - 是否是注册 */
     val register: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -84,6 +88,9 @@ class LoginViewModel(
             R.string.app_login
         }.string
     }
+
+    /** 标记 - 是否显示指纹登录 */
+    val showFingerprint: ObservableBoolean = ObservableBoolean()
 
     /** 关闭点击 */
     val onCloseClick: (MenuItem) -> Boolean = {
@@ -141,6 +148,11 @@ class LoginViewModel(
             // 登录
             login()
         }
+    }
+
+    /** 指纹登录点击 */
+    val onFingerprintClick: () -> Unit = {
+        fingerprintData.value = 0
     }
 
     /** 注册 */

@@ -31,7 +31,7 @@ abstract class BaseLibFragment
         super.onCreate(savedInstanceState)
 
         // 保存当前 Context 对象
-        mContext = activity as FragmentActivity
+        mContext = requireActivity()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

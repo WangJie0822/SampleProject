@@ -6,7 +6,7 @@ import androidx.annotation.IdRes
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import cn.wj.android.common.ext.orTrue
+import cn.wj.common.ext.orTrue
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**

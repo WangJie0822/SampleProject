@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 @file:JvmName("TimeTools")
 
-package cn.wj.android.common.tools
+package cn.wj.common.tools
 
 import java.text.ParseException
 import java.text.SimpleDateFormat

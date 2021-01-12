@@ -3,7 +3,7 @@ package com.wj.sampleproject.viewmodel
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import cn.wj.android.common.ext.isNotUrl
+import cn.wj.common.ext.isNotUrl
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R

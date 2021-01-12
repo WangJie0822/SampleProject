@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 @file:JvmName("AnyExt")
 
-package cn.wj.android.common.ext
+package cn.wj.common.ext
 
 /**
  * 所以数据对象拓展

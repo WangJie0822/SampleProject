@@ -2,7 +2,7 @@ package com.wj.sampleproject.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import cn.wj.android.common.ext.orEmpty
+import cn.wj.common.ext.orEmpty
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.CategoryEntity

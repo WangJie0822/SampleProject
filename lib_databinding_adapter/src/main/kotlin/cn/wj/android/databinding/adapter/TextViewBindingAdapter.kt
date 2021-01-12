@@ -13,7 +13,7 @@ import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import cn.wj.android.base.tools.parseColorFromString
 import cn.wj.android.base.tools.parseHtmlFromString
-import cn.wj.android.common.ext.condition
+import cn.wj.common.ext.condition
 
 /*
  * TextView DataBinding 适配器

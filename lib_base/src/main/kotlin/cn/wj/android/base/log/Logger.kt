@@ -3,7 +3,7 @@
 package cn.wj.android.base.log
 
 import android.util.Log
-import cn.wj.android.common.ext.getStackTraceString
+import cn.wj.common.ext.getStackTraceString
 
 /**
  * 内部使用日志打印

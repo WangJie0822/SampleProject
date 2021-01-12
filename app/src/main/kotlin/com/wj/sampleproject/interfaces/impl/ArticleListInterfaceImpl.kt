@@ -1,8 +1,8 @@
 package com.wj.sampleproject.interfaces.impl
 
 import androidx.lifecycle.MutableLiveData
-import cn.wj.android.common.ext.condition
-import cn.wj.android.common.ext.orEmpty
+import cn.wj.common.ext.condition
+import cn.wj.common.ext.orEmpty
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListEventInterface
 import com.wj.sampleproject.entity.ArticleEntity

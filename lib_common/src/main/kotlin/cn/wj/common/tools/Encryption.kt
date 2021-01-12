@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 @file:JvmName("EncryptionTools")
 
-package cn.wj.android.common.tools
+package cn.wj.common.tools
 
 import java.io.File
 import java.io.FileInputStream
@@ -9,6 +9,7 @@ import java.io.IOException
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.util.*
 
 /**
  * 加密相关
@@ -21,7 +22,7 @@ import java.security.NoSuchAlgorithmException
 /** 字符串对应的 **MD5** 值 */
 val String.md5: String
     get() = try {
-        MessageDigest.getInstance("MD5").digest(this.toByteArray()).toHex()
+        MessageDigest.getInstance("MD5").digest(this.toByteArray()).toHexString()
     } catch (throwable: Throwable) {
         ""
     }
@@ -49,11 +50,11 @@ val File.md5: String
         return if (bi != null) bi.toString(16) else ""
     }
 
-/** 将 [ByteArray] 转为 16 进制字符串 */
-fun ByteArray.toHex(): String {
+/** 将 [ByteArray] 转为 16 进制字符串 [String] */
+fun ByteArray.toHexString(): String {
     //转成16进制后是32字节
     return with(StringBuilder()) {
-        forEach {
+        this@toHexString.forEach {
             val hex = it.toInt() and (0xFF)
             val hexStr = Integer.toHexString(hex)
             if (hexStr.length == 1) {
@@ -62,6 +63,24 @@ fun ByteArray.toHex(): String {
                 append(hexStr)
             }
         }
-        toString()
+        toString().toUpperCase(Locale.getDefault())
     }
+}
+
+/** 将 16 进制字符串 [String] 转换为字节数组 [ByteArray] */
+fun String.toHexByteArray(): ByteArray {
+    val hexString = toUpperCase(Locale.getDefault())
+    val len = hexString.length / 2
+    val charArray = hexString.toCharArray()
+    val byteArray = ByteArray(len)
+    for (i in 0 until len) {
+        val pos = i * 2
+        byteArray[i] = (charArray[pos].toHexByte().toInt() shl 4 or charArray[pos + 1].toHexByte().toInt()).toByte()
+    }
+    return byteArray
+}
+
+/** 将 [Char] 转换为 16 进制 [String] 对应的 [Byte] */
+fun Char.toHexByte(): Byte {
+    return "0123456789ABCDEF".indexOf(this).toByte()
 }

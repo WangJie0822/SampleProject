@@ -39,3 +39,6 @@ const val NET_PAGE_START = 0
 /** 字符串开关标记 */
 const val STR_TRUE = "1"
 const val STR_FALSE = "0"
+
+/** 用户信息分隔 */
+const val USER_INFO_SPLIT = "\"^-^\""

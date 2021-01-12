@@ -1,6 +1,6 @@
 @file:JvmName("ThrowableExt")
 
-package cn.wj.android.common.ext
+package cn.wj.common.ext
 
 import java.io.PrintWriter
 import java.io.StringWriter

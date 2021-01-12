@@ -5,8 +5,8 @@ import android.view.MotionEvent
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import cn.wj.android.common.ext.condition
-import cn.wj.android.common.ext.orEmpty
+import cn.wj.common.ext.condition
+import cn.wj.common.ext.orEmpty
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.WebViewActivity
