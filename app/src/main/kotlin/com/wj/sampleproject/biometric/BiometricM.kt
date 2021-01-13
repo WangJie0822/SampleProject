@@ -44,19 +44,19 @@ class BiometricM(val activity: FragmentActivity)
         return when {
             !fingerprintManager.isHardwareDetected -> {
                 // 不支持指纹
-                BiometricInterface.UN_SUPPORT
+                BiometricInterface.ERROR_HW_UNAVAILABLE
             }
             !km.isKeyguardSecure -> {
                 // 未设置锁屏
-                BiometricInterface.NO_KEYGUARD_SECURE
+                BiometricInterface.ERROR_NO_DEVICE_CREDENTIAL
             }
             !fingerprintManager.hasEnrolledFingerprints() -> {
                 // 未注册有效指纹
-                BiometricInterface.NO_ENROLLED_FINGERPRINTS
+                BiometricInterface.ERROR_NO_BIOMETRICS
             }
             else -> {
                 // 支持指纹识别
-                BiometricInterface.SUPPORT
+                BiometricInterface.HW_AVAILABLE
             }
         }
     }
@@ -72,8 +72,17 @@ class BiometricM(val activity: FragmentActivity)
             cancellationSignal.cancel()
         }
         dialog?.show(activity)
+        val loadCipher = try {
+            loadCipher(encrypt, keyAlias, ivBytes)
+        } catch (throwable: Throwable) {
+            null
+        }
+        if (null == loadCipher) {
+            onError.invoke(BiometricInterface.ERROR_FAILED, "指纹验证失败")
+            return
+        }
         fingerprintManager.authenticate(
-                FingerprintManagerCompat.CryptoObject(loadCipher(encrypt, keyAlias, ivBytes)),
+                FingerprintManagerCompat.CryptoObject(loadCipher),
                 0,
                 cancellationSignal,
                 object : FingerprintManagerCompat.AuthenticationCallback() {
@@ -84,7 +93,7 @@ class BiometricM(val activity: FragmentActivity)
                             onSuccess.invoke(cipher)
                         } catch (throwable: Throwable) {
                             Logger.e(throwable, "authenticate")
-                            onError.invoke(-1, "指纹认证失败")
+                            onError.invoke(BiometricInterface.ERROR_FAILED, "指纹验证失败")
                         } finally {
                             dialog?.dismiss()
                         }
@@ -97,7 +106,7 @@ class BiometricM(val activity: FragmentActivity)
 
                     override fun onAuthenticationFailed() {
                         dialog?.dismiss()
-                        onError.invoke(-1, "指纹验证失败")
+                        onError.invoke(BiometricInterface.ERROR_FAILED, "指纹验证失败")
                     }
 
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {

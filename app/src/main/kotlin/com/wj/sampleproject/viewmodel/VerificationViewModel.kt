@@ -15,6 +15,7 @@ import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.UserRepository
+import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.launch
 
 /**

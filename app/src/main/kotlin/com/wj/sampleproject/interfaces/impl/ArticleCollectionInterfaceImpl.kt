@@ -6,9 +6,9 @@ import com.orhanobut.logger.Logger
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.ext.judge
-import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.interfaces.ArticleCollectionInterface
 import com.wj.sampleproject.repository.ArticleRepository
+import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.launch
 
 /**

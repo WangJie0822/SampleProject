@@ -3,15 +3,17 @@ package com.wj.sampleproject.viewmodel
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import cn.wj.common.ext.isNotNullAndBlank
 import com.orhanobut.logger.Logger
-import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
-import com.wj.sampleproject.constants.SP_KEY_FINGERPRINT
+import com.wj.sampleproject.constants.DATA_CACHE_KEY_FINGERPRINT
 import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.UserRepository
+import com.wj.sampleproject.tools.decodeString
+import com.wj.sampleproject.tools.encode
+import com.wj.sampleproject.tools.safeMMKV
+import com.wj.sampleproject.tools.withMMKV
 import kotlinx.coroutines.launch
 
 /**
@@ -38,7 +40,9 @@ class SettingsViewModel(
     val showFingerprint: ObservableBoolean = ObservableBoolean(false)
 
     /** 标记 - 指纹登录开关 */
-    val fingerprintChecked: ObservableBoolean = object : ObservableBoolean(MMKV.defaultMMKV().decodeString(SP_KEY_FINGERPRINT).isNotNullAndBlank()) {
+    val fingerprintChecked: ObservableBoolean = object : ObservableBoolean(withMMKV(safeMMKV) {
+        "$DATA_CACHE_KEY_FINGERPRINT${UserInfoData.value?.username}".decodeString()
+    }.isNotBlank()) {
         override fun set(value: Boolean) {
             super.set(value)
 
@@ -53,7 +57,9 @@ class SettingsViewModel(
                 showVerificationData.value = 0
             } else {
                 // 关闭指纹登录，清空指纹登录数据
-                MMKV.defaultMMKV().encode(SP_KEY_FINGERPRINT, "")
+                withMMKV(safeMMKV) {
+                    "$DATA_CACHE_KEY_FINGERPRINT${UserInfoData.value?.username}".encode("")
+                }
             }
         }
     }

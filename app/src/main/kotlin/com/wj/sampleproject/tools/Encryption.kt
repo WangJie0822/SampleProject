@@ -1,4 +1,6 @@
-package com.wj.sampleproject.ext
+@file:Suppress("unused")
+
+package com.wj.sampleproject.tools
 
 import android.util.Base64
 

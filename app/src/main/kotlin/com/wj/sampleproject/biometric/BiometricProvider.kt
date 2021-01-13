@@ -27,21 +27,21 @@ val FragmentActivity.biometric: BiometricInterface
 
 /** 是否支持生物识别 */
 fun FragmentActivity.supportBiometric(): Boolean {
-    return biometric.checkBiometric() == BiometricInterface.SUPPORT
+    return biometric.checkBiometric() == BiometricInterface.HW_AVAILABLE
 }
 
 /** 尝试进行生物识别认证，成功回调 [onSuccess] 回传 [Cipher] 对象，失败回调 [onError] 回传错误码 [Int] 错误信息 [String] */
 fun BiometricInterface.tryAuthenticate(onSuccess: (Cipher) -> Unit, onError: (Int, String) -> Unit) {
     when (val resultCode = checkBiometric()) {
-        BiometricInterface.UN_SUPPORT -> {
+        BiometricInterface.ERROR_HW_UNAVAILABLE -> {
             // 不支持
             onError.invoke(resultCode, "当前设备不支持指纹识别")
         }
-        BiometricInterface.NO_ENROLLED_FINGERPRINTS -> {
+        BiometricInterface.ERROR_NO_BIOMETRICS -> {
             // 没有有效指纹
             onError.invoke(resultCode, "请添加至少一个有效指纹")
         }
-        BiometricInterface.NO_KEYGUARD_SECURE -> {
+        BiometricInterface.ERROR_NO_DEVICE_CREDENTIAL -> {
             // 没有设置锁屏
             onError.invoke(resultCode, "请先设置锁屏")
         }

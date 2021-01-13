@@ -47,9 +47,17 @@ class BiometricQ(val activity: FragmentActivity)
             })
             build()
         }
-
+        val loadCipher = try {
+            loadCipher(encrypt, keyAlias, ivBytes)
+        } catch (throwable: Throwable) {
+            null
+        }
+        if (null == loadCipher) {
+            onError.invoke(BiometricInterface.ERROR_FAILED, "指纹验证失败")
+            return
+        }
         prompt.authenticate(
-                BiometricPrompt.CryptoObject(loadCipher(encrypt, keyAlias, ivBytes)),
+                BiometricPrompt.CryptoObject(loadCipher),
                 cancellationSignal,
                 activity.mainExecutor,
                 object : BiometricPrompt.AuthenticationCallback() {
@@ -60,7 +68,7 @@ class BiometricQ(val activity: FragmentActivity)
                             onSuccess.invoke(cipher)
                         } catch (throwable: Throwable) {
                             Logger.e(throwable, "authenticate")
-                            onError.invoke(-1, "指纹认证失败")
+                            onError.invoke(BiometricInterface.ERROR_FAILED, "指纹验证失败")
                         }
                     }
 
@@ -69,7 +77,7 @@ class BiometricQ(val activity: FragmentActivity)
                     }
 
                     override fun onAuthenticationFailed() {
-                        onError.invoke(-1, "指纹验证失败")
+                        onError.invoke(BiometricInterface.ERROR_FAILED, "指纹验证失败")
                     }
 
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {

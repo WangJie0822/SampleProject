@@ -14,6 +14,7 @@
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/app_backgroundPrimary"
         app:layoutDescription="@xml/app_scene_login">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -209,17 +210,20 @@
             android:layout_marginBottom="20dp"
             android:background="?selectableItemBackground"
             android:bind_onClick="@{viewModel.onFingerprintClick}"
+            android:bind_visibility="@{viewModel.showFingerprint}"
             android:drawablePadding="4dp"
             android:text="@string/app_login_by_fingerprint"
             android:textColor="@color/app_textAccent"
             android:textSize="14sp"
+            android:visibility="gone"
             app:drawableTint="@color/app_tintAccent"
             app:ftv_drawableTop="@drawable/app_vector_fingerprint"
             app:ftv_drawableTopHeight="48dp"
             app:ftv_drawableTopWidth="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 

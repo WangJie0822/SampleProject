@@ -13,11 +13,11 @@ import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.ArticleListEntity
 import com.wj.sampleproject.ext.judge
-import com.wj.sampleproject.ext.toNetResult
 import com.wj.sampleproject.interfaces.ArticleListInterface
 import com.wj.sampleproject.interfaces.ArticleListPagingInterface
 import com.wj.sampleproject.net.NetResult
 import com.wj.sampleproject.repository.ArticleRepository
+import com.wj.sampleproject.tools.toNetResult
 import kotlinx.coroutines.launch
 
 /**

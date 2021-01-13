@@ -10,8 +10,8 @@ import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.NavigationListEntity
 import com.wj.sampleproject.ext.defaultFaildBlock
 import com.wj.sampleproject.ext.judge
-import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.repository.ArticleRepository
+import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.launch
 
 /**

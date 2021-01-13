@@ -42,3 +42,6 @@ const val STR_FALSE = "0"
 
 /** 用户信息分隔 */
 const val USER_INFO_SPLIT = "\"^-^\""
+
+/** 加密 MMKV id */
+const val MMKV_ID_ENCRYPTION = "mmkv_id_encryption"

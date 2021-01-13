@@ -2,6 +2,7 @@ package com.wj.sampleproject.ext
 
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.net.NetResult
+import com.wj.sampleproject.tools.toSnackbarModel
 
 /**
  * ViewModel 相关

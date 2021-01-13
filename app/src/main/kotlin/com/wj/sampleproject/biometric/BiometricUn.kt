@@ -20,7 +20,7 @@ class BiometricUn : BiometricInterface {
     override var negative = "取消"
 
     override fun checkBiometric(): Int {
-        return BiometricInterface.UN_SUPPORT
+        return BiometricInterface.ERROR_HW_UNAVAILABLE
     }
 
     override fun authenticate(onSuccess: (Cipher) -> Unit, onError: (Int, String) -> Unit) {

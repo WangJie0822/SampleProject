@@ -1,12 +1,13 @@
 package com.wj.sampleproject.helper
 
 import androidx.lifecycle.MutableLiveData
-import com.tencent.mmkv.MMKV
-import com.wj.sampleproject.constants.SP_KEY_COOKIES
-import com.wj.sampleproject.constants.SP_KEY_USER_INFO
+import com.wj.sampleproject.constants.DATA_CACHE_KEY_COOKIES
+import com.wj.sampleproject.constants.DATA_CACHE_KEY_USER_INFO
 import com.wj.sampleproject.entity.UserInfoEntity
-import com.wj.sampleproject.ext.toJsonString
-import com.wj.sampleproject.ext.toTypeEntity
+import com.wj.sampleproject.tools.decodeString
+import com.wj.sampleproject.tools.encode
+import com.wj.sampleproject.tools.toJsonString
+import com.wj.sampleproject.tools.toTypeEntity
 
 /**
  * 用户信息
@@ -23,16 +24,16 @@ object UserInfoData : MutableLiveData<UserInfoEntity>() {
         if (!firstLoad) {
             return
         }
-        value = MMKV.defaultMMKV().decodeString(SP_KEY_USER_INFO, "").toTypeEntity<UserInfoEntity>()
+        value = DATA_CACHE_KEY_USER_INFO.decodeString("").toTypeEntity<UserInfoEntity>()
         firstLoad = false
     }
 
     override fun setValue(value: UserInfoEntity?) {
         super.setValue(value)
-        MMKV.defaultMMKV().encode(SP_KEY_USER_INFO, value.toJsonString())
+        DATA_CACHE_KEY_USER_INFO.encode(value.toJsonString())
         if (null == value) {
             // 退出登录，清空 cookie
-            MMKV.defaultMMKV().encode(SP_KEY_COOKIES, "")
+            DATA_CACHE_KEY_COOKIES.encode("")
         }
     }
 }

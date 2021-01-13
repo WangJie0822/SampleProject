@@ -1,8 +1,9 @@
 @file:Suppress("unused")
 
-package com.wj.sampleproject.ext
+package com.wj.sampleproject.tools
 
 import com.wj.sampleproject.constants.NET_RESPONSE_CODE_ERROR
+import com.wj.sampleproject.ext.hintMsg
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.net.NetResult
 import com.wj.sampleproject.serializer.AnyKSerializer

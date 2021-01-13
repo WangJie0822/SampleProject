@@ -15,10 +15,10 @@ import com.wj.sampleproject.constants.MAIN_BANNER_TRANSFORM_INTERVAL_MS
 import com.wj.sampleproject.entity.BannerEntity
 import com.wj.sampleproject.ext.defaultFaildBlock
 import com.wj.sampleproject.ext.judge
-import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.interfaces.ArticleListPagingInterface
 import com.wj.sampleproject.interfaces.impl.ArticleListPagingInterfaceImpl
 import com.wj.sampleproject.repository.ArticleRepository
+import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.*
 
 /**

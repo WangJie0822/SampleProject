@@ -11,11 +11,11 @@ import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.constants.EVENT_COLLECTION_REFRESH_COLLECTED_WEB
 import com.wj.sampleproject.ext.defaultFaildBlock
 import com.wj.sampleproject.ext.judge
-import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.ArticleRepository
+import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.launch
 
 /**

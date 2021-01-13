@@ -5,19 +5,22 @@ import android.os.Bundle
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.ext.string
 import cn.wj.common.tools.toHexString
-import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.biometric.biometric
 import com.wj.sampleproject.biometric.supportBiometric
 import com.wj.sampleproject.biometric.tryAuthenticate
-import com.wj.sampleproject.constants.SP_KEY_CIPHER_IV
-import com.wj.sampleproject.constants.SP_KEY_FINGERPRINT
+import com.wj.sampleproject.constants.DATA_CACHE_KEY_CIPHER_IV
+import com.wj.sampleproject.constants.DATA_CACHE_KEY_FINGERPRINT
 import com.wj.sampleproject.databinding.AppActivitySettingsBinding
 import com.wj.sampleproject.dialog.GeneralDialog
 import com.wj.sampleproject.dialog.VerificationDialog
 import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.helper.ProgressDialogHelper
+import com.wj.sampleproject.helper.UserInfoData
+import com.wj.sampleproject.tools.encode
+import com.wj.sampleproject.tools.safeMMKV
+import com.wj.sampleproject.tools.withMMKV
 import com.wj.sampleproject.viewmodel.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -64,12 +67,14 @@ class SettingsActivity
                             encrypt = true
                             subTitle = "验证指纹以开启指纹登录"
                             tryAuthenticate({ cipher ->
-                                // 验证成功，保存加密向量
-                                MMKV.defaultMMKV().encode(SP_KEY_CIPHER_IV, cipher.iv.toHexString())
-                                // 加密用户信息
-                                val result = cipher.doFinal(info.toByteArray())
-                                // 保存加密后的用户信息
-                                MMKV.defaultMMKV().encode(SP_KEY_FINGERPRINT, result.toHexString())
+                                // 验证成功，加密用户信息
+                                val result = cipher.doFinal(info.toByteArray()).toHexString()
+                                withMMKV(safeMMKV) {
+                                    // 保存加密后的用户信息
+                                    "$DATA_CACHE_KEY_FINGERPRINT${UserInfoData.value?.username}".encode(result)
+                                    // 保存加密向量
+                                    "$DATA_CACHE_KEY_CIPHER_IV$result".encode(cipher.iv.toHexString())
+                                }
                                 viewModel.snackbarData.value = "指纹登录开启成功".toSnackbarModel()
                             }, { _, msg ->
                                 // 验证失败

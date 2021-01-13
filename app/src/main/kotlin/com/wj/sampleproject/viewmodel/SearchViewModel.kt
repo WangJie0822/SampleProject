@@ -14,12 +14,12 @@ import com.wj.sampleproject.databinding.SmartRefreshState
 import com.wj.sampleproject.entity.HotSearchEntity
 import com.wj.sampleproject.ext.defaultFaildBlock
 import com.wj.sampleproject.ext.judge
-import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.interfaces.ArticleListPagingInterface
 import com.wj.sampleproject.interfaces.impl.ArticleListPagingInterfaceImpl
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.ArticleRepository
+import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.launch
 
 /**

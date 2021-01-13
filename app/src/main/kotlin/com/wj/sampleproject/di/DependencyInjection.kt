@@ -3,22 +3,19 @@ package com.wj.sampleproject.di
 import cn.wj.common.ext.orEmpty
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.orhanobut.logger.Logger
-import com.tencent.mmkv.MMKV
 import com.wj.android.okhttp.InterceptorLogger
 import com.wj.android.okhttp.LoggerInterceptor
 import com.wj.sampleproject.BuildConfig
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.adapter.NavigationRvAdapter
 import com.wj.sampleproject.adapter.SystemCategoryRvAdapter
-import com.wj.sampleproject.constants.SP_KEY_COOKIES
+import com.wj.sampleproject.constants.DATA_CACHE_KEY_COOKIES
 import com.wj.sampleproject.entity.CookieEntity
-import com.wj.sampleproject.ext.jsonDefault
-import com.wj.sampleproject.ext.toJsonString
-import com.wj.sampleproject.ext.toTypeEntity
 import com.wj.sampleproject.net.UrlDefinition
 import com.wj.sampleproject.net.WebService
 import com.wj.sampleproject.repository.ArticleRepository
 import com.wj.sampleproject.repository.UserRepository
+import com.wj.sampleproject.tools.*
 import com.wj.sampleproject.viewmodel.*
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -45,7 +42,7 @@ val netModule: Module = module {
                 .cookieJar(object : CookieJar {
                     override fun loadForRequest(url: HttpUrl): List<Cookie> {
                         val cookieEntity = try {
-                            MMKV.defaultMMKV().decodeString(SP_KEY_COOKIES, "").toTypeEntity<CookieEntity>()
+                            DATA_CACHE_KEY_COOKIES.decodeString("").toTypeEntity<CookieEntity>()
                         } catch (e: Exception) {
                             Logger.t("NET").e(e, "loadCookie")
                             null
@@ -58,7 +55,7 @@ val netModule: Module = module {
                             val ls = arrayListOf<Cookie>()
                             ls.addAll(cookies)
                             val cookieEntity = CookieEntity(ls)
-                            MMKV.defaultMMKV().encode(SP_KEY_COOKIES, cookieEntity.toJsonString())
+                            DATA_CACHE_KEY_COOKIES.encode(cookieEntity.toJsonString())
                         }
                     }
                 })

@@ -10,18 +10,19 @@ import androidx.lifecycle.viewModelScope
 import cn.wj.android.base.ext.string
 import cn.wj.common.ext.condition
 import com.orhanobut.logger.Logger
-import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
+import com.wj.sampleproject.constants.DATA_CACHE_KEY_USER_NAME
 import com.wj.sampleproject.constants.PASSWORD_MIN_LENGTH
-import com.wj.sampleproject.constants.SP_KEY_USER_NAME
 import com.wj.sampleproject.ext.defaultFaildBlock
 import com.wj.sampleproject.ext.judge
-import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.model.ProgressModel
 import com.wj.sampleproject.model.UiCloseModel
 import com.wj.sampleproject.repository.UserRepository
+import com.wj.sampleproject.tools.decodeString
+import com.wj.sampleproject.tools.encode
+import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.launch
 
 /**
@@ -45,7 +46,7 @@ class LoginViewModel(
     val register: MutableLiveData<Boolean> = MutableLiveData(true)
 
     /** 用户名 */
-    val userName: ObservableField<String> = ObservableField(MMKV.defaultMMKV().decodeString(SP_KEY_USER_NAME, ""))
+    val userName: ObservableField<String> = ObservableField(DATA_CACHE_KEY_USER_NAME.decodeString())
 
     /** 用户名错误文本 */
     val userNameError: ObservableField<String> = ObservableField<String>()
@@ -165,8 +166,7 @@ class LoginViewModel(
                         .judge(onSuccess = {
                             // 注册成功，保存用户信息
                             UserInfoData.value = data
-                            // 保存用户账号
-                            MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
+                            DATA_CACHE_KEY_USER_NAME.encode(userName.get().orEmpty())
                             // 关闭当前界面
                             uiCloseData.value = UiCloseModel()
                         }, onFailed = defaultFaildBlock)
@@ -191,8 +191,7 @@ class LoginViewModel(
                         .judge(onSuccess = {
                             // 登录成功，保存用户信息
                             UserInfoData.value = data
-                            // 保存用户账号
-                            MMKV.defaultMMKV().encode(SP_KEY_USER_NAME, userName.get().orEmpty())
+                            DATA_CACHE_KEY_USER_NAME.encode(userName.get().orEmpty())
                             // 关闭当前界面
                             uiCloseData.value = UiCloseModel()
                         }, onFailed = defaultFaildBlock)

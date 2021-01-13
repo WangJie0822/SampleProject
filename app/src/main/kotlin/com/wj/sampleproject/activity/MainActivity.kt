@@ -5,7 +5,6 @@ import android.os.Bundle
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.ext.string
 import com.gyf.immersionbar.ImmersionBar
-import com.tencent.mmkv.MMKV
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.*
@@ -31,9 +30,6 @@ class MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity_main)
-
-        // 初始化 MMKV
-        MMKV.initialize(mContext)
 
         // 配置适配器
         mBinding.vpMain.setFragmentAdapter(this) {
