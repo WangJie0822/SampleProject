@@ -1,11 +1,9 @@
 package com.wj.sampleproject.fragment
 
-import cn.wj.android.base.ext.string
 import com.wj.sampleproject.R
 import com.wj.sampleproject.activity.*
 import com.wj.sampleproject.base.ui.BaseFragment
 import com.wj.sampleproject.databinding.AppFragmentMyBinding
-import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.viewmodel.MyViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,16 +21,6 @@ class MyFragment
     }
 
     override fun initObserve() {
-        // 用户信息
-        UserInfoData.observe(this, { userInfo ->
-            if (null == userInfo) {
-                viewModel.userName.set(R.string.app_un_login.string)
-                viewModel.avatarUrl.set("")
-            } else {
-                viewModel.userName.set(userInfo.username)
-                viewModel.avatarUrl.set(userInfo.icon)
-            }
-        })
         viewModel.run {
             // 跳转设置
             jumpToSettingsData.observe(this@MyFragment, {

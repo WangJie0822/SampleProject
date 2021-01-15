@@ -137,6 +137,18 @@ interface WebService {
     @GET(UrlDefinition.LOGOUT)
     suspend fun logout(): NetResult<Any>
 
+    /** 获取用户积分信息 */
+    @GET(UrlDefinition.USER_COINS)
+    suspend fun coinsInfo(): NetResult<CoinEntity>
+
+    /** 根据页码 [pageNum] 获取积分变动记录 */
+    @GET(UrlDefinition.USER_COINS_LIST)
+    suspend fun coinsList(@Path("pageNum") pageNum: Int): NetResult<ArrayList<CoinRecordEntity>>
+
+    /** 根据页码 [pageNum] 获取积分排行榜 */
+    @GET(UrlDefinition.COINS_RANKING)
+    suspend fun coinsRanking(@Path("pageNum") pageNum: Int): NetResult<ArrayList<CoinEntity>>
+
     /** 获取搜索热词并返回 */
     @GET(UrlDefinition.GET_HOT_SEARCH)
     suspend fun getHotSearch(): NetResult<ArrayList<HotSearchEntity>>

@@ -57,18 +57,31 @@ object UrlDefinition {
 
     /** 获取项目分类列表 */
     const val GET_PROJECT_CATEGORY = "/project/tree/json"
+
     /** 获取项目列表 */
     const val GET_PROJECT_LIST = "/project/list/{pageNum}/json"
 
     /** 登录 */
     const val LOGIN = "/user/login"
+
     /** 注册 */
     const val REGISTER = "/user/register"
+
     /** 退出登录 */
     const val LOGOUT = "/user/logout/json"
 
+    /** 个人积分 */
+    const val USER_COINS = "/lg/coin/userinfo/json"
+
+    /** 个人积分列表 */
+    const val USER_COINS_LIST = "/lg/coin/list/{pageNum}/json"
+
+    /** 积分排行榜 */
+    const val COINS_RANKING = "/coin/rank/{pageNum}/json"
+
     /** 获取搜索热词 */
     const val GET_HOT_SEARCH = "/hotkey/json"
+
     /** 搜索 */
     const val SEARCH = "/article/query/{pageNum}/json"
 }

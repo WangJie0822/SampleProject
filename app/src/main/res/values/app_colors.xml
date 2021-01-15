@@ -35,6 +35,8 @@
     <color name="app_textAccent">@color/app_colorAccent</color>
     <!-- 文本错误颜色 -->
     <color name="app_textError">@color/app_colorError</color>
+    <!-- 文本积分颜色 -->
+    <color name="app_textCoin">#FFF176</color>
 
     <!-- 主要着色 -->
     <color name="app_tintPrimary">@color/app_white</color>

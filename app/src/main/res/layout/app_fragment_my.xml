@@ -26,40 +26,79 @@
             app:menu="@menu/app_menu_settings"
             app:theme="@style/app_toolbar" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/app_colorPrimary"
             android:bind_onClick="@{viewModel.onTopClick}"
-            android:orientation="vertical"
-            android:paddingTop="40dp"
+            android:paddingTop="20dp"
             android:paddingBottom="40dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_avatar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
                 android:bind_iv_img_default="@{@drawable/app_vector_account_box}"
                 android:bind_iv_img_placeholder="@{@drawable/app_vector_account_box}"
                 android:bind_iv_img_url="@{viewModel.avatarUrl}"
                 android:contentDescription="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/app_image_circle"
                 tools:src="@drawable/app_vector_account_box" />
+
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/app_shape_level_bg"
+                android:bind_visibility="@{null != viewModel.coinsData}"
+                android:paddingStart="4dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="2dp"
+                android:text="@{@string/app_level_with_colon + viewModel.level}"
+                android:textColor="@color/app_textPrimary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+                app:layout_constraintEnd_toEndOf="@id/iv_avatar"
+                tools:text="lv: 33"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="@{viewModel.userName}"
                 android:textColor="@color/app_textPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_avatar"
                 tools:text="用户名" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_coins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:bind_visibility="@{null != viewModel.coinsData}"
+                android:text="@{@string/app_coin_with_colon + viewModel.coins}"
+                android:textColor="@color/app_textCoin"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                tools:text="积分：999"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <cn.wj.android.views.textview.FixedTextView
             android:layout_width="match_parent"

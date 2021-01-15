@@ -1,13 +1,18 @@
 package com.wj.sampleproject.viewmodel
 
 import android.view.MenuItem
-import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import cn.wj.android.base.ext.string
+import cn.wj.common.ext.orEmpty
+import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
+import com.wj.sampleproject.entity.CoinEntity
+import com.wj.sampleproject.ext.judge
 import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.repository.UserRepository
+import com.wj.sampleproject.tools.toSnackbarModel
+import kotlinx.coroutines.launch
 
 /**
  * 我的 ViewModel，注入 [repository] 获取数据
@@ -31,11 +36,30 @@ class MyViewModel(
     /** 跳转学习数据 */
     val jumpToStudyData = MutableLiveData<Int>()
 
+    /** 积分信息 */
+    val coinsData: LiveData<CoinEntity?> = UserInfoData.switchMap {
+        getCoinInfo(null != it)
+    }
+
     /** 用户头像地址 */
-    val avatarUrl: ObservableField<String> = ObservableField()
+    val avatarUrl: LiveData<String> = UserInfoData.map {
+        it?.icon.orEmpty()
+    }
+
+    /** 用户等级 */
+    val level: LiveData<String> = coinsData.map {
+        it?.level.orEmpty("1")
+    }
 
     /** 用户名 */
-    val userName: ObservableField<String> = ObservableField(R.string.app_un_login.string)
+    val userName: LiveData<String> = UserInfoData.map {
+        it?.username.orEmpty(R.string.app_un_login.string)
+    }
+
+    /** 用户积分 */
+    val coins: LiveData<String> = coinsData.map {
+        it?.coinCount.orEmpty("0")
+    }
 
     /** 设置点击 */
     val onSettingsClick: (MenuItem) -> Boolean = {
@@ -84,5 +108,26 @@ class MyViewModel(
     /** 学习入口点击 */
     val onStudyClick: () -> Unit = {
         jumpToStudyData.value = 0
+    }
+
+    /** 获取用户积分信息 */
+    private fun getCoinInfo(loggedIn: Boolean): LiveData<CoinEntity?> {
+        val result = MutableLiveData<CoinEntity?>()
+        if (loggedIn) {
+            viewModelScope.launch {
+                try {
+                    repository.coinsInfo()
+                            .judge(onSuccess = {
+                                // 请求成功
+                                result.value = data
+                            })
+                } catch (throwable: Throwable) {
+                    Logger.e(throwable, "getCoinInfo")
+                    snackbarData.value = throwable.toSnackbarModel()
+                }
+            }
+
+        }
+        return result
     }
 }

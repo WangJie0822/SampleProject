@@ -16,7 +16,7 @@ import com.wj.sampleproject.tools.toTypeEntity
  *
  * @author 王杰
  */
-object UserInfoData : MutableLiveData<UserInfoEntity>() {
+object UserInfoData : MutableLiveData<UserInfoEntity?>() {
 
     private var firstLoad = true
 

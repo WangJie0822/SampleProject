@@ -66,4 +66,6 @@
     <string name="app_about_us">关于我们</string>
     <string name="app_clear_cache">清空缓存</string>
     <string name="app_verify_fingerprint">验证指纹</string>
+    <string name="app_level_with_colon">Lv: </string>
+    <string name="app_coin_with_colon">积分: </string>
 </resources>
