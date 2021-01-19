@@ -2,6 +2,7 @@ package com.wj.sampleproject.viewmodel
 
 import android.view.MenuItem
 import android.view.MotionEvent
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -37,19 +38,38 @@ class HomepageViewModel(
         }
     }
 
+    /** Banner 轮播 job */
+    private var carouselJob: Job? = null
+
     /** Banner 列表数据 */
     val bannerData: MutableLiveData<ArrayList<BannerEntity>> = MutableLiveData()
 
     /** 跳转搜索数据 */
-    val jumpSearchData: MutableLiveData<Int> = MutableLiveData()
+    val jumpToSearchData: MutableLiveData<Int> = MutableLiveData()
 
-    /** Banner 轮播 job */
-    private var carouselJob: Job? = null
+    /** 跳转问答数据 */
+    val jumpToQaData = MutableLiveData<Int>()
+
+    /** 标记 - 问答是否展开 */
+    val qaExtend: ObservableBoolean = ObservableBoolean(false)
+
+    /** 问答点击 */
+    val onQaClick: () -> Unit = {
+        if (qaExtend.get()) {
+            // 已展开，跳转问答
+            jumpToQaData.value = 0
+        } else {
+            // 未展开，直接展开
+            qaExtend.set(true)
+        }
+        // 延时折叠
+        shrinkDelay()
+    }
 
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
         if (it.itemId == R.id.menu_search) {
-            jumpSearchData.value = 0
+            jumpToSearchData.value = 0
         }
         false
     }
@@ -99,6 +119,18 @@ class HomepageViewModel(
     val onBannerItemClick: (BannerEntity) -> Unit = { item ->
         // 跳转 WebView 打开
         jumpWebViewData.value = WebViewActivity.ActionModel(item.id.orEmpty(), item.title.orEmpty(), item.url.orEmpty())
+    }
+
+    /** 用于折叠问答的 [Job] */
+    private var shrinkJob: Job? = null
+
+    /** 延时后折叠问答 */
+    private fun shrinkDelay() {
+        shrinkJob?.cancel()
+        shrinkJob = viewModelScope.launch {
+            delay(2_000L)
+            qaExtend.set(false)
+        }
     }
 
     /** 获取首页 Banner 列表 */

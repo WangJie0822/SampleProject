@@ -32,7 +32,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     /** 侧滑返回帮助类对象 */
     private var mSwipeBackHelper: SwipeBackHelper? = null
 
-    /** Snackbar 转换接口 */
+    /** [Snackbar] 转换接口 */
     protected var snackbarTransform: ((SnackbarModel) -> SnackbarModel)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

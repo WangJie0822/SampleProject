@@ -98,6 +98,11 @@
             android:name=".activity.SettingsActivity"
             android:configChanges="screenSize"
             android:screenOrientation="fullSensor" />
+        <!-- 问答界面 -->
+        <activity
+            android:name=".activity.QuestionAnswerActivity"
+            android:configChanges="screenSize"
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>

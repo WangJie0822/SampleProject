@@ -112,6 +112,9 @@ object Configuration {
 
         /** moshi 版本 */
         const val moshi_version = "1.11.0"
+
+        /** ARouter 版本 */
+        const val arouter_version = "1.5.1"
     }
 
     /**
@@ -345,5 +348,12 @@ object Configuration {
         const val skin_support_material = "skin.support:skin-support-design:4.0.5"
         const val skin_support_cardview = "skin.support:skin-support-cardview:4.0.5"
         const val skin_support_constraint = "skin.support:skin-support-constraint-layout:4.0.5"
+
+        /**
+         * ARouter 路由
+         * - Github: [https://github.com/alibaba/ARouter]
+         */
+        const val arouter_api = "com.alibaba:arouter-api:${Versions.arouter_version}"
+        const val arouter_compiler = "com.alibaba:arouter-compiler:${Versions.arouter_version}"
     }
 }

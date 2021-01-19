@@ -165,4 +165,9 @@ class ArticleRepository(private val webService: WebService) {
     suspend fun getSystemArticleList(pageNum: Int, cid: String) = netRequest {
         webService.getSystemArticleList(pageNum, cid)
     }
+
+    /** 根据页码 [pageNum] 获取问答列表数据 */
+    suspend fun getQaList(pageNum: Int) = netRequest {
+        webService.getQaList(pageNum)
+    }
 }

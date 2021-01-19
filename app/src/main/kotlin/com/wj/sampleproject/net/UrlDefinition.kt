@@ -84,4 +84,7 @@ object UrlDefinition {
 
     /** 搜索 */
     const val SEARCH = "/article/query/{pageNum}/json"
+
+    /** 问答列表 */
+    const val QA_LIST = "/wenda/list/{pageNum}/json"
 }

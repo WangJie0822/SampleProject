@@ -160,4 +160,10 @@ interface WebService {
             @Path("pageNum") pageNum: Int,
             @Field("k") keywords: String
     ): NetResult<ArticleListEntity>
+
+    /** 根据页码 [pageNum] 获取问答列表数据 */
+    @GET(UrlDefinition.QA_LIST)
+    suspend fun getQaList(
+            @Path("pageNum") pageNum: Int
+    ): NetResult<ArticleListEntity>
 }

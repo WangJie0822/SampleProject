@@ -16,16 +16,19 @@
         android:orientation="vertical">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/cl_target"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/abl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:bind_ratio="@{@string/app_golden_ratio_horizontal}"
                 tools:layout_height="260dp">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/ctl"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:bind_ctl_collapsedTitleTextColor="@{@color/app_textPrimary}"
@@ -95,6 +98,21 @@
                     android:layout_height="wrap_content" />
 
             </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_qa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:bind_efab_extend="@{viewModel.qaExtend}"
+                android:bind_onClick="@{viewModel.onQaClick}"
+                android:text="@string/app_qa"
+                android:textColor="@color/app_textPrimary"
+                android:textSize="16sp"
+                app:backgroundTint="@color/app_tintAccent"
+                app:icon="@drawable/app_vector_question_answer"
+                app:iconTint="@color/app_tintPrimary" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

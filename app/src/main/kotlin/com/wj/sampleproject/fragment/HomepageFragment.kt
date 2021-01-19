@@ -4,6 +4,7 @@ import cn.wj.android.recyclerview.adapter.simple.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.QuestionAnswerActivity
 import com.wj.sampleproject.activity.SearchActivity
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
@@ -71,6 +72,11 @@ class HomepageFragment
                 it.showHeaderWhenEmpty(true)
             }
         }
+
+        // [Snackbar] 转换
+        snackbarTransform = { snackbarModel ->
+            snackbarModel.copy(targetId = R.id.cl_target)
+        }
     }
 
     override fun initObserve() {
@@ -91,26 +97,6 @@ class HomepageFragment
                 viewModel.refreshing.value = SmartRefreshState(true)
             }
         })
-        // Banner 列表
-        viewModel.bannerData.observe(this, { list ->
-            // 更新 Banner 列表
-            mBannerAdapter.refresh(list)
-            // 设置 Banner 数量并开启轮播
-            viewModel.bannerCount = list.size
-        })
-        // 文章列表
-        viewModel.articleListData.observe(this, {
-            // 更新文章列表
-            mArticlesAdapter.submitList(it)
-        })
-        // WebView 跳转
-        viewModel.jumpWebViewData.observe(this, {
-            WebViewActivity.actionStart(mContext, it)
-        })
-        // 跳转搜索
-        viewModel.jumpSearchData.observe(this, {
-            SearchActivity.actionStart(mContext)
-        })
         // 取消收藏事件
         LiveEventBus.get(EVENT_COLLECTION_CANCELLED, String::class.java)
                 .observe(this, { id ->
@@ -119,6 +105,32 @@ class HomepageFragment
                     }
                     item?.collected?.set(false)
                 })
+        viewModel.run {
+            // Banner 列表
+            bannerData.observe(this@HomepageFragment, { list ->
+                // 更新 Banner 列表
+                mBannerAdapter.refresh(list)
+                // 设置 Banner 数量并开启轮播
+                bannerCount = list.size
+            })
+            // 文章列表
+            articleListData.observe(this@HomepageFragment, {
+                // 更新文章列表
+                mArticlesAdapter.submitList(it)
+            })
+            // WebView 跳转
+            jumpWebViewData.observe(this@HomepageFragment, {
+                WebViewActivity.actionStart(mContext, it)
+            })
+            // 跳转搜索
+            jumpToSearchData.observe(this@HomepageFragment, {
+                SearchActivity.actionStart(mContext)
+            })
+            // 跳转问答
+            jumpToQaData.observe(this@HomepageFragment, {
+                QuestionAnswerActivity.actionStart(mContext)
+            })
+        }
     }
 
     companion object {

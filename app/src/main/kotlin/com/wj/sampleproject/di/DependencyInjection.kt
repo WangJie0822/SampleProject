@@ -117,4 +117,5 @@ val viewModelModule: Module = module {
     viewModel { SettingsViewModel(get()) }
     viewModel { VerificationViewModel(get()) }
     viewModel { BiometricViewModel() }
+    viewModel { QuestionAnswerViewModel(get()) }
 }
