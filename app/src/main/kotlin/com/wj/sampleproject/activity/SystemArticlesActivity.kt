@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseActivity
@@ -12,6 +13,7 @@ import com.wj.sampleproject.constants.ACTION_SYSTEM_ID
 import com.wj.sampleproject.constants.ACTION_TITLE
 import com.wj.sampleproject.databinding.AppActivitySystemArticlesBinding
 import com.wj.sampleproject.databinding.SmartRefreshState
+import com.wj.sampleproject.router.ROUTER_PATH_SYSTEM
 import com.wj.sampleproject.viewmodel.SystemArticlesViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,6 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  * @author 王杰
  */
+@Route(path = ROUTER_PATH_SYSTEM)
 class SystemArticlesActivity : BaseActivity<SystemArticlesViewModel, AppActivitySystemArticlesBinding>() {
 
     override val viewModel: SystemArticlesViewModel by viewModel()

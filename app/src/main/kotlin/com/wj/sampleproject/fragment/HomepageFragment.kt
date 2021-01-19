@@ -4,8 +4,6 @@ import cn.wj.android.recyclerview.adapter.simple.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
-import com.wj.sampleproject.activity.QuestionAnswerActivity
-import com.wj.sampleproject.activity.SearchActivity
 import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseFragment
@@ -121,14 +119,6 @@ class HomepageFragment
             // WebView 跳转
             jumpWebViewData.observe(this@HomepageFragment, {
                 WebViewActivity.actionStart(mContext, it)
-            })
-            // 跳转搜索
-            jumpToSearchData.observe(this@HomepageFragment, {
-                SearchActivity.actionStart(mContext)
-            })
-            // 跳转问答
-            jumpToQaData.observe(this@HomepageFragment, {
-                QuestionAnswerActivity.actionStart(mContext)
             })
         }
     }

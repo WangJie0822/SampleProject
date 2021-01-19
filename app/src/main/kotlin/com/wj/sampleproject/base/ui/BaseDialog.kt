@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import com.alibaba.android.arouter.launcher.ARouter
 import com.google.android.material.snackbar.Snackbar
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
@@ -87,6 +88,10 @@ abstract class BaseDialog<VM : BaseViewModel, DB : ViewDataBinding>
             close?.let {
                 dismiss()
             }
+        })
+        // 界面跳转
+        viewModel.uiNavigationData.observe(this, { path ->
+            ARouter.getInstance().build(path).navigation(mContext)
         })
     }
 

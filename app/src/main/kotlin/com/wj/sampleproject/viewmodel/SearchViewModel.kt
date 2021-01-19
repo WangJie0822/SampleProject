@@ -67,7 +67,7 @@ class SearchViewModel(
     }
 
     /** 返回点击 */
-    val onBackClick = {
+    val onBackClick: () -> Unit = {
         uiCloseData.value = UiCloseModel()
     }
 

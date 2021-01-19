@@ -165,6 +165,12 @@ android {
     }
 }
 
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 dependencies {
 
     // Kotlin
@@ -230,6 +236,9 @@ dependencies {
 
     // MMKV 数据存储
     implementation(Configuration.Dependencies.tencent_mmkv)
+
+    implementation(Configuration.Dependencies.arouter_api)
+    kapt(Configuration.Dependencies.arouter_compiler)
 
     // SmartRefreshLayout
     implementation(Configuration.Dependencies.smart_refresh)

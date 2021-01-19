@@ -5,6 +5,7 @@ import android.os.Bundle
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.ext.string
 import cn.wj.common.tools.toHexString
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.biometric.biometric
@@ -18,6 +19,7 @@ import com.wj.sampleproject.dialog.VerificationDialog
 import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.helper.ProgressDialogHelper
 import com.wj.sampleproject.helper.UserInfoData
+import com.wj.sampleproject.router.ROUTER_PATH_SETTING
 import com.wj.sampleproject.tools.encode
 import com.wj.sampleproject.tools.safeMMKV
 import com.wj.sampleproject.tools.withMMKV
@@ -32,6 +34,7 @@ import java.util.*
  *
  * @author 王杰
  */
+@Route(path = ROUTER_PATH_SETTING)
 class SettingsActivity
     : BaseActivity<SettingsViewModel, AppActivitySettingsBinding>() {
 

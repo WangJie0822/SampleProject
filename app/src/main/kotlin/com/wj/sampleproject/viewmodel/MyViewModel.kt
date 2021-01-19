@@ -11,6 +11,7 @@ import com.wj.sampleproject.entity.CoinEntity
 import com.wj.sampleproject.ext.judge
 import com.wj.sampleproject.helper.UserInfoData
 import com.wj.sampleproject.repository.UserRepository
+import com.wj.sampleproject.router.*
 import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.launch
 
@@ -20,21 +21,6 @@ import kotlinx.coroutines.launch
 class MyViewModel(
         private val repository: UserRepository
 ) : BaseViewModel() {
-
-    /** 跳转设置 */
-    val jumpToSettingsData = MutableLiveData<Int>()
-
-    /** 跳转登录 */
-    val jumpToLoginData = MutableLiveData<Int>()
-
-    /** 跳转我的收藏 */
-    val jumpToCollectionData = MutableLiveData<Int>()
-
-    /** 跳转收藏网站 */
-    val jumpToCollectedWebData = MutableLiveData<Int>()
-
-    /** 跳转学习数据 */
-    val jumpToStudyData = MutableLiveData<Int>()
 
     /** 积分信息 */
     val coinsData: LiveData<CoinEntity?> = UserInfoData.switchMap {
@@ -64,50 +50,34 @@ class MyViewModel(
     /** 设置点击 */
     val onSettingsClick: (MenuItem) -> Boolean = {
         if (it.itemId == R.id.menu_setting) {
-            if (null == UserInfoData.value) {
-                // 未登录，跳转登录
-                jumpToLoginData.value = 0
-            } else {
-                // 跳转设置
-                jumpToSettingsData.value = 0
-            }
+            // 跳转设置
+            uiNavigationData.value = ROUTER_PATH_SETTING
         }
         false
     }
 
     /** 头部点击 */
     val onTopClick: () -> Unit = {
-        if (null == UserInfoData.value) {
-            // 未登录，跳转登录
-            jumpToLoginData.value = 0
-        }
+        // 跳转积分
+        uiNavigationData.value = ROUTER_PATH_COIN
     }
 
     /** 我的收藏点击 */
     val onMyCollectionClick: () -> Unit = {
-        if (null == UserInfoData.value) {
-            // 未登录，跳转登录
-            jumpToLoginData.value = 0
-        } else {
-            // 已登录，跳转我的收藏列表
-            jumpToCollectionData.value = 0
-        }
+        // 跳转我的收藏
+        uiNavigationData.value = ROUTER_PATH_COLLECTION
     }
 
     /** 收藏网站点击 */
     val onCollectedWebClick: () -> Unit = {
-        if (null == UserInfoData.value) {
-            // 未登录，跳转登录
-            jumpToLoginData.value = 0
-        } else {
-            // 已登录，跳转收藏网站列表
-            jumpToCollectedWebData.value = 0
-        }
+        // 跳转收藏网站
+        uiNavigationData.value = ROUTER_PATH_COLLECTED_WEB
     }
 
     /** 学习入口点击 */
     val onStudyClick: () -> Unit = {
-        jumpToStudyData.value = 0
+        // 跳转学习
+        uiNavigationData.value = ROUTER_PATH_STUDY
     }
 
     /** 获取用户积分信息 */
@@ -126,7 +96,8 @@ class MyViewModel(
                     snackbarData.value = throwable.toSnackbarModel()
                 }
             }
-
+        } else {
+            result.value = null
         }
         return result
     }

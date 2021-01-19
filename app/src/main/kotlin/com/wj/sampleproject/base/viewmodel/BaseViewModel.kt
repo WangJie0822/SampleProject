@@ -18,4 +18,7 @@ abstract class BaseViewModel
 
     /** 控制 UI 组件关闭 */
     val uiCloseData = MutableLiveData<UiCloseModel>()
+
+    /** 界面跳转控制 */
+    val uiNavigationData = MutableLiveData<String>()
 }

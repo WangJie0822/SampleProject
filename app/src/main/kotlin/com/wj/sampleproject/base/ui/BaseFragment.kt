@@ -3,6 +3,7 @@ package com.wj.sampleproject.base.ui
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import com.alibaba.android.arouter.launcher.ARouter
 import com.google.android.material.snackbar.Snackbar
 import com.wj.android.ui.fragment.BaseBindingLibFragment
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
@@ -73,6 +74,10 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>
                 mContext.setResult(model.resultCode, model.result)
                 mContext.finish()
             }
+        })
+        // 界面跳转
+        viewModel.uiNavigationData.observe(this, { path ->
+            ARouter.getInstance().build(path).navigation(mContext)
         })
     }
 }

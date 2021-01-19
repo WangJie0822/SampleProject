@@ -7,11 +7,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.tools.jumpToBrowser
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.constants.ACTION_PARCELABLE
 import com.wj.sampleproject.databinding.AppActivityWebviewBinding
 import com.wj.sampleproject.fragment.WebViewFragment
+import com.wj.sampleproject.router.ROUTER_PATH_WEB
 import com.wj.sampleproject.viewmodel.WebViewViewModel
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,6 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * H5 界面
  */
+@Route(path = ROUTER_PATH_WEB)
 class WebViewActivity
     : BaseActivity<WebViewViewModel, AppActivityWebviewBinding>() {
 

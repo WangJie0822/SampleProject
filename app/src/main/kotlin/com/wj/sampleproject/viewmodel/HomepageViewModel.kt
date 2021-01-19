@@ -19,6 +19,8 @@ import com.wj.sampleproject.ext.judge
 import com.wj.sampleproject.interfaces.ArticleListPagingInterface
 import com.wj.sampleproject.interfaces.impl.ArticleListPagingInterfaceImpl
 import com.wj.sampleproject.repository.ArticleRepository
+import com.wj.sampleproject.router.ROUTER_PATH_QA
+import com.wj.sampleproject.router.ROUTER_PATH_SEARCH
 import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.*
 
@@ -44,12 +46,6 @@ class HomepageViewModel(
     /** Banner 列表数据 */
     val bannerData: MutableLiveData<ArrayList<BannerEntity>> = MutableLiveData()
 
-    /** 跳转搜索数据 */
-    val jumpToSearchData: MutableLiveData<Int> = MutableLiveData()
-
-    /** 跳转问答数据 */
-    val jumpToQaData = MutableLiveData<Int>()
-
     /** 标记 - 问答是否展开 */
     val qaExtend: ObservableBoolean = ObservableBoolean(false)
 
@@ -57,7 +53,7 @@ class HomepageViewModel(
     val onQaClick: () -> Unit = {
         if (qaExtend.get()) {
             // 已展开，跳转问答
-            jumpToQaData.value = 0
+            uiNavigationData.value = ROUTER_PATH_QA
         } else {
             // 未展开，直接展开
             qaExtend.set(true)
@@ -69,7 +65,8 @@ class HomepageViewModel(
     /** 菜单列表点击 */
     val onMenuItemClick: (MenuItem) -> Boolean = {
         if (it.itemId == R.id.menu_search) {
-            jumpToSearchData.value = 0
+            // 跳转搜索
+            uiNavigationData.value = ROUTER_PATH_SEARCH
         }
         false
     }

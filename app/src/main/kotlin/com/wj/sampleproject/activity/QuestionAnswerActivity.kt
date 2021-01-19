@@ -4,11 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.databinding.AppActivityQuestionAnswerBinding
 import com.wj.sampleproject.databinding.SmartRefreshState
+import com.wj.sampleproject.router.ROUTER_PATH_QA
 import com.wj.sampleproject.viewmodel.QuestionAnswerViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,6 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  * @author 王杰
  */
+@Route(path = ROUTER_PATH_QA)
 class QuestionAnswerActivity
     : BaseActivity<QuestionAnswerViewModel, AppActivityQuestionAnswerBinding>() {
 

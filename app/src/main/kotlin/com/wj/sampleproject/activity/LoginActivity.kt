@@ -6,6 +6,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.utils.AppManager
 import cn.wj.common.tools.toHexByteArray
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.transition.platform.MaterialFade
 import com.gyf.immersionbar.ImmersionBar
 import com.wj.sampleproject.R
@@ -18,6 +19,7 @@ import com.wj.sampleproject.databinding.AppActivityLoginBinding
 import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.helper.ProgressDialogHelper
 import com.wj.sampleproject.helper.UserInfoData
+import com.wj.sampleproject.router.ROUTER_PATH_LOGIN
 import com.wj.sampleproject.tools.decodeString
 import com.wj.sampleproject.tools.encode
 import com.wj.sampleproject.tools.safeMMKV
@@ -32,6 +34,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  * @author 王杰
  */
+@Route(path = ROUTER_PATH_LOGIN)
 class LoginActivity : BaseActivity<LoginViewModel, AppActivityLoginBinding>() {
 
     override val viewModel: LoginViewModel by viewModel()

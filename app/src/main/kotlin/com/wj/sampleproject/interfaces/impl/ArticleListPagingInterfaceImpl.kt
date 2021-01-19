@@ -93,6 +93,11 @@ class ArticleListPagingInterfaceImpl(repository: ArticleRepository)
                 onFailed = {
                     smartControl.value = SmartRefreshState(loading = false, success = false)
                     liveData.value = articleListData.value.orEmpty()
+                },
+                onFailed4Login = {
+                    smartControl.value = SmartRefreshState(loading = false, success = false)
+                    liveData.value = articleListData.value.orEmpty()
+                    false
                 }
         )
         return liveData

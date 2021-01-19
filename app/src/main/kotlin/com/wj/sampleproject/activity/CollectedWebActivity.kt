@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.recyclerview.adapter.simple.SimpleRvListAdapter
 import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
@@ -15,6 +16,7 @@ import com.wj.sampleproject.databinding.AppActivityCollectedWebBinding
 import com.wj.sampleproject.dialog.EditCollectedWebDialog
 import com.wj.sampleproject.entity.CollectedWebEntity
 import com.wj.sampleproject.helper.ProgressDialogHelper
+import com.wj.sampleproject.router.ROUTER_PATH_COLLECTED_WEB
 import com.wj.sampleproject.viewmodel.CollectedWebViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,6 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  * @author 王杰
  */
+@Route(path = ROUTER_PATH_COLLECTED_WEB)
 class CollectedWebActivity
     : BaseActivity<CollectedWebViewModel, AppActivityCollectedWebBinding>() {
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.base.ext.string
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.gyf.immersionbar.ImmersionBar
 import com.wj.sampleproject.R
 import com.wj.sampleproject.base.ui.BaseActivity
@@ -11,6 +12,7 @@ import com.wj.sampleproject.constants.*
 import com.wj.sampleproject.databinding.AppActivityMainBinding
 import com.wj.sampleproject.ext.toSnackbarModel
 import com.wj.sampleproject.fragment.*
+import com.wj.sampleproject.router.ROUTER_PATH_MAIN
 import com.wj.sampleproject.simple.setFragmentAdapter
 import com.wj.sampleproject.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,6 +21,7 @@ import kotlin.math.absoluteValue
 /**
  * 应用首页
  */
+@Route(path = ROUTER_PATH_MAIN)
 class MainActivity
     : BaseActivity<MainViewModel, AppActivityMainBinding>() {
 

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
 import cn.wj.android.base.log.InternalLog
+import com.alibaba.android.arouter.launcher.ARouter
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -53,6 +54,14 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(listOf(netModule, viewModelModule, repositoryModule, adapterModule))
         }
+
+        // 初始化 ARouter
+        if (BuildConfig.DEBUG || !BuildConfig.IS_ONLINE_ENV) {
+            // Debug 模式或非线上模式
+            ARouter.openLog()
+            ARouter.openDebug()
+        }
+        ARouter.init(this)
 
         // 初始化LiveDataBus
         LiveEventBus

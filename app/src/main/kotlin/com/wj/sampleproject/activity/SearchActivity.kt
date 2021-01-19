@@ -6,11 +6,13 @@ import cn.wj.android.base.ext.startTargetActivity
 import cn.wj.android.recyclerview.adapter.simple.SimpleRvAdapter
 import cn.wj.android.recyclerview.layoutmanager.FlowLayoutManager
 import cn.wj.android.recyclerview.layoutmanager.WrapContentLinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.wj.sampleproject.R
 import com.wj.sampleproject.adapter.ArticleListRvAdapter
 import com.wj.sampleproject.base.ui.BaseActivity
 import com.wj.sampleproject.databinding.AppActivitySearchBinding
 import com.wj.sampleproject.entity.HotSearchEntity
+import com.wj.sampleproject.router.ROUTER_PATH_SEARCH
 import com.wj.sampleproject.viewmodel.SearchViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * 搜索界面
  */
+@Route(path = ROUTER_PATH_SEARCH)
 class SearchActivity
     : BaseActivity<SearchViewModel, AppActivitySearchBinding>() {
 

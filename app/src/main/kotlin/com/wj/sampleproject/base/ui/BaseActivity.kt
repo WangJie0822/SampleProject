@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import cn.wj.android.base.tools.fixFontScaleResources
 import cn.wj.android.swipeback.helper.SwipeBackHelper
 import cn.wj.android.swipeback.helper.dispatchTouchEvent
+import com.alibaba.android.arouter.launcher.ARouter
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import com.gyf.immersionbar.ImmersionBar
@@ -124,6 +125,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 setResult(model.resultCode, model.result)
                 finish()
             }
+        })
+        // 界面跳转
+        viewModel.uiNavigationData.observe(this, { path ->
+            ARouter.getInstance().build(path).navigation(mContext)
         })
     }
 }
