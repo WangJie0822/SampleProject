@@ -48,7 +48,7 @@ class ProjectArticlesFragment
         mBinding.rvProjectArticles.let { rv ->
             rv.layoutManager = WrapContentLinearLayoutManager()
             rv.adapter = mArticlesAdapter.also {
-                it.viewModel = viewModel.articleListEventInterface
+                it.viewModel = viewModel.articleListItemInterface
                 it.setEmptyView(R.layout.app_layout_placeholder)
             }
         }

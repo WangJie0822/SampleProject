@@ -9,15 +9,22 @@ import cn.wj.common.ext.isNotNullAndBlank
 import cn.wj.common.ext.orEmpty
 import com.orhanobut.logger.Logger
 import com.wj.sampleproject.R
+import com.wj.sampleproject.activity.WebViewActivity
 import com.wj.sampleproject.base.viewmodel.BaseViewModel
 import com.wj.sampleproject.databinding.SmartRefreshState
+import com.wj.sampleproject.entity.ArticleListEntity
 import com.wj.sampleproject.entity.HotSearchEntity
 import com.wj.sampleproject.ext.defaultFaildBlock
 import com.wj.sampleproject.ext.judge
+import com.wj.sampleproject.interfaces.ArticleCollectionInterface
+import com.wj.sampleproject.interfaces.ArticleListItemInterface
 import com.wj.sampleproject.interfaces.ArticleListPagingInterface
+import com.wj.sampleproject.interfaces.impl.ArticleCollectionInterfaceImpl
+import com.wj.sampleproject.interfaces.impl.ArticleListItemInterfaceImpl
 import com.wj.sampleproject.interfaces.impl.ArticleListPagingInterfaceImpl
 import com.wj.sampleproject.model.SnackbarModel
 import com.wj.sampleproject.model.UiCloseModel
+import com.wj.sampleproject.net.NetResult
 import com.wj.sampleproject.repository.ArticleRepository
 import com.wj.sampleproject.tools.toSnackbarModel
 import kotlinx.coroutines.launch
@@ -28,13 +35,29 @@ import kotlinx.coroutines.launch
 class SearchViewModel(
         private val repository: ArticleRepository
 ) : BaseViewModel(),
-        ArticleListPagingInterface by ArticleListPagingInterfaceImpl(repository) {
+        ArticleCollectionInterface by ArticleCollectionInterfaceImpl(repository),
+        ArticleListPagingInterface by ArticleListPagingInterfaceImpl() {
 
     init {
-        viewModel = this
         getArticleList = { pageNum ->
-            repository.search(pageNum, keywords.get().orEmpty())
+            val result = MutableLiveData<NetResult<ArticleListEntity>>()
+            viewModelScope.launch {
+                try {
+                    result.value = repository.search(pageNum, keywords.get().orEmpty())
+                } catch (throwable: Throwable) {
+                    Logger.t("NET").e(throwable, "getArticleList")
+                }
+            }
+            result
         }
+    }
+
+    /** 跳转网页数据 */
+    val jumpWebViewData = MutableLiveData<WebViewActivity.ActionModel>()
+
+    /** 列表事件 */
+    val articleListItemInterface: ArticleListItemInterface by lazy {
+        ArticleListItemInterfaceImpl(this, jumpWebViewData)
     }
 
     /** 热搜数据 */

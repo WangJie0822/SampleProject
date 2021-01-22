@@ -15,7 +15,7 @@ import com.wj.sampleproject.net.NetResult
  *
  * @author 王杰
  */
-interface ArticleListPagingInterface : ArticleListInterface {
+interface ArticleListPagingInterface {
 
     /** 页码 */
     val pageNumber: MutableLiveData<Int>
@@ -36,5 +36,5 @@ interface ArticleListPagingInterface : ArticleListInterface {
     val onLoadMore: () -> Unit
 
     /** 根据页码 [Int] 获取文章列表数据 */
-    var getArticleList: suspend (Int) -> NetResult<ArticleListEntity>
+    var getArticleList: (Int) -> LiveData<NetResult<ArticleListEntity>>
 }

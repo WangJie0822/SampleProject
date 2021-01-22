@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.wj.sampleproject.adapter.ArticleListEventInterface" />
+            type="com.wj.sampleproject.interfaces.ArticleListItemInterface" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

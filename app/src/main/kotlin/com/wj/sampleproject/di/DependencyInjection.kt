@@ -118,4 +118,5 @@ val viewModelModule: Module = module {
     viewModel { VerificationViewModel(get()) }
     viewModel { BiometricViewModel() }
     viewModel { QuestionAnswerViewModel(get()) }
+    viewModel { CoinViewModel(get()) }
 }

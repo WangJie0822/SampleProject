@@ -10,6 +10,7 @@ import com.wj.sampleproject.R
 import com.wj.sampleproject.databinding.AppRecyclerItemArticlesBinding
 import com.wj.sampleproject.entity.ArticleEntity
 import com.wj.sampleproject.entity.ArticleTagEntity
+import com.wj.sampleproject.interfaces.ArticleListItemInterface
 
 /**
  * 首页文章列表列表适配器类
@@ -18,7 +19,7 @@ class ArticleListRvAdapter
     : BaseRvListDBAdapter<
         ArticleListRvAdapter.ViewHolder,
         AppRecyclerItemArticlesBinding,
-        ArticleListEventInterface,
+        ArticleListItemInterface,
         ArticleEntity>() {
 
     override val layoutResID: Int = R.layout.app_recycler_item_articles
@@ -36,17 +37,4 @@ class ArticleListRvAdapter
 
     class ViewHolder(binding: AppRecyclerItemArticlesBinding)
         : BaseRvDBViewHolder<AppRecyclerItemArticlesBinding, ArticleEntity>(binding)
-}
-
-/**
- * 文章列表适配接口
- * > 提供 [onArticleItemClick]、[onArticleCollectClick] 两个点击事件
- */
-interface ArticleListEventInterface {
-
-    /** 文章列表条目点击 */
-    val onArticleItemClick: (ArticleEntity) -> Unit
-
-    /** 文章收藏点击 */
-    val onArticleCollectClick: (ArticleEntity) -> Unit
 }

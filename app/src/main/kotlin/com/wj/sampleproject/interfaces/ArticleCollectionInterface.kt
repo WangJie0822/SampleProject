@@ -1,7 +1,8 @@
 package com.wj.sampleproject.interfaces
 
-import com.wj.sampleproject.base.viewmodel.BaseViewModel
+import androidx.lifecycle.MutableLiveData
 import com.wj.sampleproject.entity.ArticleEntity
+import com.wj.sampleproject.model.SnackbarModel
 
 /**
  * 文章收藏接口
@@ -12,11 +13,9 @@ import com.wj.sampleproject.entity.ArticleEntity
  */
 interface ArticleCollectionInterface {
 
-    var viewModel: BaseViewModel
+    /** 收藏文章[item]，使用 [snackbarData] 弹出提示 */
+    suspend fun collect(item: ArticleEntity, snackbarData: MutableLiveData<SnackbarModel>)
 
-    /** 收藏文章[item] */
-    fun collect(item: ArticleEntity)
-
-    /** 取消收藏文章[item] */
-    fun unCollect(item: ArticleEntity)
+    /** 取消收藏文章[item]，使用 [snackbarData] 弹出提示 */
+    suspend fun unCollect(item: ArticleEntity, snackbarData: MutableLiveData<SnackbarModel>)
 }
